@@ -37,30 +37,46 @@ Proyek ini mengadopsi arsitektur **Decoupled (Headless)**, yang memisahkan secar
 
 ---
 
-## 🌟 Modul & Fitur Utama
+## 🌟 Modul & Fitur Utama (Blueprint Sistem)
 
-### 1. Manajemen Kurikulum & Admin
-- Pengaturan Tahun Ajaran & Titimangsa (Periode Asesmen).
-- Manajemen Struktur Kurikulum Umum & Kejuruan (Konsentrasi Keahlian).
-- Plotting Guru Pengampu & Wali Kelas.
-- Penentuan Standar KKM & Template Deskripsi Capaian.
+Aplikasi ini memiliki pembagian Hak Akses (Role-Based Access) yang komprehensif. Berikut adalah rincian fitur untuk masing-masing *role* yang telah diselesaikan:
 
-### 2. Panel Guru Mata Pelajaran
-- **Dashboard Guru:** Statistik kelas, jumlah siswa, dan mata pelajaran yang diajar.
-- **Penilaian Formatif:** Pencatatan perkembangan harian siswa untuk tiap Tujuan Pembelajaran (TP).
-- **Penilaian Sumatif:** Input Nilai Akhir (STS / SAS) untuk rapor.
-- **Rekapitulasi Akhir:** Melihat dan mencetak PDF (Print Layout khusus) rekap nilai seluruh siswa secara otomatis tanpa rumus manual.
+### 1. 👑 Modul Admin & Kurikulum
+*Pusat kendali pengaturan akademik dan master data sekolah.*
+- **Manajemen Tahun Ajaran & Titimangsa**: Pengaturan periode aktif (PSTS, PSAS/PSAT) untuk membatasi input nilai.
+- **Struktur Kurikulum & Mata Pelajaran**: Pengelompokan mapel Umum, Kejuruan, dan Muatan Lokal.
+- **Manajemen Data Master**: Kelola data Siswa, Kelas, dan Guru.
+- **Plotting Akademik**: Penugasan Guru Mata Pelajaran dan penetapan Wali Kelas untuk tiap rombongan belajar.
+- **Setup KKM & Template Deskripsi**: Pengaturan standar ketuntasan dan pembuatan *template* dinamis untuk narasi otomatis capaian belajar siswa di Rapor.
 
-### 3. Panel Wali Kelas *(Sedang Dikembangkan)*
-- *Monitoring* kelengkapan nilai dari seluruh Guru Mapel.
-- Input data tambahan rapor (Ketidakhadiran, Catatan Wali Kelas, Ekstrakurikuler).
-- Evaluasi & penilaian Proyek P5.
-- Cetak Rapor Akhir Siswa (Leger & Rapor Individu).
+### 2. 👨‍🏫 Panel Guru Mata Pelajaran
+*Ruang kerja guru untuk melakukan asesmen dan pelaporan nilai kelas.*
+- **Dashboard Akademik Guru**: Ringkasan statistik jumlah kelas, beban mapel, dan total siswa yang diajar.
+- **Input Asesmen Formatif (Harian)**: Matriks penilaian berkelanjutan berdasarkan Tujuan Pembelajaran (TP) per bab/materi.
+- **Input Asesmen Sumatif (Ujian)**: Pengisian Nilai Akhir untuk periode PSTS (Tengah Semester) maupun PSAS (Akhir Semester).
+- **Auto-Generate Deskripsi**: Sistem otomatis menerjemahkan angka capaian menjadi narasi/deskripsi kompetensi siswa berdasarkan *template* kurikulum.
+- **Cetak Rekap Nilai Mapel**: Ekspor/cetak daftar nilai satu kelas penuh sebagai arsip fisik (Leger Mapel).
 
-### 4. Panel Bimbingan Konseling (BK)
+### 3. 👨‍💼 Panel Wali Kelas
+*Pusat pengelolaan administrasi kelas dan pencetakan Rapor resmi.*
+- **Dashboard Wali Kelas**: *Monitoring* kelengkapan nilai dari seluruh Guru Mapel yang mengajar di kelasnya.
+- **Kelola Biodata & Validasi**: Memeriksa, melengkapi, dan memvalidasi biodata siswa (Identitas, Orang Tua, Wali, Asal Sekolah).
+- **Input Ekstrakurikuler**: Memasukkan predikat dan deskripsi partisipasi kegiatan ekskul wajib maupun pilihan.
+- **Input Kehadiran (Absensi)**: Perekaman akumulasi Sakit, Izin, dan Tanpa Keterangan (Alpa) dalam satu periode.
+- **Input PKL & Kokurikuler**: Perekaman riwayat Praktik Kerja Lapangan dan catatan pengembangan karakter (Kokurikuler).
+- **Catatan Wali Kelas**: Pemberian saran, motivasi, dan evaluasi personal tertulis untuk setiap siswa.
+- **Cetak Rapor Otomatis**: Menghasilkan dokumen Rapor siap cetak (Kertas A4) yang secara dinamis menyembunyikan tombol UI (khusus layar *print*).
+
+### 4. 🎓 Panel Siswa
+*Portal transparansi akademik untuk siswa dan orang tua/wali.*
+- **Dashboard Interaktif Siswa**: Menampilkan visualisasi data (Grafik/Chart) *Academic Growth*, ringkasan kehadiran 1 tahun ajaran, dan status keaktifan periode.
+- **Pembaruan Biodata Mandiri**: Memungkinkan siswa untuk mengedit dan melengkapi data pribadi, data orang tua/wali, serta tempat PKL mereka sendiri.
+- **Lihat Rapor (Read-Only)**: Akses digital untuk melihat Rapor (nilai akademik, catatan walas, absensi, ekskul) secara *real-time* begitu diterbitkan oleh sekolah, tanpa dapat mengubah data.
+
+### 5. 🛡️ Panel Bimbingan Konseling (BK) *(Perencanaan Ke Depan)*
 - Pencatatan buku kasus dan pelanggaran kedisiplinan siswa.
-- Sistem Poin Pelanggaran.
-- Input dan pelacakan tindak lanjut/penanganan kasus siswa.
+- Sistem Kalkulasi Poin Pelanggaran.
+- Pelacakan tindak lanjut dan surat panggilan orang tua.
 
 ---
 

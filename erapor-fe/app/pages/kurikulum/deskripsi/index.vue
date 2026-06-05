@@ -109,6 +109,18 @@
                 <p class="text-[10px] text-slate-500 mt-2">Teks ini akan muncul dengan menyisipkan nilai TP siswa yang tertinggi.</p>
               </div>
 
+              <!-- Teks Ekstrakurikuler -->
+              <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Template Deskripsi Ekstrakurikuler</label>
+                <textarea 
+                  v-model="form.teks_ekskul" 
+                  rows="4"
+                  class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all text-sm font-medium text-slate-700 outline-none resize-none"
+                  placeholder="Contoh: Sangat baik dalam mengikuti kegiatan [NAMA_EKSKUL], dan memperoleh nilai [NILAI]"
+                ></textarea>
+                <p class="text-[10px] text-slate-500 mt-2">Gunakan tag <code class="font-bold border px-1 rounded bg-slate-100">[NAMA_EKSKUL]</code> dan <code class="font-bold border px-1 rounded bg-slate-100">[NILAI]</code>.</p>
+              </div>
+
             </div>
 
             <!-- Footer Action -->
@@ -148,7 +160,8 @@ const selectedKurikulum = ref(null)
 const isSaving = ref(false)
 
 const form = reactive({
-  teks_tertinggi: ''
+  teks_tertinggi: '',
+  teks_ekskul: ''
 })
 
 const tokenCookie = useCookie('auth_token')
@@ -189,9 +202,11 @@ const selectKurikulum = (kur) => {
   const existing = templates.value.find(t => t.kurikulum_id === kur.id)
   if (existing) {
     form.teks_tertinggi = existing.teks_tertinggi || ''
+    form.teks_ekskul = existing.teks_ekskul || ''
   } else {
     // Default suggestion
     form.teks_tertinggi = 'Peserta didik sangat menguasai materi [NAMA_TP] pada saat kegiatan pembelajaran di sekolah.'
+    form.teks_ekskul = 'Sangat baik dalam mengikuti kegiatan [NAMA_EKSKUL], dan memperoleh nilai [NILAI]'
   }
 }
 
@@ -212,6 +227,7 @@ const saveTemplate = async () => {
         kurikulum_id: selectedKurikulum.value.id,
         teks_tertinggi: form.teks_tertinggi,
         teks_terendah: '', // Send empty or default since it's required by controller
+        teks_ekskul: form.teks_ekskul,
         is_active: true
       }
     })

@@ -53,6 +53,11 @@ class User extends Authenticatable
     {
         return $this->hasOne(Siswa::class, 'user_id');
     }
+
+    public function biodata(): HasOne
+    {
+        return $this->hasOne(\App\Models\BiodataGuru::class, 'user_id');
+    }
     
     public function jabatanWalas(): HasMany
     {

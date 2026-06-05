@@ -13,6 +13,7 @@ class DeskripsiTemplate extends Model
         'kurikulum_id',
         'teks_tertinggi',
         'teks_terendah',
+        'teks_ekskul',
         'is_active',
     ];
 

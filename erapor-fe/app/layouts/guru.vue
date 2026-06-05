@@ -43,13 +43,13 @@
               <span class="mr-3 text-lg">👀</span> Monitoring Nilai
             </NuxtLink>
             <NuxtLink to="/guru/walas/biodata" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors" active-class="bg-amber-600 text-white shadow">
-              <span class="mr-3 text-lg">🧑‍🎓</span> Biodata & Catatan
+              <span class="mr-3 text-lg">🧑‍🎓</span> Biodata Siswa
             </NuxtLink>
             <NuxtLink to="/guru/walas/ekskul" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors" active-class="bg-amber-600 text-white shadow">
               <span class="mr-3 text-lg">🏃</span> Ekstrakurikuler
             </NuxtLink>
             <NuxtLink to="/guru/walas/kokurikuler" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors" active-class="bg-amber-600 text-white shadow">
-              <span class="mr-3 text-lg">🌱</span> Proyek P5
+              <span class="mr-3 text-lg">🌱</span> Kokurikuler
             </NuxtLink>
             <NuxtLink to="/guru/walas/rekap" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors" active-class="bg-amber-600 text-white shadow">
               <span class="mr-3 text-lg">📆</span> Rekap Absensi Poin

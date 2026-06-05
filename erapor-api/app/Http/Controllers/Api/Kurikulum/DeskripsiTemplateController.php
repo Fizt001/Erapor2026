@@ -21,8 +21,9 @@ class DeskripsiTemplateController extends Controller
     {
         $validated = $request->validate([
             'kurikulum_id' => 'required|exists:kurikulums,id',
-            'teks_tertinggi' => 'required|string',
+            'teks_tertinggi' => 'nullable|string',
             'teks_terendah' => 'nullable|string',
+            'teks_ekskul' => 'nullable|string',
             'is_active' => 'boolean',
         ]);
 

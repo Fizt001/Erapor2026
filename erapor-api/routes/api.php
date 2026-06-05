@@ -141,5 +141,44 @@ Route::middleware('auth:sanctum')->group(function () {
         
         // REKAP SUMATIF
         Route::get('sumatif/rekap', [\App\Http\Controllers\Api\Guru\SumatifRekapController::class, 'index']);
+        
+        // ==========================================
+        // WALI KELAS
+        // ==========================================
+        Route::prefix('walas')->group(function () {
+            Route::get('biodata', [\App\Http\Controllers\Api\Guru\WalasController::class, 'getBiodataSiswa']);
+            Route::put('biodata/{id}', [\App\Http\Controllers\Api\Guru\WalasController::class, 'updateBiodataSiswa']);
+            Route::get('monitoring', [\App\Http\Controllers\Api\Guru\WalasController::class, 'monitoringNilai']);
+            
+            // EKSTRAKURIKULER
+            Route::get('ekskul', [\App\Http\Controllers\Api\Guru\WalasEkskulController::class, 'index']);
+            Route::post('ekskul/store', [\App\Http\Controllers\Api\Guru\WalasEkskulController::class, 'store']);
+            Route::post('ekskul/kurikulum', [\App\Http\Controllers\Api\Guru\WalasEkskulController::class, 'updateKurikulum']);
+            
+            // KOKURIKULER (P5)
+            Route::get('kokurikuler', [App\Http\Controllers\Api\Guru\WalasKokurikulerController::class, 'index']);
+            Route::post('kokurikuler/store', [App\Http\Controllers\Api\Guru\WalasKokurikulerController::class, 'store']);
+            Route::post('kokurikuler/kurikulum', [App\Http\Controllers\Api\Guru\WalasKokurikulerController::class, 'updateKurikulum']);
+
+            // REKAP ABSENSI DAN CATATAN WALI KELAS
+            Route::get('rekap', [App\Http\Controllers\Api\Guru\WalasRekapController::class, 'index']);
+            Route::post('rekap/catatan', [App\Http\Controllers\Api\Guru\WalasRekapController::class, 'storeCatatan']);
+
+            // CETAK LEGER DAN RAPOR
+            Route::get('cetak', [App\Http\Controllers\Api\Guru\WalasCetakController::class, 'index']);
+            Route::get('cetak/rapor', [App\Http\Controllers\Api\Guru\WalasCetakController::class, 'raporSiswa']);
+            Route::get('cetak/leger', [App\Http\Controllers\Api\Guru\WalasCetakController::class, 'legerKelas']);
+        });
+    });
+
+    // ROUTES SISWA
+    Route::middleware('auth:sanctum')->prefix('siswa')->group(function () {
+        Route::get('dashboard', [\App\Http\Controllers\Api\Siswa\SiswaDashboardController::class, 'index']);
+        
+        Route::get('biodata', [\App\Http\Controllers\Api\Siswa\SiswaBiodataController::class, 'index']);
+        Route::put('biodata', [\App\Http\Controllers\Api\Siswa\SiswaBiodataController::class, 'update']);
+        
+        Route::get('rapor', [\App\Http\Controllers\Api\Siswa\SiswaRaporController::class, 'index']);
+        Route::get('rapor/cetak', [\App\Http\Controllers\Api\Siswa\SiswaRaporController::class, 'cetak']);
     });
 });
