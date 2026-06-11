@@ -47,7 +47,7 @@
               <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Rombel</label>
               <select :value="filter.kelas_id" @change="handleFilterChange('kelas_id', $event)" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm font-medium text-slate-700 outline-none" :disabled="isLoading">
                 <option value="">-- Pilih Rombel --</option>
-                <option v-for="kelas in references.kelases" :key="kelas.id" :value="kelas.id">{{ kelas.nama_kelas }}</option>
+                <option v-for="kelas in references.kelases" :key="kelas.id" :value="kelas.id">{{ kelas.tingkat }} {{ kelas.nama_kelas }}</option>
               </select>
             </div>
 
@@ -76,7 +76,7 @@
               <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center text-lg shadow-inner">🏫</div>
               <div>
                 <h3 class="text-sm font-black leading-none uppercase tracking-wide">
-                  {{ filter.kelas_id ? references.kelases.find(k => k.id === filter.kelas_id)?.nama_kelas : 'Pilih Rombel' }}
+                  {{ filter.kelas_id ? (references.kelases.find(k => k.id === filter.kelas_id)?.tingkat + ' ' + references.kelases.find(k => k.id === filter.kelas_id)?.nama_kelas) : 'Pilih Rombel' }}
                 </h3>
                 <p class="text-[10px] font-bold text-sky-100 uppercase tracking-widest mt-1">{{ siswas.length }} Siswa Aktif</p>
               </div>

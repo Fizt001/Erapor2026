@@ -47,7 +47,7 @@
               <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Rombel</label>
               <select :value="filter.kelas_id" @change="handleFilterChange('kelas_id', $event)" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm font-medium text-slate-700 outline-none" :disabled="isLoading">
                 <option value="">-- Pilih Rombel --</option>
-                <option v-for="kelas in references.kelases" :key="kelas.id" :value="kelas.id">{{ kelas.nama_kelas }}</option>
+                <option v-for="kelas in references.kelases" :key="kelas.id" :value="kelas.id">{{ kelas.tingkat }} {{ kelas.nama_kelas }}</option>
               </select>
             </div>
 
