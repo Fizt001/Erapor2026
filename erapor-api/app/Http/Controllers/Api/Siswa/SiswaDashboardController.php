@@ -23,45 +23,141 @@ class SiswaDashboardController extends Controller
 
         $kelas = $siswa->kelas;
         $walasName = '-';
-        if ($kelas && $kelas->walas) {
-            $walasName = $kelas->walas->user->name ?? '-';
+        $namaKelasFull = '-';
+
+        if ($kelas) {
+            $namaKelasFull = $kelas->nama_kelas;
+            if (!str_starts_with($namaKelasFull, $kelas->tingkat)) {
+                $namaKelasFull = $kelas->tingkat . ' ' . $namaKelasFull;
+            }
+
+            $walasRecord = \App\Models\WaliKelas::with('guru.biodata')->where('kelas_id', $kelas->id)->first();
+            if ($walasRecord && $walasRecord->guru) {
+                $walasName = $walasRecord->guru->biodata->nama_lengkap ?? $walasRecord->guru->name ?? '-';
+            }
         }
 
-        $titimangsaAktif = Titimangsa::where('is_aktif', true)->first();
         $tahunAjaranAktif = TahunAjaran::where('is_aktif', true)->first();
+        
+        // Penentuan periode berdasarkan bulan berjalan
+        $currentMonth = (int) date('n');
+        $periodeName = '';
+        if ($currentMonth >= 7 && $currentMonth <= 9) {
+            $periodeName = 'PSTS Ganjil';
+        } elseif ($currentMonth >= 10 && $currentMonth <= 12) {
+            $periodeName = 'PSAS';
+        } elseif ($currentMonth >= 1 && $currentMonth <= 3) {
+            $periodeName = 'PSTS Genap';
+        } else {
+            $periodeName = 'PSAT';
+        }
 
-        // 1. Absensi 1 Tahun (Tahun Ajaran Aktif)
-        $absensi = ['s' => 0, 'i' => 0, 'a' => 0];
+        $titimangsaAktif = null;
         if ($tahunAjaranAktif) {
-            $titimangsaIds = Titimangsa::where('tahun_ajaran_id', $tahunAjaranAktif->id)->pluck('id');
+            $titimangsaAktif = Titimangsa::where('nama_periode', $periodeName)
+                ->where('tahun_ajaran_id', $tahunAjaranAktif->id)
+                ->first();
+        }
+        
+        // Fallback jika tidak ditemukan
+        if (!$titimangsaAktif) {
+            $titimangsaAktif = Titimangsa::where('is_aktif', true)->first();
+        }
+
+        $semesterGanjil = ['PSTS Ganjil', 'PSAS'];
+        $semesterGenap = ['PSTS Genap', 'PSAT'];
+        
+        $activeSemester = '';
+        $activePeriods = [];
+        $months = [];
+        if ($currentMonth >= 7 && $currentMonth <= 12) {
+            $activeSemester = 'Ganjil';
+            $activePeriods = $semesterGanjil;
+            $months = [7, 8, 9, 10, 11, 12];
+        } else {
+            $activeSemester = 'Genap';
+            $activePeriods = $semesterGenap;
+            $months = [1, 2, 3, 4, 5, 6];
+        }
+
+        // 1. Absensi (Ganjil & Genap)
+        $absensiGanjil = ['s' => 0, 'i' => 0, 'a' => 0];
+        $absensiGenap = ['s' => 0, 'i' => 0, 'a' => 0];
+        
+        if ($tahunAjaranAktif) {
             $absensiData = AbsensiSiswa::where('siswa_id', $siswa->id)
-                ->whereIn('titimangsa_id', $titimangsaIds)
+                ->where('tahun_ajaran', $tahunAjaranAktif->tahun)
                 ->get();
             
             foreach ($absensiData as $ab) {
-                $absensi['s'] += $ab->s;
-                $absensi['i'] += $ab->i;
-                $absensi['a'] += $ab->a;
+                $isGanjil = $ab->bulan >= 7 && $ab->bulan <= 12;
+                
+                for ($i = 1; $i <= 31; $i++) {
+                    $col = 'tgl_' . $i;
+                    if ($ab->$col === 'S') {
+                        if ($isGanjil) $absensiGanjil['s']++; else $absensiGenap['s']++;
+                    }
+                    if ($ab->$col === 'I') {
+                        if ($isGanjil) $absensiGanjil['i']++; else $absensiGenap['i']++;
+                    }
+                    if ($ab->$col === 'A') {
+                        if ($isGanjil) $absensiGanjil['a']++; else $absensiGenap['a']++;
+                    }
+                }
             }
         }
 
         // 2. Poin Pelanggaran
-        $totalPoin = PoinSiswa::where('siswa_id', $siswa->id)->sum('poin');
+        $poinRecords = PoinSiswa::where('siswa_id', $siswa->id)->get();
+        $totalPoin = 100; // Base poin default
+        foreach ($poinRecords as $pr) {
+            $totalPoin -= $pr->skor_pengurang ?? 0;
+            $totalPoin += $pr->skor_penambah ?? 0;
+        }
 
         // 3. Kemajuan Akademis (Grow) - Rata-rata Nilai Sumatif per Titimangsa
-        $allTitimangsa = Titimangsa::orderBy('id', 'asc')->get();
         $grafikAkademis = [];
         
-        $nilaiSumatif = SumatifNilai::where('siswa_id', $siswa->id)->get();
-        
-        foreach ($allTitimangsa as $tm) {
-            $nilaiTm = $nilaiSumatif->where('titimangsa_id', $tm->id);
-            if ($nilaiTm->count() > 0) {
-                $rataRata = $nilaiTm->avg('na_value');
+        if ($tahunAjaranAktif && $kelas) {
+            $allTitimangsa = Titimangsa::where('tahun_ajaran_id', $tahunAjaranAktif->id)
+                ->where('kurikulum_id', $kelas->kurikulum_id)
+                ->orderBy('tanggal_cetak', 'asc')
+                ->get();
+                
+            $nilaiSumatif = SumatifNilai::where('siswa_id', $siswa->id)->get();
+            
+            foreach ($allTitimangsa as $tm) {
+                $nilaiTm = $nilaiSumatif->where('titimangsa_id', $tm->id);
+                $rataRata = $nilaiTm->count() > 0 ? round($nilaiTm->avg('na_value'), 2) : null;
                 $grafikAkademis[] = [
                     'label' => $tm->nama_periode,
-                    'rata_rata' => round($rataRata, 2)
+                    'rata_rata' => $rataRata
                 ];
+            }
+        }
+
+        // 4. Peringkat Kelas di Periode Aktif
+        $peringkat = null;
+        $jumlahSiswa = 0;
+        if ($titimangsaAktif && $kelas) {
+            $allSiswaIds = \App\Models\Siswa::where('kelas_id', $kelas->id)->pluck('id')->toArray();
+            $jumlahSiswa = count($allSiswaIds);
+            
+            $allSumatif = \App\Models\SumatifNilai::whereIn('siswa_id', $allSiswaIds)
+                ->where('titimangsa_id', $titimangsaAktif->id)
+                ->get();
+            
+            if ($allSumatif->count() > 0) {
+                $totalsPerSiswa = [];
+                foreach ($allSiswaIds as $sId) {
+                    $totalsPerSiswa[$sId] = 0;
+                }
+                foreach ($allSumatif as $sum) {
+                    $totalsPerSiswa[$sum->siswa_id] += $sum->na_value;
+                }
+                
+                arsort($totalsPerSiswa);
+                $peringkat = array_search($siswa->id, array_keys($totalsPerSiswa)) + 1;
             }
         }
 
@@ -75,7 +171,7 @@ class SiswaDashboardController extends Controller
                     'foto' => $siswa->foto
                 ],
                 'kelas' => [
-                    'nama_kelas' => $kelas ? $kelas->nama_kelas : '-',
+                    'nama_kelas' => $namaKelasFull,
                     'tingkat' => $kelas ? $kelas->tingkat : '-',
                     'walas' => $walasName
                 ],
@@ -86,10 +182,14 @@ class SiswaDashboardController extends Controller
                 'tahun_ajaran' => [
                     'nama' => $tahunAjaranAktif ? $tahunAjaranAktif->tahun_ajaran : '-'
                 ],
+                'semester' => $activeSemester,
                 'rekap' => [
-                    'absensi' => $absensi,
+                    'absensi_ganjil' => $absensiGanjil,
+                    'absensi_genap' => $absensiGenap,
                     'total_poin' => $totalPoin,
-                    'grafik_akademis' => $grafikAkademis
+                    'grafik_akademis' => $grafikAkademis,
+                    'peringkat' => $peringkat,
+                    'jumlah_siswa' => $jumlahSiswa
                 ]
             ]
         ]);

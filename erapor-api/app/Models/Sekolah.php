@@ -12,6 +12,7 @@ class Sekolah extends Model
     protected $fillable = [
         'nama_sekolah', 'npsn', 'nss', 'website', 'alamat', 
         'kelurahan', 'kecamatan', 'kota', 'provinsi', 'kode_pos', 
-        'telepon', 'email', 'nama_kepsek', 'nip_kepsek'
+        'telepon', 'email', 'nama_kepsek', 'nip_kepsek', 'logo',
+        'logo_kiri', 'nama_yayasan', 'akreditasi'
     ];
 }

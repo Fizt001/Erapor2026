@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Api\Bk;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Pelanggaran;
+use App\Models\TahunAjaran;
 
 class BkPelanggaranController extends Controller
 {
     public function index(Request $request)
     {
+        $tahunAktif = TahunAjaran::where('is_aktif', true)->first();
         $query = Pelanggaran::query();
 
         if ($request->filled('search')) {
@@ -24,7 +26,8 @@ class BkPelanggaranController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $pelanggarans
+            'data' => $pelanggarans,
+            'tahun_aktif' => $tahunAktif
         ]);
     }
 

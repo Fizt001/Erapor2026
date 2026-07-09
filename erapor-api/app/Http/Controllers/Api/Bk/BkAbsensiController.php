@@ -14,14 +14,22 @@ class BkAbsensiController extends Controller
 {
     public function index(Request $request)
     {
-        $kelases = Kelas::orderBy('tingkat')->orderBy('nama_kelas')->get();
+        $tahunAktif = TahunAjaran::where('is_aktif', true)->first();
+        $tahun = $tahunAktif ? $tahunAktif->tahun : date('Y') . '/' . (date('Y') + 1);
+
+        $kelases = [];
+        if ($tahunAktif) {
+            $kelases = Kelas::where('tahun_ajaran_id', $tahunAktif->id)
+                            ->withCount('siswas')
+                            ->orderBy('tingkat')->orderBy('nama_kelas')->get();
+        }
         $selectedKelasId = $request->kelas_id;
         $bulan = $request->bulan ?? date('n');
 
         $siswas = [];
         if ($selectedKelasId) {
-            $siswas = Siswa::with(['user', 'absensi' => function($q) use ($bulan) {
-                    $q->where('bulan', $bulan);
+            $siswas = Siswa::with(['user', 'absensi' => function($q) use ($bulan, $tahun) {
+                    $q->where('bulan', $bulan)->where('tahun_ajaran', $tahun);
                 }])
                 ->where('kelas_id', $selectedKelasId)
                 ->get()
@@ -34,15 +42,24 @@ class BkAbsensiController extends Controller
                     ];
                 });
         }
-
-        $tahunAktif = TahunAjaran::where('is_aktif', true)->first();
-        $tahun = $tahunAktif ? $tahunAktif->tahun : date('Y') . '/' . (date('Y') + 1);
         
         $periodeAktif = [];
+        $titimangsas = [];
         if ($tahunAktif) {
-            $titimangsa = Titimangsa::where('tahun_ajaran_id', $tahunAktif->id)->where('is_aktif', true)->get();
-            $periodeAktif = $titimangsa->pluck('nama_periode')->toArray();
+            $titimangsaData = Titimangsa::where('tahun_ajaran_id', $tahunAktif->id)->get();
+            $periodeAktif = $titimangsaData->where('is_aktif', true)->pluck('nama_periode')->toArray();
+            $titimangsas = $titimangsaData->map(function($t) {
+                return [
+                    'id' => $t->id,
+                    'kurikulum_id' => $t->kurikulum_id,
+                    'nama_periode' => $t->nama_periode,
+                    'is_aktif' => $t->is_aktif,
+                    'tanggal_cetak' => $t->tanggal_cetak
+                ];
+            });
         }
+
+        $masterKurikulum = \App\Models\Kurikulum::orderBy('id', 'asc')->get(['id', 'nama_kurikulum']);
 
         return response()->json([
             'success' => true,
@@ -51,7 +68,9 @@ class BkAbsensiController extends Controller
                 'siswas' => $siswas,
                 'bulan' => $bulan,
                 'tahun_ajaran' => $tahun,
-                'periode_aktif' => $periodeAktif
+                'periode_aktif' => $periodeAktif,
+                'titimangsas' => $titimangsas,
+                'master_kurikulum' => $masterKurikulum
             ]
         ]);
     }

@@ -53,37 +53,23 @@ class AdminBackupController extends Controller
         $role = $request->role;
         $mode = $request->mode;
 
-        // Cek maintenance role
-        $maintenanceRoles = ['guru', 'walikelas', 'siswa', 'kepsek'];
-        if (in_array($role, $maintenanceRoles)) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Fitur backup untuk role ini sedang dalam tahap maintenance.'
-            ], 400);
-        }
-        
-        $backupData = [
-            'role' => $role,
-            'mode' => $mode,
-            'generated_at' => Carbon::now()->toIso8601String(),
-            'main_data' => [],
-            'grow_data' => []
-        ];
+        $mainDataTables = [];
+        $growDataQueries = [];
 
         try {
             if ($role === 'admin') {
-                $backupData['main_data'] = [
-                    'users' => class_exists(\App\Models\User::class) ? \App\Models\User::all() : [],
-                    'sekolah' => class_exists(\App\Models\Sekolah::class) ? \App\Models\Sekolah::all() : [],
-                    'kelas' => class_exists(\App\Models\Kelas::class) ? \App\Models\Kelas::all() : [],
-                    'bidang' => class_exists(\App\Models\Bidang::class) ? \App\Models\Bidang::all() : [],
-                    'program' => class_exists(\App\Models\Program::class) ? \App\Models\Program::all() : [],
-                    'kejuruan' => class_exists(\App\Models\Kejuruan::class) ? \App\Models\Kejuruan::all() : [],
-                    'kurikulum' => class_exists(\App\Models\Kurikulum::class) ? \App\Models\Kurikulum::all() : [],
-                    'tahun_ajaran' => class_exists(\App\Models\TahunAjaran::class) ? \App\Models\TahunAjaran::all() : [],
-                    'referensi' => class_exists(\App\Models\Referensi::class) ? \App\Models\Referensi::all() : [],
-                    'mapel' => class_exists(\App\Models\Mapel::class) ? \App\Models\Mapel::all() : [],
-                    'ekskul' => class_exists(\App\Models\Ekskul::class) ? \App\Models\Ekskul::all() : []
+                $mainDataTables = [
+                    'users' => \App\Models\User::class,
+                    'sekolah' => \App\Models\Sekolah::class,
+                    'kelas' => \App\Models\Kelas::class,
+                    'bidang' => \App\Models\Bidang::class,
+                    'program' => \App\Models\Program::class,
+                    'kejuruan' => \App\Models\Kejuruan::class,
+                    'kurikulum' => \App\Models\Kurikulum::class,
+                    'tahun_ajaran' => \App\Models\TahunAjaran::class,
+                    'referensi' => \App\Models\Referensi::class,
+                    'mapel' => \App\Models\Mapel::class,
+                    'ekskul' => \App\Models\Ekskul::class
                 ];
 
                 if (class_exists(\App\Models\Siswa::class)) {
@@ -93,16 +79,16 @@ class AdminBackupController extends Controller
                     } else if ($mode === 'psat') {
                         $query->whereMonth('created_at', '>=', 1)->whereMonth('created_at', '<=', 6);
                     }
-                    $backupData['grow_data']['siswa'] = $query->get();
+                    $growDataQueries['siswa'] = $query;
                 }
 
             } elseif ($role === 'kurikulum') {
-                $backupData['main_data'] = [
-                    'struktur_kurikulum' => class_exists(\App\Models\StrukturKurikulum::class) ? \App\Models\StrukturKurikulum::all() : [],
-                    'struktur_kejuruan' => class_exists(\App\Models\StrukturKejuruan::class) ? \App\Models\StrukturKejuruan::all() : [],
-                    'kkm' => class_exists(\App\Models\Kkm::class) ? \App\Models\Kkm::all() : [],
-                    'pengampu' => class_exists(\App\Models\Pengampu::class) ? \App\Models\Pengampu::all() : [],
-                    'wali_kelas' => class_exists(\App\Models\WaliKelas::class) ? \App\Models\WaliKelas::all() : []
+                $mainDataTables = [
+                    'struktur_kurikulum' => \App\Models\StrukturKurikulum::class,
+                    'struktur_kejuruan' => \App\Models\StrukturKejuruan::class,
+                    'kkm' => \App\Models\Kkm::class,
+                    'pengampu' => \App\Models\Pengampu::class,
+                    'wali_kelas' => \App\Models\WaliKelas::class
                 ];
 
                 if (class_exists(\App\Models\Titimangsa::class)) {
@@ -112,11 +98,11 @@ class AdminBackupController extends Controller
                     } else if ($mode === 'psat') {
                         $query->whereMonth('created_at', '>=', 1)->whereMonth('created_at', '<=', 6);
                     }
-                    $backupData['grow_data']['titimangsa'] = $query->get();
+                    $growDataQueries['titimangsa'] = $query;
                 }
             } elseif ($role === 'bk') {
-                $backupData['main_data'] = [
-                    'pelanggarans' => class_exists(\App\Models\Pelanggaran::class) ? \App\Models\Pelanggaran::all() : []
+                $mainDataTables = [
+                    'pelanggarans' => \App\Models\Pelanggaran::class
                 ];
 
                 if (class_exists(\App\Models\AbsensiSiswa::class)) {
@@ -134,23 +120,83 @@ class AdminBackupController extends Controller
                         $queryPenanganan->whereMonth('created_at', '>=', 1)->whereMonth('created_at', '<=', 6);
                     }
 
-                    $backupData['grow_data']['absensi_siswas'] = $queryAbsensi->get();
-                    $backupData['grow_data']['poin_siswas'] = $queryPoin->get();
-                    $backupData['grow_data']['penanganan_pelanggarans'] = $queryPenanganan->get();
+                    $growDataQueries['absensi_siswas'] = $queryAbsensi;
+                    $growDataQueries['poin_siswas'] = $queryPoin;
+                    $growDataQueries['penanganan_pelanggarans'] = $queryPenanganan;
                 }
+            } elseif ($role === 'guru') {
+                $mainDataTables = [
+                    'jadwal_pelajarans' => \App\Models\JadwalPelajaran::class,
+                    'deskripsi_templates' => \App\Models\DeskripsiTemplate::class
+                ];
+
+                if (class_exists(\App\Models\FormatifMaster::class)) {
+                    $queryMaster = \App\Models\FormatifMaster::query();
+                    $queryTp = \App\Models\FormatifTp::query();
+                    $queryF_Nilai = \App\Models\FormatifNilai::query();
+                    $queryS_Nilai = \App\Models\SumatifNilai::query();
+
+                    if ($mode === 'psas') {
+                        $queryMaster->whereMonth('created_at', '>=', 7)->whereMonth('created_at', '<=', 12);
+                        $queryTp->whereMonth('created_at', '>=', 7)->whereMonth('created_at', '<=', 12);
+                        $queryF_Nilai->whereMonth('created_at', '>=', 7)->whereMonth('created_at', '<=', 12);
+                        $queryS_Nilai->whereMonth('created_at', '>=', 7)->whereMonth('created_at', '<=', 12);
+                    } else if ($mode === 'psat') {
+                        $queryMaster->whereMonth('created_at', '>=', 1)->whereMonth('created_at', '<=', 6);
+                        $queryTp->whereMonth('created_at', '>=', 1)->whereMonth('created_at', '<=', 6);
+                        $queryF_Nilai->whereMonth('created_at', '>=', 1)->whereMonth('created_at', '<=', 6);
+                        $queryS_Nilai->whereMonth('created_at', '>=', 1)->whereMonth('created_at', '<=', 6);
+                    }
+
+                    $growDataQueries['formatif_masters'] = $queryMaster;
+                    $growDataQueries['formatif_tps'] = $queryTp;
+                    $growDataQueries['formatif_nilais'] = $queryF_Nilai;
+                    $growDataQueries['sumatif_nilais'] = $queryS_Nilai;
+                }
+            } elseif ($role === 'walikelas') {
+                $mainDataTables = [];
+
+                if (class_exists(\App\Models\CatatanWaliKelas::class)) {
+                    $queryCatatan = \App\Models\CatatanWaliKelas::query();
+                    $queryPrestasi = \App\Models\PrestasiSiswa::query();
+                    $queryEkskul = \App\Models\EkskulSiswa::query();
+
+                    if ($mode === 'psas') {
+                        $queryCatatan->whereMonth('created_at', '>=', 7)->whereMonth('created_at', '<=', 12);
+                        $queryPrestasi->whereMonth('created_at', '>=', 7)->whereMonth('created_at', '<=', 12);
+                        $queryEkskul->whereMonth('created_at', '>=', 7)->whereMonth('created_at', '<=', 12);
+                    } else if ($mode === 'psat') {
+                        $queryCatatan->whereMonth('created_at', '>=', 1)->whereMonth('created_at', '<=', 6);
+                        $queryPrestasi->whereMonth('created_at', '>=', 1)->whereMonth('created_at', '<=', 6);
+                        $queryEkskul->whereMonth('created_at', '>=', 1)->whereMonth('created_at', '<=', 6);
+                    }
+
+                    $growDataQueries['catatan_wali_kelas'] = $queryCatatan;
+                    $growDataQueries['prestasi_siswas'] = $queryPrestasi;
+                    $growDataQueries['ekskul_siswas'] = $queryEkskul;
+                }
+            } elseif ($role === 'siswa') {
+                $mainDataTables = [];
+
+                if (class_exists(\App\Models\TargetBelajar::class)) {
+                    $queryTarget = \App\Models\TargetBelajar::query();
+
+                    if ($mode === 'psas') {
+                        $queryTarget->whereMonth('created_at', '>=', 7)->whereMonth('created_at', '<=', 12);
+                    } else if ($mode === 'psat') {
+                        $queryTarget->whereMonth('created_at', '>=', 1)->whereMonth('created_at', '<=', 6);
+                    }
+
+                    $growDataQueries['target_belajars'] = $queryTarget;
+                }
+            } elseif ($role === 'kepsek') {
+                $mainDataTables = [
+                    'kalender_akademiks' => \App\Models\KalenderAkademik::class,
+                    'kokurikulers' => \App\Models\Kokurikuler::class
+                ];
             }
 
-            // Generate Filename
-            $timestamp = Carbon::now()->format('Y_m_d_His');
-            $filename = "Backup_{$role}_{$mode}_{$timestamp}.json";
-            
-            $backupDir = storage_path('app/backups');
-            if (!File::exists($backupDir)) {
-                File::makeDirectory($backupDir, 0755, true);
-            }
-
-            $filePath = $backupDir . '/' . $filename;
-            File::put($filePath, json_encode($backupData, JSON_PRETTY_PRINT));
+            $filename = $this->streamBackupFile($role, $mode, $mainDataTables, $growDataQueries);
 
             return response()->json([
                 'success' => true,
@@ -165,6 +211,64 @@ class AdminBackupController extends Controller
             ], 500);
         }
     }
+
+    private function streamBackupFile($role, $mode, $mainDataTables, $growDataQueries) {
+        $timestamp = \Carbon\Carbon::now()->format('Y_m_d_His');
+        $filename = "Backup_{$role}_{$mode}_{$timestamp}.json";
+        
+        $backupDir = storage_path('app/backups');
+        if (!\Illuminate\Support\Facades\File::exists($backupDir)) {
+            \Illuminate\Support\Facades\File::makeDirectory($backupDir, 0755, true);
+        }
+        $filePath = $backupDir . '/' . $filename;
+        
+        $handle = fopen($filePath, 'w');
+        fwrite($handle, '{"role":"'.$role.'","mode":"'.$mode.'","generated_at":"'.\Carbon\Carbon::now()->toIso8601String().'","main_data":{');
+        
+        $firstMain = true;
+        foreach($mainDataTables as $table => $modelClass) {
+            if (!$firstMain) fwrite($handle, ',');
+            fwrite($handle, '"'.$table.'":[');
+            if (class_exists($modelClass)) {
+                $firstRecord = true;
+                $modelClass::query()->orderBy('id')->chunk(500, function($records) use ($handle, &$firstRecord) {
+                    foreach($records as $record) {
+                        if (!$firstRecord) fwrite($handle, ',');
+                        fwrite($handle, json_encode($record->getAttributes()));
+                        $firstRecord = false;
+                    }
+                });
+            }
+            fwrite($handle, ']');
+            $firstMain = false;
+        }
+        
+        fwrite($handle, '},"grow_data":{');
+        
+        $firstGrow = true;
+        foreach($growDataQueries as $table => $query) {
+            if (!$firstGrow) fwrite($handle, ',');
+            fwrite($handle, '"'.$table.'":[');
+            $firstRecord = true;
+            // Get base model to ensure id column
+            $query->orderBy($query->getModel()->getKeyName());
+            $query->chunk(500, function($records) use ($handle, &$firstRecord) {
+                foreach($records as $record) {
+                    if (!$firstRecord) fwrite($handle, ',');
+                    fwrite($handle, json_encode($record->getAttributes()));
+                    $firstRecord = false;
+                }
+            });
+            fwrite($handle, ']');
+            $firstGrow = false;
+        }
+        
+        fwrite($handle, '}}');
+        fclose($handle);
+        
+        return $filename;
+    }
+
 
     public function downloadBackup($filename, Request $request)
     {
@@ -221,6 +325,12 @@ class AdminBackupController extends Controller
                     }
                 }
             }
+            
+            // Tambahkan file info agar zip tidak pernah kosong
+            $role = isset($data['role']) ? $data['role'] : '-';
+            $mode = isset($data['mode']) ? $data['mode'] : '-';
+            $date = isset($data['generated_at']) ? $data['generated_at'] : '-';
+            $zip->addFromString("backup_info.txt", "Format: Erapor2026 Backup\nRole: {$role}\nMode: {$mode}\nDate: {$date}");
 
             $zip->close();
             
@@ -288,8 +398,19 @@ class AdminBackupController extends Controller
                 foreach($data['main_data'] as $table => $rows) {
                     $modelClass = '\\App\\Models\\' . \Illuminate\Support\Str::studly(\Illuminate\Support\Str::singular($table));
                     if (class_exists($modelClass)) {
-                        $modelClass::truncate();
+                        $modelClass::query()->delete();
+                        
+                        $adminPassword = \Illuminate\Support\Facades\Hash::make('admin123');
+                        $defaultPassword = \Illuminate\Support\Facades\Hash::make('12345678');
+                        
                         foreach ($rows as $row) {
+                            if ($table === 'users' && !isset($row['password'])) {
+                                if (isset($row['email']) && $row['email'] === 'admin@erapor.com') {
+                                    $row['password'] = $adminPassword;
+                                } else {
+                                    $row['password'] = $defaultPassword;
+                                }
+                            }
                             $modelClass::insert($row);
                         }
                     }
@@ -307,7 +428,7 @@ class AdminBackupController extends Controller
                         // Agar aman, kita abaikan duplikasi atau replace?
                         // Mengingat instruksi "kosongkan atau backup dulu", 
                         // kita akan truncate seluruh tabel grow yang direstore.
-                        $modelClass::truncate();
+                        $modelClass::query()->delete();
                         foreach ($rows as $row) {
                             $modelClass::insert($row);
                         }

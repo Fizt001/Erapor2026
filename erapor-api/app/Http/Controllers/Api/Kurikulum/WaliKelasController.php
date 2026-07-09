@@ -10,19 +10,33 @@ use App\Models\User;
 
 class WaliKelasController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $kelas = Kelas::with(['kurikulum', 'kejuruan', 'waliKelas.guru'])
+        $tahun_ajaran_id = $request->query('tahun_ajaran_id');
+        if (!$tahun_ajaran_id) {
+            $aktif = \App\Models\TahunAjaran::where('is_aktif', true)->first();
+            $tahun_ajaran_id = $aktif ? $aktif->id : null;
+        }
+
+        $query = Kelas::with(['kurikulum', 'kejuruan', 'waliKelas.guru', 'tahunAjaran'])
             ->orderBy('tingkat')
-            ->orderBy('nama_kelas')
-            ->get();
+            ->orderBy('nama_kelas');
+            
+        if ($tahun_ajaran_id) {
+            $query->where('tahun_ajaran_id', $tahun_ajaran_id);
+        }
+
+        $kelas = $query->get();
             
         $gurus = User::where('role', 'guru')->orderBy('name')->get(['id', 'name']);
+        $tahun_ajaran = \App\Models\TahunAjaran::orderBy('created_at', 'desc')->get();
 
         return response()->json([
             'success' => true,
             'data' => $kelas,
-            'gurus' => $gurus
+            'gurus' => $gurus,
+            'tahun_ajaran' => $tahun_ajaran,
+            'active_tahun_ajaran_id' => $tahun_ajaran_id
         ]);
     }
 

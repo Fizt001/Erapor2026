@@ -19,7 +19,13 @@ class BkLaporanController extends Controller
             return response()->json(['success' => false, 'message' => 'Tahun Ajaran aktif tidak ditemukan.'], 400);
         }
 
-        $kelases = Kelas::orderBy('tingkat')->orderBy('nama_kelas')->get();
+        $tahunAktif = TahunAjaran::where('is_aktif', true)->first();
+        $kelases = [];
+        if ($tahunAktif) {
+            $kelases = Kelas::where('tahun_ajaran_id', $tahunAktif->id)
+                            ->withCount('siswas')
+                            ->orderBy('tingkat')->orderBy('nama_kelas')->get();
+        }
         $kelasId = $request->kelas_id;
 
         $baseQuery = PoinSiswa::where('tahun_ajaran_id', $tahunAktif->id)
@@ -86,7 +92,8 @@ class BkLaporanController extends Controller
                 'monthly' => $monthlyStats,
                 'categories' => [$ringan, $sedang, $berat],
                 'absensi_monthly' => $absensiMonthly,
-                'absensi_categories' => [$absensiStats['S'], $absensiStats['I'], $absensiStats['A']]
+                'absensi_categories' => [$absensiStats['S'], $absensiStats['I'], $absensiStats['A']],
+                'tahun_aktif' => $tahunAktif
             ]
         ]);
     }

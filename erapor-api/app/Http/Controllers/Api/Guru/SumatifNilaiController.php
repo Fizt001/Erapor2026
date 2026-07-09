@@ -44,9 +44,10 @@ class SumatifNilaiController extends Controller
         $selectedKelasId = $request->kelas_id;
         $selectedMapelId = $request->mapel_id;
 
-        $kelases = Kelas::whereHas('pengampus', function($q) use ($user) {
-            $q->where('guru_id', $user->id);
-        })->get();
+        $kelases = Kelas::where('tahun_ajaran_id', $selectedTahunId)
+            ->whereHas('pengampus', function($q) use ($user) {
+                $q->where('guru_id', $user->id);
+            })->get();
 
         $mapels = [];
         if ($selectedKelasId) {
@@ -77,7 +78,7 @@ class SumatifNilaiController extends Controller
 
         if ($selectedKelasId && $selectedTitimangsaId && $selectedMapelId) {
             // Ambil Siswa
-            $siswas = Siswa::where('kelas_id', $selectedKelasId)->with('user')->get()->map(function($s) {
+            $siswas = Siswa::where('kelas_id', $selectedKelasId)->where('status_siswa', 'aktif')->with('user')->get()->map(function($s) {
                 return [
                     'id' => $s->id,
                     'nama' => $s->user->name ?? 'Tanpa Nama',

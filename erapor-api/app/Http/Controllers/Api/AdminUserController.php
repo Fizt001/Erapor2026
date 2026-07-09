@@ -134,12 +134,12 @@ class AdminUserController extends Controller
         $callback = function() {
             $file = fopen('php://output', 'w');
             
-            // Kolom header
-            fputcsv($file, ['Name', 'Email', 'Role', 'Password', 'Pengampu Umum', 'Pengampu Kejuruan']);
+            // Kolom header (gunakan titik koma agar otomatis terpisah di Excel versi Indonesia)
+            fputcsv($file, ['Name', 'Email', 'Role', 'Password', 'Pengampu Umum', 'Pengampu Kejuruan'], ';');
             
             // Contoh isi
-            fputcsv($file, ['Guru Contoh', 'guru@sekolah.id', 'guru', 'password123', '1', '0']);
-            fputcsv($file, ['Siswa Contoh', 'siswa@sekolah.id', 'siswa', 'password123', '0', '0']);
+            fputcsv($file, ['Guru Contoh', 'guru@sekolah.id', 'guru', 'password123', '1', '0'], ';');
+            fputcsv($file, ['Siswa Contoh', 'siswa@sekolah.id', 'siswa', 'password123', '0', '0'], ';');
             
             fclose($file);
         };
@@ -154,50 +154,72 @@ class AdminUserController extends Controller
         ]);
 
         $file = $request->file('file');
+        
+        // Auto detect delimiter (seringkali Excel Indonesia memakai titik koma)
+        $content = file_get_contents($file->getRealPath());
+        $firstLine = strtok($content, "\n");
+        $delimiter = strpos($firstLine, ';') !== false ? ';' : ',';
+
         $handle = fopen($file->getRealPath(), "r");
         
-        $header = fgetcsv($handle, 1000, ",");
-        if (!$header || count($header) < 4) {
-            return response()->json(['success' => false, 'message' => 'Format file CSV tidak valid.'], 400);
+        $header = fgetcsv($handle, 1000, $delimiter);
+        // Kita tidak hanya cek count($header) < 4, karena bisa jadi formatnya beda. 
+        // Setidaknya header harus ada.
+        if (!$header || count($header) < 2) {
+            return response()->json(['success' => false, 'message' => 'Format file CSV tidak valid. Pastikan memakai delimiter koma (,) atau titik koma (;).'], 400);
         }
 
         $imported = 0;
         $failed = 0;
 
-        while (($row = fgetcsv($handle, 1000, ",")) !== false) {
-            if (count($row) < 4) continue;
-            
-            $email = trim($row[1]);
-            
-            if (User::where('email', $email)->exists()) {
-                $failed++;
-                continue;
+        try {
+            \Illuminate\Support\Facades\DB::beginTransaction();
+
+            while (($row = fgetcsv($handle, 1000, $delimiter)) !== false) {
+                // Pastikan panjang kolom cukup (minimum nama, email, role, password)
+                if (count($row) < 4) continue;
+                
+                $email = trim($row[1]);
+                
+                if (User::where('email', $email)->exists()) {
+                    $failed++;
+                    continue;
+                }
+
+                $role = strtolower(trim($row[2]));
+                if (!in_array($role, ['admin', 'kepsek', 'kurikulum', 'bk', 'guru', 'siswa'])) {
+                    $role = 'siswa';
+                }
+
+                $password = trim($row[3]);
+                if (empty($password)) $password = 'password123';
+
+                $user = new User();
+                $user->name = trim($row[0]);
+                $user->email = $email;
+                $user->role = $role;
+                $user->password = Hash::make($password);
+                
+                if ($role === 'guru') {
+                    $user->is_pengampu_umum = isset($row[4]) ? filter_var(trim($row[4]), FILTER_VALIDATE_BOOLEAN) : true;
+                    $user->is_pengampu_kejuruan = isset($row[5]) ? filter_var(trim($row[5]), FILTER_VALIDATE_BOOLEAN) : false;
+                } else {
+                    $user->is_pengampu_umum = false;
+                    $user->is_pengampu_kejuruan = false;
+                }
+
+                $user->save();
+                $imported++;
             }
-
-            $role = strtolower(trim($row[2]));
-            if (!in_array($role, ['admin', 'kepsek', 'kurikulum', 'bk', 'guru', 'siswa'])) {
-                $role = 'siswa';
-            }
-
-            $password = trim($row[3]);
-            if (empty($password)) $password = 'password123';
-
-            $user = new User();
-            $user->name = trim($row[0]);
-            $user->email = $email;
-            $user->role = $role;
-            $user->password = Hash::make($password);
             
-            if ($role === 'guru') {
-                $user->is_pengampu_umum = isset($row[4]) ? filter_var(trim($row[4]), FILTER_VALIDATE_BOOLEAN) : true;
-                $user->is_pengampu_kejuruan = isset($row[5]) ? filter_var(trim($row[5]), FILTER_VALIDATE_BOOLEAN) : false;
-            } else {
-                $user->is_pengampu_umum = false;
-                $user->is_pengampu_kejuruan = false;
-            }
-
-            $user->save();
-            $imported++;
+            \Illuminate\Support\Facades\DB::commit();
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\DB::rollBack();
+            fclose($handle);
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan saat mengimpor data. Tidak ada data yang tersimpan. Error: ' . $e->getMessage()
+            ], 500);
         }
         
         fclose($handle);
@@ -205,6 +227,18 @@ class AdminUserController extends Controller
         return response()->json([
             'success' => true,
             'message' => "Import selesai. Berhasil: $imported, Gagal/Duplikat: $failed."
+        ]);
+    }
+
+    public function resetPassword($id)
+    {
+        $user = User::findOrFail($id);
+        $user->password = Hash::make('12345678');
+        $user->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Password berhasil direset menjadi 12345678'
         ]);
     }
 }

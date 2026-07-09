@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tahun_ajarans', function (Blueprint $table) {
     $table->id();
-    $table->string('tahun'); // 2025/2026
+    $table->string('tahun'); // 2023/2024
     $table->boolean('is_aktif')->default(false);
     $table->timestamps();
 });

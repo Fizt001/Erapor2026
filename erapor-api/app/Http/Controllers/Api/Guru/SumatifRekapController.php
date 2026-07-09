@@ -41,6 +41,7 @@ class SumatifRekapController extends Controller
 
         $siswas = Siswa::with('user')
             ->where('kelas_id', $kelasId)
+            ->where('status_siswa', 'aktif')
             ->get();
 
         $nilaiSumatif = SumatifNilai::where('titimangsa_id', $titimangsaId)

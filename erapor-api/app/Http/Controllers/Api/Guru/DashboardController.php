@@ -18,9 +18,16 @@ class DashboardController extends Controller
         $tahunAktif = TahunAjaran::where('is_aktif', true)->first();
         
         $isWalas = false;
-        $cekWalas = WaliKelas::where('guru_id', $user->id)->first();
-        if ($cekWalas) {
-            $isWalas = true;
+        if ($tahunAktif) {
+            $cekWalas = WaliKelas::where('guru_id', $user->id)
+                ->whereHas('kelas', function($query) use ($tahunAktif) {
+                    $query->where('tahun_ajaran_id', $tahunAktif->id);
+                })
+                ->first();
+                
+            if ($cekWalas) {
+                $isWalas = true;
+            }
         }
 
         // Dapatkan Titimangsa/Periode yang aktif

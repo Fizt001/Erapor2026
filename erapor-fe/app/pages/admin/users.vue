@@ -1,229 +1,240 @@
 <template>
-  <div class="animate-fadeIn max-w-7xl mx-auto pb-12 mt-4 relative">
+  <div class="absolute inset-0 flex flex-col min-h-0 bg-slate-50 z-10">
     
-    <!-- MOBILE VIEW TABS -->
-    <div class="lg:hidden mb-8 mt-2">
-      <div class="grid grid-cols-3 gap-2">
+<!-- Layout 2 Panel Dock & Flow -->
+    <div class="flex-1 flex overflow-hidden relative">
+      
+      <!-- MOBILE VIEW TABS -->
+      <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-2 grid grid-cols-3 gap-2 z-20">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTab = tab.id"
           :class="activeTab === tab.id ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="rounded-2xl flex flex-col items-center justify-center py-4 px-1 transition-all active:scale-95">
-          <span class="text-2xl mb-1.5 transition-transform" :class="activeTab === tab.id ? 'scale-110' : ''">{{ tab.icon }}</span>
+          class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
+          <span class="text-lg mb-0.5 transition-transform" :class="activeTab === tab.id ? 'scale-110' : ''">{{ tab.icon }}</span>
           <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
-    </div>
 
-    <!-- MAIN GRID LAYOUT -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-      
-      <!-- ==============================================
-           KIRI: PANEL KENDALI (Form & Import) - lg:col-span-4
-           Muncul jika layar besar, ATAU jika di mobile memilih form/import
-           ============================================== -->
-      <div class="lg:col-span-4 space-y-6 lg:sticky lg:top-6" v-show="isDesktop || (activeTab === 'form' || activeTab === 'import')">
+      <!-- Panel Dock Kiri -->
+      <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', (activeTab === 'form' || activeTab === 'import') || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[60px]' : '']">
         
         <!-- Desktop Tabs (Toggle Form vs Import) -->
-        <div class="hidden lg:flex bg-white rounded-2xl shadow-sm border border-slate-200/60 p-1.5">
-            <button @click="activeTab = 'form'" :class="activeTab === 'form' ? 'bg-emerald-50 text-emerald-700 shadow-sm' : 'text-slate-500 hover:bg-slate-50'" class="flex-1 py-2.5 rounded-2xl font-bold text-xs uppercase tracking-widest transition-all">
+        <div class="hidden xl:flex bg-slate-50/50 border-b border-slate-200 p-2 shrink-0">
+            <button @click="activeTab = 'form'" :class="activeTab === 'form' ? 'bg-white text-emerald-700 shadow-sm border border-slate-200' : 'text-slate-500 hover:bg-slate-100 border border-transparent'" class="flex-1 py-2.5 rounded-xl font-bold text-[10px] uppercase tracking-widest transition-all">
                 👤 Registrasi
             </button>
-            <button @click="activeTab = 'import'" :class="activeTab === 'import' ? 'bg-emerald-50 text-emerald-700 shadow-sm' : 'text-slate-500 hover:bg-slate-50'" class="flex-1 py-2.5 rounded-2xl font-bold text-xs uppercase tracking-widest transition-all">
+            <button @click="activeTab = 'import'" :class="activeTab === 'import' ? 'bg-white text-emerald-700 shadow-sm border border-slate-200' : 'text-slate-500 hover:bg-slate-100 border border-transparent'" class="flex-1 py-2.5 rounded-xl font-bold text-[10px] uppercase tracking-widest transition-all ml-2">
                 🚀 Import
             </button>
         </div>
 
-        <!-- Panel Form Tambah -->
-        <div v-show="activeTab === 'form'" class="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden animate-slideUpFade">
-            <div class="p-6 bg-gradient-to-r from-slate-900 to-slate-800 border-b border-slate-100 flex items-center gap-4">
-                <span class="text-3xl">👤</span>
-                <div>
-                    <h3 class="text-sm font-black uppercase tracking-widest text-white">Akun Baru</h3>
-                    <p class="text-[10px] text-slate-400 font-semibold uppercase mt-0.5">Tambah Pengguna Manual</p>
+        <div class="flex-1 overflow-y-auto custom-scrollbar">
+            <!-- Panel Form Tambah -->
+            <div v-show="activeTab === 'form'" class="animate-fadeIn">
+                <div class="p-6 shrink-0">
+                  <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-5 border border-emerald-500 shadow-sm relative overflow-hidden flex items-center gap-4">
+                    <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10">👤</div>
+                    <div class="relative z-10">
+                        <h3 class="text-sm font-black uppercase tracking-widest text-white">Akun Baru</h3>
+                        <p class="text-[10px] text-emerald-100 font-semibold uppercase mt-0.5">Tambah Pengguna Manual</p>
+                    </div>
+                    <div class="absolute right-0 bottom-0 opacity-20 text-white">
+                      <svg class="w-20 h-20 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>
+                    </div>
+                  </div>
+                </div>
+                <div class="px-6 pb-6">
+                    <form @submit.prevent="saveUser" class="space-y-4">
+                        <div>
+                            <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Nama Lengkap</label>
+                            <input type="text" v-model="form.name" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800" placeholder="Misal: John Doe, S.Pd.">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Email Login</label>
+                            <input type="email" v-model="form.email" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800" placeholder="guru@erapor.id">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Role Akses</label>
+                                <select v-model="form.role" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-bold text-slate-700 cursor-pointer appearance-none">
+                                    <option value="guru">Guru</option>
+                                    <option value="siswa">Siswa</option>
+                                    <option value="admin">Admin</option>
+                                    <option value="kepsek">Kepsek</option>
+                                    <option value="kurikulum">Kurikulum</option>
+                                    <option value="bk">BK</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Password</label>
+                                <input type="password" v-model="form.password" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800" placeholder="Min. 6 karakter">
+                            </div>
+                        </div>
+
+                        <!-- Opsi Khusus Guru -->
+                        <div v-if="form.role === 'guru'" class="p-4 bg-emerald-50/50 border border-emerald-100 rounded-2xl space-y-3 animate-fadeIn">
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input type="checkbox" v-model="form.is_pengampu_umum" class="rounded border-emerald-300 text-emerald-600 w-5 h-5 focus:ring-emerald-500">
+                                <span class="text-xs font-black text-emerald-800 uppercase tracking-widest">Unit Umum (Normatif)</span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input type="checkbox" v-model="form.is_pengampu_kejuruan" class="rounded border-emerald-300 text-emerald-600 w-5 h-5 focus:ring-emerald-500">
+                                <span class="text-xs font-black text-emerald-800 uppercase tracking-widest">Unit Kejuruan (Produktif)</span>
+                            </label>
+                        </div>
+
+                        <div class="pt-4 border-t border-slate-100">
+                            <button type="submit" :disabled="isSaving" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-2xl shadow-lg shadow-emerald-500/30 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2">
+                                <span v-if="isSaving" class="animate-spin">⏳</span>
+                                <span v-else>➕</span> 
+                                Tambah Pengguna
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <div class="p-6 space-y-5">
-                <form @submit.prevent="saveUser" class="space-y-5">
-                    <div>
-                        <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Nama Lengkap</label>
-                        <input type="text" v-model="form.name" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800" placeholder="Misal: John Doe, S.Pd.">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Email Login</label>
-                        <input type="email" v-model="form.email" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800" placeholder="guru@erapor.id">
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Role Akses</label>
-                            <select v-model="form.role" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-bold text-slate-700 cursor-pointer appearance-none">
-                                <option value="guru">Guru</option>
-                                <option value="siswa">Siswa</option>
-                                <option value="admin">Admin</option>
-                                <option value="kepsek">Kepsek</option>
-                                <option value="kurikulum">Kurikulum</option>
-                                <option value="bk">BK</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Password</label>
-                            <input type="password" v-model="form.password" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800" placeholder="Min. 6 karakter">
-                        </div>
-                    </div>
 
-                    <!-- Opsi Khusus Guru -->
-                    <div v-if="form.role === 'guru'" class="p-4 bg-emerald-50/50 border border-emerald-100 rounded-2xl space-y-3 animate-fadeIn">
-                        <label class="flex items-center gap-3 cursor-pointer group">
-                            <input type="checkbox" v-model="form.is_pengampu_umum" class="rounded border-emerald-300 text-emerald-600 w-5 h-5 focus:ring-emerald-500">
-                            <span class="text-xs font-black text-emerald-800 uppercase tracking-widest">Unit Umum (Normatif)</span>
-                        </label>
-                        <label class="flex items-center gap-3 cursor-pointer group">
-                            <input type="checkbox" v-model="form.is_pengampu_kejuruan" class="rounded border-emerald-300 text-emerald-600 w-5 h-5 focus:ring-emerald-500">
-                            <span class="text-xs font-black text-emerald-800 uppercase tracking-widest">Unit Kejuruan (Produktif)</span>
-                        </label>
-                    </div>
-
-                    <button type="submit" :disabled="isSaving" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-2xl shadow-lg shadow-emerald-500/30 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2">
-                        <span v-if="isSaving" class="animate-spin">⏳</span>
-                        <span v-else>➕</span> 
-                        Tambah Pengguna
-                    </button>
-                </form>
-            </div>
-        </div>
-
-        <!-- Panel Import -->
-        <div v-show="activeTab === 'import'" class="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden animate-slideUpFade">
-            <div class="p-6 bg-gradient-to-r from-emerald-600 to-emerald-800 border-b border-emerald-500 flex items-center justify-between">
-                <div class="flex items-center gap-4">
-                    <span class="text-3xl">🚀</span>
-                    <div>
+            <!-- Panel Import -->
+            <div v-show="activeTab === 'import'" class="animate-fadeIn">
+                <div class="p-6 shrink-0">
+                  <div class="bg-gradient-to-r from-indigo-600 to-blue-700 rounded-2xl p-5 border border-indigo-500 shadow-sm relative overflow-hidden flex items-center gap-4">
+                    <span class="text-2xl w-10 h-10 flex items-center justify-center relative z-10">🚀</span>
+                    <div class="relative z-10">
                         <h3 class="text-sm font-black uppercase tracking-widest text-white">Import Massal</h3>
-                        <p class="text-[10px] text-emerald-100 font-semibold uppercase mt-0.5">Via File CSV / Excel</p>
+                        <p class="text-[10px] text-indigo-100 font-semibold uppercase mt-0.5">Via File CSV</p>
                     </div>
+                    <div class="absolute right-0 bottom-0 opacity-20 text-white">
+                      <svg class="w-20 h-20 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"></path></svg>
+                    </div>
+                  </div>
+                </div>
+                <div class="px-6 pb-6 text-center space-y-5">
+                    
+                    <p class="text-[11px] text-slate-500 font-medium leading-relaxed bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                        Gunakan template resmi kami agar struktur kolom sesuai dengan database sistem. Format: <span class="font-bold text-slate-700">.csv</span>
+                    </p>
+
+                    <!-- Tombol Download -->
+                    <button @click="downloadTemplate" type="button" class="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl font-bold text-[10px] uppercase tracking-widest transition-colors shadow-inner border border-slate-200">
+                        📥 Download Template CSV
+                    </button>
+
+                    <!-- Area Upload -->
+                    <form @submit.prevent="uploadImportFile" class="space-y-6 relative pt-4 border-t border-slate-100">
+                        <div class="border-2 border-dashed border-emerald-300 bg-emerald-50/50 rounded-2xl p-6 transition-all hover:bg-emerald-50 group relative cursor-pointer min-h-[140px] flex flex-col items-center justify-center">
+                            <input type="file" ref="fileInput" @change="handleFileChange" accept=".csv" required class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                            <div class="pointer-events-none text-center">
+                                <span class="text-4xl block mb-2 group-hover:scale-110 transition-transform text-emerald-400">📄</span>
+                                <p class="text-xs font-bold text-emerald-700">Pilih file CSV</p>
+                                <p class="text-[10px] font-semibold text-emerald-600/70 mt-1" v-if="!selectedFile">atau drag & drop ke area ini</p>
+                                <div v-else class="mt-2 bg-emerald-200/50 py-1.5 px-3 rounded-lg flex items-center justify-center gap-2">
+                                    <span class="text-[10px] font-black text-emerald-800 truncate max-w-[150px]">{{ selectedFile.name }}</span>
+                                    <span class="text-[9px] text-emerald-600 font-bold shrink-0">({{ (selectedFile.size / 1024).toFixed(1) }} KB)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" :disabled="isSaving || !selectedFile" class="w-full py-4 bg-gradient-to-r from-emerald-500 to-emerald-700 text-white font-bold rounded-2xl shadow-lg shadow-emerald-500/30 hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:transform-none flex items-center justify-center gap-3">
+                            <span v-if="isSaving" class="animate-spin text-lg">⏳</span>
+                            <span v-else class="text-lg">🚀</span> 
+                            <span class="uppercase tracking-widest text-[11px]">Mulai Import</span>
+                        </button>
+                    </form>
+
                 </div>
             </div>
-            <div class="p-8 text-center">
-                
-                <p class="text-xs text-slate-500 font-medium mb-6 leading-relaxed">
-                    Gunakan template resmi kami agar struktur kolom sesuai dengan database sistem. <br class="hidden lg:block"> Format file yang didukung: <span class="font-bold text-slate-700">.csv</span>
-                </p>
-
-                <!-- Tombol Download -->
-                <button @click="downloadTemplate" type="button" class="inline-flex items-center gap-2 px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl font-bold text-xs uppercase tracking-widest transition-colors mb-8 shadow-inner border border-slate-200">
-                    📥 Download Template CSV
-                </button>
-
-                <!-- Area Upload -->
-                <form @submit.prevent="uploadImportFile" class="space-y-6 relative">
-                    <div class="border-2 border-dashed border-emerald-300 bg-emerald-50/50 rounded-2xl p-8 transition-all hover:bg-emerald-50 group relative">
-                        <input type="file" ref="fileInput" @change="handleFileChange" accept=".csv" required class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
-                        <div class="pointer-events-none">
-                            <span class="text-5xl block mb-3 group-hover:scale-110 transition-transform text-emerald-400">📄</span>
-                            <p class="text-sm font-bold text-emerald-700">Pilih file CSV</p>
-                            <p class="text-xs font-semibold text-emerald-600/70 mt-1" v-if="!selectedFile">atau drag & drop ke area ini</p>
-                            <p class="text-xs font-black text-emerald-800 mt-2 bg-emerald-200/50 py-1 px-3 rounded-lg inline-block" v-else>
-                                {{ selectedFile.name }} ({{ (selectedFile.size / 1024).toFixed(1) }} KB)
-                            </p>
-                        </div>
-                    </div>
-
-                    <button type="submit" :disabled="isSaving || !selectedFile" class="w-full py-4 bg-gradient-to-r from-emerald-500 to-emerald-700 text-white font-bold rounded-2xl shadow-lg shadow-emerald-500/30 hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:transform-none flex items-center justify-center gap-3">
-                        <span v-if="isSaving" class="animate-spin text-xl">⏳</span>
-                        <span v-else class="text-xl">🚀</span> 
-                        <span class="uppercase tracking-widest text-xs">Mulai Import Data</span>
-                    </button>
-                </form>
-
-            </div>
         </div>
-
       </div>
 
-      <!-- ==============================================
-           KANAN: DATABASE TABLE - lg:col-span-8
-           Muncul jika layar besar, ATAU jika di mobile memilih table
-           ============================================== -->
-      <div class="lg:col-span-8" v-show="isDesktop || activeTab === 'table'">
-         <div class="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col min-h-[500px]">
-            
+      <!-- Panel Flow Kanan -->
+      <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative', activeTab === 'table' || isDesktop ? 'flex' : 'hidden', !isDesktop ? 'pt-[60px]' : '']">
+        <div class="p-6 lg:p-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
+          <div class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
             <!-- Table Header & Filters -->
-            <div class="p-6 bg-slate-50/50 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-4">
-                <div class="flex items-center gap-4 w-full sm:w-auto">
-                    <div class="w-12 h-12 rounded-2xl bg-white shadow-sm border border-slate-200 flex items-center justify-center text-2xl hidden sm:flex">📋</div>
-                    <div>
-                        <h3 class="text-sm font-black uppercase tracking-widest text-emerald-700">Database</h3>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Total: {{ pagination.total }} Akun</p>
-                    </div>
-                </div>
-
-                <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-                    <!-- Search Input -->
-                    <div class="relative">
-                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">🔍</span>
-                        <input type="text" v-model="searchQuery" @input="debouncedFetch" placeholder="Cari nama/email..." class="w-full sm:w-48 pl-9 pr-4 py-2.5 rounded-2xl border border-slate-200 bg-white focus:ring-2 focus:ring-emerald-500 text-xs font-bold transition-all shadow-sm">
-                    </div>
-                    <!-- Role Filter -->
-                    <select v-model="roleFilter" @change="fetchUsers(1)" class="w-full sm:w-40 py-2.5 px-4 rounded-2xl border border-slate-200 bg-white focus:ring-2 focus:ring-emerald-500 text-xs font-black uppercase tracking-wider text-slate-600 cursor-pointer shadow-sm">
-                        <option value="">Semua Akses</option>
-                        <option value="admin">Admin</option>
-                        <option value="kepsek">Kepsek</option>
-                        <option value="kurikulum">Kurikulum</option>
-                        <option value="guru">Guru</option>
-                        <option value="bk">BK</option>
-                        <option value="siswa">Siswa</option>
-                    </select>
+            <div class="px-6 py-5 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white shrink-0 z-10">
+            <div class="flex items-center gap-4 w-full sm:w-auto">
+                <div class="w-10 h-10 rounded-2xl bg-white shadow-sm border border-slate-200 flex items-center justify-center text-xl hidden sm:flex">📋</div>
+                <div>
+                    <h3 class="text-sm font-black uppercase tracking-widest text-emerald-700">Database</h3>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Total: {{ pagination.total }} Akun</p>
                 </div>
             </div>
 
-            <!-- Loading State -->
-            <div v-if="isLoading" class="flex-grow flex items-center justify-center flex-col p-10 opacity-60">
-                <div class="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-                <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Memuat Data...</span>
+            <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                <select v-model="roleFilter" @change="fetchUsers(1)" class="w-full sm:w-40 py-2 px-4 rounded-xl border border-slate-200 bg-white focus:ring-2 focus:ring-emerald-500 text-[11px] font-black uppercase tracking-wider text-slate-600 cursor-pointer shadow-sm">
+                    <option value="">Semua Akses</option>
+                    <option value="admin">Admin</option>
+                    <option value="kepsek">Kepsek</option>
+                    <option value="kurikulum">Kurikulum</option>
+                    <option value="guru">Guru</option>
+                    <option value="bk">BK</option>
+                    <option value="siswa">Siswa</option>
+                </select>
+                <!-- Search Input -->
+                <div class="relative w-full sm:w-auto">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">🔍</span>
+                    <input type="text" v-model="searchQuery" @input="debouncedFetch" placeholder="Cari nama/email..." class="w-full sm:w-48 pl-9 pr-4 py-2 rounded-xl border border-slate-200 bg-white focus:ring-2 focus:ring-emerald-500 text-xs font-bold transition-all shadow-sm">
+                </div>
             </div>
+        </div>
 
-            <!-- Table Data -->
-            <div v-else class="flex-grow overflow-x-auto custom-scrollbar relative">
-                <table class="w-full text-left border-collapse min-w-[600px]">
-                    <thead>
-                        <tr class="bg-slate-100 text-[9px] uppercase tracking-widest font-black text-slate-500">
-                            <th class="p-4 border-b border-slate-200 w-12 text-center">No</th>
-                            <th class="p-4 border-b border-slate-200">Pengguna</th>
-                            <th class="p-4 border-b border-slate-200 w-32">Hak Akses</th>
-                            <th class="p-4 border-b border-slate-200 w-24 text-center">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-xs font-medium text-slate-700 divide-y divide-slate-100">
-                        <tr v-if="users.length === 0">
-                            <td colspan="4" class="p-10 text-center text-slate-400 font-bold">Tidak ada data pengguna ditemukan.</td>
-                        </tr>
-                        <tr v-for="(u, index) in users" :key="u.id" class="hover:bg-slate-50/80 transition-colors">
-                            <td class="p-4 text-center text-slate-400">{{ (pagination.currentPage - 1) * 15 + index + 1 }}</td>
-                            <td class="p-4">
-                                <div class="font-bold text-slate-800 text-sm">{{ u.name }}</div>
-                                <div class="text-[10px] font-bold text-slate-400 mt-0.5">{{ u.email }}</div>
-                            </td>
-                            <td class="p-4">
-                                <span class="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border" :class="getRoleBadgeClass(u.role)">
-                                    {{ u.role }}
-                                </span>
-                            </td>
-                            <td class="p-4">
-                                <div class="flex items-center justify-center gap-2">
-                                    <button @click="openEditModal(u)" class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 hover:bg-emerald-100 hover:text-emerald-700 flex items-center justify-center transition-colors" title="Edit">✏️</button>
-                                    <button @click="confirmDelete(u)" class="w-8 h-8 rounded-xl bg-rose-50 text-rose-600 hover:bg-rose-100 hover:text-rose-700 flex items-center justify-center transition-colors" title="Hapus">🗑️</button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <!-- Loading State -->
+        <div v-if="isLoading" class="flex-grow flex items-center justify-center flex-col p-10 opacity-60">
+            <div class="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Memuat Data...</span>
+        </div>
 
-            <!-- Pagination -->
-            <div class="p-4 bg-slate-50 border-t border-slate-100 flex items-center justify-between" v-if="pagination.lastPage > 1">
-                <button @click="fetchUsers(pagination.currentPage - 1)" :disabled="pagination.currentPage === 1" class="px-4 py-2 bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-600 hover:bg-slate-100 disabled:opacity-50 transition-all">Previous</button>
-                <span class="text-[10px] font-black uppercase text-slate-400 tracking-widest">Halaman {{ pagination.currentPage }} dari {{ pagination.lastPage }}</span>
-                <button @click="fetchUsers(pagination.currentPage + 1)" :disabled="pagination.currentPage === pagination.lastPage" class="px-4 py-2 bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-600 hover:bg-slate-100 disabled:opacity-50 transition-all">Next</button>
+        <!-- Table Data -->
+        <div v-else class="flex-1 overflow-y-auto overflow-x-auto custom-scrollbar relative bg-white">
+            <table class="w-full text-left border-collapse min-w-[600px] whitespace-nowrap">
+                <thead class="sticky top-0 z-10 bg-slate-50 border-b border-slate-200 shadow-sm">
+                    <tr class="text-[9px] uppercase tracking-widest font-black text-slate-500">
+                        <th class="py-3 px-4 w-12 text-center">No</th>
+                        <th class="py-3 px-4">Pengguna</th>
+                        <th class="py-3 px-4 w-32">Hak Akses</th>
+                        <th class="py-3 px-4 w-24 text-center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="text-xs font-medium text-slate-700 divide-y divide-slate-100">
+                    <tr v-if="users.length === 0">
+                        <td colspan="4" class="p-16 text-center text-slate-400 font-bold bg-white">
+                            <span class="text-4xl block mb-2 opacity-30">📋</span>
+                            Tidak ada data pengguna ditemukan.
+                        </td>
+                    </tr>
+                    <tr v-for="(u, index) in users" :key="u.id" class="hover:bg-slate-50/80 transition-colors bg-white group">
+                        <td class="p-4 text-center text-slate-400 font-bold">{{ (pagination.currentPage - 1) * 15 + index + 1 }}</td>
+                        <td class="p-4">
+                            <div class="font-black text-slate-800 text-[13px]">{{ u.name }}</div>
+                            <div class="text-[10px] font-bold text-slate-400 mt-0.5">{{ u.email }}</div>
+                        </td>
+                        <td class="p-4">
+                            <span class="px-3 py-1.5 rounded-md text-[9px] font-black uppercase tracking-widest border" :class="getRoleBadgeClass(u.role)">
+                                {{ u.role }}
+                            </span>
+                        </td>
+                        <td class="p-4">
+                            <div class="flex items-center justify-center gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
+                                <button @click="resetPassword(u)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:border-amber-200 hover:bg-amber-50 hover:text-amber-600 flex items-center justify-center transition-colors shadow-sm" title="Reset Password">🔑</button>
+                                <button @click="openEditModal(u)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-600 flex items-center justify-center transition-colors shadow-sm" title="Edit">✏️</button>
+                                <button @click="confirmDelete(u)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-center transition-colors shadow-sm" title="Hapus">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="p-4 sm:p-6 bg-slate-50 border-t border-slate-200 flex items-center justify-between shrink-0" v-if="pagination.lastPage > 1">
+            <span class="hidden sm:inline-block text-[10px] font-black uppercase text-slate-400 tracking-widest">Halaman {{ pagination.currentPage }} dari {{ pagination.lastPage }}</span>
+            <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
+                <button @click="fetchUsers(pagination.currentPage - 1)" :disabled="pagination.currentPage === 1" class="px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-600 hover:bg-slate-50 disabled:opacity-50 shadow-sm transition-all">Prev</button>
+                <span class="sm:hidden text-[10px] font-black uppercase text-slate-400 tracking-widest">{{ pagination.currentPage }} / {{ pagination.lastPage }}</span>
+                <button @click="fetchUsers(pagination.currentPage + 1)" :disabled="pagination.currentPage === pagination.lastPage" class="px-4 py-2.5 bg-emerald-50 border border-emerald-100 rounded-xl text-[10px] font-black uppercase tracking-widest text-emerald-700 hover:bg-emerald-100 disabled:opacity-50 shadow-sm transition-all">Next</button>
             </div>
-         </div>
+        </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -254,7 +265,7 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Role Akses</label>
-                            <select v-model="editForm.role" class="w-full px-4 py-2.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-bold text-slate-700">
+                            <select v-model="editForm.role" class="w-full px-4 py-2.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-bold text-slate-700 appearance-none">
                                 <option value="guru">Guru</option>
                                 <option value="siswa">Siswa</option>
                                 <option value="admin">Admin</option>
@@ -281,8 +292,10 @@
                         </label>
                     </div>
 
-                    <button type="submit" :disabled="isSaving" class="w-full mt-4 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-2xl shadow-lg hover:-translate-y-0.5 transition-all">
-                        {{ isSaving ? '⏳ Memproses...' : '💾 Simpan Perubahan' }}
+                    <button type="submit" :disabled="isSaving" class="w-full mt-4 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-2xl shadow-lg hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 text-[11px] uppercase tracking-widest">
+                        <span v-if="isSaving" class="animate-spin text-sm">⏳</span>
+                        <span v-else class="text-sm">💾</span>
+                        {{ isSaving ? 'Memproses...' : 'Simpan Perubahan' }}
                     </button>
                 </form>
             </div>
@@ -315,11 +328,38 @@
         </div>
     </div>
 
-    <!-- Toast Notification -->
-    <div v-if="showToast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-slate-900/95 backdrop-blur-md text-white px-6 py-4 rounded-full shadow-2xl flex items-center gap-4 z-[100] animate-slideUp">
-      <div class="w-8 h-8 bg-gradient-to-br from-emerald-400 to-emerald-500 rounded-full flex items-center justify-center text-white text-sm shadow-inner shadow-white/20">✓</div>
-      <p class="font-bold text-sm tracking-wide pr-2">{{ toastMessage }}</p>
+    <!-- ==============================================
+         MODAL KONFIRMASI RESET PASSWORD (Overlay)
+         ============================================== -->
+    <div v-if="isResetModalOpen" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
+        <div class="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden animate-slideUpFade text-center">
+            <div class="p-8">
+                <div class="w-20 h-20 bg-amber-50 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-inner border-4 border-white ring-4 ring-amber-50">
+                    🔑
+                </div>
+                <h3 class="text-xl font-black text-slate-800 tracking-tight">Reset Password?</h3>
+                <p class="text-xs text-slate-500 mt-3 leading-relaxed">
+                    Password akun <span class="font-bold text-amber-600">{{ userToReset?.name }}</span> akan direset menjadi <span class="font-bold text-slate-800 bg-slate-100 px-1 py-0.5 rounded">12345678</span>.
+                </p>
+                <div class="flex items-center gap-4 mt-8">
+                    <button @click="isResetModalOpen = false" class="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-2xl transition-all text-xs uppercase tracking-widest">
+                        Batal
+                    </button>
+                    <button @click="executeReset" :disabled="isSaving" class="flex-1 py-3 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-2xl shadow-lg shadow-amber-500/30 transition-all text-xs uppercase tracking-widest flex items-center justify-center gap-2">
+                        <span v-if="isSaving" class="animate-spin text-base">⏳</span>
+                        <span v-else>Ya, Reset</span>
+                    </button>
+                </div>
+            </div>
+      </div>
+
     </div>
+
+    <!-- Footer Info -->
+    <div class="bg-slate-100 border-t border-slate-200 text-center py-3 shrink-0 print:hidden z-20">
+        <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Created by <span class="text-emerald-600">SMK-Yatindo</span></p>
+    </div>
+
   </div>
 </template>
 
@@ -334,7 +374,7 @@ definePageMeta({
 
 // Responsiveness detector (Simulated for Vue SSR safety by relying on CSS hiding mostly, but this ref is helpful for conditional renders if needed)
 const windowWidth = ref(1024) 
-const isDesktop = computed(() => windowWidth.value >= 1024)
+const isDesktop = computed(() => windowWidth.value >= 1280) // xl breakpoint
 
 // Tabs for Mobile
 const activeTab = ref('table')
@@ -348,8 +388,6 @@ const mobileTabs = [
 const users = ref([])
 const isLoading = ref(true)
 const isSaving = ref(false)
-const showToast = ref(false)
-const toastMessage = ref('')
 
 // Import state
 const fileInput = ref(null)
@@ -373,7 +411,7 @@ const downloadTemplate = async () => {
         a.remove()
     } catch (error) {
         console.error('Download failed:', error)
-        alert('Gagal mengunduh template CSV.')
+        useSwal().fire('Error', 'Gagal mengunduh template CSV.', 'error')
     }
 }
 
@@ -382,7 +420,7 @@ const handleFileChange = (e) => {
     if (file && (file.type === 'text/csv' || file.name.endsWith('.csv') || file.type === 'application/vnd.ms-excel')) {
         selectedFile.value = file
     } else if (file) {
-        alert('Gagal! Pastikan Anda menyimpan Excel tersebut dengan format Save As -> CSV (Comma delimited).')
+        useSwal().fire('Gagal!', 'Pastikan Anda menyimpan Excel tersebut dengan format Save As -> CSV (Comma delimited).', 'error')
         e.target.value = ''
         selectedFile.value = null
     }
@@ -404,7 +442,7 @@ const uploadImportFile = async () => {
         })
         
         if (response.success) {
-            displayToast(response.message)
+            useSwal().toast(response.message)
             selectedFile.value = null
             if (fileInput.value) fileInput.value.value = ''
             fetchUsers(1)
@@ -412,7 +450,7 @@ const uploadImportFile = async () => {
         }
     } catch (error) {
         console.error('Import failed:', error)
-        alert(error.data?.message || 'Terjadi kesalahan saat mengimpor file. Cek format kolom Anda.')
+        useSwal().fire('Import Gagal', error.data?.message || 'Terjadi kesalahan saat mengimpor file. Cek format kolom Anda.', 'error')
     } finally {
         isSaving.value = false
     }
@@ -437,7 +475,9 @@ const form = ref({
 
 const isEditModalOpen = ref(false)
 const isDeleteModalOpen = ref(false)
+const isResetModalOpen = ref(false)
 const userToDelete = ref(null)
+const userToReset = ref(null)
 
 const editForm = ref({
     id: null,
@@ -497,7 +537,7 @@ const saveUser = async () => {
         })
         
         if (response.success) {
-            displayToast('Pengguna berhasil ditambahkan!')
+            useSwal().toast('Pengguna berhasil ditambahkan!')
             // Reset Form
             form.value = { name: '', email: '', role: 'guru', password: '', is_pengampu_umum: true, is_pengampu_kejuruan: false }
             // Fetch updated list
@@ -507,7 +547,7 @@ const saveUser = async () => {
         }
     } catch (error) {
         console.error('Failed to save user:', error)
-        alert('Gagal menambahkan pengguna. Email mungkin sudah terdaftar.')
+        useSwal().toast('Gagal menambahkan pengguna. Email mungkin sudah terdaftar.', 'error')
     } finally {
         isSaving.value = false
     }
@@ -540,12 +580,12 @@ const updateUser = async () => {
         
         if (response.success) {
             isEditModalOpen.value = false
-            displayToast('Data pengguna berhasil diperbarui!')
+            useSwal().toast('Data pengguna berhasil diperbarui!')
             fetchUsers(pagination.value.currentPage)
         }
     } catch (error) {
         console.error('Failed to update user:', error)
-        alert('Gagal memperbarui pengguna.')
+        useSwal().toast('Gagal memperbarui pengguna.', 'error')
     } finally {
         isSaving.value = false
     }
@@ -571,21 +611,44 @@ const executeDelete = async () => {
         
         if (response.success) {
             isDeleteModalOpen.value = false
-            displayToast('Pengguna telah dihapus secara permanen.')
+            useSwal().toast('Pengguna telah dihapus secara permanen.')
             fetchUsers(pagination.value.currentPage)
         }
     } catch (error) {
         console.error('Failed to delete user:', error)
-        alert('Gagal menghapus pengguna (Mungkin Anda menghapus akun sendiri).')
+        useSwal().toast('Gagal menghapus pengguna (Mungkin Anda menghapus akun sendiri).', 'error')
     } finally {
         isSaving.value = false
     }
 }
 
-const displayToast = (msg) => {
-    toastMessage.value = msg
-    showToast.value = true
-    setTimeout(() => { showToast.value = false }, 3500)
+// Reset Password Modal
+const resetPassword = (user) => {
+    userToReset.value = user
+    isResetModalOpen.value = true
+}
+
+const executeReset = async () => {
+    if (!userToReset.value) return
+    isSaving.value = true
+    
+    const token = useCookie('auth_token').value
+    try {
+        const response = await $fetch(`http://localhost:8000/api/admin/users/${userToReset.value.id}/reset-password`, {
+            method: 'POST',
+            headers: { Authorization: `Bearer ${token}` }
+        })
+        
+        if (response.success) {
+            isResetModalOpen.value = false
+            useSwal().toast('Password berhasil direset menjadi 12345678!', 'success')
+        }
+    } catch (error) {
+        console.error('Failed to reset password:', error)
+        useSwal().toast('Gagal mereset password.', 'error')
+    } finally {
+        isSaving.value = false
+    }
 }
 
 const getRoleBadgeClass = (role) => {
@@ -650,5 +713,8 @@ onMounted(() => {
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background-color: #cbd5e1;
   border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #94a3b8;
 }
 </style>

@@ -19,5 +19,15 @@ class SumatifNilai extends Model
         return $this->belongsTo(Siswa::class, 'siswa_id');
     }
 
+    public function mapel() {
+        return $this->belongsTo(Mapel::class, 'mapel_id');
+    }
 
+    public function titimangsa() {
+        return $this->belongsTo(Titimangsa::class, 'titimangsa_id');
+    }
+
+    public function kelas() {
+        return $this->belongsTo(Kelas::class, 'kelas_id');
+    }
 }

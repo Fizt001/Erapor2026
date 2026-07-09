@@ -1,159 +1,216 @@
 <template>
-  <div class="animate-fadeIn max-w-7xl mx-auto pb-12 mt-4 relative">
-    
-    <!-- Header -->
-    <div class="mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
-      <div>
-        <h2 class="text-2xl font-black text-slate-800 tracking-tight">Rekap Absensi Poin & Catatan</h2>
-        <p class="text-sm font-semibold text-slate-500 mt-1 mb-3">Tinjau rekap absensi dari BK dan masukkan catatan wali kelas.</p>
-
-        <!-- Compact Info Badges -->
-        <div v-if="pageData" class="flex flex-wrap items-center gap-2 animate-fadeIn">
-            <div class="px-3 py-1.5 bg-white shadow-sm rounded-lg flex items-center gap-2 border border-slate-200">
-                <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Kelas:</span>
-                <span class="text-xs font-bold text-slate-700">{{ pageData.kelas?.tingkat }} {{ pageData.kelas?.nama_kelas }}</span>
+  <div class="h-full flex flex-col min-h-0 bg-slate-50">
+    <!-- Layout 2 Panel Dock & Flow -->
+    <div class="flex-1 flex flex-col xl:flex-row overflow-hidden relative">
+      
+      <!-- Panel Dock Kiri -->
+      <div class="xl:w-[360px] w-full bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full xl:z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] overflow-y-auto custom-scrollbar">
+        <div class="p-6 space-y-6">
+          <div class="bg-gradient-to-r from-sky-600 to-blue-700 rounded-2xl p-5 border border-sky-500 shadow-sm relative overflow-hidden">
+            <div class="relative z-10">
+              <h3 class="text-sm font-black uppercase tracking-widest text-white">Rekap Absensi Poin</h3>
+              <p class="text-[10px] text-slate-400 font-semibold mt-0.5">Tinjau absensi dan rekap poin siswa per periode</p>
             </div>
-            <div class="px-3 py-1.5 bg-white shadow-sm rounded-lg flex items-center gap-2 border border-slate-200">
-                <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Tahun:</span>
-                <span class="text-xs font-bold text-slate-700">{{ pageData.tahun_ajaran?.tahun }}</span>
+            <div class="absolute right-0 bottom-0 opacity-10">
+              <svg class="w-24 h-24 transform translate-x-6 translate-y-6" fill="currentColor" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
             </div>
-            <div class="px-3 py-1.5 bg-white shadow-sm rounded-lg flex items-center gap-2 border border-slate-200">
-                <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Kurikulum:</span>
+          </div>
+          
+          <div class="space-y-4" v-if="pageData">
+            <!-- Informasi Kelas & Tahun -->
+            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-3">
+              <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Kelas</span>
+                <span class="text-[11px] font-bold text-slate-700">{{ pageData.kelas?.tingkat }} {{ pageData.kelas?.nama_kelas }}</span>
+              </div>
+              <div class="flex justify-between items-center pb-2 border-b border-slate-200">
+                <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Tahun Ajaran</span>
+                <span class="text-[11px] font-bold text-slate-700">{{ pageData.tahun_ajaran?.tahun }}</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-1">Kurikulum</span>
                 <select 
-                    v-model="pageData.kelas.kurikulum_id"
-                    @change="saveKurikulum(pageData.kelas.kurikulum_id)"
-                    class="text-xs font-bold text-slate-700 bg-transparent border-none p-0 focus:ring-0 cursor-pointer outline-none min-w-[120px]"
+                  v-model="pageData.kelas.kurikulum_id"
+                  @change="saveKurikulum(pageData.kelas.kurikulum_id)"
+                  class="text-[11px] font-bold text-indigo-700 bg-transparent border-none p-0 focus:ring-0 cursor-pointer outline-none text-right max-w-[150px]"
                 >
-                    <option v-for="kuri in pageData.master_kurikulum" :key="kuri.id" :value="kuri.id">{{ kuri.nama_kurikulum }}</option>
+                  <option v-for="kuri in pageData.master_kurikulum" :key="kuri.id" :value="kuri.id">{{ kuri.nama_kurikulum }}</option>
                 </select>
+              </div>
             </div>
+
+            <!-- Search / Filter -->
+            <div>
+              <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Pencarian Siswa</label>
+              <div class="relative">
+                  <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 pointer-events-none">🔍</span>
+                  <input type="text" v-model="searchQuery" placeholder="Cari nama siswa..." 
+                    class="w-full pl-10 pr-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all font-semibold text-xs text-slate-700 outline-none">
+              </div>
+            </div>
+            
+            <div class="bg-indigo-50 p-4 rounded-2xl border border-indigo-100 flex flex-col items-center justify-center text-center">
+                <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center mb-2">
+                    <span class="animate-pulse">💾</span>
+                </div>
+                <h4 class="text-[11px] font-black uppercase tracking-widest text-indigo-800">Auto-Save</h4>
+                <p class="text-[10px] font-bold text-indigo-600 mt-1">Catatan akan tersimpan otomatis saat Anda selesai mengetik.</p>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Loading State -->
-    <div v-if="pending" class="flex items-center justify-center min-h-[400px]">
-        <div class="flex flex-col items-center opacity-60">
-            <div class="w-10 h-10 border-4 border-teal-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Memuat Data...</span>
-        </div>
-    </div>
+      <!-- Panel Flow Kanan -->
+      <div class="flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative">
+        <div class="p-6 lg:p-8 max-w-7xl mx-auto w-full h-full flex flex-col relative z-0">
+          
+          <!-- Loading State -->
+          <div v-if="pending" class="flex-grow flex flex-col items-center justify-center p-20 opacity-60 bg-white rounded-3xl shadow-sm border border-slate-200/60">
+            <div class="w-10 h-10 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Memuat Data...</span>
+          </div>
 
-    <!-- Error State -->
-    <div v-else-if="error" class="bg-rose-50 border border-rose-200 rounded-2xl p-8 text-center min-h-[400px] flex flex-col items-center justify-center">
-        <span class="text-4xl mb-4">🔒</span>
-        <h3 class="text-lg font-black text-rose-700">Akses Ditolak</h3>
-        <p class="text-sm font-semibold text-rose-500 mt-2 max-w-md">{{ error.message || 'Terjadi kesalahan saat memuat data.' }}</p>
-        <button @click="fetchData" class="mt-6 px-6 py-2 bg-rose-600 hover:bg-rose-700 text-white font-bold text-sm rounded-lg shadow-sm transition-colors">Coba Lagi</button>
-    </div>
+          <!-- Error State -->
+          <div v-else-if="error" class="flex-grow flex flex-col items-center justify-center p-16 text-center bg-white rounded-3xl shadow-sm border border-slate-200/60">
+            <div class="text-rose-500 text-4xl mb-4">🔒</div>
+            <h3 class="text-rose-800 font-black mb-1">Akses Ditolak</h3>
+            <p class="text-rose-600 text-sm font-semibold max-w-md">{{ error.message || 'Terjadi kesalahan saat memuat data.' }}</p>
+            <button @click="fetchData" class="mt-4 px-4 py-2 bg-rose-100 hover:bg-rose-200 text-rose-700 text-[10px] font-black uppercase tracking-widest rounded-lg transition-colors">
+              Coba Lagi
+            </button>
+          </div>
 
-    <!-- Main Content -->
-    <div v-else-if="pageData" class="flex flex-col gap-6">
-        
-        <!-- Matrix Editor Container -->
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+          <!-- Main Content Container -->
+          <div v-else-if="pageData" class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
             
             <!-- Tabs Titimangsa -->
-            <div class="flex border-b border-slate-200 bg-slate-50 overflow-x-auto custom-scrollbar">
+            <div class="flex border-b border-slate-200 bg-slate-50 overflow-x-auto custom-scrollbar shrink-0">
                 <button 
                     v-for="titimangsa in pageData.titimangsas" 
                     :key="titimangsa.id"
                     @click="activeTab = titimangsa.id"
                     :class="[
-                        'px-8 py-4 text-sm font-black transition-all whitespace-nowrap outline-none relative',
+                        'px-8 py-4 text-[11px] font-black uppercase tracking-widest transition-all whitespace-nowrap outline-none relative',
                         activeTab === titimangsa.id 
-                            ? 'text-teal-700 bg-white' 
+                            ? 'text-indigo-700 bg-white' 
                             : 'text-slate-400 hover:text-slate-600 hover:bg-slate-100/50',
                         !titimangsa.is_aktif ? 'opacity-60' : ''
                     ]"
                 >
                     <span v-if="!titimangsa.is_aktif" class="mr-1">🔒</span>
-                    {{ titimangsa.nama_periode }}
-                    <div v-if="activeTab === titimangsa.id" class="absolute bottom-0 left-0 w-full h-0.5 bg-teal-500 rounded-t-full"></div>
+                    {{ titimangsa.nama_periode_panjang || titimangsa.nama_periode }}
+                    <div v-if="activeTab === titimangsa.id" class="absolute bottom-0 left-0 w-full h-[3px] bg-indigo-500 rounded-t-full"></div>
                 </button>
             </div>
             
             <!-- Warning Closed -->
-            <div v-if="activeTitimangsaData && !activeTitimangsaData.is_aktif" class="bg-amber-50 border-b border-amber-100 px-6 py-3 flex items-center gap-3">
+            <div v-if="activeTitimangsaData && !activeTitimangsaData.is_aktif" class="bg-amber-50 border-b border-amber-100 px-6 py-3 flex items-center gap-3 shrink-0">
                 <span class="text-amber-500">🔒</span>
-                <p class="text-xs font-bold text-amber-700">Periode ini sudah ditutup. Catatan wali kelas bersifat Read-Only.</p>
+                <p class="text-[11px] font-black uppercase tracking-widest text-amber-700">Periode ini sudah ditutup. Catatan wali kelas bersifat Read-Only.</p>
             </div>
 
-            <!-- Tab Content (Matrix Table) -->
-            <div class="overflow-x-auto">
-                <table class="w-full text-sm text-left">
-                    <thead class="text-[10px] uppercase text-slate-400 bg-slate-50/50 font-black tracking-wider border-b border-slate-100">
-                        <tr>
-                            <th class="px-6 py-4 w-12 text-center border-r border-slate-100">No</th>
-                            <th class="px-6 py-4 min-w-[200px] border-r border-slate-100">Nama Siswa</th>
-                            <th class="px-4 py-4 w-20 text-center border-r border-slate-100" title="Sakit">S</th>
-                            <th class="px-4 py-4 w-20 text-center border-r border-slate-100" title="Izin">I</th>
-                            <th class="px-4 py-4 w-20 text-center border-r border-slate-100" title="Alpha">A</th>
-                            <th class="px-6 py-4 min-w-[300px]">Catatan Wali Kelas</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-100">
-                        <template v-if="activeTitimangsaData">
-                            <tr 
-                                v-for="(siswa, idx) in activeTitimangsaData.siswa" 
-                                :key="siswa.id"
-                                class="hover:bg-slate-50/50 transition-colors group"
-                            >
-                                <td class="px-6 py-4 text-center font-semibold text-slate-400 border-r border-slate-100">
-                                    {{ idx + 1 }}
-                                </td>
-                                <td class="px-6 py-4 font-bold text-slate-700 border-r border-slate-100">
-                                    {{ siswa.nama_siswa }}
-                                </td>
-                                <td class="px-4 py-4 text-center border-r border-slate-100 bg-slate-50">
-                                    <span class="font-bold text-slate-500">{{ siswa.absensi.s }}</span>
-                                </td>
-                                <td class="px-4 py-4 text-center border-r border-slate-100 bg-slate-50">
-                                    <span class="font-bold text-slate-500">{{ siswa.absensi.i }}</span>
-                                </td>
-                                <td class="px-4 py-4 text-center border-r border-slate-100 bg-slate-50">
-                                    <span class="font-bold text-rose-500">{{ siswa.absensi.a }}</span>
-                                </td>
-                                <td class="px-4 py-3 align-top">
-                                    <textarea
-                                        v-model="siswa.catatan"
-                                        :disabled="!activeTitimangsaData.is_aktif"
-                                        @blur="saveCatatan(siswa.id, siswa.catatan)"
-                                        :class="[
-                                            'w-full text-sm text-slate-700 placeholder-slate-300 border-0 focus:ring-2 focus:ring-teal-500 rounded-lg p-3 min-h-[60px] transition-all resize-none custom-scrollbar',
-                                            !activeTitimangsaData.is_aktif ? 'bg-slate-100 opacity-70 cursor-not-allowed' : 'bg-slate-50 hover:bg-white focus:bg-white'
-                                        ]"
-                                        placeholder="Ketikan catatan untuk siswa ini..."
-                                    ></textarea>
-                                </td>
-                            </tr>
-                            <tr v-if="activeTitimangsaData.siswa.length === 0">
-                                <td colspan="6" class="px-6 py-12 text-center">
-                                    <div class="text-4xl mb-3 opacity-20">📭</div>
-                                    <p class="text-slate-400 font-semibold text-sm">Tidak ada data siswa di kelas ini.</p>
-                                </td>
-                            </tr>
-                        </template>
-                    </tbody>
-                </table>
+            <div class="flex-1 overflow-auto custom-scrollbar relative bg-slate-50/30">
+              <table class="w-full text-left border-collapse bg-white">
+                <thead class="sticky top-0 z-20 shadow-sm">
+                  <tr class="bg-slate-100 border-b border-slate-200">
+                    <th class="py-3 px-4 text-center text-[10px] font-black uppercase tracking-widest text-slate-500 w-[60px] border-r border-slate-200">No</th>
+                    <th class="py-3 px-4 text-[10px] font-black uppercase tracking-widest text-slate-500 border-r border-slate-200 min-w-[200px] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.05)] sticky left-0 bg-slate-100 z-30">Nama Siswa</th>
+                    <th class="py-3 px-4 text-center text-[10px] font-black uppercase tracking-widest text-slate-500 w-16 border-r border-slate-200" title="Sakit">S</th>
+                    <th class="py-3 px-4 text-center text-[10px] font-black uppercase tracking-widest text-slate-500 w-16 border-r border-slate-200" title="Izin">I</th>
+                    <th class="py-3 px-4 text-center text-[10px] font-black uppercase tracking-widest text-slate-500 w-16 border-r border-slate-200" title="Alpha">A</th>
+                    <th class="py-3 px-4 text-center text-[10px] font-black uppercase tracking-widest text-slate-500 w-20 border-r border-slate-200">Rekap Poin BK</th>
+                    <th class="py-3 px-4 text-center text-[10px] font-black uppercase tracking-widest text-slate-500 w-32 border-r border-slate-200">Tambahan Poin</th>
+                    <th class="py-3 px-4 text-[10px] font-black uppercase tracking-widest text-slate-500 min-w-[200px] border-r border-slate-200">Keterangan</th>
+                    <th class="py-3 px-4 text-center text-[10px] font-black uppercase tracking-widest text-slate-500 w-24">Poin Final</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                  <template v-if="activeTitimangsaData">
+                    <tr 
+                        v-for="(siswa, idx) in filteredSiswa" 
+                        :key="activeTab + '-' + siswa.id"
+                        class="hover:bg-slate-50/80 transition-colors group"
+                    >
+                        <td class="py-3 px-4 text-center text-[11px] font-bold text-slate-400 border-r border-slate-100 align-top">
+                            {{ idx + 1 }}
+                        </td>
+                        <td class="py-3 px-4 border-r border-slate-100 sticky left-0 bg-white group-hover:bg-slate-50/90 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.02)] z-10 align-top">
+                            <div class="flex items-center gap-2">
+                                <div class="text-[12px] font-black uppercase tracking-wide" :class="siswa.tanggal_keluar ? 'text-rose-600 line-through' : 'text-slate-700'">{{ siswa.nama_siswa }}</div>
+                                <span v-if="siswa.tanggal_keluar" class="px-1.5 py-0.5 bg-rose-100 text-rose-700 text-[8px] font-black uppercase tracking-widest rounded whitespace-nowrap">Keluar</span>
+                            </div>
+                        </td>
+                        <td class="py-3 px-4 text-center border-r border-slate-100 bg-slate-50/50 align-top">
+                            <span class="text-[11px] font-black text-slate-500">{{ siswa.absensi.s }}</span>
+                        </td>
+                        <td class="py-3 px-4 text-center border-r border-slate-100 bg-slate-50/50 align-top">
+                            <span class="text-[11px] font-black text-slate-500">{{ siswa.absensi.i }}</span>
+                        </td>
+                        <td class="py-3 px-4 text-center border-r border-slate-100 bg-slate-50/50 align-top">
+                            <span class="text-[11px] font-black text-rose-500">{{ siswa.absensi.a }}</span>
+                        </td>
+                        <td class="py-3 px-4 text-center border-r border-slate-100 bg-slate-50/50 align-middle">
+                            <span class="text-[12px] font-black text-slate-700">{{ siswa.poin.bk }}</span>
+                        </td>
+                        <td class="py-2 px-3 align-top border-r border-slate-100">
+                            <input
+                                type="number"
+                                v-model="siswa.poin.tambahan"
+                                :disabled="!activeTitimangsaData.is_aktif"
+                                @input="handleInput(siswa)"
+                                :class="[
+                                    'w-full text-center text-xs font-bold text-slate-700 placeholder-slate-300 border-2 focus:ring-4 focus:ring-indigo-500/10 rounded-xl p-2 transition-all outline-none',
+                                    !activeTitimangsaData.is_aktif ? 'bg-slate-50 border-slate-200/50 opacity-70 cursor-not-allowed' : 'bg-white border-slate-200/70 focus:border-indigo-500'
+                                ]"
+                                placeholder="0"
+                            />
+                        </td>
+                        <td class="py-2 px-3 align-top border-r border-slate-100">
+                            <div class="relative w-full">
+                                <textarea
+                                    v-model="siswa.poin.keterangan"
+                                    :disabled="!activeTitimangsaData.is_aktif"
+                                    @input="handleInput(siswa)"
+                                    :class="[
+                                        'w-full text-xs font-bold text-slate-700 placeholder-slate-300 border-2 focus:ring-4 focus:ring-indigo-500/10 rounded-xl p-2 min-h-[40px] transition-all resize-none custom-scrollbar outline-none',
+                                        !activeTitimangsaData.is_aktif ? 'bg-slate-50 border-slate-200/50 opacity-70 cursor-not-allowed' : 'bg-white border-slate-200/70 focus:border-indigo-500'
+                                    ]"
+                                    placeholder="Keterangan..."
+                                ></textarea>
+                            </div>
+                        </td>
+                        <td class="py-3 px-4 text-center bg-indigo-50/50 align-middle relative">
+                            <span class="text-[13px] font-black text-indigo-700">
+                                {{ parseInt(siswa.poin.bk || 0) + parseInt(siswa.poin.tambahan || 0) }}
+                            </span>
+                            <div class="absolute bottom-1 right-1 pointer-events-none transition-opacity duration-300" 
+                                :class="savingStatus[siswa.id] ? 'opacity-100' : 'opacity-0'">
+                                <span v-if="savingStatus[siswa.id] === 'saving'" class="text-indigo-500">
+                                    <svg class="animate-spin h-3 w-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                                </span>
+                                <span v-else-if="savingStatus[siswa.id] === 'saved'" class="text-emerald-500 text-[10px]">
+                                    ✓
+                                </span>
+                                <span v-else-if="savingStatus[siswa.id] === 'error'" class="text-rose-500 text-[10px]">
+                                    ⚠️
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr v-if="filteredSiswa.length === 0">
+                        <td colspan="9" class="py-12 text-center text-slate-500 bg-slate-50/50">
+                            <div class="text-3xl mb-3 opacity-50">🔍</div>
+                            <div class="text-xs font-bold">Tidak ada siswa yang sesuai.</div>
+                        </td>
+                    </tr>
+                  </template>
+                </tbody>
+              </table>
             </div>
-
-            <div class="bg-slate-50 p-4 border-t border-slate-200 flex items-center justify-between">
-                <p class="text-xs font-semibold text-slate-500 flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-teal-500 animate-pulse"></span>
-                    Perubahan otomatis tersimpan
-                </p>
-                <div class="flex gap-2">
-                    <span v-if="isSaving" class="text-xs font-bold text-amber-500 px-3 py-1.5 bg-amber-50 rounded-lg flex items-center gap-2">
-                        <div class="w-3 h-3 border-2 border-amber-500 border-t-transparent rounded-full animate-spin"></div>
-                        Menyimpan...
-                    </span>
-                    <span v-if="saveSuccess" class="text-xs font-bold text-teal-600 px-3 py-1.5 bg-teal-50 rounded-lg animate-fadeIn">
-                        ✓ Tersimpan
-                    </span>
-                </div>
-            </div>
+            
+          </div>
         </div>
+      </div>
     </div>
   </div>
 </template>
@@ -166,24 +223,30 @@ definePageMeta({
     middleware: 'guru'
 })
 
-const config = useRuntimeConfig()
 const pageData = ref(null)
 const pending = ref(true)
 const error = ref(null)
 const activeTab = ref(null)
-const isSaving = ref(false)
-const saveSuccess = ref(false)
+const searchQuery = ref('')
+
+// State untuk menyimpan status per siswa
+const savingStatus = ref({})
+const saveTimeouts = ref({})
 
 const activeTitimangsaData = computed(() => {
     if (!pageData.value || !activeTab.value) return null
     return pageData.value.titimangsas.find(t => t.id === activeTab.value)
 })
 
-const displayToast = (message, type = 'success') => {
-    if (process.client) {
-        window.dispatchEvent(new CustomEvent('toast', { detail: { message, type } }))
-    }
-}
+const filteredSiswa = computed(() => {
+    if (!activeTitimangsaData.value || !activeTitimangsaData.value.siswa) return []
+    if (!searchQuery.value) return activeTitimangsaData.value.siswa
+    
+    const q = searchQuery.value.toLowerCase()
+    return activeTitimangsaData.value.siswa.filter(s => 
+        s.nama_siswa && s.nama_siswa.toLowerCase().includes(q)
+    )
+})
 
 const fetchData = async () => {
     pending.value = true
@@ -211,36 +274,45 @@ const fetchData = async () => {
     }
 }
 
-const saveCatatan = async (siswaId, catatanText) => {
-    isSaving.value = true
-    saveSuccess.value = false
-    
+const handleInput = (siswa) => {
+    savingStatus.value[siswa.id] = 'saving'
+    if (saveTimeouts.value[siswa.id]) {
+        clearTimeout(saveTimeouts.value[siswa.id])
+    }
+    saveTimeouts.value[siswa.id] = setTimeout(() => {
+        savePoin(siswa.id, siswa.poin.tambahan, siswa.poin.keterangan)
+    }, 1000)
+}
+
+const savePoin = async (siswaId, tambahan, keterangan) => {
+    savingStatus.value[siswaId] = 'saving'
     try {
         const token = useCookie('auth_token')
         const payload = {
             siswa_id: siswaId,
             titimangsa_id: activeTab.value,
-            catatan: catatanText
+            tambahan_poin: tambahan,
+            keterangan: keterangan
         }
 
-        const res = await $fetch(`http://localhost:8000/api/guru/walas/rekap/catatan`, {
+        const res = await $fetch(`http://localhost:8000/api/guru/walas/rekap/poin`, {
             method: 'POST',
             headers: { Authorization: `Bearer ${token.value}` },
             body: payload
         })
 
         if (res.success) {
-            saveSuccess.value = true
+            savingStatus.value[siswaId] = 'saved'
             setTimeout(() => {
-                saveSuccess.value = false
+                if (savingStatus.value[siswaId] === 'saved') {
+                    savingStatus.value[siswaId] = null
+                }
             }, 2000)
         } else {
-            displayToast(res.message || 'Gagal menyimpan catatan.', 'error')
+            savingStatus.value[siswaId] = 'error'
         }
     } catch (err) {
-        displayToast(err.data?.message || 'Terjadi kesalahan jaringan.', 'error')
-    } finally {
-        isSaving.value = false
+        savingStatus.value[siswaId] = 'error'
     }
 }
 
@@ -257,12 +329,28 @@ const saveKurikulum = async (kurikulumId) => {
         })
 
         if (res.success) {
-            displayToast('Kurikulum berhasil diubah!', 'success')
+            useNuxtApp().$swal.fire({
+                title: 'Berhasil',
+                text: 'Kurikulum berhasil diubah.',
+                icon: 'success',
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            })
         } else {
-            displayToast(res.message || 'Gagal merubah kurikulum.', 'error')
+            throw new Error(res.message || 'Gagal merubah kurikulum.')
         }
     } catch (err) {
-        displayToast(err.data?.message || 'Terjadi kesalahan jaringan.', 'error')
+        useNuxtApp().$swal.fire({
+            title: 'Gagal',
+            text: err.data?.message || err.message || 'Terjadi kesalahan jaringan.',
+            icon: 'error',
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        })
     }
 }
 
@@ -272,12 +360,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-.animate-fadeIn { animation: fadeIn 0.3s ease-out forwards; }
-
 /* Custom Scrollbar for Tabs and Textareas */
 .custom-scrollbar::-webkit-scrollbar { height: 6px; width: 6px; }
 .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }

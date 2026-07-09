@@ -16,12 +16,15 @@ class WalasKokurikulerController extends Controller
     private function getWalasContext()
     {
         $user = Auth::user();
-        
-        $walas = WaliKelas::where('guru_id', $user->id)->first();
-        if (!$walas) return null;
 
         $tahunAktif = TahunAjaran::where('is_aktif', true)->first();
         if (!$tahunAktif) return null;
+
+        $walas = WaliKelas::where('guru_id', $user->id)
+            ->whereHas('kelas', function($query) use ($tahunAktif) {
+                $query->where('tahun_ajaran_id', $tahunAktif->id);
+            })->first();
+        if (!$walas) return null;
 
         return [
             'kelas_id' => $walas->kelas_id,
@@ -46,9 +49,14 @@ class WalasKokurikulerController extends Controller
             ->get();
 
         // Ambil data siswa di kelas tersebut
-        $siswas = Siswa::with('user')->where('kelas_id', $kelasId)->get()->sortBy(function($siswa) {
-            return $siswa->user ? $siswa->user->name : '';
-        })->values();
+        $siswas = Siswa::with('user')
+            ->where('kelas_id', $kelasId)
+            ->whereNull('tanggal_keluar')
+            ->get()
+            ->sortBy(function($siswa) {
+                return $siswa->user ? $siswa->user->name : '';
+            })
+            ->values();
 
         // Ambil data kokurikuler
         $kokurikulers = Kokurikuler::whereIn('siswa_id', $siswas->pluck('id'))

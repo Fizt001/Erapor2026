@@ -1,204 +1,240 @@
 <template>
-  <div class="animate-fadeIn max-w-7xl mx-auto pb-12 mt-4">
-    <!-- Main Form Architecture -->
-    <form @submit.prevent="saveData" class="relative">
+  <div class="h-full flex flex-col min-h-0 bg-slate-50">
+    
+<!-- Layout 2 Panel Dock & Flow -->
+    <form @submit.prevent="saveData" class="flex-1 flex overflow-hidden relative">
       
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        
-        <!-- ==============================================
-             KIRI: MODERN SIDEBAR TABS (Col 3)
-             ============================================== -->
-        <div class="hidden lg:block lg:col-span-3 space-y-2 sticky top-6">
-          <button 
-            v-for="tab in tabs" :key="tab.id" 
-            type="button" 
-            @click="activeTab = tab.id"
-            class="w-full flex items-center gap-4 px-5 py-4 rounded-2xl transition-all duration-300 text-left relative group overflow-hidden"
-            :class="activeTab === tab.id ? 'bg-white shadow-md text-emerald-700' : 'text-slate-500 hover:bg-slate-200/50 hover:text-slate-800'"
-          >
-            <!-- Active Indicator Line -->
-            <div 
-              class="absolute left-0 top-0 bottom-0 w-1 bg-emerald-500 transition-transform origin-left duration-300"
-              :class="activeTab === tab.id ? 'scale-y-100' : 'scale-y-0 group-hover:scale-y-50 bg-slate-300'"
-            ></div>
-            
-            <div 
-              class="w-10 h-10 rounded-2xl flex items-center justify-center text-xl transition-all duration-300"
-              :class="activeTab === tab.id ? 'bg-emerald-100 text-emerald-600 scale-110' : 'bg-slate-100 text-slate-400 group-hover:bg-white group-hover:shadow-sm'"
-            >
-              {{ tab.icon }}
-            </div>
-            
-            <div>
-              <p class="font-bold text-sm tracking-wide">{{ tab.title }}</p>
-              <p class="text-[10px] uppercase tracking-wider font-semibold opacity-70 mt-0.5">{{ tab.subtitle }}</p>
-            </div>
-          </button>
-        </div>
+      <!-- MOBILE VIEW TABS -->
+      <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-2 grid grid-cols-4 gap-2 z-20">
+        <button v-for="tab in tabs" :key="'mob-'+tab.id" type="button" @click="activeTab = tab.id"
+          :class="activeTab === tab.id ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
+          class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
+          <span class="text-lg mb-0.5 transition-transform" :class="activeTab === tab.id ? 'scale-110' : ''">{{ tab.icon }}</span>
+          <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">{{ tab.shortTitle }}</span>
+        </button>
+      </div>
 
-        <!-- MOBILE VIEW (Hanya tampil di HP atau layar sempit) -->
-        <div class="lg:hidden mb-10 mt-2">
-          <div class="grid grid-cols-4 gap-2">
-            <button v-for="tab in tabs" :key="'mob-'+tab.id" type="button" @click="activeTab = tab.id"
-              :class="activeTab === tab.id ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-              class="rounded-2xl flex flex-col items-center justify-center py-4 px-1 transition-all active:scale-95">
-              <span class="text-2xl mb-1.5 transition-transform" :class="activeTab === tab.id ? 'scale-110' : ''">{{ tab.icon }}</span>
-              <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">{{ tab.shortTitle }}</span>
-            </button>
+      <!-- Panel Dock Kiri -->
+      <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all hidden xl:flex']">
+        
+        <div class="p-6 shrink-0">
+          <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-5 border border-emerald-500 shadow-sm relative overflow-hidden flex items-center gap-4">
+            <div class="w-12 h-12 flex items-center justify-center text-3xl shrink-0 relative z-10">⚙️</div>
+            <div class="relative z-10">
+                <h3 class="text-sm font-black uppercase tracking-widest text-white">Pengaturan Profil</h3>
+                <p class="text-[10px] text-emerald-100 font-semibold uppercase mt-0.5">Navigasi Kategori</p>
+            </div>
+            <div class="absolute right-0 bottom-0 opacity-20 text-white">
+              <svg class="w-20 h-20 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M4 5a2 2 0 012-2h12a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm2 0v14h12V5H6zm2 3a1 1 0 011-1h6a1 1 0 110 2H9a1 1 0 01-1-1zm0 4a1 1 0 011-1h6a1 1 0 110 2H9a1 1 0 01-1-1zm0 4a1 1 0 011-1h6a1 1 0 110 2H9a1 1 0 01-1-1z"></path></svg>
+            </div>
           </div>
         </div>
 
-        <!-- ==============================================
-             KANAN: CONTENT AREA & FORMS (Col 9)
-             ============================================== -->
-        <div class="lg:col-span-9">
-          <div class="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden relative">
-            
-            <!-- Beautiful Card Header Background -->
-            <div class="h-24 bg-gradient-to-r from-emerald-800 to-slate-900 relative overflow-hidden">
-                <div class="absolute right-0 bottom-0 transform text-emerald-100 opacity-20 text-8xl -mr-4 -mb-4 font-black">
-                  {{ currentTab.icon }}
+        <div class="flex-1 overflow-y-auto p-4 space-y-2 custom-scrollbar">
+            <button 
+                v-for="tab in tabs" :key="tab.id" 
+                type="button" 
+                @click="activeTab = tab.id"
+                class="w-full flex items-center gap-4 p-4 rounded-2xl transition-all duration-300 text-left relative group overflow-hidden border"
+                :class="activeTab === tab.id ? 'bg-emerald-50 border-emerald-200 text-emerald-700' : 'bg-white border-transparent text-slate-500 hover:bg-slate-50 hover:border-slate-200 hover:text-slate-800'"
+            >
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center text-xl transition-all duration-300 shrink-0"
+                    :class="activeTab === tab.id ? 'bg-white text-emerald-600 shadow-sm' : 'bg-slate-100 text-slate-400 group-hover:bg-white'">
+                    {{ tab.icon }}
+                </div>
+                <div class="overflow-hidden">
+                    <p class="font-bold text-xs uppercase tracking-widest truncate">{{ tab.title }}</p>
+                    <p class="text-[10px] font-semibold text-slate-400 truncate mt-0.5">{{ tab.subtitle }}</p>
+                </div>
+            </button>
+        </div>
+
+        <!-- Submit Button Dock -->
+        <div class="p-6 bg-slate-50 border-t border-slate-200 shrink-0">
+            <button type="submit" :disabled="isSaving" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-bold rounded-2xl shadow-lg shadow-emerald-500/30 hover:shadow-xl hover:shadow-emerald-500/40 hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2 uppercase tracking-widest text-xs">
+                <span v-if="isSaving" class="animate-spin text-lg">⏳</span>
+                <span v-else class="text-lg">💾</span>
+                <span>Simpan Profil</span>
+            </button>
+        </div>
+
+      </div>
+
+      <!-- Panel Flow Kanan -->
+      <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative', !isDesktop ? 'pt-[60px]' : '']">
+        <div class="p-6 lg:p-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
+          <div class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
+            <!-- Table Header & Filters -->
+            <div class="px-6 py-5 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0 z-10 bg-white">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-sm flex items-center justify-center text-2xl text-white">
+                        {{ currentTab.icon }}
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-black uppercase tracking-widest text-emerald-700">{{ currentTab.title }}</h3>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">{{ currentTab.subtitle }}</p>
+                    </div>
+                </div>
+                
+                <div class="xl:hidden">
+                    <button type="submit" :disabled="isSaving" class="w-full sm:w-auto px-6 py-2.5 bg-emerald-500 text-white font-bold rounded-xl shadow-md disabled:opacity-70 flex items-center justify-center gap-2 text-xs uppercase tracking-widest transition-all">
+                        <span v-if="isSaving" class="animate-spin">⏳</span>
+                        <span v-else>💾 Simpan</span>
+                    </button>
                 </div>
             </div>
 
-            <!-- Card Content Wrapper -->
-            <div class="px-8 pb-8 pt-6 relative">
-              
-              <!-- Floating Tab Title -->
-              <div class="absolute -top-8 left-4 lg:-top-12 lg:left-8 bg-white px-4 py-3 lg:px-6 lg:py-4 rounded-2xl lg:rounded-2xl shadow-lg border border-slate-100 flex items-center gap-3 lg:gap-4 z-10 max-w-[85%] lg:max-w-full overflow-hidden">
-                 <div class="w-10 h-10 lg:w-12 lg:h-12 flex-shrink-0 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-lg lg:rounded-2xl flex items-center justify-center text-xl lg:text-2xl text-white shadow-inner">
-                    {{ currentTab.icon }}
-                 </div>
-                 <div class="min-w-0">
-                    <h3 class="text-sm lg:text-lg font-black text-slate-800 truncate">{{ currentTab.title }}</h3>
-                    <p class="text-[9px] lg:text-[11px] font-bold text-slate-400 uppercase tracking-widest truncate">{{ currentTab.subtitle }}</p>
-                 </div>
-              </div>
-
-              <!-- Jarak untuk floating title -->
-              <div class="mt-14">
+            <div class="flex-1 overflow-y-auto custom-scrollbar p-6 md:p-8 bg-slate-50/30">
+                <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-slate-200/60 p-6 md:p-10">
+                
                 <!-- 1. IDENTITAS -->
-                <div v-show="activeTab === 'identitas'" class="animate-slideUpFade">
-                  <div class="space-y-6">
-                    <div>
-                      <label class="block text-sm font-bold text-slate-700 mb-2">Nama Sekolah Lengkap <span class="text-rose-500">*</span></label>
-                      <input type="text" v-model="form.nama_sekolah" required class="w-full px-5 py-3.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Misal: SMK Negeri 1 Jakarta">
+                <div v-show="activeTab === 'identitas'" class="animate-fadeIn space-y-6">
+                    <div class="flex flex-col md:flex-row gap-6 items-start">
+                        <div class="w-full md:w-1/2 flex flex-col gap-4">
+                            <div>
+                                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Logo Sekolah (Kanan)</label>
+                                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-2xl hover:bg-slate-50 transition-colors relative group">
+                                    <div class="space-y-1 text-center">
+                                        <div v-if="logoPreview" class="mx-auto h-24 w-24 mb-4 relative rounded-xl overflow-hidden bg-white shadow-sm border border-slate-200">
+                                            <img :src="logoPreview" alt="Logo Preview" class="h-full w-full object-contain p-2" />
+                                            <button @click.prevent="clearLogo" class="absolute top-1 right-1 bg-rose-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                            </button>
+                                        </div>
+                                        <div v-else class="mx-auto h-12 w-12 text-slate-400 mb-4 text-4xl">🏢</div>
+                                        <div class="flex text-sm text-slate-600 justify-center">
+                                            <label for="logo-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-emerald-600 hover:text-emerald-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-emerald-500 px-2 py-1">
+                                                <span v-if="!logoPreview">Upload file</span>
+                                                <span v-else>Ganti file</span>
+                                                <input id="logo-upload" name="logo-upload" type="file" class="sr-only" accept="image/*" @change="handleLogoUpload">
+                                            </label>
+                                        </div>
+                                        <p class="text-xs text-slate-500">PNG, JPG, GIF up to 2MB</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Logo Kiri (Dinas/Pemda)</label>
+                                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-2xl hover:bg-slate-50 transition-colors relative group">
+                                    <div class="space-y-1 text-center">
+                                        <div v-if="logoKiriPreview" class="mx-auto h-24 w-24 mb-4 relative rounded-xl overflow-hidden bg-white shadow-sm border border-slate-200">
+                                            <img :src="logoKiriPreview" alt="Logo Kiri Preview" class="h-full w-full object-contain p-2" />
+                                            <button @click.prevent="clearLogoKiri" class="absolute top-1 right-1 bg-rose-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                            </button>
+                                        </div>
+                                        <div v-else class="mx-auto h-12 w-12 text-slate-400 mb-4 text-4xl">🏛️</div>
+                                        <div class="flex text-sm text-slate-600 justify-center">
+                                            <label for="logo-kiri-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-emerald-600 hover:text-emerald-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-emerald-500 px-2 py-1">
+                                                <span v-if="!logoKiriPreview">Upload file</span>
+                                                <span v-else>Ganti file</span>
+                                                <input id="logo-kiri-upload" name="logo-kiri-upload" type="file" class="sr-only" accept="image/*" @change="handleLogoKiriUpload">
+                                            </label>
+                                        </div>
+                                        <p class="text-xs text-slate-500">Untuk KOP Rapor</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-full md:w-1/2 space-y-6">
+                            <div>
+                                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Nama Yayasan</label>
+                                <input type="text" v-model="form.nama_yayasan" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Misal: YAYASAN TINTA EMAS INDONESIA">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Nama Sekolah Lengkap <span class="text-rose-500">*</span></label>
+                                <input type="text" v-model="form.nama_sekolah" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Misal: SMK TINTA EMAS INDONESIA">
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">NPSN</label>
+                                    <input type="text" v-model="form.npsn" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Nomor Pokok Sekolah Nasional">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Akreditasi</label>
+                                    <input type="text" v-model="form.akreditasi" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Misal: TERAKREDITASI 'A'">
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-2">NPSN</label>
-                        <input type="text" v-model="form.npsn" class="w-full px-5 py-3.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Nomor Pokok Sekolah Nasional">
-                      </div>
-                      <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-2">NSS / NDS</label>
-                        <input type="text" v-model="form.nss" class="w-full px-5 py-3.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Nomor Statistik Sekolah">
-                      </div>
-                    </div>
-                  </div>
                 </div>
 
                 <!-- 2. PIMPINAN -->
-                <div v-show="activeTab === 'pimpinan'" class="animate-slideUpFade">
-                  <div class="space-y-6">
+                <div v-show="activeTab === 'pimpinan'" class="animate-fadeIn space-y-6">
                     <div>
-                      <label class="block text-sm font-bold text-slate-700 mb-2">Nama Kepala Sekolah</label>
-                      <input type="text" v-model="form.nama_kepsek" class="w-full px-5 py-3.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Masukkan nama lengkap beserta gelar">
+                        <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Nama Kepala Sekolah</label>
+                        <input type="text" v-model="form.nama_kepsek" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Masukkan nama lengkap beserta gelar">
                     </div>
                     <div>
-                      <label class="block text-sm font-bold text-slate-700 mb-2">NIP Kepala Sekolah</label>
-                      <input type="text" v-model="form.nip_kepsek" class="w-full px-5 py-3.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Nomor Induk Pegawai (Opsional)">
+                        <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">NIP Kepala Sekolah</label>
+                        <input type="text" v-model="form.nip_kepsek" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Nomor Induk Pegawai (Opsional)">
                     </div>
-                  </div>
                 </div>
 
                 <!-- 3. MEDIA -->
-                <div v-show="activeTab === 'media'" class="animate-slideUpFade">
-                  <div class="space-y-6">
+                <div v-show="activeTab === 'media'" class="animate-fadeIn space-y-6">
                     <div>
-                      <label class="block text-sm font-bold text-slate-700 mb-2">Situs Web Resmi</label>
-                      <div class="relative">
+                        <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Situs Web Resmi</label>
+                        <div class="relative">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">🌐</span>
-                        <input type="url" v-model="form.website" class="w-full pl-11 pr-5 py-3.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="https://www.sekolahanda.sch.id">
-                      </div>
+                        <input type="url" v-model="form.website" class="w-full pl-11 pr-5 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="https://www.sekolahanda.sch.id">
+                        </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-2">Alamat Email</label>
+                        <div>
+                        <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Alamat Email</label>
                         <div class="relative">
-                          <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">✉️</span>
-                          <input type="email" v-model="form.email" class="w-full pl-11 pr-5 py-3.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="info@sekolahanda.sch.id">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">✉️</span>
+                            <input type="email" v-model="form.email" class="w-full pl-11 pr-5 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="info@sekolahanda.sch.id">
                         </div>
-                      </div>
-                      <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-2">Nomor Telepon</label>
+                        </div>
+                        <div>
+                        <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Nomor Telepon</label>
                         <div class="relative">
-                          <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">📞</span>
-                          <input type="text" v-model="form.telepon" class="w-full pl-11 pr-5 py-3.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="(021) 1234567">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">📞</span>
+                            <input type="text" v-model="form.telepon" class="w-full pl-11 pr-5 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="(021) 1234567">
                         </div>
-                      </div>
+                        </div>
                     </div>
-                  </div>
                 </div>
 
                 <!-- 4. LOKASI -->
-                <div v-show="activeTab === 'lokasi'" class="animate-slideUpFade">
-                  <div class="space-y-6">
+                <div v-show="activeTab === 'lokasi'" class="animate-fadeIn space-y-6">
                     <div>
-                      <label class="block text-sm font-bold text-slate-700 mb-2">Alamat Lengkap</label>
-                      <textarea v-model="form.alamat" rows="3" class="w-full px-5 py-3.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400 leading-relaxed" placeholder="Tuliskan nama jalan, RT/RW, dan patokan..."></textarea>
+                        <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Alamat Lengkap</label>
+                        <textarea v-model="form.alamat" rows="3" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400 leading-relaxed custom-scrollbar" placeholder="Tuliskan nama jalan, RT/RW, dan patokan..."></textarea>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-2">Kelurahan / Desa</label>
-                        <input type="text" v-model="form.kelurahan" class="w-full px-5 py-3.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Nama Kelurahan">
-                      </div>
-                      <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-2">Kecamatan</label>
-                        <input type="text" v-model="form.kecamatan" class="w-full px-5 py-3.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Nama Kecamatan">
-                      </div>
-                      <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-2">Kabupaten / Kota</label>
-                        <input type="text" v-model="form.kota" class="w-full px-5 py-3.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Nama Kota">
-                      </div>
-                      <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-2">Provinsi</label>
-                        <input type="text" v-model="form.provinsi" class="w-full px-5 py-3.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Nama Provinsi">
-                      </div>
-                      <div class="md:col-span-2">
-                        <label class="block text-sm font-bold text-slate-700 mb-2">Kode Pos</label>
-                        <input type="text" v-model="form.kode_pos" class="w-full md:w-1/2 px-5 py-3.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="12345">
-                      </div>
+                        <div>
+                        <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Kelurahan / Desa</label>
+                        <input type="text" v-model="form.kelurahan" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Nama Kelurahan">
+                        </div>
+                        <div>
+                        <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Kecamatan</label>
+                        <input type="text" v-model="form.kecamatan" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Nama Kecamatan">
+                        </div>
+                        <div>
+                        <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Kabupaten / Kota</label>
+                        <input type="text" v-model="form.kota" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Nama Kota">
+                        </div>
+                        <div>
+                        <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Provinsi</label>
+                        <input type="text" v-model="form.provinsi" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Nama Provinsi">
+                        </div>
+                        <div class="md:col-span-2">
+                        <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Kode Pos</label>
+                        <input type="text" v-model="form.kode_pos" class="w-full md:w-1/2 px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="12345">
+                        </div>
                     </div>
-                  </div>
                 </div>
-                
-              </div> <!-- End Margin Top for Floating Title -->
+
             </div>
-            
-            <!-- Card Footer & Submit -->
-            <div class="bg-slate-50 p-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4 rounded-b-3xl">
-              <div class="flex items-center gap-3 text-slate-500">
-                <div class="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center text-emerald-500 border border-slate-200">ℹ️</div>
-                <p class="text-xs font-semibold leading-relaxed">Perubahan akan langsung<br>memperbarui database.</p>
-              </div>
-              
-              <button type="submit" :disabled="isSaving" class="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-bold rounded-2xl shadow-lg shadow-emerald-500/30 hover:shadow-xl hover:shadow-emerald-500/40 hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-3 group">
-                <span v-if="isSaving" class="animate-spin text-xl">⏳</span>
-                <span v-else class="text-xl group-hover:scale-110 transition-transform">💾</span>
-                <span class="tracking-wide uppercase text-sm">Simpan Perubahan</span>
-              </button>
-            </div>
-            
           </div>
         </div>
       </div>
+      </div>
     </form>
-
-    <!-- Sleek Toast Notification -->
-    <div v-if="showToast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-slate-900/95 backdrop-blur-md text-white px-6 py-4 rounded-full shadow-2xl flex items-center gap-4 z-[100] animate-slideUp">
-      <div class="w-8 h-8 bg-gradient-to-br from-emerald-400 to-emerald-500 rounded-full flex items-center justify-center text-white text-sm shadow-inner shadow-white/20">✓</div>
-      <p class="font-bold text-sm tracking-wide pr-2">Data Sekolah berhasil disimpan!</p>
-    </div>
   </div>
 </template>
 
@@ -208,8 +244,11 @@ import { ref, computed, onMounted } from 'vue'
 definePageMeta({
   layout: 'admin',
   middleware: 'admin',
-  title: 'Data Sekolah & Profil Instansi'
+  title: 'Data Sekolah'
 })
+
+const windowWidth = ref(1024)
+const isDesktop = computed(() => windowWidth.value >= 1280) // xl breakpoint
 
 // === TAB MANAGEMENT ===
 const activeTab = ref('identitas')
@@ -225,6 +264,8 @@ const currentTab = computed(() => tabs.find(t => t.id === activeTab.value))
 // === FORM STATE ===
 const form = ref({
   nama_sekolah: '',
+  nama_yayasan: '',
+  akreditasi: '',
   npsn: '',
   nss: '',
   website: '',
@@ -241,7 +282,58 @@ const form = ref({
 })
 
 const isSaving = ref(false)
-const showToast = ref(false)
+
+const logoFile = ref(null)
+const logoPreview = ref(null)
+
+const logoKiriFile = ref(null)
+const logoKiriPreview = ref(null)
+
+const handleLogoUpload = (event) => {
+  const file = event.target.files[0]
+  if (!file) return
+  
+  if (file.size > 2 * 1024 * 1024) {
+    useSwal().toast('Ukuran file maksimal 2MB', 'warning')
+    return
+  }
+
+  logoFile.value = file
+  
+  const reader = new FileReader()
+  reader.onload = (e) => {
+    logoPreview.value = e.target.result
+  }
+  reader.readAsDataURL(file)
+}
+
+const handleLogoKiriUpload = (event) => {
+  const file = event.target.files[0]
+  if (!file) return
+  
+  if (file.size > 2 * 1024 * 1024) {
+    useSwal().toast('Ukuran file maksimal 2MB', 'warning')
+    return
+  }
+
+  logoKiriFile.value = file
+  
+  const reader = new FileReader()
+  reader.onload = (e) => {
+    logoKiriPreview.value = e.target.result
+  }
+  reader.readAsDataURL(file)
+}
+
+const clearLogo = () => {
+  logoFile.value = null
+  logoPreview.value = null
+}
+
+const clearLogoKiri = () => {
+  logoKiriFile.value = null
+  logoKiriPreview.value = null
+}
 
 // === FETCH DATA INITAL ===
 const fetchSekolah = async () => {
@@ -257,6 +349,12 @@ const fetchSekolah = async () => {
           form.value[key] = response.data[key]
         }
       })
+      if (response.data.logo) {
+        logoPreview.value = `http://localhost:8000/${response.data.logo}`
+      }
+      if (response.data.logo_kiri) {
+        logoKiriPreview.value = `http://localhost:8000/${response.data.logo_kiri}`
+      }
     }
   } catch (error) {
     console.error('Failed to fetch sekolah:', error)
@@ -264,6 +362,8 @@ const fetchSekolah = async () => {
 }
 
 onMounted(() => {
+  windowWidth.value = window.innerWidth
+  window.addEventListener('resize', () => { windowWidth.value = window.innerWidth })
   fetchSekolah()
 })
 
@@ -274,22 +374,36 @@ const saveData = async () => {
   
   const tokenCookie = useCookie('auth_token')
   try {
+    const formData = new FormData()
+    Object.keys(form.value).forEach(key => {
+      formData.append(key, form.value[key] || '')
+    })
+    
+    if (logoFile.value) {
+      formData.append('logo', logoFile.value)
+    }
+    if (logoKiriFile.value) {
+      formData.append('logo_kiri', logoKiriFile.value)
+    }
+
+    const { fetchSekolah: fetchGlobalSekolah } = useSekolah()
     const response = await $fetch('http://localhost:8000/api/admin/sekolah', {
-      method: 'PUT',
+      method: 'POST', // POST instead of PUT for FormData handling in Laravel
       headers: { 
         Authorization: `Bearer ${tokenCookie.value}`,
-        'Content-Type': 'application/json'
       },
-      body: form.value
+      body: formData
     })
     
     if (response.success) {
-      showToast.value = true
-      setTimeout(() => { showToast.value = false }, 3500)
+      // Update global state so sidebar logo updates immediately without refresh
+      await fetchGlobalSekolah()
+      
+      useSwal().toast('Data Sekolah berhasil disimpan!', 'success')
     }
   } catch (error) {
     console.error('Failed to save sekolah:', error)
-    alert('Terjadi kesalahan saat menyimpan data.')
+    useSwal().toast('Terjadi kesalahan saat menyimpan data.', 'error')
   } finally {
     isSaving.value = false
   }
@@ -302,30 +416,21 @@ const saveData = async () => {
   to { opacity: 1; }
 }
 .animate-fadeIn {
-  animation: fadeIn 0.4s ease-out forwards;
+  animation: fadeIn 0.3s ease-out forwards;
 }
 
-@keyframes slideUpFade {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
-.animate-slideUpFade {
-  animation: slideUpFade 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
 }
-
-@keyframes slideUp {
-  from { opacity: 0; transform: translate(-50%, 50px); }
-  to { opacity: 1; transform: translate(-50%, 0); }
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 10px;
 }
-.animate-slideUp {
-  animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
-
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.hide-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #94a3b8;
 }
 </style>

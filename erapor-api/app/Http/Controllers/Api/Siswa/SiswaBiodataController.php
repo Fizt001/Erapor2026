@@ -35,6 +35,10 @@ class SiswaBiodataController extends Controller
             return response()->json(['success' => false, 'message' => 'Data siswa tidak ditemukan.'], 404);
         }
 
+        if ($siswa->is_biodata_locked) {
+            return response()->json(['success' => false, 'message' => 'Biodata Anda telah dikunci oleh Wali Kelas dan tidak dapat diubah lagi.'], 403);
+        }
+
         DB::beginTransaction();
         try {
             // Filter out 'nis' from request so it can't be updated by the student

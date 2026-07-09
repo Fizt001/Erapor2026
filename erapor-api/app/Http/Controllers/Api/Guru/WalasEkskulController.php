@@ -18,19 +18,20 @@ class WalasEkskulController extends Controller
     private function getWalasContext()
     {
         $user = Auth::user();
-        
-        $walas = WaliKelas::with(['kelas.kurikulum'])->where('guru_id', $user->id)->first();
-        if (!$walas) {
-            return null;
-        }
 
         $tahunAktif = TahunAjaran::where('is_aktif', true)->first();
         if (!$tahunAktif) return null;
 
+        $walas = WaliKelas::with(['kelas.kurikulum'])->where('guru_id', $user->id)
+            ->whereHas('kelas', function($query) use ($tahunAktif) {
+                $query->where('tahun_ajaran_id', $tahunAktif->id);
+            })->first();
+        if (!$walas) {
+            return null;
+        }
+
         $titimangsas = Titimangsa::where('tahun_ajaran_id', $tahunAktif->id)
             ->orderBy('id')->get();
-            
-        if ($titimangsas->isEmpty()) return null;
 
         return [
             'kelas' => $walas->kelas,
@@ -69,9 +70,14 @@ class WalasEkskulController extends Controller
         $pramukaId = $pramuka->id;
 
         // Get Siswa
-        $siswas = Siswa::with('user')->where('kelas_id', $kelas->id)->get()->sortBy(function($siswa) {
-            return $siswa->user ? $siswa->user->name : '';
-        })->values();
+        $siswas = Siswa::with('user')
+            ->where('kelas_id', $kelas->id)
+            ->whereNull('tanggal_keluar')
+            ->get()
+            ->sortBy(function($siswa) {
+                return $siswa->user ? $siswa->user->name : '';
+            })
+            ->values();
 
         $siswaIds = $siswas->pluck('id')->toArray();
 

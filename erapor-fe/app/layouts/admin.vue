@@ -1,69 +1,80 @@
 <template>
-  <div class="min-h-screen bg-slate-50 flex text-slate-800 text-sm">
+  <div class="min-h-screen bg-slate-50 flex text-slate-800 text-sm print:bg-white print:block print:min-h-0">
     <!-- Sidebar -->
-    <aside class="w-56 bg-slate-900 text-white flex-shrink-0 min-h-screen fixed lg:static z-50 transition-transform transform lg:translate-x-0" :class="{ '-translate-x-full': !sidebarOpen }">
-      <div class="h-14 flex items-center px-4 bg-slate-950 font-bold text-base tracking-wider border-b border-slate-800">
-        <span class="text-emerald-500 mr-2">e</span>-Rapor
+    <aside class="group bg-slate-900 text-white flex-shrink-0 min-h-screen fixed lg:static z-50 transform lg:translate-x-0 transition-all duration-300 ease-in-out overflow-x-hidden print:hidden" :class="[sidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full lg:translate-x-0 lg:w-[72px] lg:hover:w-64 w-64']">
+      <div class="h-14 flex items-center pl-5 pr-4 bg-slate-950 font-bold text-base tracking-wider border-b border-slate-800 whitespace-nowrap overflow-hidden">
+        <img v-if="sekolah?.logo" :src="`http://localhost:8000/${sekolah.logo}`" alt="Logo" class="h-8 w-8 object-contain lg:mr-3 shrink-0" />
+        <span v-else class="text-emerald-500 mr-1 text-xl shrink-0">e</span>
+        <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">
+            <span v-if="sekolah?.logo" class="ml-1">e-Rapor</span>
+            <span v-else>-Rapor</span>
+        </span>
       </div>
       
       <div class="p-3">
 
 
-        <nav class="space-y-1">
-          <NuxtLink to="/admin/dashboard" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors" active-class="bg-emerald-600 text-white shadow">
-            <span class="mr-3 text-lg">📊</span> Dashboard
-          </NuxtLink>
+        <nav class="space-y-1 h-[calc(100vh-140px)] overflow-y-auto custom-scrollbar pr-2">
+          <NuxtLink to="/admin/dashboard" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-emerald-600 text-white shadow">
+<span class="mr-3 text-lg">📊</span>
+            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Dashboard</span></NuxtLink>
 
-          <div class="pt-4 pb-1 px-3 text-[10px] font-bold text-emerald-500 uppercase tracking-widest">
+          <div class="pt-4 pb-1 px-3 text-[10px] font-bold text-emerald-500 uppercase tracking-widest whitespace-nowrap opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">
             Master Data
           </div>
 
-          <NuxtLink to="/admin/sekolah" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors" active-class="bg-emerald-600 text-white shadow">
-            <span class="mr-3 text-lg">🏢</span> Data Sekolah
-          </NuxtLink>
-          <NuxtLink to="/admin/users" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors" active-class="bg-emerald-600 text-white shadow">
-            <span class="mr-3 text-lg">👥</span> Manajemen User
-          </NuxtLink>
-          <NuxtLink to="/admin/master-database" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors" active-class="bg-emerald-600 text-white shadow">
-            <span class="mr-3 text-lg">🗄️</span> Master Database
-          </NuxtLink>
-          <NuxtLink to="/admin/kejuruan" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors" active-class="bg-emerald-600 text-white shadow">
-            <span class="mr-3 text-lg">🛠️</span> Master Kejuruan
-          </NuxtLink>
-          <NuxtLink to="/admin/kelas" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors" active-class="bg-emerald-600 text-white shadow">
-            <span class="mr-3 text-lg">🏫</span> Master Kelas
-          </NuxtLink>
+          <NuxtLink to="/admin/sekolah" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-emerald-600 text-white shadow">
+<span class="mr-3 text-lg">🏢</span>
+            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Data Sekolah</span></NuxtLink>
+          <NuxtLink to="/admin/users" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-emerald-600 text-white shadow">
+<span class="mr-3 text-lg">👥</span>
+            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Manajemen User</span></NuxtLink>
+          <NuxtLink to="/admin/master-database" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-emerald-600 text-white shadow">
+<span class="mr-3 text-lg">🗄️</span>
+            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Master Database</span></NuxtLink>
+          <NuxtLink to="/admin/kejuruan" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-emerald-600 text-white shadow">
+<span class="mr-3 text-lg">🛠️</span>
+            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Master Kejuruan</span></NuxtLink>
+          <NuxtLink to="/admin/kelas" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-emerald-600 text-white shadow">
+<span class="mr-3 text-lg">🏫</span>
+            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Master Kelas</span></NuxtLink>
 
-          <div class="pt-4 pb-1 px-3 text-[10px] font-bold text-emerald-500 uppercase tracking-widest">
+          <div class="pt-4 pb-1 px-3 text-[10px] font-bold text-emerald-500 uppercase tracking-widest whitespace-nowrap opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">
             Sistem Akademik
           </div>
-          <NuxtLink to="/admin/tahun-ajaran" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors" active-class="bg-emerald-600 text-white shadow">
-            <span class="mr-3 text-lg">🗓️</span> Tahun Ajaran
-          </NuxtLink>
-          <NuxtLink to="/admin/kurikulum" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors" active-class="bg-emerald-600 text-white shadow">
-            <span class="mr-3 text-lg">📚</span> Master Kurikulum
-          </NuxtLink>
+          <NuxtLink to="/admin/tahun-ajaran" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-emerald-600 text-white shadow">
+<span class="mr-3 text-lg">🗓️</span>
+            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Tahun Ajaran</span></NuxtLink>
+          <NuxtLink to="/admin/kurikulum" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-emerald-600 text-white shadow">
+<span class="mr-3 text-lg">📚</span>
+            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Master Kurikulum</span></NuxtLink>
+          <NuxtLink to="/admin/kenaikan-kelas" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-emerald-600 text-white shadow">
+<span class="mr-3 text-lg">🎓</span>
+            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Kenaikan Kelas</span></NuxtLink>
+          <NuxtLink to="/admin/riwayat-mutasi" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-emerald-600 text-white shadow">
+<span class="mr-3 text-lg">📝</span>
+            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Riwayat Mutasi</span></NuxtLink>
 
-          <div class="pt-4 pb-1 px-3 text-[10px] font-bold text-emerald-500 uppercase tracking-widest">
+          <div class="pt-4 pb-1 px-3 text-[10px] font-bold text-emerald-500 uppercase tracking-widest whitespace-nowrap opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">
             Laporan & Arsip
           </div>
-          <NuxtLink to="/admin/buku-induk" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors" active-class="bg-emerald-600 text-white shadow">
-            <span class="mr-3 text-lg">📖</span> Buku Induk
-          </NuxtLink>
-          <NuxtLink to="/admin/backup" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors" active-class="bg-emerald-600 text-white shadow">
-            <span class="mr-3 text-lg">💾</span> Backup & Arsip
-          </NuxtLink>
+          <NuxtLink to="/admin/buku-induk" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-emerald-600 text-white shadow">
+<span class="mr-3 text-lg">📖</span>
+            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Buku Induk</span></NuxtLink>
+          <NuxtLink to="/admin/backup" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-emerald-600 text-white shadow">
+<span class="mr-3 text-lg">💾</span>
+            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Backup & Arsip</span></NuxtLink>
         </nav>
       </div>
     </aside>
 
     <!-- Overlay when sidebar is open on mobile -->
-    <div v-if="sidebarOpen" @click="sidebarOpen = false" class="fixed inset-0 bg-slate-900/50 z-40 lg:hidden backdrop-blur-sm"></div>
+    <div v-if="sidebarOpen" @click="sidebarOpen = false" class="fixed inset-0 bg-slate-900/50 z-40 lg:hidden backdrop-blur-sm print:hidden"></div>
 
     <!-- Main Content -->
-    <div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+    <div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden print:h-auto print:overflow-visible print:block">
       <!-- Navbar -->
-      <header class="h-14 bg-white border-b border-slate-200 flex items-center justify-between px-4 sm:px-6 z-10 shadow-sm flex-shrink-0">
+      <header class="relative h-14 bg-white border-b border-slate-200 flex items-center justify-between px-4 sm:px-6 z-[60] shadow-sm flex-shrink-0 print:hidden">
         <div class="flex items-center">
           <button @click="sidebarOpen = !sidebarOpen" class="lg:hidden text-slate-500 hover:text-emerald-600 transition-colors focus:outline-none">
             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -74,32 +85,44 @@
         </div>
         
         <div class="flex-1 lg:flex-none flex justify-end items-center space-x-4">
-          <!-- Profile in Navbar -->
-          <div class="flex items-center space-x-3 text-right">
-            <div class="hidden sm:block min-w-0">
-              <p class="text-[13px] font-bold text-slate-700 truncate leading-tight">{{ userProfile?.name || 'Administrator' }}</p>
-              <p class="text-[10px] text-slate-500 truncate uppercase tracking-wider">{{ userProfile?.email || 'admin@erapor.com' }}</p>
-            </div>
-            <div class="h-9 w-9 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-black shadow-md text-sm border-2 border-white">
-              {{ userInitials }}
-            </div>
-          </div>
-          
-          <div class="h-6 w-px bg-slate-200 hidden sm:block"></div>
+          <!-- Profile Dropdown in Navbar -->
+          <div class="relative">
+            <button @click="profileDropdownOpen = !profileDropdownOpen" class="flex items-center space-x-3 text-right focus:outline-none bg-slate-50 hover:bg-slate-100 p-1.5 pl-3 rounded-full border border-slate-200 transition-all">
+              <div class="hidden sm:block min-w-0 pr-2">
+                <p class="text-[13px] font-bold text-slate-700 truncate leading-tight">{{ userProfile?.name || 'Administrator' }}</p>
+                <p class="text-[10px] text-slate-500 truncate uppercase tracking-wider">{{ userProfile?.email || 'admin@erapor.com' }}</p>
+              </div>
+              <div class="h-9 w-9 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-black shadow-md text-sm border-2 border-white shrink-0">
+                {{ userInitials }}
+              </div>
+            </button>
 
-          <!-- Logout Button (Icon Only) -->
-          <button @click="handleLogout" title="Logout" class="text-xl text-rose-500 hover:text-rose-700 hover:bg-rose-50 flex items-center justify-center p-2 rounded-xl transition-all active:scale-95">
-            🚪
-          </button>
+            <!-- Dropdown Menu -->
+            <div v-show="profileDropdownOpen" class="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-xl border border-slate-200 py-2 z-[60] origin-top-right overflow-hidden flex flex-col">
+              <div class="px-4 py-2 border-b border-slate-100 mb-1 block">
+                <p class="text-[13px] font-bold text-slate-700 truncate">{{ userProfile?.name || 'Administrator' }}</p>
+                <p class="text-[10px] text-slate-500 truncate">{{ userProfile?.email || 'admin@erapor.com' }}</p>
+              </div>
+              <button @click="router.push('/admin/profil'); profileDropdownOpen = false" type="button" class="flex items-center px-4 py-2 text-sm text-slate-700 hover:bg-emerald-50 hover:text-emerald-700 transition-colors w-full text-left">
+                <span class="mr-2">👤</span> Profil Saya
+              </button>
+              <button @click="handleLogout" type="button" class="flex items-center px-4 py-2 text-sm text-rose-600 hover:bg-rose-50 transition-colors w-full text-left">
+                <span class="mr-2">🚪</span> Logout
+              </button>
+            </div>
+            
+            <!-- Close on click outside -->
+            <div v-if="profileDropdownOpen" @click="profileDropdownOpen = false" class="fixed inset-0 z-40 bg-transparent"></div>
+          </div>
         </div>
       </header>
 
       <!-- Page Content -->
-      <main class="flex-1 overflow-y-auto p-4 sm:p-5 bg-slate-100">
+      <main class="flex-1 overflow-y-auto p-4 sm:p-5 bg-slate-100 relative print:p-0 print:bg-white print:overflow-visible print:block">
         <NuxtPage />
         
         <!-- Footer Info -->
-        <div class="mt-10 pt-4 border-t border-slate-200 text-center pb-4">
+        <div class="mt-10 pt-4 border-t border-slate-200 text-center pb-4 print:hidden">
             <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Created by <span class="text-emerald-600">SMK-Yatindo</span></p>
         </div>
       </main>
@@ -114,6 +137,13 @@ import { useRouter, useRoute } from 'vue-router'
 const router = useRouter()
 const route = useRoute()
 const sidebarOpen = ref(false)
+const profileDropdownOpen = ref(false)
+
+const { sekolah, fetchSekolah } = useSekolah()
+
+onMounted(() => {
+  fetchSekolah()
+})
 
 const userCookie = useCookie('user_profile')
 const userProfile = computed(() => {
@@ -149,3 +179,18 @@ const handleLogout = async () => {
   }
 }
 </script>
+
+<style scoped>
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.15s ease-out forwards;
+}
+
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+.custom-scrollbar:hover::-webkit-scrollbar-thumb { background: #64748b; }
+</style>

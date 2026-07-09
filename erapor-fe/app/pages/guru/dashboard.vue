@@ -1,146 +1,154 @@
 <template>
-  <div class="animate-fadeIn max-w-7xl mx-auto space-y-6">
-    <!-- Header Welcome -->
-    <div class="bg-gradient-to-r from-sky-600 to-indigo-700 rounded-3xl p-8 sm:p-10 text-white shadow-lg relative overflow-hidden">
-      <!-- Dekorasi Lingkaran -->
-      <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/4"></div>
+  <div class="h-full flex flex-col min-h-0 bg-slate-50">
+    <!-- Layout 2 Panel Dock & Flow -->
+    <div class="flex-1 flex flex-col xl:flex-row overflow-hidden relative">
       
-      <div class="relative z-10">
-        <h1 class="text-3xl sm:text-4xl font-black tracking-tight mb-2">Selamat Datang, {{ dashboardData?.user?.name || 'Bapak/Ibu Guru' }}!</h1>
-        <p class="text-sky-100 text-lg font-medium mb-6">
-          Tahun Ajaran <span class="font-bold text-white">{{ dashboardData?.akademik?.tahun_ajaran }}</span> — 
-          <span class="font-bold text-white">{{ dashboardData?.akademik?.periode }}</span>
-        </p>
-        
-        <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-bold shadow-sm">
-          <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
-          Peran: Guru Mata Pelajaran <span v-if="dashboardData?.is_walas" class="text-emerald-300 ml-1">& Wali Kelas</span>
-        </div>
-      </div>
-    </div>
+      <!-- Panel Dock Kiri -->
+      <div class="xl:w-[360px] w-full bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full xl:z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] overflow-y-auto custom-scrollbar">
+        <div class="p-6 space-y-6">
+          
+          <!-- Welcome Widget -->
+          <div class="bg-gradient-to-br from-sky-600 to-indigo-800 rounded-2xl p-5 shadow-sm text-white relative overflow-hidden">
+            <div class="relative z-10">
+              <h2 class="text-lg font-extrabold mb-1">Halo, {{ dashboardData?.user?.name?.split(' ')[0] || 'Bapak/Ibu' }} 👋</h2>
+              <p class="text-sky-100 text-xs leading-relaxed">
+                Tahun Ajaran <span class="font-bold text-white bg-indigo-900/50 px-1.5 py-0.5 rounded">{{ dashboardData?.akademik?.tahun_ajaran || '...' }}</span>
+                <br>Periode: <span class="font-bold text-white">{{ dashboardData?.akademik?.periode || '...' }}</span>
+              </p>
+            </div>
+            <div class="absolute right-0 bottom-0 opacity-10">
+              <svg class="w-24 h-24 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 14l9-5-9-5-9 5 9 5z"></path><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path></svg>
+            </div>
+          </div>
 
-    <!-- Loading State -->
-    <div v-if="isLoading" class="flex justify-center py-12">
-      <div class="animate-spin rounded-full h-10 w-10 border-4 border-slate-200 border-t-sky-600"></div>
-    </div>
+          <!-- Peran Status Widget -->
+          <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100">
+            <h3 class="text-xs font-bold text-slate-700 uppercase tracking-widest mb-4 flex items-center"><span class="mr-2">🛡️</span> Hak Akses Aktif</h3>
+            <div class="space-y-3">
+              <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex items-center gap-3 border-l-4 border-l-sky-500">
+                <div class="w-8 h-8 rounded-full bg-sky-100 text-sky-600 flex items-center justify-center text-sm font-black">GM</div>
+                <div>
+                  <p class="font-bold text-slate-800 text-[11px] uppercase tracking-wider">Guru Mata Pelajaran</p>
+                  <p class="text-[9px] text-slate-500 mt-0.5">Akses input nilai formatif & sumatif</p>
+                </div>
+              </div>
 
-    <!-- Konten Dashboard -->
-    <div v-else class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-      
-      <!-- STATISTIK (Minimalis) -->
-      <div class="lg:col-span-12 grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <!-- Card 1 -->
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/60 flex items-center gap-5 hover:shadow-md transition-shadow">
-          <div class="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
-            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+            </div>
           </div>
-          <div>
-            <div class="text-3xl font-black text-slate-800">{{ dashboardData?.stats?.total_kelas || 0 }}</div>
-            <div class="text-sm font-bold text-slate-500 uppercase tracking-wider mt-1">Kelas Diajar</div>
-          </div>
-        </div>
-        
-        <!-- Card 2 -->
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/60 flex items-center gap-5 hover:shadow-md transition-shadow">
-          <div class="w-14 h-14 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
-            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-          </div>
-          <div>
-            <div class="text-3xl font-black text-slate-800">{{ dashboardData?.stats?.total_mapel || 0 }}</div>
-            <div class="text-sm font-bold text-slate-500 uppercase tracking-wider mt-1">Mata Pelajaran</div>
-          </div>
-        </div>
 
-        <!-- Card 3 -->
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/60 flex items-center gap-5 hover:shadow-md transition-shadow">
-          <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-          </div>
-          <div>
-            <div class="text-3xl font-black text-slate-800">{{ dashboardData?.stats?.total_siswa || 0 }}</div>
-            <div class="text-sm font-bold text-slate-500 uppercase tracking-wider mt-1">Total Siswa</div>
-          </div>
         </div>
       </div>
 
-      <!-- AKSI CEPAT -->
-      <div class="lg:col-span-12">
-        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4 ml-1">Akses Cepat</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <!-- Tombol Formatif -->
-          <NuxtLink to="/guru/formatif/nilai" class="group bg-white rounded-xl p-5 border border-slate-200/60 shadow-sm hover:border-sky-300 hover:shadow-md hover:shadow-sky-100 transition-all cursor-pointer block">
-            <div class="flex items-center justify-between mb-3">
-              <div class="w-10 h-10 rounded-full bg-sky-50 flex items-center justify-center text-sky-600 group-hover:bg-sky-500 group-hover:text-white transition-colors">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-              </div>
-              <svg class="w-5 h-5 text-slate-300 group-hover:text-sky-500 transition-colors transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-            </div>
-            <div class="font-bold text-slate-800 mb-1">Input Nilai Formatif</div>
-            <div class="text-xs font-medium text-slate-500">Isi capaian harian tiap TP</div>
-          </NuxtLink>
+      <!-- Panel Flow Kanan -->
+      <div class="flex-1 bg-slate-50 flex flex-col h-full min-w-0 overflow-y-auto custom-scrollbar">
+        
+        <!-- Loading State -->
+        <div v-if="isLoading" class="flex-grow flex items-center justify-center py-12">
+          <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-sky-600"></div>
+        </div>
 
-          <!-- Tombol Sumatif -->
-          <NuxtLink to="/guru/sumatif/nilai" class="group bg-white rounded-xl p-5 border border-slate-200/60 shadow-sm hover:border-indigo-300 hover:shadow-md hover:shadow-indigo-100 transition-all cursor-pointer block">
-            <div class="flex items-center justify-between mb-3">
-              <div class="w-10 h-10 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600 group-hover:bg-indigo-500 group-hover:text-white transition-colors">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-              </div>
-              <svg class="w-5 h-5 text-slate-300 group-hover:text-indigo-500 transition-colors transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-            </div>
-            <div class="font-bold text-slate-800 mb-1">Input Nilai Sumatif</div>
-            <div class="text-xs font-medium text-slate-500">Isi nilai akhir (STS / SAS)</div>
-          </NuxtLink>
-
-          <!-- Tombol Rekapitulasi -->
-          <NuxtLink to="/guru/sumatif/rekap" class="group bg-white rounded-xl p-5 border border-slate-200/60 shadow-sm hover:border-emerald-300 hover:shadow-md hover:shadow-emerald-100 transition-all cursor-pointer block relative overflow-hidden">
-            <!-- Ribbon / Badge Highlight -->
-            <div class="absolute top-0 right-0 bg-emerald-500 text-white text-[10px] font-black px-3 py-1 rounded-bl-lg">REKOMENDASI</div>
+        <div v-else class="p-6 lg:p-8 space-y-6 max-w-7xl mx-auto w-full">
             
-            <div class="flex items-center justify-between mb-3">
-              <div class="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600 group-hover:bg-emerald-500 group-hover:text-white transition-colors">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-              </div>
-              <svg class="w-5 h-5 text-slate-300 group-hover:text-emerald-500 transition-colors transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            <!-- STATISTIK UTAMA (3 COLUMNS) -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <!-- Card 1 -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center gap-4 transition-all hover:-translate-y-1 hover:shadow-md hover:border-indigo-200">
+                    <div class="h-12 w-12 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 text-2xl border border-indigo-100">🏫</div>
+                    <div>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Kelas Diajar</p>
+                        <p class="text-2xl font-black text-slate-800 leading-none">{{ dashboardData?.stats?.total_kelas || 0 }}</p>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center gap-4 transition-all hover:-translate-y-1 hover:shadow-md hover:border-sky-200">
+                    <div class="h-12 w-12 rounded-xl bg-sky-50 flex items-center justify-center text-sky-600 text-2xl border border-sky-100">📚</div>
+                    <div>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Mata Pelajaran</p>
+                        <p class="text-2xl font-black text-slate-800 leading-none">{{ dashboardData?.stats?.total_mapel || 0 }}</p>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center gap-4 transition-all hover:-translate-y-1 hover:shadow-md hover:border-emerald-200">
+                    <div class="h-12 w-12 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 text-2xl border border-emerald-100">👥</div>
+                    <div>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Total Siswa</p>
+                        <p class="text-2xl font-black text-slate-800 leading-none">{{ dashboardData?.stats?.total_siswa || 0 }}</p>
+                    </div>
+                </div>
             </div>
-            <div class="font-bold text-slate-800 mb-1">Rekap Nilai Semua Mapel</div>
-            <div class="text-xs font-medium text-slate-500">Cetak & pantau nilai akhir</div>
-          </NuxtLink>
+
+            <!-- AKSI CEPAT -->
+            <div>
+              <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center">⚡ Akses Cepat Guru</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Tombol Formatif -->
+                <NuxtLink to="/guru/formatif/nilai" class="group bg-white rounded-2xl p-5 border border-slate-200/60 shadow-sm hover:border-sky-300 hover:shadow-md hover:shadow-sky-100 transition-all cursor-pointer block relative overflow-hidden">
+                  <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 rounded-xl bg-sky-50 flex items-center justify-center text-sky-600 group-hover:bg-sky-500 group-hover:text-white transition-colors border border-sky-100 group-hover:border-sky-500 shadow-sm">
+                      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                    </div>
+                    <svg class="w-5 h-5 text-slate-300 group-hover:text-sky-500 transition-colors transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                  </div>
+                  <div class="font-black text-slate-800 text-sm mb-1 uppercase tracking-wide">Input Formatif</div>
+                  <div class="text-[11px] font-medium text-slate-500">Isi capaian harian tiap Tujuan Pembelajaran</div>
+                </NuxtLink>
+
+                <!-- Tombol Sumatif -->
+                <NuxtLink to="/guru/sumatif/nilai" class="group bg-white rounded-2xl p-5 border border-slate-200/60 shadow-sm hover:border-indigo-300 hover:shadow-md hover:shadow-indigo-100 transition-all cursor-pointer block relative overflow-hidden">
+                  <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 group-hover:bg-indigo-500 group-hover:text-white transition-colors border border-indigo-100 group-hover:border-indigo-500 shadow-sm">
+                      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    </div>
+                    <svg class="w-5 h-5 text-slate-300 group-hover:text-indigo-500 transition-colors transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                  </div>
+                  <div class="font-black text-slate-800 text-sm mb-1 uppercase tracking-wide">Input Sumatif</div>
+                  <div class="text-[11px] font-medium text-slate-500">Isi nilai akhir ujian (STS / SAS)</div>
+                </NuxtLink>
+
+                <!-- Tombol Rekapitulasi -->
+                <NuxtLink to="/guru/sumatif/rekap" class="group bg-white rounded-2xl p-5 border border-slate-200/60 shadow-sm hover:border-emerald-300 hover:shadow-md hover:shadow-emerald-100 transition-all cursor-pointer block relative overflow-hidden">
+                  <div class="absolute top-0 right-0 bg-emerald-500 text-white text-[9px] font-black px-2.5 py-1 rounded-bl-xl shadow-sm">REKOMENDASI</div>
+                  
+                  <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 group-hover:bg-emerald-500 group-hover:text-white transition-colors border border-emerald-100 group-hover:border-emerald-500 shadow-sm">
+                      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    </div>
+                    <svg class="w-5 h-5 text-slate-300 group-hover:text-emerald-500 transition-colors transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                  </div>
+                  <div class="font-black text-slate-800 text-sm mb-1 uppercase tracking-wide">Rekap Mapel</div>
+                  <div class="text-[11px] font-medium text-slate-500">Cetak leger dan pantau nilai akhir kelas</div>
+                </NuxtLink>
+              </div>
+            </div>
+
+
+            
         </div>
       </div>
-
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { computed } from 'vue'
 
 definePageMeta({ layout: "guru", middleware: "guru", title: 'Dashboard Guru' })
 
-const dashboardData = ref(null)
-const isLoading = ref(true)
 const tokenCookie = useCookie('auth_token')
 
-const fetchDashboardData = async () => {
-  try {
-    const res = await $fetch('http://localhost:8000/api/guru/dashboard', {
-      headers: {
-        'Authorization': `Bearer ${tokenCookie.value}`,
-        'Accept': 'application/json'
-      }
-    })
-    
-    if (res.success) {
-      dashboardData.value = res.data
-    }
-  } catch (error) {
-    console.error('Failed to fetch dashboard data:', error)
-  } finally {
-    isLoading.value = false
+const { data: response, pending: isLoading } = await useFetch('http://localhost:8000/api/guru/dashboard', {
+  headers: {
+    'Authorization': `Bearer ${tokenCookie.value}`,
+    'Accept': 'application/json'
   }
-}
-
-onMounted(() => {
-  fetchDashboardData()
 })
+
+const dashboardData = computed(() => response.value?.data || null)
 </script>
+
+<style scoped>
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+</style>

@@ -22,6 +22,7 @@ class Siswa extends Model
         'tanggal_masuk', 'kelas_masuk', 'tanggal_keluar', 'alasan_keluar',
         'no_sttb_smk', 'tgl_sttb_smk',
         'tempat_pkl', 'alamat_pkl', 'tgl_mulai_pkl', 'tgl_selesai_pkl',
+        'is_biodata_locked', 'status_siswa'
     ];
 
     // ==========================================
@@ -85,5 +86,10 @@ class Siswa extends Model
     public function kokurikulers()
     {
         return $this->hasMany(Kokurikuler::class, 'siswa_id');
+    }
+
+    public function sumatifNilai()
+    {
+        return $this->hasMany(SumatifNilai::class, 'siswa_id');
     }
 }

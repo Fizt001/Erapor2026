@@ -8,13 +8,22 @@ use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\PenangananPelanggaran;
 use App\Models\TahunAjaran;
+use App\Models\Referensi;
 use Illuminate\Support\Facades\Auth;
 
 class BkPenangananController extends Controller
 {
     public function index(Request $request)
     {
-        $kelases = Kelas::orderBy('tingkat')->orderBy('nama_kelas')->get();
+        $tahunAktif = TahunAjaran::where('is_aktif', true)->first();
+        $kelases = [];
+        $kategoriList = [];
+        if ($tahunAktif) {
+            $kelases = Kelas::where('tahun_ajaran_id', $tahunAktif->id)
+                            ->withCount('siswas')
+                            ->orderBy('tingkat')->orderBy('nama_kelas')->get();
+            $kategoriList = Referensi::where('jenis', 'kategori_penanganan')->get();
+        }
         $selectedKelasId = $request->kelas_id;
 
         $siswas = [];
@@ -38,7 +47,9 @@ class BkPenangananController extends Controller
             'data' => [
                 'kelases' => $kelases,
                 'selectedKelasId' => $selectedKelasId,
-                'siswas' => $siswas
+                'siswas' => $siswas,
+                'tahun_aktif' => $tahunAktif,
+                'kategoriList' => $kategoriList
             ]
         ]);
     }
@@ -47,7 +58,7 @@ class BkPenangananController extends Controller
     {
         $request->validate([
             'siswa_id' => 'required|exists:siswa,id',
-            'kategori' => 'required|in:Bimbingan Walas,SP1,SP2,SP3',
+            'kategori' => 'required|string',
             'deskripsi_masalah' => 'required|string',
             'tindakan_penyelesaian' => 'required|string',
             'status' => 'required|in:Proses,Selesai'
@@ -78,7 +89,7 @@ class BkPenangananController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'kategori' => 'required|in:Bimbingan Walas,SP1,SP2,SP3',
+            'kategori' => 'required|string',
             'deskripsi_masalah' => 'required|string',
             'tindakan_penyelesaian' => 'required|string',
             'status' => 'required|in:Proses,Selesai'

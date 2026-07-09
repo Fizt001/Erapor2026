@@ -6,12 +6,40 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Kelas;
 use App\Models\Siswa;
+use App\Models\TahunAjaran;
+use App\Models\Titimangsa;
 
 class BkBukuKasusController extends Controller
 {
     public function index(Request $request)
     {
-        $kelases = Kelas::orderBy('tingkat')->orderBy('nama_kelas')->get();
+        $tahunAktif = TahunAjaran::where('is_aktif', true)->first();
+        $titimangsaAktif = Titimangsa::where('is_aktif', true)->first();
+        
+        $kelases = [];
+        $titimangsas = collect();
+        if ($tahunAktif) {
+            $titimangsas = Titimangsa::with('tahunAjaran')
+                ->where('tahun_ajaran_id', $tahunAktif->id)
+                ->where(function($q) {
+                    $q->where('nama_periode', 'like', '%ASAS%')
+                      ->orWhere('nama_periode', 'like', '%ASAT%')
+                      ->orWhere('nama_periode', 'like', '%PSAS%')
+                      ->orWhere('nama_periode', 'like', '%PSAT%')
+                      ->orWhere('nama_periode', 'like', '%PAS%')
+                      ->orWhere('nama_periode', 'like', '%PAT%')
+                      ->orWhere('nama_periode', 'like', '%Akhir%');
+                })
+                ->orderBy('id', 'asc')
+                ->get();
+        }
+            
+        if ($tahunAktif) {
+            $kelases = Kelas::where('tahun_ajaran_id', $tahunAktif->id)
+                            ->withCount('siswas')
+                            ->with('waliKelas.guru')
+                            ->orderBy('tingkat')->orderBy('nama_kelas')->get();
+        }
         $selectedKelasId = $request->kelas_id;
 
         $siswas = [];
@@ -19,7 +47,10 @@ class BkBukuKasusController extends Controller
             $siswas = Siswa::with([
                 'user', 
                 'poinLogs.pelanggaran', 
-                'penanganans.guru'
+                'poinLogs.tahunAjaran',
+                'poinLogs.titimangsa',
+                'penanganans.guru',
+                'penanganans.tahunAjaran'
             ])
             ->where('kelas_id', $selectedKelasId)
             ->get()
@@ -39,7 +70,10 @@ class BkBukuKasusController extends Controller
             'success' => true,
             'data' => [
                 'kelases' => $kelases,
-                'siswas' => $siswas
+                'siswas' => $siswas,
+                'tahun_aktif' => $tahunAktif,
+                'titimangsa_aktif' => $titimangsaAktif,
+                'titimangsas' => $titimangsas
             ]
         ]);
     }

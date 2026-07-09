@@ -13,6 +13,7 @@ class CatatanWaliKelas extends Model
         'tahun_ajaran_id',
         'titimangsa_id',
         'catatan',
+        'rekomendasi_kenaikan',
     ];
 
     public function siswa()

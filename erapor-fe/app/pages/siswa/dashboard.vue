@@ -1,5 +1,5 @@
 <template>
-  <div class="animate-fadeIn max-w-5xl mx-auto pb-12 mt-4">
+  <div class="animate-fadeIn max-w-7xl mx-auto pb-12 mt-4">
     <!-- Header Welcome -->
     <div class="mb-8">
       <h2 class="text-2xl font-black text-slate-800 tracking-tight">Dashboard Siswa</h2>
@@ -8,7 +8,7 @@
 
     <!-- Loading State -->
     <div v-if="isLoading" class="flex flex-col items-center justify-center py-20">
-      <div class="w-10 h-10 border-4 border-emerald-200 border-t-emerald-600 rounded-full animate-spin"></div>
+      <div class="w-10 h-10 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin"></div>
       <p class="mt-4 text-sm font-semibold text-slate-500 animate-pulse">Memuat data dashboard...</p>
     </div>
     
@@ -21,7 +21,7 @@
       </div>
       <h3 class="text-lg font-bold text-slate-800">Gagal Memuat Data</h3>
       <p class="text-sm text-slate-500 mt-1 max-w-md">{{ errorMessage }}</p>
-      <button @click="loadDashboard" class="mt-4 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-bold shadow-sm hover:bg-emerald-700">Coba Lagi</button>
+      <button @click="loadDashboard" class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-bold shadow-sm hover:bg-indigo-700">Coba Lagi</button>
     </div>
 
     <!-- Content -->
@@ -30,7 +30,7 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         
         <!-- Kartu Identitas -->
-        <div class="bg-gradient-to-br from-emerald-600 to-teal-800 rounded-2xl shadow-lg p-6 text-white relative overflow-hidden md:col-span-2 flex items-center gap-6">
+        <div class="bg-gradient-to-br from-indigo-600 to-violet-800 rounded-2xl shadow-lg p-6 text-white relative overflow-hidden md:col-span-2 flex items-center gap-6">
           <div class="absolute top-0 right-0 -mr-8 -mt-8 w-40 h-40 rounded-full bg-white opacity-10"></div>
           
           <div class="w-20 h-20 bg-white/20 rounded-full border-4 border-white/30 flex-shrink-0 flex items-center justify-center overflow-hidden">
@@ -59,8 +59,8 @@
           </div>
           <div class="mb-4">
             <p class="text-[11px] font-black text-slate-400 uppercase tracking-wider mb-1">Periode Aktif</p>
-            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-700 text-xs font-bold">
-              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-indigo-50 text-indigo-700 text-xs font-bold">
+              <span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
               {{ dashboardData.periode.nama }}
             </div>
           </div>
@@ -111,22 +111,53 @@
               </div>
               <div>
                 <h3 class="text-sm font-black text-slate-800">Rekap Absensi</h3>
-                <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Tahun {{ dashboardData.tahun_ajaran.nama }}</p>
+                <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">TA {{ dashboardData.tahun_ajaran.nama }}</p>
               </div>
             </div>
 
-            <div class="grid grid-cols-3 gap-3">
-              <div class="bg-slate-50 rounded-xl p-3 text-center border border-slate-100">
-                <p class="text-2xl font-black text-slate-700">{{ dashboardData.rekap.absensi.s }}</p>
-                <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mt-1">Sakit</p>
+            <div class="space-y-4">
+              <!-- Semester Ganjil -->
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">SMT Ganjil</span>
+                  <span class="text-[9px] font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">Bln 7-12</span>
+                </div>
+                <div class="grid grid-cols-3 gap-2">
+                  <div class="bg-slate-50 rounded-lg py-2 px-1 text-center border border-slate-100 shadow-sm">
+                    <p class="text-lg font-black text-slate-700 leading-none">{{ dashboardData.rekap.absensi_ganjil.s }}</p>
+                    <p class="text-[9px] font-bold text-slate-500 uppercase tracking-wider mt-1">Sakit</p>
+                  </div>
+                  <div class="bg-slate-50 rounded-lg py-2 px-1 text-center border border-slate-100 shadow-sm">
+                    <p class="text-lg font-black text-slate-700 leading-none">{{ dashboardData.rekap.absensi_ganjil.i }}</p>
+                    <p class="text-[9px] font-bold text-slate-500 uppercase tracking-wider mt-1">Izin</p>
+                  </div>
+                  <div class="bg-rose-50 rounded-lg py-2 px-1 text-center border border-rose-100 shadow-sm">
+                    <p class="text-lg font-black text-rose-600 leading-none">{{ dashboardData.rekap.absensi_ganjil.a }}</p>
+                    <p class="text-[9px] font-bold text-rose-500 uppercase tracking-wider mt-1">Alpha</p>
+                  </div>
+                </div>
               </div>
-              <div class="bg-slate-50 rounded-xl p-3 text-center border border-slate-100">
-                <p class="text-2xl font-black text-slate-700">{{ dashboardData.rekap.absensi.i }}</p>
-                <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mt-1">Izin</p>
-              </div>
-              <div class="bg-red-50 rounded-xl p-3 text-center border border-red-100">
-                <p class="text-2xl font-black text-red-600">{{ dashboardData.rekap.absensi.a }}</p>
-                <p class="text-[10px] font-bold text-red-500 uppercase tracking-wider mt-1">Alpha</p>
+
+              <!-- Semester Genap -->
+              <div class="pt-4 border-t border-slate-100">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">SMT Genap</span>
+                  <span class="text-[9px] font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">Bln 1-6</span>
+                </div>
+                <div class="grid grid-cols-3 gap-2">
+                  <div class="bg-slate-50 rounded-lg py-2 px-1 text-center border border-slate-100 shadow-sm">
+                    <p class="text-lg font-black text-slate-700 leading-none">{{ dashboardData.rekap.absensi_genap.s }}</p>
+                    <p class="text-[9px] font-bold text-slate-500 uppercase tracking-wider mt-1">Sakit</p>
+                  </div>
+                  <div class="bg-slate-50 rounded-lg py-2 px-1 text-center border border-slate-100 shadow-sm">
+                    <p class="text-lg font-black text-slate-700 leading-none">{{ dashboardData.rekap.absensi_genap.i }}</p>
+                    <p class="text-[9px] font-bold text-slate-500 uppercase tracking-wider mt-1">Izin</p>
+                  </div>
+                  <div class="bg-rose-50 rounded-lg py-2 px-1 text-center border border-rose-100 shadow-sm">
+                    <p class="text-lg font-black text-rose-600 leading-none">{{ dashboardData.rekap.absensi_genap.a }}</p>
+                    <p class="text-[9px] font-bold text-rose-500 uppercase tracking-wider mt-1">Alpha</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -149,7 +180,7 @@
               <div class="text-4xl font-black text-slate-800">{{ dashboardData.rekap.total_poin }} <span class="text-sm text-slate-500 font-bold ml-1">poin</span></div>
               <div v-if="dashboardData.rekap.total_poin > 50" class="text-xs font-bold text-red-600 px-2 py-1 bg-red-100 rounded-md">Perhatian</div>
               <div v-else-if="dashboardData.rekap.total_poin > 0" class="text-xs font-bold text-orange-600 px-2 py-1 bg-orange-100 rounded-md">Peringatan</div>
-              <div v-else class="text-xs font-bold text-emerald-600 px-2 py-1 bg-emerald-100 rounded-md">Bersih</div>
+              <div v-else class="text-xs font-bold text-indigo-600 px-2 py-1 bg-indigo-100 rounded-md">Bersih</div>
             </div>
           </div>
 
@@ -192,34 +223,15 @@ definePageMeta({
   title: 'Dashboard Siswa'
 })
 
-const dashboardData = ref(null)
-const isLoading = ref(true)
-const errorMessage = ref('')
+const tokenCookie = useCookie('auth_token')
+const { data: response, pending: isLoading, error } = await useFetch('http://localhost:8000/api/siswa/dashboard', {
+  headers: {
+    'Authorization': `Bearer ${tokenCookie.value}`
+  }
+})
 
-const loadDashboard = async () => {
-    isLoading.value = true
-    errorMessage.value = ''
-    try {
-        const token = useCookie('auth_token').value
-        
-        const res = await $fetch(`http://localhost:8000/api/siswa/dashboard`, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-
-        if (res.success) {
-            dashboardData.value = res.data
-        } else {
-            errorMessage.value = res.message || 'Respons API gagal tanpa pesan error.'
-        }
-    } catch (error) {
-        console.error("Gagal memuat dashboard:", error)
-        errorMessage.value = error.data?.message || 'Terjadi kesalahan jaringan atau server saat memuat dashboard.'
-    } finally {
-        isLoading.value = false
-    }
-}
+const dashboardData = computed(() => response.value?.data || null)
+const errorMessage = computed(() => error.value?.message || (!response.value?.success && response.value?.message ? response.value?.message : ''))
 
 const chartData = computed(() => {
   if (!dashboardData.value || !dashboardData.value.rekap.grafik_akademis) return { labels: [], datasets: [] };
@@ -230,11 +242,11 @@ const chartData = computed(() => {
     datasets: [
       {
         label: 'Rata-rata Nilai Rapor',
-        backgroundColor: 'rgba(16, 185, 129, 0.2)', // Emerald 500 with opacity
-        borderColor: '#10b981', // Emerald 500
+        backgroundColor: 'rgba(99, 102, 241, 0.2)', // Indigo 500 with opacity
+        borderColor: '#6366f1', // Indigo 500
         pointBackgroundColor: '#fff',
-        pointBorderColor: '#059669', // Emerald 600
-        pointHoverBackgroundColor: '#10b981',
+        pointBorderColor: '#4f46e5', // Indigo 600
+        pointHoverBackgroundColor: '#6366f1',
         pointHoverBorderColor: '#fff',
         pointRadius: 5,
         pointHoverRadius: 7,
@@ -299,9 +311,7 @@ const chartOptions = {
   },
 }
 
-onMounted(() => {
-    loadDashboard()
-})
+
 </script>
 
 <style scoped>

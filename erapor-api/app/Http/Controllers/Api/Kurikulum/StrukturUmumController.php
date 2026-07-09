@@ -84,4 +84,20 @@ class StrukturUmumController extends Controller
             'message' => 'Mapel berhasil dikeluarkan dari struktur!'
         ]);
     }
+
+    public function strukturUpdate(Request $request, $id)
+    {
+        $request->validate([
+            'jp' => 'required|integer|min:1',
+        ]);
+
+        $struktur = StrukturKurikulum::findOrFail($id);
+        $struktur->update(['jp' => $request->jp]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'JP berhasil diperbarui!',
+            'data' => $struktur
+        ]);
+    }
 }

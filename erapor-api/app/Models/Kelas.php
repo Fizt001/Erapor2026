@@ -10,12 +10,18 @@ use Illuminate\Database\Eloquent\Relations\HasOne; // <--- Tambahkan ini
 class Kelas extends Model
 {
     protected $fillable = [
+        'tahun_ajaran_id',
         'kejuruan_id', 
         'kurikulum_id',
         'tingkat', 
         'nama_kelas',
         // 'wali_kelas_id' // Sebaiknya ini ditinggalkan karena kita pakai tabel WaliKelas
     ];
+
+    public function tahunAjaran(): BelongsTo
+    {
+        return $this->belongsTo(TahunAjaran::class);
+    }
 
     public function kejuruan(): BelongsTo
     {

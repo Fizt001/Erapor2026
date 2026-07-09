@@ -21,21 +21,23 @@ class WalasController extends Controller
     private function getWalasContext()
     {
         $user = Auth::user();
-        
-        $walas = WaliKelas::where('guru_id', $user->id)->first();
+        $tahunAktif = TahunAjaran::where('is_aktif', true)->first();
+        if (!$tahunAktif) return null;
+
+        $walas = WaliKelas::where('guru_id', $user->id)
+            ->whereHas('kelas', function($query) use ($tahunAktif) {
+                $query->where('tahun_ajaran_id', $tahunAktif->id);
+            })
+            ->first();
+            
         if (!$walas) {
             return null;
         }
-
-        $tahunAktif = TahunAjaran::where('is_aktif', true)->first();
-        if (!$tahunAktif) return null;
 
         $titimangsaAktif = Titimangsa::where('tahun_ajaran_id', $tahunAktif->id)
             ->where('is_aktif', true)
             ->first();
             
-        if (!$titimangsaAktif) return null;
-
         return [
             'kelas_id' => $walas->kelas_id,
             'tahun_ajaran' => $tahunAktif,
@@ -56,9 +58,13 @@ class WalasController extends Controller
         $kelasId = $context['kelas_id'];
 
         // Get all students in the class
-        $siswas = Siswa::with('user')->where('kelas_id', $kelasId)->get()->sortBy(function($siswa) {
-            return $siswa->user ? $siswa->user->name : '';
-        })->values();
+        $siswas = Siswa::with('user')
+            ->where('kelas_id', $kelasId)
+            ->get()
+            ->sortBy(function($siswa) {
+                return $siswa->user ? $siswa->user->name : '';
+            })
+            ->values();
 
         $fields = [
             'nis', 'nisn', 'jenis_kelamin', 'tempat_lahir', 'tanggal_lahir', 
@@ -125,6 +131,7 @@ class WalasController extends Controller
                 'tgl_selesai_pkl' => $siswa->tgl_selesai_pkl,
                 
                 'persentase_lengkap' => $persentase,
+                'is_biodata_locked' => $siswa->is_biodata_locked,
             ];
         });
 
@@ -165,13 +172,45 @@ class WalasController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Biodata '.$siswa->user->name.' berhasil diperbarui!'
+                'message' => 'Biodata berhasil diperbarui!'
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
                 'success' => false,
-                'message' => 'Terjadi kesalahan saat menyimpan biodata: ' . $e->getMessage()
+                'message' => 'Gagal memperbarui biodata: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Lock or unlock biodata for all students in the class
+     */
+    public function lockAllBiodata(Request $request)
+    {
+        $context = $this->getWalasContext();
+        if (!$context) {
+            return response()->json(['success' => false, 'message' => 'Anda bukan wali kelas aktif saat ini.'], 403);
+        }
+
+        $request->validate([
+            'is_locked' => 'required|boolean'
+        ]);
+
+        $kelasId = $context['kelas_id'];
+        $isLocked = $request->is_locked;
+
+        try {
+            Siswa::where('kelas_id', $kelasId)->update(['is_biodata_locked' => $isLocked]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Status kunci biodata berhasil diperbarui untuk seluruh kelas!'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal memperbarui status kunci biodata: ' . $e->getMessage()
             ], 500);
         }
     }

@@ -1,217 +1,267 @@
 <template>
-  <div class="animate-fadeIn max-w-7xl mx-auto pb-12 mt-4 relative">
-    
-    <!-- HEADER & BACK BUTTON -->
-    <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <NuxtLink to="/admin/kelas" class="inline-flex items-center gap-3 px-6 py-3 bg-slate-800 text-white rounded-2xl hover:bg-black transition-all shadow-lg active:scale-95 group w-fit">
-            <span class="group-hover:-translate-x-1 transition-transform">⬅️</span>
-            <span class="text-[10px] font-black uppercase tracking-widest">Kembali ke Master Kelas</span>
-        </NuxtLink>
-        
-        <div class="text-left md:text-right">
-            <h2 v-if="isLoading" class="w-48 h-6 bg-slate-200 animate-pulse rounded ml-auto"></h2>
-            <h2 v-else class="text-sm font-black uppercase tracking-[0.3em] text-emerald-700 drop-shadow-sm">
-                {{ kelas?.nama_kelas || 'Memuat...' }}
-            </h2>
-            <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">Penyusunan Anggota Rombel</p>
-        </div>
-    </div>
-
-    <!-- MOBILE VIEW TABS -->
-    <div class="xl:hidden mb-8 mt-2">
-      <div class="grid grid-cols-2 gap-3">
-        <button type="button" @click="activeTab = 'form'" :class="activeTab === 'form' ? 'bg-gradient-to-br from-indigo-500 to-indigo-600 text-white shadow-md shadow-indigo-500/20 ring-2 ring-indigo-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="rounded-2xl flex flex-col items-center justify-center py-5 transition-all active:scale-95">
-          <span class="text-3xl mb-2 transition-transform" :class="activeTab === 'form' ? 'scale-110' : ''">📥</span>
-          <span class="text-[10px] font-black uppercase tracking-wider">Tarik User</span>
+  <div class="h-full flex flex-col min-h-0 bg-slate-50">
+    <!-- Layout 2 Panel Dock & Flow -->
+    <div class="flex-1 flex flex-col xl:flex-row overflow-hidden relative">
+      <!-- MOBILE VIEW TABS -->
+      <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-2 grid grid-cols-2 gap-2 z-20">
+        <button type="button" @click="activeTab = 'table'"
+          :class="activeTab === 'table' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
+          class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
+          <span class="text-lg mb-0.5 transition-transform" :class="activeTab === 'table' ? 'scale-110' : ''">🧑‍🎓</span>
+          <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">Anggota Kelas</span>
         </button>
-        <button type="button" @click="activeTab = 'table'" :class="activeTab === 'table' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="rounded-2xl flex flex-col items-center justify-center py-5 transition-all active:scale-95">
-          <span class="text-3xl mb-2 transition-transform" :class="activeTab === 'table' ? 'scale-110' : ''">📋</span>
-          <span class="text-[10px] font-black uppercase tracking-wider">Daftar Anggota</span>
+        <button type="button" @click="activeTab = 'form'"
+          :class="activeTab === 'form' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
+          class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
+          <span class="text-lg mb-0.5 transition-transform" :class="activeTab === 'form' ? 'scale-110' : ''">📥</span>
+          <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">Tarik User</span>
         </button>
       </div>
-    </div>
 
-    <!-- MAIN GRID LAYOUT -->
-    <div class="grid grid-cols-1 xl:grid-cols-5 gap-8 items-start">
-      
-      <!-- ==============================================
-           KIRI: PANEL TARIK USER - xl:col-span-2 (40%)
-           ============================================== -->
-      <div class="xl:col-span-2 space-y-6 xl:sticky xl:top-6" v-show="isDesktop || activeTab === 'form'">
+      <!-- Panel Dock Kiri -->
+      <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', activeTab === 'form' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[60px]' : '']">
         
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden animate-slideUpFade">
-            <div class="p-6 bg-gradient-to-r from-slate-900 to-slate-800 border-b border-slate-100 flex items-center gap-4">
-                <span class="text-3xl">📥</span>
-                <div>
-                    <h3 class="text-sm font-black uppercase tracking-widest text-white">Tarik User</h3>
-                    <p class="text-[10px] text-indigo-400 font-semibold uppercase mt-0.5">Assign ke Kelas Ini</p>
+        <div class="p-6 shrink-0 z-10 relative">
+          <div class="bg-gradient-to-r from-teal-600 to-emerald-700 rounded-2xl p-5 border border-teal-500 shadow-sm relative overflow-hidden flex items-center gap-4">
+            <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10">📥</div>
+            <div class="relative z-10">
+                <h3 class="text-sm font-black uppercase tracking-widest text-white">Tarik User</h3>
+                <p class="text-[10px] text-teal-100 font-semibold uppercase mt-0.5">Tambah Siswa Ke Kelas</p>
+            </div>
+            <div class="absolute right-0 bottom-0 opacity-20 text-white">
+              <svg class="w-20 h-20 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-4 border-b border-slate-100 bg-slate-50/50 shrink-0">
+            <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 text-lg">🔍</span>
+                <input type="text" v-model="searchKandidat" placeholder="Cari nama siswa..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-slate-200/70 bg-white focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-xs font-bold text-slate-800 outline-none placeholder-slate-400">
+            </div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto custom-scrollbar bg-slate-50">
+            <div v-if="filteredKandidat.length === 0" class="text-center py-8">
+                <div class="w-12 h-12 bg-slate-200 rounded-full flex items-center justify-center mx-auto mb-3 text-xl opacity-50">📭</div>
+                <p class="text-xs font-bold text-slate-500">Tidak ada kandidat.</p>
+            </div>
+            <div v-else class="p-3 space-y-2">
+                <div v-for="u in filteredKandidat" :key="u.id" class="p-3 rounded-xl border-2 transition-all duration-200 cursor-pointer shadow-sm" :class="selectedUsers.includes(u.id) ? 'bg-emerald-50 border-emerald-200 shadow-emerald-500/10' : 'border-slate-200/60 bg-white hover:border-slate-300'" @click.self="toggleUserSelection(u.id)">
+                    <div class="flex items-start gap-2.5 pointer-events-none">
+                        <input type="checkbox" :value="u.id" v-model="selectedUsers" class="w-4 h-4 text-emerald-600 rounded border-slate-300 pointer-events-auto focus:ring-emerald-500 focus:ring-2 mt-0.5 shrink-0 transition-all">
+                        <div class="flex-1 min-w-0">
+                            <p class="text-xs font-black text-slate-800 truncate" :class="{'text-emerald-700': selectedUsers.includes(u.id)}">{{ u.name }}</p>
+                            <p class="text-[9px] font-bold text-slate-400 mt-0.5 truncate uppercase tracking-wider">{{ u.email || u.username || '-' }}</p>
+                            <div class="mt-2 pointer-events-auto">
+                                <input type="text" v-model="bulkNis[u.id]" @input="autoCheck(u.id)" placeholder="NIS (WAJIB)" class="w-full px-2.5 py-1.5 rounded-lg border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-[11px] font-bold text-slate-800 outline-none uppercase tracking-wider placeholder-slate-400">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
+
+        <div class="p-6 bg-slate-50 border-t border-slate-200 shrink-0">
+            <button @click="assignBulkUser" :disabled="isSaving || selectedUsers.length === 0" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-2xl shadow-lg shadow-emerald-500/30 hover:shadow-xl hover:shadow-emerald-500/40 hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2 uppercase tracking-widest text-xs">
+                <span v-if="isSaving" class="animate-spin text-lg">⏳</span>
+                <span v-else class="text-lg">💾</span>
+                <span>Tambahkan ({{ selectedUsers.length }})</span>
+            </button>
+        </div>
+      </div>
+
+      <!-- Panel Flow Kanan -->
+      <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0', !isDesktop && activeTab === 'form' ? 'hidden' : 'flex', !isDesktop ? 'pt-[60px]' : '']">
+        <div class="p-6 lg:p-8 max-w-7xl mx-auto w-full h-full flex flex-col relative z-0">
+          <div class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
             
-            <div class="p-6 md:p-8">
-                <div class="mb-4">
-                    <input type="text" v-model="searchKandidat" placeholder="Cari nama siswa..." class="w-full px-4 py-2.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all text-xs font-bold text-slate-800 outline-none">
+            <!-- Table Header & Filters -->
+            <div class="px-6 py-5 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0 z-10 sticky top-0 bg-white/80 backdrop-blur-xl">
+                <div class="flex items-center gap-4 w-full sm:w-auto">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-sm flex items-center justify-center text-2xl text-white hidden sm:flex">🧑‍🎓</div>
+                <div>
+                        <h3 class="text-sm font-black uppercase tracking-widest text-emerald-700">
+                            {{ kelas.tingkat ? `${kelas.tingkat} ${kelas.nama_kelas}` : 'Anggota Kelas' }}
+                        </h3>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">
+                            Tahun Ajaran: {{ kelas.tahun_ajaran?.tahun || '-' }} | Total: {{ students.filter(s => s.status_siswa === 'aktif').length }} Aktif
+                        </p>
+                    </div>
                 </div>
                 
-                <div class="space-y-2 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
-                    <div v-if="filteredKandidat.length === 0" class="text-center py-4 text-xs font-bold text-rose-500">
-                        Tidak ada kandidat ditemukan.
-                    </div>
-                    <div v-for="u in filteredKandidat" :key="u.id" class="flex items-center gap-2 p-2.5 rounded-2xl border border-slate-100 bg-white hover:bg-slate-50 transition-colors" :class="{'ring-2 ring-indigo-500 ring-offset-1': selectedUsers.includes(u.id)}">
-                        <input type="checkbox" :value="u.id" v-model="selectedUsers" class="w-4 h-4 text-indigo-600 rounded border-slate-300 cursor-pointer focus:ring-indigo-500 focus:ring-2">
-                        <div class="flex-1 min-w-0">
-                            <p class="text-xs font-black text-slate-700 truncate">{{ u.name }}</p>
-                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-0.5 truncate">{{ u.email || u.username || '-' }}</p>
+                <div class="flex items-center gap-3 w-full sm:w-auto">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <div class="relative">
+                            <input type="checkbox" v-model="showInactive" @change="fetchData" class="sr-only">
+                            <div class="block bg-slate-200 w-10 h-6 rounded-full transition-colors" :class="showInactive ? 'bg-emerald-500' : ''"></div>
+                            <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform" :class="showInactive ? 'transform translate-x-4' : ''"></div>
                         </div>
-                        <input type="text" v-model="bulkNis[u.id]" @input="autoCheck(u.id)" placeholder="NIS..." class="w-24 px-2 py-2 rounded-xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-[11px] font-black text-slate-800 text-center outline-none">
-                    </div>
-                </div>
-
-                <div class="pt-4 mt-4 border-t border-slate-100">
-                    <button @click="assignBulkUser" :disabled="isSaving || selectedUsers.length === 0" class="w-full py-3.5 bg-gradient-to-r from-indigo-500 to-blue-600 text-white font-bold rounded-2xl shadow-lg hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 uppercase tracking-widest text-xs disabled:opacity-50 disabled:cursor-not-allowed">
-                        <span v-if="isSaving" class="animate-spin text-lg">⏳</span>
-                        <span v-else class="text-lg">➕</span> Tambahkan Terpilih ({{ selectedUsers.length }})
+                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Tampilkan Non-Aktif</span>
+                    </label>
+                    <button @click="navigateTo('/admin/kelas')" class="w-full sm:w-auto px-6 py-2.5 bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-800 font-bold rounded-xl shadow-sm transition-all flex items-center justify-center gap-2 text-[10px] uppercase tracking-widest">
+                        <span>🔙</span>
+                        <span>Kembali</span>
                     </button>
                 </div>
             </div>
+
+            <div class="flex-1 overflow-y-auto custom-scrollbar relative z-0 flex flex-col h-full">
+                
+                <div v-if="isLoading" class="flex-grow flex items-center justify-center flex-col p-10 opacity-60">
+                    <div class="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+                    <span class="text-xs font-bold text-slate-500">Memuat Data...</span>
+                </div>
+                
+                <div v-else class="flex-grow flex flex-col">
+                    <div v-if="students.length === 0" class="text-center py-20 m-auto">
+                        <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl opacity-50">🪹</div>
+                        <p class="text-sm font-bold text-slate-600">Belum ada siswa di kelas ini.</p>
+                        <p class="text-xs text-slate-400 mt-1">Pilih dan tambahkan siswa dari panel di sebelah kiri.</p>
+                    </div>
+                    
+                    <div v-else class="overflow-x-auto flex-1">
+                        <table class="w-full text-left border-collapse whitespace-nowrap">
+                            <thead>
+                                <tr class="bg-slate-50/50 text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-200">
+                                    <th class="py-4 px-4 pl-6 w-16 text-center">#</th>
+                                    <th class="py-4 px-4">Nama Siswa / Akun</th>
+                                    <th class="py-4 px-4 text-center">NIS</th>
+                                    <th class="py-4 px-4 text-center">Status</th>
+                                    <th class="py-4 px-4 text-right pr-6">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm">
+                                <tr v-for="(s, index) in paginatedStudents" :key="s.id" class="border-b border-slate-100 hover:bg-slate-50/80 transition-colors group bg-white">
+                                    <td class="p-4 pl-6 text-center text-xs font-bold text-slate-400">
+                                        {{ (currentPage - 1) * itemsPerPage + index + 1 }}
+                                    </td>
+                                    <td class="p-4">
+                                        <p class="font-black text-slate-800 text-[13px]">{{ s.user?.name || 'Unknown' }}</p>
+                                    </td>
+                                    <td class="p-4 text-center">
+                                        <span class="inline-flex items-center px-2.5 py-1.5 rounded-md bg-slate-100 text-slate-600 text-[11px] font-black uppercase tracking-widest border border-slate-200">
+                                            {{ s.nis }}
+                                        </span>
+                                    </td>
+                                    <td class="p-4 text-center">
+                                        <div class="flex flex-col items-center justify-center">
+                                            <span :class="s.status_siswa === 'aktif' ? 'bg-emerald-100 text-emerald-700 border-emerald-200' : 'bg-rose-100 text-rose-700 border-rose-200'" class="inline-flex items-center px-2.5 py-1.5 rounded-md text-[11px] font-black uppercase tracking-widest border">
+                                                {{ s.status_siswa === 'pindah_sekolah' ? 'PINDAH SEKOLAH' : (s.status_siswa || 'aktif') }}
+                                            </span>
+                                            <span v-if="s.status_siswa !== 'aktif' && s.alasan_keluar" class="text-[9px] text-rose-500 font-bold mt-1 max-w-[120px] truncate" :title="s.alasan_keluar">{{ s.alasan_keluar }}</span>
+                                        </div>
+                                    </td>
+                                    <td class="p-4 pr-6 text-right">
+                                        <div class="flex items-center justify-end gap-2 opacity-100 xl:opacity-0 xl:group-hover:opacity-100 transition-opacity">
+                                            <button v-if="s.status_siswa === 'aktif'" @click="openMutasiModal(s)" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-amber-500 hover:border-amber-200 hover:bg-amber-50 flex items-center justify-center transition-all shadow-sm" title="Proses Mutasi">🔄</button>
+                                            <button @click="openEditNisModal(s)" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-emerald-500 hover:border-emerald-200 hover:bg-emerald-50 flex items-center justify-center transition-all shadow-sm" title="Edit NIS">✏️</button>
+                                            <button @click="confirmDelete(s.id, s.user?.name)" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-rose-500 hover:border-rose-200 hover:bg-rose-50 flex items-center justify-center transition-all shadow-sm" title="Hapus">🗑️</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div v-if="totalPages > 1" class="p-4 sm:p-6 bg-slate-50 border-t border-slate-200 flex items-center justify-between shrink-0 mt-auto">
+                        <span class="hidden sm:inline-block text-[10px] font-black uppercase text-slate-400 tracking-widest">Halaman {{ currentPage }} dari {{ totalPages }}</span>
+                        <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
+                            <button @click="prevPage" :disabled="currentPage === 1" class="px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-600 hover:bg-slate-50 disabled:opacity-50 shadow-sm transition-all">Prev</button>
+                            <span class="sm:hidden text-[10px] font-black uppercase text-slate-400 tracking-widest">{{ currentPage }} / {{ totalPages }}</span>
+                            <button @click="nextPage" :disabled="currentPage === totalPages" class="px-4 py-2.5 bg-emerald-50 border border-emerald-100 rounded-xl text-[10px] font-black uppercase tracking-widest text-emerald-700 hover:bg-emerald-100 disabled:opacity-50 shadow-sm transition-all">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
         </div>
-
-        <div class="p-5 bg-emerald-50 border border-emerald-100 rounded-2xl text-center shadow-sm">
-            <p class="text-[9px] font-black text-emerald-700 uppercase leading-relaxed tracking-widest">
-                💡 Siswa yang sudah memiliki kelas tidak akan muncul dalam daftar pilihan kandidat di atas.
-            </p>
-        </div>
-
-      </div>
-
-      <!-- ==============================================
-           KANAN: DATABASE SISWA DI KELAS - xl:col-span-3 (60%)
-           ============================================== -->
-      <div class="xl:col-span-3" v-show="isDesktop || activeTab === 'table'">
-         <div class="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col min-h-[500px]">
-            
-            <!-- Table Header & Filters -->
-            <div class="p-6 bg-white border-b border-slate-100">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-                    <div class="flex items-center gap-4">
-                        <span class="text-3xl">🧑‍🎓</span>
-                        <div>
-                            <h3 class="text-sm font-black uppercase tracking-widest text-emerald-700">Daftar Anggota Kelas</h3>
-                            <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Total Siswa Aktif</p>
-                        </div>
-                    </div>
-                    <span class="px-5 py-2 bg-white border border-slate-200 rounded-full text-[10px] font-black text-emerald-600 shadow-sm uppercase tracking-widest">
-                        {{ students.length }} SISWA
-                    </span>
-                </div>
-            </div>
-
-            <!-- Loading State -->
-            <div v-if="isLoading" class="flex-grow flex items-center justify-center flex-col p-10 opacity-60">
-                <div class="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-                <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Memuat Data...</span>
-            </div>
-
-            <!-- Table Content -->
-            <div v-else class="flex-grow flex flex-col">
-                <div v-if="students.length === 0" class="text-center py-20 m-auto">
-                    <div class="text-6xl opacity-30 mb-4">🪹</div>
-                    <p class="text-sm font-bold text-slate-500">Belum ada siswa di kelas ini.</p>
-                    <p class="text-[10px] text-slate-400 uppercase tracking-widest mt-2 font-bold">Gunakan form di sebelah kiri untuk menarik user.</p>
-                </div>
-
-                <!-- Desktop Table -->
-                <div v-else class="hidden md:block overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="bg-slate-50/50 text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 border-b border-slate-200">
-                                <th class="py-3 px-4 pl-6 w-16 text-center">#</th>
-                                <th class="py-3 px-4">Nama Siswa / Akun</th>
-                                <th class="py-3 px-4 text-center">NIS</th>
-                                <th class="py-3 px-4 text-right pr-6">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-sm">
-                            <tr v-for="(s, index) in paginatedStudents" :key="s.id" class="border-b border-slate-100 hover:bg-slate-50/80 transition-colors group">
-                                <td class="py-2.5 px-4 pl-6 text-center text-xs font-bold text-slate-300">
-                                    {{ (currentPage - 1) * 10 + index + 1 }}
-                                </td>
-                                <td class="py-2.5 px-4">
-                                    <p class="font-black text-slate-700 text-xs">{{ s.user?.name || 'Unknown' }}</p>
-                                </td>
-                                <td class="py-2.5 px-4 text-center">
-                                    <span class="inline-flex items-center px-2 py-1 rounded bg-emerald-50 text-emerald-700 text-[10px] font-black tracking-widest border border-emerald-100">
-                                        {{ s.nis }}
-                                    </span>
-                                </td>
-                                <td class="py-2.5 px-4 pr-6 text-right">
-                                    <div class="flex items-center justify-end gap-1.5 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
-                                        <button @click="openEditNisModal(s)" class="w-7 h-7 rounded-xl bg-white border border-slate-200 text-slate-400 hover:text-indigo-500 hover:border-indigo-200 hover:bg-indigo-50 flex items-center justify-center transition-all shadow-sm" title="Edit NIS">✏️</button>
-                                        <button @click="confirmDelete(s.id, s.user?.name)" class="w-7 h-7 rounded-xl bg-white border border-slate-200 text-slate-400 hover:text-rose-500 hover:border-rose-200 hover:bg-rose-50 flex items-center justify-center transition-all shadow-sm" title="Hapus">🗑️</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Mobile Cards -->
-                <div v-if="students.length > 0" class="md:hidden p-4 space-y-4 bg-slate-50">
-                    <div v-for="s in paginatedStudents" :key="'mob-'+s.id" class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 relative overflow-hidden">
-                        <div class="absolute right-4 top-4 flex items-center gap-2 z-10">
-                            <button @click="openEditNisModal(s)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:text-indigo-500 hover:bg-indigo-50 flex items-center justify-center shadow-sm" title="Edit NIS">✏️</button>
-                            <button @click="confirmDelete(s.id, s.user?.name)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:text-rose-500 hover:bg-rose-50 flex items-center justify-center shadow-sm" title="Hapus">🗑️</button>
-                        </div>
-                        <div class="mb-4 pr-16">
-                            <h4 class="font-black text-slate-800 text-lg leading-tight">{{ s.user?.name }}</h4>
-                        </div>
-                        <div class="mb-1 flex items-center gap-2">
-                            <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">NIS:</span>
-                            <span class="inline-flex items-center px-2 py-1 rounded bg-emerald-50 text-emerald-700 text-xs font-black tracking-widest border border-emerald-100">
-                                {{ s.nis }}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Pagination -->
-                <div v-if="totalPages > 1" class="p-4 border-t border-slate-100 bg-slate-50/50 flex flex-col sm:flex-row items-center justify-between gap-4 mt-auto">
-                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest text-center">
-                        Halaman {{ currentPage }} dari {{ totalPages }}
-                    </p>
-                    <div class="flex items-center gap-2">
-                        <button @click="prevPage" :disabled="currentPage === 1" class="px-4 py-2 rounded-xl bg-white border border-slate-200 text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-emerald-600 hover:border-emerald-200 hover:bg-emerald-50 disabled:opacity-50 transition-all shadow-sm">
-                            &laquo; Prev
-                        </button>
-                        <button @click="nextPage" :disabled="currentPage === totalPages" class="px-4 py-2 rounded-xl bg-white border border-slate-200 text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-emerald-600 hover:border-emerald-200 hover:bg-emerald-50 disabled:opacity-50 transition-all shadow-sm">
-                            Next &raquo;
-                        </button>
-                    </div>
-                </div>
-
-            </div>
-         </div>
       </div>
     </div>
 
-    <!-- ==============================================
-         MODAL EDIT NIS
-         ============================================== -->
-    <div v-if="isEditModalOpen" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
-        <div class="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden animate-slideUpFade">
-            <div class="p-8">
-                <div class="flex items-center justify-between mb-6 border-b border-slate-100 pb-4">
-                    <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Koreksi NIS</h3>
-                    <button @click="isEditModalOpen = false" class="text-slate-400 hover:text-rose-500 bg-slate-50 w-8 h-8 rounded-full flex items-center justify-center">✕</button>
+    <!-- MODAL EDIT NIS -->
+    <div v-if="isEditModalOpen" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+        <div class="relative w-full max-w-sm bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+                    <h3 class="text-sm font-bold text-slate-800">Edit NIS Siswa</h3>
+                    <button @click="isEditModalOpen = false" class="text-slate-400 hover:text-rose-500 w-6 h-6 flex items-center justify-center rounded-md hover:bg-rose-50 transition-colors">✕</button>
                 </div>
-                <form @submit.prevent="executeEditNis" class="space-y-6">
+                <form @submit.prevent="executeEditNis" class="space-y-4">
                     <div>
-                        <p class="text-center text-xs font-black text-indigo-600 uppercase mb-4">{{ editForm.name }}</p>
-                        <input type="text" v-model="editForm.nis" required class="w-full py-4 text-center text-lg font-black text-slate-800 rounded-2xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 tracking-[0.3em] transition-all">
+                        <p class="text-xs font-medium text-slate-500 mb-1">Nama Siswa</p>
+                        <p class="text-sm font-bold text-slate-800 mb-4">{{ editForm.name }}</p>
+                        <label class="text-xs font-medium text-slate-600 mb-1 block">NIS</label>
+                        <input type="text" v-model="editForm.nis" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm font-bold text-slate-800 outline-none mb-4">
+                        <label class="text-xs font-medium text-slate-600 mb-1 block">Status Siswa (Bypass)</label>
+                        <select v-model="editForm.status_siswa" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm font-bold text-slate-800 outline-none">
+                            <option value="aktif">Aktif</option>
+                            <option value="lulus">Lulus</option>
+                            <option value="pindah_sekolah">Pindah Sekolah</option>
+                            <option value="keluar">Keluar</option>
+                            <option value="dikeluarkan">Dikeluarkan</option>
+                        </select>
+                        <p class="text-[9px] text-slate-400 mt-2 font-bold leading-relaxed">
+                            Gunakan tombol Mutasi (🔄) untuk mencatat alasan dan tanggal keluar secara detail.
+                        </p>
                     </div>
-                    <button type="submit" :disabled="isSaving" class="w-full py-4 text-[10px] font-black text-white bg-indigo-600 hover:bg-indigo-700 rounded-2xl shadow-lg uppercase tracking-widest flex items-center justify-center gap-2">
+                    <button type="submit" :disabled="isSaving" class="w-full py-2.5 bg-indigo-600 text-white text-sm font-bold rounded-xl shadow-sm hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-100 transition-all flex items-center justify-center gap-2">
+                        <span v-if="isSaving" class="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full"></span>
+                        <span>Simpan Perubahan</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PROSES MUTASI -->
+    <div v-if="isMutasiModalOpen" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+        <div class="relative w-full max-w-md bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+                    <h3 class="text-sm font-bold text-amber-700 flex items-center gap-2">
+                        <span>🔄</span>
+                        Proses Mutasi Siswa
+                    </h3>
+                    <button @click="isMutasiModalOpen = false" class="text-slate-400 hover:text-rose-500 w-6 h-6 flex items-center justify-center rounded-md hover:bg-rose-50 transition-colors">✕</button>
+                </div>
+                
+                <form @submit.prevent="executeMutasi" class="space-y-4">
+                    <div>
+                        <p class="text-xs font-medium text-slate-500 mb-1">Nama Siswa</p>
+                        <p class="text-sm font-black text-slate-800 mb-4">{{ mutasiForm.name }}</p>
+                        
+                        <label class="text-xs font-medium text-slate-600 mb-1 block">Jenis Mutasi</label>
+                        <select v-model="mutasiForm.jenis_mutasi" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all text-sm font-bold text-slate-800 outline-none mb-4">
+                            <option value="pindah_sekolah">🚶 Pindah Sekolah</option>
+                            <option value="pindah_kelas">🔄 Pindah Kelas (Internal)</option>
+                            <option value="keluar">🚶 Keluar</option>
+                            <option value="dikeluarkan">⚠️ Dikeluarkan</option>
+                        </select>
+
+                        <template v-if="mutasiForm.jenis_mutasi === 'pindah_kelas'">
+                            <label class="text-xs font-medium text-slate-600 mb-1 block">Pilih Kelas Tujuan</label>
+                            <select v-model="mutasiForm.kelas_tujuan_id" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all text-sm font-bold text-slate-800 outline-none mb-4">
+                                <option value="">-- Pilih Kelas --</option>
+                                <option v-for="k in semua_kelas.filter(k => k.id !== parseInt(kelasId))" :key="k.id" :value="k.id">
+                                    {{ k.tingkat }} {{ k.nama_kelas }}
+                                </option>
+                            </select>
+                        </template>
+
+                        <template v-else>
+                            <label class="text-xs font-medium text-slate-600 mb-1 block">Tanggal Mutasi / Keluar</label>
+                            <input type="date" v-model="mutasiForm.tanggal_mutasi" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all text-sm font-bold text-slate-800 outline-none mb-4">
+                            
+                            <label class="text-xs font-medium text-slate-600 mb-1 block">Sekolah Tujuan / Alasan Detail</label>
+                            <textarea v-model="mutasiForm.alasan" required rows="3" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all text-sm font-bold text-slate-800 outline-none" placeholder="Masukkan nama sekolah tujuan atau alasan lengkap..."></textarea>
+                        </template>
+                    </div>
+
+                    <button type="submit" :disabled="isSaving" class="w-full py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs uppercase tracking-widest font-black rounded-xl shadow-lg shadow-amber-500/30 hover:shadow-xl hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2">
                         <span v-if="isSaving" class="animate-spin text-base">⏳</span>
-                        <span v-else>💾 Simpan Perubahan</span>
+                        <span>Proses Mutasi & Arsipkan</span>
                     </button>
                 </form>
             </div>
@@ -219,64 +269,39 @@
     </div>
 
     <!-- ==============================================
-         MODAL KONFIRMASI HAPUS
+         MODAL KONFIRMASI HAPUS (Overlay)
          ============================================== -->
     <div v-if="isDeleteModalOpen" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
         <div class="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden animate-slideUpFade text-center">
             <div class="p-8">
-                <div class="w-20 h-20 bg-rose-50 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-inner border-4 border-white ring-4 ring-rose-50">⚠️</div>
+                <div class="w-20 h-20 bg-rose-50 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-inner border-4 border-white ring-4 ring-rose-50">
+                    ⚠️
+                </div>
                 <h3 class="text-xl font-black text-slate-800 tracking-tight">Keluarkan Siswa?</h3>
                 <p class="text-xs text-slate-500 mt-3 leading-relaxed">
                     Anda yakin ingin mengeluarkan:<br>
                     <span class="font-bold text-slate-800">{{ deleteTarget.name }}</span><br>
                     dari kelas ini?
                 </p>
-                <div class="mt-4 p-3 bg-rose-50 border border-rose-100 rounded-2xl">
-                    <p class="text-[9px] font-black text-rose-600 uppercase tracking-widest leading-relaxed">
-                        PERINGATAN:<br>Siswa akan dikembalikan ke daftar kandidat kosong. Seluruh history biodata di tabel siswa akan ikut terhapus!
-                    </p>
-                </div>
+                <p class="text-[10px] font-bold text-rose-500 mt-3 p-2 bg-rose-50 rounded-lg">Peringatan: Seluruh history biodata siswa ini akan ikut terhapus.</p>
                 
                 <div class="flex items-center gap-4 mt-8">
-                    <button @click="isDeleteModalOpen = false" class="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-2xl transition-all text-xs uppercase tracking-widest">Batal</button>
-                    <button @click="executeDelete" :disabled="isSaving" class="flex-1 py-3 bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-2xl shadow-lg shadow-rose-500/30 transition-all text-xs uppercase tracking-widest flex items-center justify-center gap-2">
-                        <span v-if="isSaving" class="animate-spin text-base">⏳</span>
+                    <button @click="isDeleteModalOpen = false" class="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-2xl transition-all text-xs uppercase tracking-widest">
+                        Batal
+                    </button>
+                    <button @click="executeDelete" :disabled="isDeleting" class="flex-1 py-3 bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-2xl shadow-lg shadow-rose-500/30 transition-all text-xs uppercase tracking-widest flex items-center justify-center gap-2">
+                        <span v-if="isDeleting" class="animate-spin text-base">⏳</span>
                         <span v-else>Keluarkan</span>
                     </button>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- ==============================================
-         MODAL ERROR
-         ============================================== -->
-    <div v-if="isErrorModalOpen" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
-        <div class="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden animate-slideUpFade text-center">
-            <div class="p-8">
-                <div class="w-20 h-20 bg-rose-50 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-inner border-4 border-white ring-4 ring-rose-50">❌</div>
-                <h3 class="text-xl font-black text-slate-800 tracking-tight">Terjadi Kesalahan</h3>
-                <p class="text-xs text-slate-500 mt-3 leading-relaxed font-bold bg-slate-50 p-4 rounded-xl border border-slate-100">
-                    {{ errorMessage }}
-                </p>
-                <div class="mt-8">
-                    <button @click="isErrorModalOpen = false" class="w-full py-3 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded-2xl shadow-lg transition-all text-xs uppercase tracking-widest">Saya Mengerti</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Toast Notification -->
-    <div v-if="showToast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-slate-900/95 backdrop-blur-md text-white px-6 py-4 rounded-full shadow-2xl flex items-center gap-4 z-[100] animate-slideUp">
-      <div class="w-8 h-8 bg-gradient-to-br from-emerald-400 to-emerald-500 rounded-full flex items-center justify-center text-white text-sm shadow-inner shadow-white/20">✓</div>
-      <p class="font-bold text-sm tracking-wide pr-2">{{ toastMessage }}</p>
-    </div>
-
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 definePageMeta({
@@ -291,17 +316,16 @@ const kelasId = route.params.id
 const windowWidth = ref(1024) 
 const isDesktop = computed(() => windowWidth.value >= 1280) // xl breakpoint
 
-// Mobile Tab State
 const activeTab = ref('table')
 
-// Main State
 const kelas = ref({})
-const usersAvailable = ref([])
 const students = ref([])
+const usersAvailable = ref([])
+const semua_kelas = ref([]) // Untuk opsi mutasi pindah kelas
+
 const isLoading = ref(true)
 const isSaving = ref(false)
 
-// Pagination State
 const currentPage = ref(1)
 const itemsPerPage = 10
 
@@ -317,10 +341,21 @@ const paginatedStudents = computed(() => {
 const nextPage = () => { if (currentPage.value < totalPages.value) currentPage.value++ }
 const prevPage = () => { if (currentPage.value > 1) currentPage.value-- }
 
-// Bulk Form State
 const searchKandidat = ref('')
 const selectedUsers = ref([])
 const bulkNis = ref({})
+
+const isDeleteModalOpen = ref(false)
+const isDeleting = ref(false)
+const deleteTarget = ref({ id: null, name: '' })
+
+const toggleUserSelection = (id) => {
+    if (selectedUsers.value.includes(id)) {
+        selectedUsers.value = selectedUsers.value.filter(uid => uid !== id)
+    } else {
+        selectedUsers.value.push(id)
+    }
+}
 
 const filteredKandidat = computed(() => {
     if (!searchKandidat.value) return usersAvailable.value
@@ -328,53 +363,47 @@ const filteredKandidat = computed(() => {
     return usersAvailable.value.filter(u => u.name.toLowerCase().includes(s) || (u.email && u.email.toLowerCase().includes(s)) || (u.username && u.username.toLowerCase().includes(s)))
 })
 
-// Edit NIS State
 const isEditModalOpen = ref(false)
+const showInactive = ref(false)
 const editForm = ref({
     id: null,
     name: '',
-    nis: ''
+    nis: '',
+    status_siswa: 'aktif'
 })
 
-// Delete State
-const isDeleteModalOpen = ref(false)
-const deleteTarget = ref({ id: null, name: '' })
-
-// Error Modal State
-const isErrorModalOpen = ref(false)
-const errorMessage = ref('')
-
-const showError = (msg) => {
-    errorMessage.value = msg
-    isErrorModalOpen.value = true
-}
-
-// Toast State
-const showToast = ref(false)
-const toastMessage = ref('')
-
-// === API CALLS ===
+const isMutasiModalOpen = ref(false)
+const mutasiForm = ref({
+    siswa_id: null,
+    name: '',
+    jenis_mutasi: 'pindah_sekolah',
+    kelas_tujuan_id: '',
+    tanggal_mutasi: '',
+    alasan: ''
+})
 
 const fetchData = async () => {
     isLoading.value = true
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch(`http://localhost:8000/api/admin/kelas/${kelasId}/siswa`, {
+        const response = await $fetch(`http://localhost:8000/api/admin/kelas/${kelasId}/siswa?show_inactive=${showInactive.value ? '1' : '0'}`, {
             headers: { Authorization: `Bearer ${token}` }
         })
         if (response.success) {
             kelas.value = response.kelas
             usersAvailable.value = response.users_available
             students.value = response.students
+            semua_kelas.value = response.semua_kelas || []
             
-            // Auto reset pagination if current page exceeds total pages after refetch
-            if (currentPage.value > Math.ceil(students.value.length / itemsPerPage)) {
+            if (currentPage.value > Math.ceil(students.value.length / itemsPerPage) && students.value.length > 0) {
                 currentPage.value = Math.max(1, Math.ceil(students.value.length / itemsPerPage))
+            } else if (students.value.length === 0) {
+                currentPage.value = 1
             }
         }
     } catch (error) {
         console.error('Failed to fetch data:', error)
-        showError('Gagal memuat data rombel.')
+        useSwal().toast('Gagal memuat data rombel.', 'error')
     } finally {
         isLoading.value = false
     }
@@ -391,11 +420,10 @@ const autoCheck = (id) => {
 const assignBulkUser = async () => {
     if(selectedUsers.value.length === 0) return
     
-    // Validasi NIS kosong
     const payloadSiswa = []
     for (const uid of selectedUsers.value) {
         if (!bulkNis.value[uid]) {
-            showError('Ada siswa yang dicentang namun NIS-nya masih kosong!')
+            useSwal().toast('Ada siswa yang dicentang namun NIS-nya masih kosong!', 'warning')
             return
         }
         payloadSiswa.push({
@@ -414,7 +442,7 @@ const assignBulkUser = async () => {
             body: { siswa: payloadSiswa }
         })
         if (response.success) {
-            displayToast(response.message)
+            useSwal().toast(response.message, 'success')
             selectedUsers.value = []
             bulkNis.value = {}
             searchKandidat.value = ''
@@ -427,7 +455,7 @@ const assignBulkUser = async () => {
         if (error.response && error.response._data && error.response._data.message) {
             msg = error.response._data.message
         }
-        showError(msg)
+        useSwal().toast(msg, 'error')
     } finally {
         isSaving.value = false
     }
@@ -437,7 +465,8 @@ const openEditNisModal = (s) => {
     editForm.value = {
         id: s.id,
         name: s.user?.name || 'Unknown',
-        nis: s.nis
+        nis: s.nis,
+        status_siswa: s.status_siswa || 'aktif'
     }
     isEditModalOpen.value = true
 }
@@ -449,29 +478,33 @@ const executeEditNis = async () => {
         const response = await $fetch(`http://localhost:8000/api/admin/siswa/${editForm.value.id}`, {
             method: 'PUT',
             headers: { Authorization: `Bearer ${token}` },
-            body: { nis: editForm.value.nis }
+            body: { 
+                nis: editForm.value.nis, 
+                kelas_id: kelasId, 
+                status_siswa: editForm.value.status_siswa 
+            }
         })
         if (response.success) {
             isEditModalOpen.value = false
-            displayToast(response.message)
+            useSwal().toast(response.message, 'success')
             await fetchData()
         }
     } catch (error) {
         console.error('Update NIS failed:', error)
-        showError('Gagal memperbarui NIS. Pastikan NIS tidak bentrok dengan siswa lain.')
+        useSwal().toast('Gagal memperbarui NIS. Pastikan NIS unik.', 'error')
     } finally {
         isSaving.value = false
     }
 }
 
 const confirmDelete = (id, name) => {
-    deleteTarget.value = { id, name: name || 'Siswa' }
+    deleteTarget.value = { id, name }
     isDeleteModalOpen.value = true
 }
 
 const executeDelete = async () => {
     if (!deleteTarget.value.id) return
-    isSaving.value = true
+    isDeleting.value = true
     const token = useCookie('auth_token').value
     try {
         const response = await $fetch(`http://localhost:8000/api/admin/siswa/${deleteTarget.value.id}`, {
@@ -480,21 +513,53 @@ const executeDelete = async () => {
         })
         if (response.success) {
             isDeleteModalOpen.value = false
-            displayToast(response.message)
+            useSwal().toast(response.message, 'success')
             await fetchData()
         }
     } catch (error) {
         console.error('Delete failed:', error)
-        showError('Gagal mengeluarkan siswa.')
+        useSwal().toast('Gagal mengeluarkan siswa.', 'error')
     } finally {
-        isSaving.value = false
+        isDeleting.value = false
     }
 }
 
-const displayToast = (msg) => {
-    toastMessage.value = msg
-    showToast.value = true
-    setTimeout(() => { showToast.value = false }, 3500)
+const openMutasiModal = (s) => {
+    mutasiForm.value = {
+        siswa_id: s.id,
+        name: s.user?.name || '',
+        jenis_mutasi: 'pindah_sekolah',
+        kelas_tujuan_id: '',
+        tanggal_mutasi: new Date().toISOString().split('T')[0],
+        alasan: ''
+    }
+    isMutasiModalOpen.value = true
+}
+
+const executeMutasi = async () => {
+    isSaving.value = true
+    const token = useCookie('auth_token').value
+    try {
+        const response = await $fetch(`http://localhost:8000/api/admin/mutasi/proses`, {
+            method: 'POST',
+            headers: { Authorization: `Bearer ${token}` },
+            body: mutasiForm.value
+        })
+
+        if (response.success) {
+            useSwal().toast('Berhasil!', response.message, 'success')
+            isMutasiModalOpen.value = false
+            await fetchData()
+        }
+    } catch (error) {
+        let msg = error.response?._data?.message || 'Terjadi kesalahan'
+        if (error.response?._data?.errors) {
+            msg = Object.values(error.response._data.errors)[0][0]
+        }
+        useSwal().toast(msg, 'error')
+    } finally {
+        isSaving.value = false
+    }
 }
 
 onMounted(() => {
@@ -512,24 +577,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-.animate-fadeIn { animation: fadeIn 0.3s ease-out forwards; }
-
-@keyframes slideUpFade {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.animate-slideUpFade { animation: slideUpFade 0.3s ease-out forwards; }
-
-@keyframes slideUp {
-  from { opacity: 0; transform: translate(-50%, 20px); }
-  to { opacity: 1; transform: translate(-50%, 0); }
-}
-.animate-slideUp { animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-
 .custom-scrollbar::-webkit-scrollbar { width: 4px; }
 .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
 .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }

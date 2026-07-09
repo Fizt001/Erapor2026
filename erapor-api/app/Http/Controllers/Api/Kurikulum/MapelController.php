@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Mapel;
 use App\Models\Kurikulum;
+use App\Models\TahunAjaran;
 
 class MapelController extends Controller
 {
@@ -25,12 +26,14 @@ class MapelController extends Controller
             ->get();
             
         $kurikulums = Kurikulum::all();
+        $tahunAjaranAktif = TahunAjaran::where('is_aktif', true)->first();
 
         return response()->json([
             'success' => true,
             'data' => $mapels,
             'kategori' => $kategori,
-            'kurikulums' => $kurikulums
+            'kurikulums' => $kurikulums,
+            'tahun_ajaran_aktif' => $tahunAjaranAktif
         ]);
     }
 

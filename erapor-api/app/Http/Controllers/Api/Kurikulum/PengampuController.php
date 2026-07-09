@@ -18,8 +18,14 @@ class PengampuController extends Controller
         $kurikulum_id = $request->query('kurikulum_id');
         $tingkat = $request->query('tingkat', 'X');
         $kategori = $request->query('kategori', 'umum'); // umum or kejuruan
+        $tahun_ajaran_id = $request->query('tahun_ajaran_id');
 
         $tahunAktif = TahunAjaran::where('is_aktif', true)->first();
+        if (!$tahun_ajaran_id && $tahunAktif) {
+            $tahun_ajaran_id = $tahunAktif->id;
+        }
+
+        $tahun_ajarans = TahunAjaran::orderBy('tahun', 'desc')->get();
 
         if (!$kurikulum_id || !$tingkat) {
             return response()->json([
@@ -28,6 +34,8 @@ class PengampuController extends Controller
                     'strukturs' => [],
                     'kelases' => []
                 ],
+                'tahun_ajarans' => $tahun_ajarans,
+                'active_tahun_ajaran_id' => $tahun_ajaran_id,
                 // For empty initial state, fetch all gurus or general gurus
                 'gurus' => User::where('role', 'guru')->orderBy('name')->get(['id', 'name'])
             ]);
@@ -36,9 +44,13 @@ class PengampuController extends Controller
         // 1. Fetch Kelases for this Kurikulum and Tingkat
         $kelases = Kelas::with('kejuruan.program')
             ->where('kurikulum_id', $kurikulum_id)
-            ->where('tingkat', $tingkat)
-            ->orderBy('nama_kelas')
-            ->get();
+            ->where('tingkat', $tingkat);
+            
+        if ($tahun_ajaran_id) {
+            $kelases->where('tahun_ajaran_id', $tahun_ajaran_id);
+        }
+        
+        $kelases = $kelases->orderBy('nama_kelas')->get();
 
         // 2. Fetch Strukturs (Umum or Kejuruan)
         if ($kategori === 'umum') {
@@ -68,7 +80,9 @@ class PengampuController extends Controller
                 'strukturs' => $strukturs,
                 'kelases' => $kelases
             ],
-            'gurus' => $gurus
+            'gurus' => $gurus,
+            'tahun_ajarans' => $tahun_ajarans,
+            'active_tahun_ajaran_id' => $tahun_ajaran_id
         ]);
     }
 

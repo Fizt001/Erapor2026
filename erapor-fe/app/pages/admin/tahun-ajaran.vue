@@ -1,160 +1,137 @@
 <template>
-  <div class="animate-fadeIn max-w-7xl mx-auto pb-12 mt-4 relative">
+  <div class="h-full flex flex-col min-h-0 bg-slate-50">
     
-    <!-- MOBILE VIEW TABS -->
-    <div class="xl:hidden mb-8 mt-2">
-      <div class="grid grid-cols-2 gap-3">
-        <button type="button" @click="activeTab = 'form'" :class="activeTab === 'form' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="rounded-2xl flex flex-col items-center justify-center py-5 transition-all active:scale-95">
-          <span class="text-3xl mb-2 transition-transform" :class="activeTab === 'form' ? 'scale-110' : ''">🗓️</span>
-          <span class="text-[10px] font-black uppercase tracking-wider">Entry Tahun Ajaran</span>
+<!-- Layout 2 Panel Dock & Flow -->
+    <div class="flex-1 flex overflow-hidden relative">
+      
+      <!-- MOBILE VIEW TABS -->
+      <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-2 grid grid-cols-2 gap-2 z-20">
+        <button type="button" @click="activeTab = 'form'" :class="activeTab === 'form' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="rounded-xl flex items-center justify-center py-2 px-1 transition-all active:scale-95">
+          <span class="text-lg mr-1.5 transition-transform" :class="activeTab === 'form' ? 'scale-110' : ''">🗓️</span>
+          <span class="text-[10px] font-black uppercase tracking-wider">Entry Tahun</span>
         </button>
-        <button type="button" @click="activeTab = 'table'" :class="activeTab === 'table' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="rounded-2xl flex flex-col items-center justify-center py-5 transition-all active:scale-95">
-          <span class="text-3xl mb-2 transition-transform" :class="activeTab === 'table' ? 'scale-110' : ''">📋</span>
+        <button type="button" @click="activeTab = 'table'" :class="activeTab === 'table' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="rounded-xl flex items-center justify-center py-2 px-1 transition-all active:scale-95">
+          <span class="text-lg mr-1.5 transition-transform" :class="activeTab === 'table' ? 'scale-110' : ''">📋</span>
           <span class="text-[10px] font-black uppercase tracking-wider">Database</span>
         </button>
       </div>
-    </div>
 
-    <!-- MAIN GRID LAYOUT -->
-    <div class="grid grid-cols-1 xl:grid-cols-4 gap-8 items-start">
-      
-      <!-- ==============================================
-           KIRI: PANEL ENTRY (Form) - xl:col-span-1
-           ============================================== -->
-      <div class="xl:col-span-1 space-y-6 xl:sticky xl:top-6" v-show="isDesktop || activeTab === 'form'">
+      <!-- Panel Dock Kiri -->
+      <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', activeTab === 'form' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[60px]' : '']">
         
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden animate-slideUpFade">
-            <div class="p-6 bg-gradient-to-r from-slate-900 to-slate-800 border-b border-slate-100 flex items-center gap-4">
-                <span class="text-3xl">🗓️</span>
-                <div>
-                    <h3 class="text-sm font-black uppercase tracking-widest text-white">{{ isEditing ? 'Update Tahun' : 'Entry Tahun' }}</h3>
-                    <p class="text-[10px] text-emerald-400 font-semibold uppercase mt-0.5">Master Data</p>
+        <div class="flex-1 overflow-y-auto custom-scrollbar">
+            <div class="animate-fadeIn">
+                <div class="p-6 shrink-0">
+                  <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-5 border border-emerald-500 shadow-sm relative overflow-hidden flex items-center gap-4">
+                    <div class="w-12 h-12 flex items-center justify-center text-3xl shrink-0 relative z-10">🗓️</div>
+                    <div class="relative z-10">
+                        <h3 class="text-sm font-black uppercase tracking-widest text-white">Data Tahun</h3>
+                        <p class="text-[10px] text-emerald-100 font-semibold uppercase mt-0.5">{{ isEditing ? 'Mode Update' : 'Mode Tambah Baru' }}</p>
+                    </div>
+                    <div class="absolute right-0 bottom-0 opacity-20 text-white">
+                      <svg class="w-20 h-20 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"></path></svg>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="px-6 pb-6">
+                    <form @submit.prevent="saveTahunAjaran" class="space-y-5">
+                        
+                        <div>
+                            <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Tahun Ajaran</label>
+                            <input type="text" v-model="form.tahun" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-bold text-slate-800" placeholder="Misal: 2023/2024">
+                        </div>
+
+                        <div class="flex items-center gap-3 bg-slate-50 p-4 rounded-2xl border border-slate-200 cursor-pointer hover:bg-white transition-colors" @click="form.is_aktif = !form.is_aktif">
+                            <input type="checkbox" id="is_aktif" v-model="form.is_aktif" class="w-5 h-5 rounded border-slate-300 text-emerald-500 focus:ring-emerald-500 cursor-pointer" @click.stop>
+                            <label for="is_aktif" class="text-xs font-bold text-slate-700 cursor-pointer">Set sebagai Tahun Ajaran Aktif saat ini</label>
+                        </div>
+                        <p class="text-[10px] text-slate-500 font-semibold px-1">Peringatan: Mengaktifkan ini akan otomatis menonaktifkan tahun ajaran lainnya.</p>
+
+                        <div class="pt-4 border-t border-slate-100 flex gap-3">
+                            <button v-if="isEditing" type="button" @click="resetForm" class="flex-1 py-3.5 bg-slate-100 text-slate-600 font-bold rounded-2xl hover:bg-slate-200 transition-all uppercase tracking-widest text-xs">
+                                Batal
+                            </button>
+                            <button type="submit" :disabled="isSaving" class="flex-1 py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-2xl shadow-lg shadow-emerald-500/30 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 uppercase tracking-widest text-xs">
+                                <span v-if="isSaving" class="animate-spin text-lg">⏳</span>
+                                <span v-else class="text-lg">💾</span> {{ isEditing ? 'Simpan' : 'Tambah Tahun' }}
+                            </button>
+                        </div>
+
+                    </form>
                 </div>
             </div>
-            
-            <div class="p-6 md:p-8">
-                <form @submit.prevent="saveTahunAjaran" class="space-y-5">
-                    
-                    <div>
-                        <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Tahun Ajaran</label>
-                        <input type="text" v-model="form.tahun" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-bold text-slate-800" placeholder="Misal: 2026/2027 Ganjil">
-                    </div>
+        </div>
+      </div>
 
-                    <div class="flex items-center gap-3 bg-slate-50 p-4 rounded-2xl border border-slate-200">
-                        <input type="checkbox" id="is_aktif" v-model="form.is_aktif" class="w-5 h-5 rounded border-slate-300 text-emerald-500 focus:ring-emerald-500">
-                        <label for="is_aktif" class="text-xs font-bold text-slate-700 cursor-pointer">Set sebagai Tahun Ajaran Aktif saat ini</label>
-                    </div>
-                    <p class="text-[10px] text-slate-500 italic px-1">Peringatan: Mengaktifkan ini akan otomatis menonaktifkan tahun ajaran lainnya.</p>
-
-                    <div class="pt-4 border-t border-slate-100 flex gap-3">
-                         <button v-if="isEditing" type="button" @click="resetForm" class="px-4 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-2xl transition-all text-xs uppercase tracking-widest">
-                            Batal
-                        </button>
-                        <button type="submit" :disabled="isSaving" class="flex-1 py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-2xl shadow-lg hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 uppercase tracking-widest text-xs">
-                            <span v-if="isSaving" class="animate-spin text-lg">⏳</span>
-                            <span v-else class="text-lg">💾</span> {{ isEditing ? 'Update' : 'Simpan' }}
-                        </button>
-                    </div>
-
-                </form>
+      <!-- Panel Flow Kanan -->
+      <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative', activeTab === 'table' || isDesktop ? 'flex' : 'hidden', !isDesktop ? 'pt-[60px]' : '']">
+        <div class="p-6 lg:p-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
+          <div class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
+            <!-- Table Header & Filters -->
+            <div class="px-6 py-5 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0 z-10 bg-white">
+            <div class="flex items-center gap-4 w-full sm:w-auto">
+                <div class="w-12 h-12 rounded-2xl bg-slate-50 shadow-sm border border-slate-200 flex items-center justify-center text-2xl hidden sm:flex">📋</div>
+                <div>
+                    <h3 class="text-sm font-black uppercase tracking-widest text-emerald-700">Database Tahun Ajaran</h3>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Daftar Tahun Ajaran Akademik</p>
+                </div>
             </div>
         </div>
 
-      </div>
+        <!-- Loading State -->
+        <div v-if="isLoading" class="flex-grow flex items-center justify-center flex-col p-10 opacity-60">
+            <div class="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Memuat Data...</span>
+        </div>
 
-      <!-- ==============================================
-           KANAN: DATABASE TABLE - xl:col-span-3
-           ============================================== -->
-      <div class="xl:col-span-3" v-show="isDesktop || activeTab === 'table'">
-         <div class="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col min-h-[500px]">
-            
-            <!-- Table Header & Filters -->
-            <div class="p-6 md:p-8 bg-slate-50/50 border-b border-slate-100">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-2xl bg-white shadow-sm border border-slate-200 flex items-center justify-center text-2xl hidden sm:flex">📋</div>
-                        <div>
-                            <h3 class="text-sm font-black uppercase tracking-widest text-emerald-700">Database Tahun Ajaran</h3>
-                            <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Daftar Tahun Ajaran Akademik</p>
-                        </div>
-                    </div>
-                </div>
+        <!-- Table Content -->
+        <div v-else class="flex-1 overflow-y-auto overflow-x-auto custom-scrollbar relative bg-white">
+            <div v-if="!tahunAjaranData || tahunAjaranData.length === 0" class="text-center py-16 flex flex-col items-center justify-center h-full min-h-[400px]">
+                <div class="text-6xl opacity-30 mb-4 block">🌵</div>
+                <h3 class="text-lg font-black text-slate-700 mb-2 uppercase tracking-widest">Data Kosong</h3>
+                <p class="text-slate-500 text-sm font-semibold max-w-sm">Data tahun ajaran belum tersedia.</p>
             </div>
 
-            <!-- Loading State -->
-            <div v-if="isLoading" class="flex-grow flex items-center justify-center flex-col p-10 opacity-60">
-                <div class="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-                <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Memuat Data...</span>
-            </div>
-
-            <!-- Table Content -->
-            <div v-else class="flex-grow flex flex-col">
-                <div v-if="!tahunAjaranData || tahunAjaranData.length === 0" class="text-center py-16 m-auto">
-                    <div class="text-6xl opacity-30 mb-4">🌵</div>
-                    <p class="text-sm font-bold text-slate-500">Data tahun ajaran masih kosong.</p>
-                </div>
-
-                <!-- Desktop Table -->
-                <div v-else class="hidden md:block overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="bg-slate-50 text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 border-b border-slate-200">
-                                <th class="p-5 pl-8 w-16 text-center">#</th>
-                                <th class="p-5">Tahun Ajaran</th>
-                                <th class="p-5">Status</th>
-                                <th class="p-5 text-right pr-8">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-sm">
-                            <tr v-for="(ta, index) in tahunAjaranData" :key="ta.id" class="border-b border-slate-100 hover:bg-slate-50/80 transition-colors group">
-                                <td class="p-4 pl-8 text-center text-xs font-bold text-slate-300">
-                                    {{ index + 1 }}
-                                </td>
-                                <td class="p-4">
-                                    <p class="font-black text-slate-700">{{ ta.tahun }}</p>
-                                </td>
-                                <td class="p-4">
-                                    <span v-if="ta.is_aktif" class="inline-flex items-center px-2.5 py-1 rounded-md text-[9px] font-black uppercase tracking-widest bg-emerald-100 text-emerald-700 border border-emerald-200">
-                                        Aktif
-                                    </span>
-                                    <span v-else class="inline-flex items-center px-2.5 py-1 rounded-md text-[9px] font-black uppercase tracking-widest bg-slate-100 text-slate-500 border border-slate-200">
-                                        Tidak Aktif
-                                    </span>
-                                </td>
-                                <td class="p-4 pr-8 text-right">
-                                    <div class="flex items-center justify-end gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
-                                        <button v-if="!ta.is_aktif" @click="setAktif(ta)" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-emerald-500 hover:border-emerald-200 hover:bg-emerald-50 flex items-center justify-center transition-all shadow-sm" title="Jadikan Aktif">✅</button>
-                                        <button @click="editTahunAjaran(ta)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:text-indigo-500 hover:border-indigo-200 hover:bg-indigo-50 flex items-center justify-center transition-all shadow-sm" title="Edit">✏️</button>
-                                        <button v-if="!ta.is_aktif" @click="confirmDelete(ta.id, ta.tahun)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:text-rose-500 hover:border-rose-200 hover:bg-rose-50 flex items-center justify-center transition-all shadow-sm" title="Hapus">🗑️</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Mobile Cards -->
-                <div v-if="tahunAjaranData && tahunAjaranData.length > 0" class="md:hidden p-4 space-y-4 bg-slate-50">
-                    <div v-for="(ta, index) in tahunAjaranData" :key="'mob-'+ta.id" class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 relative overflow-hidden" :class="{'border-emerald-300 shadow-emerald-500/10': ta.is_aktif}">
-                        <div class="absolute right-4 top-4 flex items-center gap-2 z-10">
-                            <button @click="editTahunAjaran(ta)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:text-indigo-500 hover:bg-indigo-50 flex items-center justify-center shadow-sm" title="Edit">✏️</button>
-                            <button @click="confirmDelete(ta.id, ta.tahun)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:text-rose-500 hover:bg-rose-50 flex items-center justify-center shadow-sm" v-if="!ta.is_aktif" title="Hapus">🗑️</button>
-                        </div>
-                        <div class="mb-4 pr-16">
-                            <h4 class="font-black text-slate-800 text-lg leading-tight">{{ ta.tahun }}</h4>
-                            <span v-if="ta.is_aktif" class="inline-block mt-2 px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest bg-emerald-100 text-emerald-700 border border-emerald-200">Aktif</span>
-                            <span v-else class="inline-block mt-2 px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest bg-slate-100 text-slate-500 border border-slate-200">Tidak Aktif</span>
-                        </div>
-                        <div class="mt-4 flex flex-col gap-2 pt-4 border-t border-slate-100">
-                            <button v-if="!ta.is_aktif" @click="setAktif(ta)" class="w-full py-3 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-600 hover:bg-emerald-100 hover:text-emerald-700 text-[10px] uppercase tracking-widest font-bold flex items-center justify-center gap-2 transition-all">
-                                ✨ Aktifkan Tahun Ajaran
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-         </div>
+            <!-- Desktop Table -->
+            <table v-else class="w-full text-left border-collapse min-w-[500px] whitespace-nowrap">
+                <thead class="sticky top-0 z-10 bg-slate-50 border-b border-slate-200 shadow-sm">
+                    <tr class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-500">
+                        <th class="p-4 w-16 text-center">#</th>
+                        <th class="p-4">Tahun Ajaran</th>
+                        <th class="p-4">Status</th>
+                        <th class="p-4 text-center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="text-xs">
+                    <tr v-for="(ta, index) in tahunAjaranData" :key="ta.id" class="border-b border-slate-100 hover:bg-slate-50/80 transition-colors group bg-white">
+                        <td class="p-4 text-center text-[10px] font-bold text-slate-400">
+                            {{ index + 1 }}
+                        </td>
+                        <td class="p-4">
+                            <p class="font-black text-slate-800 text-[13px]">{{ ta.tahun }}</p>
+                        </td>
+                        <td class="p-4">
+                            <span v-if="ta.is_aktif" class="inline-flex items-center px-2.5 py-1.5 rounded-md text-[9px] font-black uppercase tracking-widest bg-emerald-100 text-emerald-700 border border-emerald-200">
+                                Aktif
+                            </span>
+                            <span v-else class="inline-flex items-center px-2.5 py-1.5 rounded-md text-[9px] font-black uppercase tracking-widest bg-slate-100 text-slate-500 border border-slate-200">
+                                Tidak Aktif
+                            </span>
+                        </td>
+                        <td class="p-4 text-center">
+                            <div class="flex items-center justify-center gap-2 opacity-100 xl:opacity-0 xl:group-hover:opacity-100 transition-opacity">
+                                <button v-if="!ta.is_aktif" @click="setAktif(ta)" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-emerald-500 hover:border-emerald-200 hover:bg-emerald-50 flex items-center justify-center transition-all shadow-sm" title="Jadikan Aktif">✅</button>
+                                <button @click="editTahunAjaran(ta)" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-indigo-500 hover:border-indigo-200 hover:bg-indigo-50 flex items-center justify-center transition-all shadow-sm" title="Edit">✏️</button>
+                                <button v-if="!ta.is_aktif" @click="confirmDelete(ta.id, ta.tahun)" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-rose-500 hover:border-rose-200 hover:bg-rose-50 flex items-center justify-center transition-all shadow-sm" title="Hapus">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -180,11 +157,28 @@
             </div>
         </div>
     </div>
-
-    <!-- Toast Notification -->
-    <div v-if="showToast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-slate-900/95 backdrop-blur-md text-white px-6 py-4 rounded-full shadow-2xl flex items-center gap-4 z-[100] animate-slideUp">
-      <div class="w-8 h-8 bg-gradient-to-br from-emerald-400 to-emerald-500 rounded-full flex items-center justify-center text-white text-sm shadow-inner shadow-white/20">✓</div>
-      <p class="font-bold text-sm tracking-wide pr-2">{{ toastMessage }}</p>
+    <!-- ==============================================
+         MODAL KONFIRMASI AKTIFKAN TAHUN AJARAN
+         ============================================== -->
+    <div v-if="isActivateModalOpen" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
+        <div class="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden animate-slideUpFade text-center">
+            <div class="p-8">
+                <div class="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-inner border-4 border-white ring-4 ring-emerald-50">⚡</div>
+                <h3 class="text-xl font-black text-slate-800 tracking-tight">Aktifkan Tahun Ajaran?</h3>
+                <p class="text-xs text-slate-500 mt-3 leading-relaxed">
+                    Anda yakin ingin mengaktifkan Tahun Ajaran:<br>
+                    <span class="font-bold text-slate-800">{{ activateTarget.tahun }}</span>?
+                </p>
+                <p class="text-[10px] font-bold text-emerald-600 mt-3 p-2 bg-emerald-50 rounded-lg">Peringatan: Tahun ajaran lain akan otomatis dinonaktifkan.</p>
+                <div class="flex items-center gap-4 mt-8">
+                    <button @click="isActivateModalOpen = false" class="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-2xl transition-all text-xs uppercase tracking-widest">Batal</button>
+                    <button @click="executeActivate" :disabled="isActivating" class="flex-1 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-2xl shadow-lg shadow-emerald-500/30 transition-all text-xs uppercase tracking-widest flex items-center justify-center gap-2">
+                        <span v-if="isActivating" class="animate-spin text-base">⏳</span>
+                        <span v-else>Ya, Aktifkan</span>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
   </div>
 </template>
@@ -221,9 +215,10 @@ const form = ref({
 const isDeleteModalOpen = ref(false)
 const deleteTarget = ref({ id: null, name: '' })
 
-// Toast State
-const showToast = ref(false)
-const toastMessage = ref('')
+// Activation State
+const isActivateModalOpen = ref(false)
+const isActivating = ref(false)
+const activateTarget = ref({ id: null, tahun: '' })
 
 // === API CALLS ===
 
@@ -259,14 +254,14 @@ const saveTahunAjaran = async () => {
             body: form.value
         })
         if (response.success) {
-            displayToast(response.message)
+            useSwal().toast(response.message)
             resetForm()
             fetchTahunAjaran()
             if (!isDesktop.value) activeTab.value = 'table'
         }
     } catch (error) {
         console.error('Save failed:', error)
-        alert('Gagal menyimpan tahun ajaran. Periksa kembali form Anda.')
+        useSwal().toast('Gagal menyimpan tahun ajaran. Periksa kembali form Anda.', 'error')
     } finally {
         isSaving.value = false
     }
@@ -280,18 +275,37 @@ const editTahunAjaran = (ta) => {
         is_aktif: Boolean(ta.is_aktif)
     }
     activeTab.value = 'form'
-    window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
-const setAktif = async (ta) => {
-    if (confirm(`Anda yakin ingin mengaktifkan Tahun Ajaran ${ta.tahun}? Tahun ajaran lain akan dinonaktifkan.`)) {
-        isEditing.value = true
-        form.value = {
-            id: ta.id,
-            tahun: ta.tahun,
-            is_aktif: true
+const setAktif = (ta) => {
+    activateTarget.value = { id: ta.id, tahun: ta.tahun }
+    isActivateModalOpen.value = true
+}
+
+const executeActivate = async () => {
+    if (!activateTarget.value.id) return
+    isActivating.value = true
+    const token = useCookie('auth_token').value
+    
+    try {
+        const response = await $fetch(`http://localhost:8000/api/admin/tahun-ajaran/${activateTarget.value.id}`, {
+            method: 'PUT',
+            headers: { Authorization: `Bearer ${token}` },
+            body: { 
+                tahun: activateTarget.value.tahun,
+                is_aktif: true 
+            }
+        })
+        if (response.success) {
+            isActivateModalOpen.value = false
+            useSwal().toast(response.message)
+            fetchTahunAjaran()
         }
-        await saveTahunAjaran()
+    } catch (error) {
+        console.error('Activation failed:', error)
+        useSwal().toast('Gagal mengaktifkan tahun ajaran.', 'error')
+    } finally {
+        isActivating.value = false
     }
 }
 
@@ -320,26 +334,20 @@ const executeDelete = async () => {
         })
         if (response.success) {
             isDeleteModalOpen.value = false
-            displayToast(response.message)
+            useSwal().toast(response.message)
             fetchTahunAjaran()
         }
     } catch (error) {
         console.error('Delete failed:', error)
         if (error.response && error.response.status === 400) {
-             alert(error.response._data.message)
+             useSwal().toast(error.response._data.message, 'error')
              isDeleteModalOpen.value = false
         } else {
-             alert('Gagal menghapus data tahun ajaran.')
+             useSwal().toast('Gagal menghapus data tahun ajaran.', 'error')
         }
     } finally {
         isSaving.value = false
     }
-}
-
-const displayToast = (msg) => {
-    toastMessage.value = msg
-    showToast.value = true
-    setTimeout(() => { showToast.value = false }, 3500)
 }
 
 onMounted(() => {
@@ -369,9 +377,18 @@ onMounted(() => {
 }
 .animate-slideUpFade { animation: slideUpFade 0.3s ease-out forwards; }
 
-@keyframes slideUp {
-  from { opacity: 0; transform: translate(-50%, 20px); }
-  to { opacity: 1; transform: translate(-50%, 0); }
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
-.animate-slideUp { animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #94a3b8;
+}
 </style>

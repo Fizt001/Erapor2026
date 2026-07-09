@@ -2,6 +2,9 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"path": "../SIP-BTR7V2"
 		}
 	],
 	"settings": {}

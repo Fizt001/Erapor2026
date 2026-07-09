@@ -19,14 +19,17 @@ class WalasRekapController extends Controller
     private function getWalasContext()
     {
         $user = Auth::user();
-        
-        $walas = WaliKelas::with(['kelas.kurikulum'])->where('guru_id', $user->id)->first();
-        if (!$walas) {
-            return null;
-        }
 
         $tahunAktif = TahunAjaran::where('is_aktif', true)->first();
         if (!$tahunAktif) return null;
+
+        $walas = WaliKelas::with(['kelas.kurikulum'])->where('guru_id', $user->id)
+            ->whereHas('kelas', function($query) use ($tahunAktif) {
+                $query->where('tahun_ajaran_id', $tahunAktif->id);
+            })->first();
+        if (!$walas) {
+            return null;
+        }
 
         $titimangsas = Titimangsa::where('tahun_ajaran_id', $tahunAktif->id)
             ->orderBy('id')->get();
@@ -57,9 +60,13 @@ class WalasRekapController extends Controller
         $titimangsas = $context['titimangsas'];
         
         // Ambil semua siswa di kelas ini
-        $siswas = Siswa::with('user')->where('kelas_id', $kelas->id)->get()->sortBy(function($siswa) {
-            return $siswa->name;
-        })->values();
+        $siswas = Siswa::with('user')
+            ->where('kelas_id', $kelas->id)
+            ->get()
+            ->sortBy(function($siswa) {
+                return $siswa->name;
+            })
+            ->values();
 
         $masterKurikulum = Kurikulum::all();
 
@@ -70,24 +77,64 @@ class WalasRekapController extends Controller
             $siswaList = [];
 
             foreach ($siswas as $siswa) {
-                // Cari Absensi untuk siswa ini pada periode ini (agregrasi dari semua bulan di absensi_siswas)
-                // karena absensi_siswas disimpan per bulan, kita jumlahkan total_s, total_i, total_a
-                $absensi = AbsensiSiswa::where('siswa_id', $siswa->id)
-                    ->where('tahun_ajaran', $tahunAjaranAktif->tahun)
-                    ->where('periode', $titimangsa->nama_periode)
+                $bulanCetak = date('n', strtotime($titimangsa->tanggal_cetak));
+                $months = [];
+                if ($bulanCetak >= 7 && $bulanCetak <= 9) {
+                    $months = [7, 8, 9]; // ASTS Ganjil
+                } elseif ($bulanCetak >= 10 && $bulanCetak <= 12) {
+                    $months = [10, 11, 12]; // ASAS
+                } elseif ($bulanCetak >= 1 && $bulanCetak <= 3) {
+                    $months = [1, 2, 3]; // ASTS Genap
+                } else {
+                    $months = [4, 5, 6]; // ASAT
+                }
+
+                // Determine start and end date for the months in this titimangsa
+                $tahun = $tahunAjaranAktif->tahun; // e.g. "2026/2027" -> 2026
+                $startYear = intval(explode('/', $tahun)[0]);
+                
+                // Helper to get all absensi_pertemuan for this student in this date range
+                // But we need "Last Known State" per day.
+                // We will just do a DB query to get all meetings for this student's class
+                // grouped by date, ordering by jam_selesai desc.
+                
+                // Get all dates where there was a meeting for this class
+                $pertemuans = \App\Models\PertemuanGuru::where('kelas_id', $kelas->id)
+                    ->whereMonth('tanggal', '>=', min($months))
+                    ->whereMonth('tanggal', '<=', max($months))
+                    ->whereYear('tanggal', in_array(min($months), [7,8,9,10,11,12]) ? $startYear : $startYear + 1)
+                    ->orderBy('tanggal')
+                    ->orderBy('jam_selesai', 'desc')
                     ->get();
+                
+                $dailyStatus = [];
+                $absensiRecords = \App\Models\AbsensiPertemuan::where('siswa_id', $siswa->id)
+                    ->whereIn('pertemuan_id', $pertemuans->pluck('id'))
+                    ->get()
+                    ->keyBy('pertemuan_id');
+
+                foreach ($pertemuans as $pert) {
+                    if (!isset($dailyStatus[$pert->tanggal])) {
+                        if (isset($absensiRecords[$pert->id])) {
+                            // If it's H, maybe we don't count it as S/I/A. But if it's S/I/A we record it.
+                            $status = $absensiRecords[$pert->id]->status;
+                            if (in_array($status, ['S', 'I', 'A'])) {
+                                $dailyStatus[$pert->tanggal] = $status;
+                            }
+                        } else {
+                            // If no record, it's considered Hadir (H). We can ignore H for sums.
+                        }
+                    }
+                }
                 
                 $totalS = 0;
                 $totalI = 0;
                 $totalA = 0;
 
-                foreach ($absensi as $ab) {
-                    for ($i = 1; $i <= 31; $i++) {
-                        $col = 'tgl_' . $i;
-                        if ($ab->$col === 'S') $totalS++;
-                        if ($ab->$col === 'I') $totalI++;
-                        if ($ab->$col === 'A') $totalA++;
-                    }
+                foreach ($dailyStatus as $date => $status) {
+                    if ($status === 'S') $totalS++;
+                    if ($status === 'I') $totalI++;
+                    if ($status === 'A') $totalA++;
                 }
 
                 // Cari Catatan Wali Kelas untuk siswa ini pada periode ini
@@ -95,16 +142,52 @@ class WalasRekapController extends Controller
                     ->where('titimangsa_id', $titimangsa->id)
                     ->first();
 
+                // BK Points (Base 100)
+                $bkRecords = \App\Models\PoinSiswa::where('siswa_id', $siswa->id)
+                    ->where('titimangsa_id', $titimangsa->id)
+                    ->where(function ($q) {
+                        $q->where('is_tambahan_walas', false)->orWhereNull('is_tambahan_walas');
+                    })->get();
+                
+                $poinBk = 100;
+                foreach ($bkRecords as $pr) {
+                    $poinBk -= $pr->skor_pengurang ?? 0;
+                    $poinBk += $pr->skor_penambah ?? 0;
+                }
+
+                // Walas Tambahan Poin
+                $walasRecord = \App\Models\PoinSiswa::where('siswa_id', $siswa->id)
+                    ->where('titimangsa_id', $titimangsa->id)
+                    ->where('is_tambahan_walas', true)
+                    ->first();
+                
+                $tambahanPoin = 0;
+                $keterangan = '';
+                if ($walasRecord) {
+                    $tambahanPoin = ($walasRecord->skor_penambah ?? 0) - ($walasRecord->skor_pengurang ?? 0);
+                    $keterangan = $walasRecord->catatan ?? '';
+                }
+
+                $poinFinal = $poinBk + $tambahanPoin;
+
                 $siswaList[] = [
                     'id' => $siswa->id,
-                    'nama_siswa' => $siswa->name,
-                    'nisn' => $siswa->nisn,
+                    'nama_siswa' => $siswa->user ? $siswa->user->name : '',
+                    'nisn' => $siswa->nis,
+                    'tanggal_keluar' => $siswa->tanggal_keluar,
                     'absensi' => [
                         's' => $totalS,
                         'i' => $totalI,
                         'a' => $totalA,
                     ],
-                    'catatan' => $catatan ? $catatan->catatan : ''
+                    'catatan' => $catatan ? $catatan->catatan : '',
+                    'rekomendasi_kenaikan' => $catatan ? $catatan->rekomendasi_kenaikan : 'belum_ditentukan',
+                    'poin' => [
+                        'bk' => $poinBk,
+                        'tambahan' => $tambahanPoin,
+                        'keterangan' => $keterangan,
+                        'final' => $poinFinal
+                    ]
                 ];
             }
 
@@ -112,6 +195,7 @@ class WalasRekapController extends Controller
                 'id' => $titimangsa->id,
                 'nama_periode' => $titimangsa->nama_periode,
                 'is_aktif' => $titimangsa->is_aktif,
+                'is_akhir_tahun' => (date('n', strtotime($titimangsa->tanggal_cetak)) >= 4 && date('n', strtotime($titimangsa->tanggal_cetak)) <= 6),
                 'siswa' => $siswaList
             ];
         }
@@ -142,10 +226,11 @@ class WalasRekapController extends Controller
         $request->validate([
             'siswa_id' => 'required|exists:siswa,id',
             'titimangsa_id' => 'required|exists:titimangsas,id',
-            'catatan' => 'nullable|string'
+            'catatan' => 'nullable|string',
+            'rekomendasi_kenaikan' => 'nullable|in:naik,tinggal,lulus,belum_ditentukan'
         ]);
 
-        $tahunAjaranAktif = TahunAjaran::where('status', 'Aktif')->first();
+        $tahunAjaranAktif = TahunAjaran::where('is_aktif', true)->first();
 
         $titimangsa = Titimangsa::find($request->titimangsa_id);
         if (!$titimangsa || !$titimangsa->is_aktif) {
@@ -162,13 +247,59 @@ class WalasRekapController extends Controller
             ],
             [
                 'tahun_ajaran_id' => $tahunAjaranAktif->id,
-                'catatan' => $request->catatan
+                'catatan' => $request->catatan,
+                'rekomendasi_kenaikan' => $request->rekomendasi_kenaikan ?? 'belum_ditentukan'
             ]
         );
 
         return response()->json([
             'success' => true,
             'message' => 'Catatan Wali Kelas berhasil disimpan.'
+        ]);
+    }
+
+    public function storePoinTambahan(Request $request)
+    {
+        $request->validate([
+            'siswa_id' => 'required|exists:siswa,id',
+            'titimangsa_id' => 'required|exists:titimangsas,id',
+            'tambahan_poin' => 'nullable|numeric',
+            'keterangan' => 'nullable|string'
+        ]);
+
+        $tahunAjaranAktif = TahunAjaran::where('is_aktif', true)->first();
+
+        $titimangsa = Titimangsa::find($request->titimangsa_id);
+        if (!$titimangsa || !$titimangsa->is_aktif) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Periode titimangsa sudah ditutup.'
+            ], 403);
+        }
+
+        $tambahanPoin = intval($request->tambahan_poin);
+        $skorPenambah = $tambahanPoin > 0 ? $tambahanPoin : 0;
+        $skorPengurang = $tambahanPoin < 0 ? abs($tambahanPoin) : 0;
+
+        \App\Models\PoinSiswa::updateOrCreate(
+            [
+                'siswa_id' => $request->siswa_id,
+                'titimangsa_id' => $request->titimangsa_id,
+                'is_tambahan_walas' => true
+            ],
+            [
+                'tahun_ajaran_id' => $tahunAjaranAktif->id,
+                'skor_penambah' => $skorPenambah,
+                'skor_pengurang' => $skorPengurang,
+                'catatan' => $request->keterangan,
+                'guru_id' => Auth::id(),
+                'tanggal' => date('Y-m-d')
+            ]
+        );
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Tambahan poin berhasil disimpan.'
         ]);
     }
 }

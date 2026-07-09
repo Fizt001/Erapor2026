@@ -6,13 +6,21 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\AdminController;
 
 Route::post('/login', [AuthController::class, 'login']);
+Route::get('/public/stats', [App\Http\Controllers\Api\PublicController::class, 'stats']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'user']);
+    Route::put('/user/profile', [AuthController::class, 'updateProfile']);
+    
+    // Master Database (Public for all roles)
+    Route::get('/referensi', [\App\Http\Controllers\Api\ReferensiController::class, 'index']);
+    
+    // Sekolah Info (Public for all authenticated roles)
+    Route::get('/admin/sekolah', [AdminController::class, 'getSekolah']);
     
     // Rute Backup
-    Route::prefix('/admin/backup')->group(function () {
+    Route::prefix('/admin/backup')->middleware('role:admin')->group(function () {
         Route::get('/list', [App\Http\Controllers\Api\AdminBackupController::class, 'listBackups']);
         Route::post('/generate', [App\Http\Controllers\Api\AdminBackupController::class, 'generateBackup']);
         Route::post('/upload', [App\Http\Controllers\Api\AdminBackupController::class, 'uploadBackup']);
@@ -30,6 +38,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('poin', App\Http\Controllers\Api\Bk\BkPoinController::class)->only(['index', 'store', 'destroy']);
         Route::apiResource('penanganan', App\Http\Controllers\Api\Bk\BkPenangananController::class);
         Route::get('buku-kasus', [App\Http\Controllers\Api\Bk\BkBukuKasusController::class, 'index']);
+        Route::get('/buku-kasus/export/pdf', [\App\Http\Controllers\Api\Bk\BkBukuKasusController::class, 'exportPdf']);
+        Route::get('/buku-kasus/export/excel', [\App\Http\Controllers\Api\Bk\BkBukuKasusController::class, 'exportExcel']);
+        
+        // Master Referensi Khusus BK
+        Route::apiResource('/referensi', \App\Http\Controllers\Api\Bk\BkReferensiController::class);
         
         Route::get('absensi', [App\Http\Controllers\Api\Bk\BkAbsensiController::class, 'index']);
         Route::post('absensi/update', [App\Http\Controllers\Api\Bk\BkAbsensiController::class, 'updateAbsensi']);
@@ -37,7 +50,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     // Rute Kurikulum (Role Waka Kurikulum)
-    Route::prefix('/kurikulum')->group(function () {
+    Route::prefix('/kurikulum')->middleware('role:kurikulum,admin')->group(function () {
         Route::get('/dashboard', [App\Http\Controllers\Api\Kurikulum\DashboardController::class, 'index']);
         
         Route::apiResource('mapel', App\Http\Controllers\Api\Kurikulum\MapelController::class);
@@ -53,6 +66,7 @@ Route::middleware('auth:sanctum')->group(function () {
         // Struktur Umum
         Route::get('/struktur-umum', [App\Http\Controllers\Api\Kurikulum\StrukturUmumController::class, 'index']);
         Route::post('/struktur-umum', [App\Http\Controllers\Api\Kurikulum\StrukturUmumController::class, 'strukturStore']);
+        Route::put('/struktur-umum/{id}', [App\Http\Controllers\Api\Kurikulum\StrukturUmumController::class, 'strukturUpdate']);
         Route::delete('/struktur-umum/{id}', [App\Http\Controllers\Api\Kurikulum\StrukturUmumController::class, 'strukturDestroy']);
 
         // Struktur Kejuruan
@@ -72,16 +86,29 @@ Route::middleware('auth:sanctum')->group(function () {
         // Master Deskripsi
         Route::get('/deskripsi-template', [App\Http\Controllers\Api\Kurikulum\DeskripsiTemplateController::class, 'index']);
         Route::post('/deskripsi-template', [App\Http\Controllers\Api\Kurikulum\DeskripsiTemplateController::class, 'store']);
+        
+        // Penanganan Kasus (SP2 & SP3)
+        Route::get('/penanganan', [App\Http\Controllers\Api\Kurikulum\KurikulumPenangananController::class, 'index']);
+        Route::put('/penanganan/{id}/acc', [App\Http\Controllers\Api\Kurikulum\KurikulumPenangananController::class, 'accSp3']);
     });
 
     // Rute Admin
-    Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);
+    Route::middleware('role:admin')->group(function () {
+        Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);
     
-    Route::get('/admin/sekolah', [AdminController::class, 'getSekolah']);
-    Route::put('/admin/sekolah', [AdminController::class, 'updateSekolah']);
+    // Buku Induk
+    Route::prefix('/admin/buku-induk')->group(function () {
+        Route::get('/dependencies', [\App\Http\Controllers\Api\AdminBukuIndukController::class, 'getDependencies']);
+        Route::get('/biodata', [\App\Http\Controllers\Api\AdminBukuIndukController::class, 'getBiodataByKurikulum']);
+        Route::get('/{kelas_id}/mapel-struktur', [\App\Http\Controllers\Api\AdminBukuIndukController::class, 'getMapelStruktur']);
+    });
+    Route::get('/admin/buku-induk/siswa/{siswa_id}/nilai', [App\Http\Controllers\Api\AdminBukuIndukController::class, 'getNilaiSiswa']);
+    
+    Route::post('/admin/sekolah', [AdminController::class, 'updateSekolah']);
     
     Route::get('/admin/users/template', [App\Http\Controllers\Api\AdminUserController::class, 'downloadTemplate']);
     Route::post('/admin/users/import', [App\Http\Controllers\Api\AdminUserController::class, 'importUsers']);
+    Route::post('/admin/users/{id}/reset-password', [App\Http\Controllers\Api\AdminUserController::class, 'resetPassword']);
     Route::apiResource('/admin/users', App\Http\Controllers\Api\AdminUserController::class);
 
     // Master Kejuruan (Bidang -> Program -> Konsentrasi)
@@ -109,14 +136,27 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/admin/tahun-ajaran', App\Http\Controllers\Api\AdminTahunAjaranController::class);
 
     // Master Kelas
-    Route::get('/admin/kelas/dependencies', [App\Http\Controllers\Api\AdminKelasController::class, 'dependencies']);
-    Route::apiResource('/admin/kelas', App\Http\Controllers\Api\AdminKelasController::class);
+    Route::get('/admin/kelas/dependencies', [\App\Http\Controllers\Api\AdminKelasController::class, 'dependencies']);
+    Route::post('/admin/kelas/generate', [\App\Http\Controllers\Api\AdminKelasController::class, 'generate']);
+    Route::apiResource('/admin/kelas', \App\Http\Controllers\Api\AdminKelasController::class);
 
     // Kelola Siswa (Assign Rombel)
     Route::get('/admin/kelas/{id}/siswa', [App\Http\Controllers\Api\AdminKelolaSiswaController::class, 'index']);
     Route::post('/admin/kelas/{id}/siswa', [App\Http\Controllers\Api\AdminKelolaSiswaController::class, 'storeBulk']);
-    Route::put('/admin/siswa/{id}', [App\Http\Controllers\Api\AdminKelolaSiswaController::class, 'update']);
-    Route::delete('/admin/siswa/{id}', [App\Http\Controllers\Api\AdminKelolaSiswaController::class, 'destroy']);
+        Route::put('/admin/siswa/{id}', [App\Http\Controllers\Api\AdminKelolaSiswaController::class, 'update']);
+        Route::delete('/admin/siswa/{id}', [App\Http\Controllers\Api\AdminKelolaSiswaController::class, 'destroy']);
+
+        // Kenaikan Kelas & Mutasi
+        Route::get('/admin/kenaikan-kelas/setup', [App\Http\Controllers\Api\AdminKenaikanKelasController::class, 'getSetupData']);
+        Route::get('/admin/kenaikan-kelas/{kelas_id}/siswa', [App\Http\Controllers\Api\AdminKenaikanKelasController::class, 'getSiswa']);
+        Route::post('/admin/kenaikan-kelas/proses', [App\Http\Controllers\Api\AdminKenaikanKelasController::class, 'proses']);
+
+        Route::get('/admin/mutasi', [App\Http\Controllers\Api\AdminMutasiController::class, 'index']);
+        Route::post('/admin/mutasi/proses', [App\Http\Controllers\Api\AdminMutasiController::class, 'prosesLangsung']);
+        Route::post('/admin/mutasi/{id}/approve', [App\Http\Controllers\Api\AdminMutasiController::class, 'approve']);
+        Route::post('/admin/mutasi/{id}/reject', [App\Http\Controllers\Api\AdminMutasiController::class, 'reject']);
+        Route::delete('/admin/mutasi/{id}', [App\Http\Controllers\Api\AdminMutasiController::class, 'cancel']);
+    });
 
     // ==========================================
     // MODULE GURU / WALAS
@@ -141,13 +181,32 @@ Route::middleware('auth:sanctum')->group(function () {
         
         // REKAP SUMATIF
         Route::get('sumatif/rekap', [\App\Http\Controllers\Api\Guru\SumatifRekapController::class, 'index']);
+
+        // ABSENSI PERTEMUAN (GURU MAPEL)
+        Route::get('absensi/referensi', [\App\Http\Controllers\Api\Guru\AbsensiController::class, 'getReferensi']);
+        Route::get('absensi/pertemuan', [\App\Http\Controllers\Api\Guru\AbsensiController::class, 'getPertemuan']);
+        Route::get('absensi/last-jam', [\App\Http\Controllers\Api\Guru\AbsensiController::class, 'getLastJam']);
+        Route::post('absensi/pertemuan', [\App\Http\Controllers\Api\Guru\AbsensiController::class, 'createPertemuan']);
+        Route::put('absensi/pertemuan/{id}', [\App\Http\Controllers\Api\Guru\AbsensiController::class, 'updatePertemuan']);
+        Route::delete('absensi/pertemuan/{id}', [\App\Http\Controllers\Api\Guru\AbsensiController::class, 'deletePertemuan']);
+        Route::get('absensi/pertemuan/{id}/siswa', [\App\Http\Controllers\Api\Guru\AbsensiController::class, 'getAbsensiSiswa']);
+        Route::post('absensi/pertemuan/{id}/simpan', [\App\Http\Controllers\Api\Guru\AbsensiController::class, 'simpanAbsensi']);
         
         // ==========================================
         // WALI KELAS
         // ==========================================
         Route::prefix('walas')->group(function () {
+            Route::get('dashboard-stats', [\App\Http\Controllers\Api\Guru\WalasDashboardStatsController::class, 'getStats']);
+            Route::get('rekap', [\App\Http\Controllers\Api\Guru\WalasRekapController::class, 'index']);
+            Route::post('rekap/catatan', [\App\Http\Controllers\Api\Guru\WalasRekapController::class, 'saveCatatan']);
+            Route::post('rekap/kurikulum', [\App\Http\Controllers\Api\Guru\WalasRekapController::class, 'saveKurikulum']);
+            Route::get('absensi/kalender', [\App\Http\Controllers\Api\Guru\WalasAbsensiController::class, 'getMonthlyCalendar']);
+            Route::get('mutasi', [\App\Http\Controllers\Api\Guru\WalasMutasiController::class, 'index']);
+            Route::get('mutasi/kelas', [\App\Http\Controllers\Api\Guru\WalasMutasiController::class, 'getKelasList']);
+            Route::post('mutasi', [\App\Http\Controllers\Api\Guru\WalasMutasiController::class, 'store']);
             Route::get('biodata', [\App\Http\Controllers\Api\Guru\WalasController::class, 'getBiodataSiswa']);
             Route::put('biodata/{id}', [\App\Http\Controllers\Api\Guru\WalasController::class, 'updateBiodataSiswa']);
+            Route::post('biodata/lock-all', [\App\Http\Controllers\Api\Guru\WalasController::class, 'lockAllBiodata']);
             Route::get('monitoring', [\App\Http\Controllers\Api\Guru\WalasController::class, 'monitoringNilai']);
             
             // EKSTRAKURIKULER
@@ -155,19 +214,34 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('ekskul/store', [\App\Http\Controllers\Api\Guru\WalasEkskulController::class, 'store']);
             Route::post('ekskul/kurikulum', [\App\Http\Controllers\Api\Guru\WalasEkskulController::class, 'updateKurikulum']);
             
-            // KOKURIKULER (P5)
+            // KOKURIKULER WALAS
             Route::get('kokurikuler', [App\Http\Controllers\Api\Guru\WalasKokurikulerController::class, 'index']);
             Route::post('kokurikuler/store', [App\Http\Controllers\Api\Guru\WalasKokurikulerController::class, 'store']);
             Route::post('kokurikuler/kurikulum', [App\Http\Controllers\Api\Guru\WalasKokurikulerController::class, 'updateKurikulum']);
 
-            // REKAP ABSENSI DAN CATATAN WALI KELAS
+            // BIMBINGAN WALAS (TINDAK LANJUT)
+            Route::get('bimbingan', [App\Http\Controllers\Api\Guru\WalasPenangananController::class, 'index']);
+            Route::put('bimbingan/{id}', [App\Http\Controllers\Api\Guru\WalasPenangananController::class, 'update']);
+
+            // REKAP ABSENSI, CATATAN WALI KELAS, DAN POIN
             Route::get('rekap', [App\Http\Controllers\Api\Guru\WalasRekapController::class, 'index']);
             Route::post('rekap/catatan', [App\Http\Controllers\Api\Guru\WalasRekapController::class, 'storeCatatan']);
+            Route::post('rekap/poin', [App\Http\Controllers\Api\Guru\WalasRekapController::class, 'storePoinTambahan']);
 
             // CETAK LEGER DAN RAPOR
-            Route::get('cetak', [App\Http\Controllers\Api\Guru\WalasCetakController::class, 'index']);
-            Route::get('cetak/rapor', [App\Http\Controllers\Api\Guru\WalasCetakController::class, 'raporSiswa']);
-            Route::get('cetak/leger', [App\Http\Controllers\Api\Guru\WalasCetakController::class, 'legerKelas']);
+            Route::get('cetak', [\App\Http\Controllers\Api\Guru\WalasCetakController::class, 'index']);
+            Route::post('cetak/simpan-catatan', [\App\Http\Controllers\Api\Guru\WalasCetakController::class, 'simpanCatatan']);
+            Route::get('cetak/rapor', [\App\Http\Controllers\Api\Guru\WalasCetakController::class, 'raporSiswa']);
+            Route::get('cetak/leger', [\App\Http\Controllers\Api\Guru\WalasCetakController::class, 'legerKelas']);
+            Route::post('naik-kelas', [\App\Http\Controllers\Api\Guru\WalasCetakController::class, 'naikKelas']);
+
+            Route::get('prestasi', [\App\Http\Controllers\Api\Guru\WalasPrestasiController::class, 'index']);
+            Route::post('prestasi', [\App\Http\Controllers\Api\Guru\WalasPrestasiController::class, 'store']);
+            Route::put('prestasi/{id}', [\App\Http\Controllers\Api\Guru\WalasPrestasiController::class, 'update']);
+            Route::delete('prestasi/{id}', [\App\Http\Controllers\Api\Guru\WalasPrestasiController::class, 'destroy']);
+
+            // CATATAN KENAIKAN KELAS
+            Route::get('kenaikan-kelas', [\App\Http\Controllers\Api\Guru\WalasKenaikanController::class, 'index']);
         });
     });
 
@@ -180,5 +254,13 @@ Route::middleware('auth:sanctum')->group(function () {
         
         Route::get('rapor', [\App\Http\Controllers\Api\Siswa\SiswaRaporController::class, 'index']);
         Route::get('rapor/cetak', [\App\Http\Controllers\Api\Siswa\SiswaRaporController::class, 'cetak']);
+        
+        Route::get('analisis', [\App\Http\Controllers\Api\Siswa\SiswaAnalisisController::class, 'index']);
+        Route::post('analisis/target', [\App\Http\Controllers\Api\Siswa\SiswaAnalisisController::class, 'setTarget']);
+
+        Route::get('kedisiplinan', [\App\Http\Controllers\Api\Siswa\SiswaKedisiplinanController::class, 'index']);
+        
+        Route::get('portofolio', [\App\Http\Controllers\Api\Siswa\SiswaPortofolioController::class, 'index']);
+        Route::get('jadwal', [\App\Http\Controllers\Api\Siswa\SiswaJadwalController::class, 'index']);
     });
 });

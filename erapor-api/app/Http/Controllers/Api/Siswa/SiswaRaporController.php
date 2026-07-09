@@ -31,21 +31,56 @@ class SiswaRaporController extends Controller
             return response()->json(['success' => false, 'message' => 'Data siswa tidak ditemukan.'], 404);
         }
 
-        // Get titimangsas where this student has grades, or just all available
-        $titimangsaIds = SumatifNilai::where('siswa_id', $siswa->id)
-            ->distinct()
-            ->pluck('titimangsa_id');
-
-        $titimangsas = Titimangsa::whereIn('id', $titimangsaIds)
-            ->orderBy('tanggal_mulai', 'desc')
+        // Ambil titimangsa dari nilai sumatif yang pernah didapatkan
+        $sumatifs = \App\Models\SumatifNilai::with('kelas')
+            ->where('siswa_id', $siswa->id)
+            ->select('titimangsa_id', 'kelas_id')
             ->get();
 
-        return response()->json([
+        $titimangsaTingkat = [];
+        foreach($sumatifs as $s) {
+            if($s->kelas) {
+                $titimangsaTingkat[$s->titimangsa_id] = $s->kelas->tingkat;
+            }
+        }
+
+        // Ambil tahun ajaran yang sedang aktif
+        $taAktif = \App\Models\TahunAjaran::where('is_aktif', 1)->first();
+
+        // Tambahkan SEMUA titimangsa aktif pada TAHUN AJARAN AKTIF dengan tingkat kelas siswa sekarang
+        if ($taAktif) {
+            $activeTitimangsas = Titimangsa::where('is_aktif', 1)
+                                           ->where('tahun_ajaran_id', $taAktif->id)
+                                           ->get();
+            $currentTingkat = $siswa->kelas->tingkat ?? 'X';
+            
+            foreach($activeTitimangsas as $active) {
+                if (!isset($titimangsaTingkat[$active->id])) {
+                    $titimangsaTingkat[$active->id] = $currentTingkat;
+                }
+            }
+        }
+
+        // Ambil data titimangsa
+        $titimangsas = Titimangsa::whereIn('id', array_keys($titimangsaTingkat))
+            ->orderBy('id', 'asc')
+            ->get()
+            ->map(function($t) use ($titimangsaTingkat) {
+                $t->tingkat = $titimangsaTingkat[$t->id] ?? 'X';
+                return $t;
+            })->values();
+
+        $responsePayload = [
             'success' => true,
             'data' => [
-                'titimangsas' => $titimangsas
+                'titimangsas' => $titimangsas,
+                'current_tingkat' => $currentTingkat
             ]
-        ]);
+        ];
+        
+        \Illuminate\Support\Facades\Log::info("SiswaRaporController Response: " . json_encode($responsePayload));
+
+        return response()->json($responsePayload);
     }
 
     public function cetak(Request $request)
@@ -294,10 +329,22 @@ class SiswaRaporController extends Controller
             ->where('titimangsa_id', $titimangsa->id)
             ->first();
 
-        // 8. Absensi Dinamis
+        // 8. Absensi Dinamis (Berdasarkan Titimangsa tanggal cetak)
+        $bulanCetak = date('n', strtotime($titimangsa->tanggal_cetak));
+        $months = [];
+        if ($bulanCetak >= 7 && $bulanCetak <= 9) {
+            $months = [7, 8, 9]; // ASTS Ganjil
+        } elseif ($bulanCetak >= 10 && $bulanCetak <= 12) {
+            $months = [10, 11, 12]; // ASAS
+        } elseif ($bulanCetak >= 1 && $bulanCetak <= 3) {
+            $months = [1, 2, 3]; // ASTS Genap
+        } else {
+            $months = [4, 5, 6]; // ASAT
+        }
+
         $absensiRecords = AbsensiSiswa::where('siswa_id', $siswa->id)
             ->where('tahun_ajaran', $tahunAktif->tahun)
-            ->where('periode', $titimangsa->nama_periode)
+            ->whereIn('bulan', $months)
             ->get();
         
         $totalS = 0; $totalI = 0; $totalA = 0;
@@ -329,7 +376,20 @@ class SiswaRaporController extends Controller
         
         $sekolah = [
             'nama' => $dbSekolah ? $dbSekolah->nama_sekolah : 'SMK Tinta Emas Indonesia',
+            'nama_yayasan' => $dbSekolah ? $dbSekolah->nama_yayasan : '-',
+            'akreditasi' => $dbSekolah ? $dbSekolah->akreditasi : '-',
             'npsn' => $dbSekolah ? $dbSekolah->npsn : '-',
+            'alamat' => $dbSekolah ? $dbSekolah->alamat : '-',
+            'kelurahan' => $dbSekolah ? $dbSekolah->kelurahan : '-',
+            'kecamatan' => $dbSekolah ? $dbSekolah->kecamatan : '-',
+            'kota' => $dbSekolah ? $dbSekolah->kota : '-',
+            'provinsi' => $dbSekolah ? $dbSekolah->provinsi : '-',
+            'kode_pos' => $dbSekolah ? $dbSekolah->kode_pos : '-',
+            'telepon' => $dbSekolah ? $dbSekolah->telepon : '-',
+            'website' => $dbSekolah ? $dbSekolah->website : '-',
+            'email' => $dbSekolah ? $dbSekolah->email : '-',
+            'logo' => $dbSekolah && $dbSekolah->logo ? url($dbSekolah->logo) : null,
+            'logo_kiri' => $dbSekolah && $dbSekolah->logo_kiri ? url($dbSekolah->logo_kiri) : null,
             'alamat_line1' => $alamatLine1,
             'alamat_line2' => $alamatLine2,
             'kepsek' => $dbSekolah ? $dbSekolah->nama_kepsek : '-',
@@ -362,10 +422,30 @@ class SiswaRaporController extends Controller
             ->where('titimangsa_id', $titimangsa->id)
             ->first();
 
+        // Ambil Data Wali Kelas untuk Kelas ini
+        $walasRecord = \App\Models\WaliKelas::with('guru.biodata')->where('kelas_id', $kelasId)->first();
+        $namaWalas = 'Wali Kelas';
+        $nipWalas = '-';
+
+        if ($walasRecord && $walasRecord->guru) {
+            $namaWalas = $walasRecord->guru->biodata->nama_lengkap ?? $walasRecord->guru->name ?? 'Wali Kelas';
+            $nipWalas = $walasRecord->guru->biodata->nip ?? '-';
+        }
+
+        $refPeriode = \App\Models\Referensi::where('jenis', 'nama_periode')->where('nama', $titimangsa->nama_periode)->first();
+        $namaPeriodePanjang = $refPeriode && !empty($refPeriode->keterangan) ? $refPeriode->keterangan : $titimangsa->nama_periode;
+
+        $nm = strtolower($titimangsa->nama_periode);
+        $isTengahSemester = str_contains($nm, 'sts') || str_contains($nm, 'pts') || str_contains($nm, 'tengah');
+
         return response()->json([
             'success' => true,
             'data' => [
                 'sekolah' => $sekolah,
+                'walas' => [
+                    'nama_lengkap' => $namaWalas,
+                    'nip' => $nipWalas
+                ],
                 'siswa' => [
                     'nama' => strtoupper($siswa->user->name),
                     'nis' => $siswa->nis,
@@ -381,7 +461,9 @@ class SiswaRaporController extends Controller
                     'kode_konsentrasi' => $kelas->kejuruan->kode_konsentrasi ?? ''
                 ],
                 'semester' => in_array($titimangsa->nama_periode, ['PSTS Ganjil', 'PSAS']) ? '1 (Ganjil)' : '2 (Genap)',
+                'is_tengah_semester' => $isTengahSemester,
                 'nama_periode' => $titimangsa->nama_periode,
+                'nama_periode_panjang' => $namaPeriodePanjang,
                 'tahun_ajaran' => str_replace('/', ' / ', $tahunAktif->tahun), // "2025/2026" to "2025 / 2026"
                 'rapor_mapel' => $raporMapel,
                 'statistik' => [

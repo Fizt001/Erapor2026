@@ -26,6 +26,7 @@ class AdminReferensiController extends Controller
             'jenis' => 'required|string|max:50',
             'kode' => 'required|string|max:50',
             'nama' => 'required|string|max:100',
+            'keterangan' => 'nullable|string|max:255',
         ]);
 
         $referensi = Referensi::create($request->all());
@@ -43,6 +44,7 @@ class AdminReferensiController extends Controller
             'jenis' => 'required|string|max:50',
             'kode' => 'required|string|max:50',
             'nama' => 'required|string|max:100',
+            'keterangan' => 'nullable|string|max:255',
         ]);
 
         $referensi = Referensi::findOrFail($id);

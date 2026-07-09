@@ -41,9 +41,10 @@ class FormatifMasterController extends Controller
         $selectedMapelId = $request->mapel_id;
 
         // Ambil semua kelas di mana guru ini mengajar mapel apa pun
-        $kelases = Kelas::whereHas('pengampus', function($q) use ($user) {
-            $q->where('guru_id', $user->id);
-        })->get();
+        $kelases = Kelas::where('tahun_ajaran_id', $selectedTahunId)
+            ->whereHas('pengampus', function($q) use ($user) {
+                $q->where('guru_id', $user->id);
+            })->get();
 
         $mapels = [];
         if ($selectedKelasId) {

@@ -60,7 +60,8 @@ class AdminController extends Controller
                 'nama_sekolah' => '', 'npsn' => '', 'nss' => '', 'website' => '',
                 'alamat' => '', 'kelurahan' => '', 'kecamatan' => '', 'kota' => '', 
                 'provinsi' => '', 'kode_pos' => '', 'telepon' => '', 'email' => '',
-                'nama_kepsek' => '', 'nip_kepsek' => ''
+                'nama_kepsek' => '', 'nip_kepsek' => '',
+                'nama_yayasan' => '', 'akreditasi' => '', 'logo_kiri' => null
             ];
         }
 
@@ -87,14 +88,58 @@ class AdminController extends Controller
             'email' => 'nullable|email|max:100',
             'nama_kepsek' => 'nullable|string|max:255',
             'nip_kepsek' => 'nullable|string|max:100',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'logo_kiri' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'nama_yayasan' => 'nullable|string|max:255',
+            'akreditasi' => 'nullable|string|max:50',
         ]);
 
         $sekolah = Sekolah::first();
         
+        $data = $request->except(['logo', 'logo_kiri']);
+
+        if ($request->hasFile('logo')) {
+            $file = $request->file('logo');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            
+            $logoDir = public_path('uploads/logo');
+            if (!\Illuminate\Support\Facades\File::exists($logoDir)) {
+                \Illuminate\Support\Facades\File::makeDirectory($logoDir, 0755, true);
+            }
+            
+            $file->move($logoDir, $filename);
+            
+            // Delete old logo if exists
+            if ($sekolah && $sekolah->logo && file_exists(public_path($sekolah->logo))) {
+                @unlink(public_path($sekolah->logo));
+            }
+            
+            $data['logo'] = 'uploads/logo/' . $filename;
+        }
+
+        if ($request->hasFile('logo_kiri')) {
+            $fileKiri = $request->file('logo_kiri');
+            $filenameKiri = time() . '_kiri_' . $fileKiri->getClientOriginalName();
+            
+            $logoDir = public_path('uploads/logo');
+            if (!\Illuminate\Support\Facades\File::exists($logoDir)) {
+                \Illuminate\Support\Facades\File::makeDirectory($logoDir, 0755, true);
+            }
+            
+            $fileKiri->move($logoDir, $filenameKiri);
+            
+            // Delete old logo if exists
+            if ($sekolah && $sekolah->logo_kiri && file_exists(public_path($sekolah->logo_kiri))) {
+                @unlink(public_path($sekolah->logo_kiri));
+            }
+            
+            $data['logo_kiri'] = 'uploads/logo/' . $filenameKiri;
+        }
+
         if ($sekolah) {
-            $sekolah->update($request->all());
+            $sekolah->update($data);
         } else {
-            $sekolah = Sekolah::create($request->all());
+            $sekolah = Sekolah::create($data);
         }
 
         return response()->json([

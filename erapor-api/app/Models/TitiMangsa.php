@@ -17,6 +17,16 @@ class Titimangsa extends Model
         'is_aktif'
     ];
 
+    protected $appends = ['nama_periode_panjang'];
+
+    public function getNamaPeriodePanjangAttribute()
+    {
+        $ref = \App\Models\Referensi::where('jenis', 'titimangsa')
+                                    ->where('nama', $this->nama_periode)
+                                    ->first();
+        return $ref ? ($ref->keterangan ?: $this->nama_periode) : $this->nama_periode;
+    }
+
     // Titimangsa balik ke Tahun Ajaran
     public function tahunAjaran(): BelongsTo
     {

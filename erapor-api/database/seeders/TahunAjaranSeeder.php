@@ -11,7 +11,7 @@ class TahunAjaranSeeder extends Seeder
     {
         // Hanya kolom 'tahun' dan 'is_aktif' sesuai migration baru
         TahunAjaran::create([
-            'tahun' => '2025/2026',
+            'tahun' => '2023/2024',
             'is_aktif' => true,
         ]);
     }

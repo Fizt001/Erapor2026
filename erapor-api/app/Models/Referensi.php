@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Referensi extends Model
 {
-    protected $fillable = ['jenis', 'kode', 'nama'];
+    protected $fillable = ['jenis', 'kode', 'nama', 'keterangan'];
 }

@@ -28,11 +28,16 @@ class WalasCetakController extends Controller
     {
         $user = Auth::user();
         
-        $walas = WaliKelas::with(['kelas.kurikulum', 'kelas.kejuruan.program.bidang', 'guru.biodata'])->where('guru_id', $user->id)->first();
-        if (!$walas) return null;
-
         $tahunAktif = TahunAjaran::where('is_aktif', true)->first();
         if (!$tahunAktif) return null;
+
+        $walas = WaliKelas::with(['kelas.kurikulum', 'kelas.kejuruan.program.bidang', 'guru.biodata'])
+            ->where('guru_id', $user->id)
+            ->whereHas('kelas', function ($query) use ($tahunAktif) {
+                $query->where('tahun_ajaran_id', $tahunAktif->id);
+            })
+            ->first();
+        if (!$walas) return null;
 
         $titimangsas = Titimangsa::where('tahun_ajaran_id', $tahunAktif->id)->orderBy('id')->get();
         if ($titimangsas->isEmpty()) return null;
@@ -52,7 +57,58 @@ class WalasCetakController extends Controller
             return response()->json(['success' => false, 'message' => 'Anda bukan wali kelas aktif.'], 403);
         }
 
-        $siswas = Siswa::with('user')->where('kelas_id', $context['kelas']->id)->get()->sortBy('user.name')->values();
+        $siswas = Siswa::with('user')
+            ->where('kelas_id', $context['kelas']->id)
+            ->whereNull('tanggal_keluar')
+            ->get()
+            ->sortBy('user.name')
+            ->values();
+        $tahunAktif = $context['tahun_ajaran'];
+        
+        // Cari tahun ajaran berikutnya (misal: 2025/2026 -> 2026/2027)
+        $parts = explode('/', $tahunAktif->tahun);
+        $nextTahun = '';
+        if (count($parts) == 2) {
+            $nextTahun = (intval($parts[0]) + 1) . '/' . (intval($parts[1]) + 1);
+        }
+        $nextTahunAjaran = \App\Models\TahunAjaran::where('tahun', $nextTahun)->first();
+
+        $tingkatSekarang = $context['kelas']->tingkat;
+        $tingkatBerikutnya = '';
+        if ($tingkatSekarang == 'X') $tingkatBerikutnya = 'XI';
+        else if ($tingkatSekarang == 'XI') $tingkatBerikutnya = 'XII';
+
+        $kelasTahunDepan = collect();
+        if ($nextTahunAjaran) {
+            $kelasTahunDepan = Kelas::with('tahunAjaran')
+                ->where('tahun_ajaran_id', $nextTahunAjaran->id)
+                ->whereIn('tingkat', array_filter([$tingkatSekarang, $tingkatBerikutnya]))
+                ->get();
+        }
+
+        $all_kelas = $kelasTahunDepan->sortBy(['tingkat', 'nama_kelas'])->values();
+
+        $isSemesterGenap = false;
+        foreach ($context['titimangsas'] as $titimangsa) {
+            $month = date('n', strtotime($titimangsa->tanggal_cetak ?? date('Y-m-d')));
+            if ($month >= 1 && $month <= 6) {
+                $isSemesterGenap = true;
+                break;
+            }
+        }
+
+        $hasPsatBackup = false;
+        $backupDir = storage_path('app/backups');
+        if (\Illuminate\Support\Facades\File::exists($backupDir)) {
+            $files = \Illuminate\Support\Facades\File::files($backupDir);
+            $currentYear = \Carbon\Carbon::now()->year;
+            foreach ($files as $file) {
+                if (str_contains(strtolower($file->getFilename()), '_psat_') && date('Y', $file->getMTime()) == $currentYear) {
+                    $hasPsatBackup = true;
+                    break;
+                }
+            }
+        }
 
         return response()->json([
             'success' => true,
@@ -61,7 +117,10 @@ class WalasCetakController extends Controller
                 'walas' => $context['walas'],
                 'tahun_ajaran' => $context['tahun_ajaran'],
                 'titimangsas' => $context['titimangsas'],
-                'siswas' => $siswas
+                'siswas' => $siswas,
+                'all_kelas' => $all_kelas,
+                'is_semester_genap' => $isSemesterGenap,
+                'has_psat_backup' => $hasPsatBackup
             ]
         ]);
     }
@@ -307,10 +366,22 @@ class WalasCetakController extends Controller
             ->where('titimangsa_id', $titimangsa->id)
             ->first();
 
-        // 8. Absensi Dinamis
+        // 8. Absensi Dinamis (Berdasarkan Titimangsa tanggal cetak)
+        $bulanCetak = date('n', strtotime($titimangsa->tanggal_cetak));
+        $months = [];
+        if ($bulanCetak >= 7 && $bulanCetak <= 9) {
+            $months = [7, 8, 9]; // ASTS Ganjil
+        } elseif ($bulanCetak >= 10 && $bulanCetak <= 12) {
+            $months = [10, 11, 12]; // ASAS
+        } elseif ($bulanCetak >= 1 && $bulanCetak <= 3) {
+            $months = [1, 2, 3]; // ASTS Genap
+        } else {
+            $months = [4, 5, 6]; // ASAT
+        }
+
         $absensiRecords = AbsensiSiswa::where('siswa_id', $siswa->id)
             ->where('tahun_ajaran', $tahunAktif->tahun)
-            ->where('periode', $titimangsa->nama_periode)
+            ->whereIn('bulan', $months)
             ->get();
         
         $totalS = 0; $totalI = 0; $totalA = 0;
@@ -342,7 +413,20 @@ class WalasCetakController extends Controller
         
         $sekolah = [
             'nama' => $dbSekolah ? $dbSekolah->nama_sekolah : 'SMK Tinta Emas Indonesia',
+            'nama_yayasan' => $dbSekolah ? $dbSekolah->nama_yayasan : '-',
+            'akreditasi' => $dbSekolah ? $dbSekolah->akreditasi : '-',
             'npsn' => $dbSekolah ? $dbSekolah->npsn : '-',
+            'alamat' => $dbSekolah ? $dbSekolah->alamat : '-',
+            'kelurahan' => $dbSekolah ? $dbSekolah->kelurahan : '-',
+            'kecamatan' => $dbSekolah ? $dbSekolah->kecamatan : '-',
+            'kota' => $dbSekolah ? $dbSekolah->kota : '-',
+            'provinsi' => $dbSekolah ? $dbSekolah->provinsi : '-',
+            'kode_pos' => $dbSekolah ? $dbSekolah->kode_pos : '-',
+            'telepon' => $dbSekolah ? $dbSekolah->telepon : '-',
+            'website' => $dbSekolah ? $dbSekolah->website : '-',
+            'email' => $dbSekolah ? $dbSekolah->email : '-',
+            'logo' => $dbSekolah && $dbSekolah->logo ? url($dbSekolah->logo) : null,
+            'logo_kiri' => $dbSekolah && $dbSekolah->logo_kiri ? url($dbSekolah->logo_kiri) : null,
             'alamat_line1' => $alamatLine1,
             'alamat_line2' => $alamatLine2,
             'kepsek' => $dbSekolah ? $dbSekolah->nama_kepsek : '-',
@@ -375,6 +459,16 @@ class WalasCetakController extends Controller
             ->where('titimangsa_id', $titimangsa->id)
             ->first();
 
+        $refPeriode = \App\Models\Referensi::where('jenis', 'nama_periode')->where('nama', $titimangsa->nama_periode)->first();
+        $namaPeriodePanjang = $refPeriode && !empty($refPeriode->keterangan) ? $refPeriode->keterangan : $titimangsa->nama_periode;
+
+        $nm = strtolower($titimangsa->nama_periode);
+        $isTengahSemester = str_contains($nm, 'sts') || str_contains($nm, 'pts') || str_contains($nm, 'tengah');
+        
+        $month = date('n', strtotime($titimangsa->tanggal_cetak ?? date('Y-m-d')));
+        $isSemesterGenap = ($month >= 1 && $month <= 6);
+        $semesterStr = $isSemesterGenap ? '2 (Genap)' : '1 (Ganjil)';
+
         return response()->json([
             'success' => true,
             'data' => [
@@ -393,8 +487,11 @@ class WalasCetakController extends Controller
                     'konsentrasi' => $konsentrasiKeahlian,
                     'kode_konsentrasi' => $kelas->kejuruan->kode_konsentrasi ?? ''
                 ],
-                'semester' => in_array($titimangsa->nama_periode, ['PSTS Ganjil', 'PSAS']) ? '1 (Ganjil)' : '2 (Genap)',
+                'semester' => $semesterStr,
+                'is_semester_genap' => $isSemesterGenap,
+                'is_tengah_semester' => $isTengahSemester,
                 'nama_periode' => $titimangsa->nama_periode,
+                'nama_periode_panjang' => $namaPeriodePanjang,
                 'tahun_ajaran' => str_replace('/', ' / ', $tahunAktif->tahun), // "2025/2026" to "2025 / 2026"
                 'rapor_mapel' => $raporMapel,
                 'statistik' => [
@@ -429,7 +526,12 @@ class WalasCetakController extends Controller
         $kurikulumId = $kelas->kurikulum_id;
         $tingkat = $kelas->tingkat;
 
-        $siswas = Siswa::with('user')->where('kelas_id', $kelas->id)->get()->sortBy('user.name')->values();
+        $siswas = Siswa::with('user')
+            ->where('kelas_id', $kelas->id)
+            ->whereNull('tanggal_keluar')
+            ->get()
+            ->sortBy('user.name')
+            ->values();
 
         // 1. Ambil Kelompok Mapel dari referensi
         $kelompokMapping = Referensi::where('jenis', 'kelompok_mapel')->pluck('nama', 'kode')->toArray();
@@ -564,6 +666,54 @@ class WalasCetakController extends Controller
                 'nilaiMatriks' => $nilaiMatriks,
                 'rekapSiswa' => $rekapSiswa
             ]
+        ]);
+    }
+
+    public function naikKelas(Request $request)
+    {
+        $context = $this->getWalasContext();
+        if (!$context) {
+            return response()->json(['success' => false, 'message' => 'Anda bukan wali kelas aktif.'], 403);
+        }
+
+        $request->validate([
+            'siswa_id' => 'required|exists:siswa,id'
+        ]);
+
+        if ($request->kelas_id_tujuan !== 'LULUS') {
+            $request->validate([
+                'kelas_id_tujuan' => 'required|exists:kelas,id'
+            ]);
+        }
+
+        // Verifikasi bahwa siswa ada di kelas walas saat ini
+        $siswa = Siswa::where('id', $request->siswa_id)
+            ->where('kelas_id', $context['kelas']->id)
+            ->first();
+
+        if (!$siswa) {
+            return response()->json(['success' => false, 'message' => 'Siswa tidak ditemukan atau bukan bagian dari kelas Anda.'], 404);
+        }
+
+        if ($request->kelas_id_tujuan === 'LULUS') {
+            // Tandai siswa lulus
+            $siswa->tanggal_keluar = now();
+            $siswa->alasan_keluar = 'Lulus';
+            $siswa->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil meluluskan ' . $siswa->user->name . '.',
+            ]);
+        }
+
+        // Pindahkan siswa ke kelas tujuan
+        $siswa->kelas_id = $request->kelas_id_tujuan;
+        $siswa->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Berhasil memindahkan ' . $siswa->user->name . ' ke kelas baru.',
         ]);
     }
 }

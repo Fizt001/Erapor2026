@@ -45,6 +45,11 @@ class PoinSiswa extends Model
         return $this->belongsTo(TahunAjaran::class, 'tahun_ajaran_id');
     }
 
+    public function titimangsa()
+    {
+        return $this->belongsTo(Titimangsa::class, 'titimangsa_id');
+    }
+
     public function scopeTahunIni($query, $tahunId)
     {
         return $query->where('tahun_ajaran_id', $tahunId);
