@@ -38,7 +38,7 @@ class SumatifNilaiController extends Controller
         $isTitimangsaAktif = $titimangsaData ? $titimangsaData->is_aktif : false;
         
         $namaPeriode = $titimangsaData ? strtolower($titimangsaData->nama_periode) : '';
-        $isPsts = str_contains($namaPeriode, 'psts');
+        $isPsts = str_contains($namaPeriode, 'psts') || str_contains($namaPeriode, 'asts') || str_contains($namaPeriode, 'pts') || str_contains($namaPeriode, 'tengah');
 
         // 2. Filter Rombel & Mapel berdasarkan tugas mengajar guru (Paralel Data)
         $selectedKelasId = $request->kelas_id;

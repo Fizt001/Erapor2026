@@ -338,7 +338,23 @@ const assignGuru = async (struktur, kelasId) => {
 }
 
 const confirmDelete = async (id) => {
-    if (!confirm('Hapus tugas mengajar ini?')) return
+    const isConfirmed = await useSwal().fire({
+        title: 'Hapus Plot Guru?',
+        text: 'Apakah Anda yakin ingin menghapus tugas mengajar ini?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444',
+        cancelButtonColor: '#94a3b8',
+        confirmButtonText: 'Ya, Hapus!',
+        cancelButtonText: 'Batal',
+        customClass: {
+            popup: 'rounded-3xl',
+            confirmButton: 'rounded-xl text-sm font-bold px-6',
+            cancelButton: 'rounded-xl text-sm font-bold px-6'
+        }
+    }).then(result => result.isConfirmed)
+
+    if (!isConfirmed) return
 
     const token = useCookie('auth_token').value
     try {

@@ -154,6 +154,45 @@ class WalasDashboardStatsController extends Controller
             ];
         });
 
+        // 6. Data Grafik 4 Periode (Titimangsa aktif tahun ini)
+        $titimangsas = \App\Models\Titimangsa::where('tahun_ajaran_id', $tahunAktif->id)
+            ->orderBy('id', 'asc')
+            ->get();
+            
+        $grafikSiswa = [];
+        // Init struktur
+        foreach ($siswaRaw as $s) {
+            $grafikSiswa[$s->id] = [
+                'id' => $s->id,
+                'nama' => $s->name,
+                'series' => []
+            ];
+            foreach ($titimangsas as $t) {
+                $grafikSiswa[$s->id]['series'][$t->nama_periode] = 0;
+            }
+        }
+
+        // Ambil semua sumatif di tahun aktif untuk siswa-siswa ini
+        $allSumatif = SumatifNilai::whereIn('siswa_id', $siswaIds)
+            ->where('tahun_ajaran_id', $tahunAktif->id)
+            ->whereNotNull('na_value')
+            ->get();
+            
+        // Group by siswa_id and titimangsa_id to calculate average
+        $grouped = $allSumatif->groupBy(['siswa_id', 'titimangsa_id']);
+        
+        foreach ($grouped as $sId => $tData) {
+            foreach ($tData as $tId => $nilais) {
+                $t = $titimangsas->firstWhere('id', $tId);
+                if ($t) {
+                    $avg = round($nilais->avg('na_value'), 1);
+                    $grafikSiswa[$sId]['series'][$t->nama_periode] = $avg;
+                }
+            }
+        }
+        
+        $grafikSiswa = array_values($grafikSiswa); // Convert to array
+
         return response()->json([
             'success' => true,
             'data' => [
@@ -166,7 +205,9 @@ class WalasDashboardStatsController extends Controller
                 'top_10' => $top10,
                 'penanganan' => $butuhPenanganan,
                 'prestasi_mapel' => $prestasiMapel,
-                'notifikasi' => $notifikasi
+                'notifikasi' => $notifikasi,
+                'grafik_siswa' => $grafikSiswa,
+                'periode_labels' => $titimangsas->pluck('nama_periode')
             ]
         ]);
     }

@@ -188,6 +188,34 @@
                 </div>
             </div>
 
+            <!-- Grafik Prestasi Akademik -->
+            <div v-if="!statsLoading && wStats && wStats.grafik_siswa?.length > 0" class="mb-6">
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden">
+                    <div class="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-50/50">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-sky-50 flex items-center justify-center text-sky-600 text-xl border border-sky-100">📈</div>
+                            <div>
+                                <h3 class="text-sm font-bold text-slate-800">Perkembangan Nilai (4 Periode)</h3>
+                                <p class="text-[10px] font-medium text-slate-500 uppercase tracking-widest">Pilih siswa untuk melihat tren</p>
+                            </div>
+                        </div>
+                        <div class="w-full sm:w-64 shrink-0">
+                            <select v-model="selectedChartSiswa" class="w-full px-4 py-2.5 rounded-xl border-2 border-slate-200/70 bg-white focus:bg-white focus:ring-4 focus:ring-sky-500/10 focus:border-sky-500 transition-all font-semibold text-xs text-slate-700 outline-none">
+                                <option v-for="s in wStats.grafik_siswa" :key="s.id" :value="s.id">{{ s.nama }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="p-6 h-72">
+                        <ClientOnly>
+                            <Line :data="chartProgressData" :options="chartProgressOptions" />
+                            <template #fallback>
+                                <div class="flex items-center justify-center h-full text-slate-400 text-xs font-bold">Memuat Grafik...</div>
+                            </template>
+                        </ClientOnly>
+                    </div>
+                </div>
+            </div>
+
             <!-- Analisis Khusus & Prestasi Mapel -->
             <div v-if="!statsLoading && wStats" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 
@@ -288,10 +316,10 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
-import { Doughnut } from 'vue-chartjs'
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, LineElement, PointElement, LineController, CategoryScale, LinearScale } from 'chart.js'
+import { Doughnut, Line } from 'vue-chartjs'
 
-ChartJS.register(ArcElement, Tooltip, Legend)
+ChartJS.register(ArcElement, Tooltip, Legend, LineElement, PointElement, LineController, CategoryScale, LinearScale)
 
 definePageMeta({ layout: "guru", middleware: "guru", title: 'Dashboard Wali Kelas' })
 
@@ -339,6 +367,64 @@ const chartGenderOptions = {
         labels: { font: { weight: 'bold', size: 10, family: "'Inter', sans-serif" } }
     }
   }
+}
+
+// --- Chart Progress (Line) ---
+const selectedChartSiswa = ref('')
+const selectedSiswaData = computed(() => {
+    if (!wStats.value?.grafik_siswa) return null;
+    
+    // Auto select first student if empty
+    if (!selectedChartSiswa.value && wStats.value.grafik_siswa.length > 0) {
+        selectedChartSiswa.value = wStats.value.grafik_siswa[0].id;
+    }
+    
+    return wStats.value.grafik_siswa.find(s => s.id === selectedChartSiswa.value);
+})
+
+const chartProgressData = computed(() => {
+    const labels = wStats.value?.periode_labels || [];
+    const dataObj = selectedSiswaData.value?.series || {};
+    
+    const dataPoints = labels.map(label => dataObj[label] || 0);
+
+    return {
+        labels: labels,
+        datasets: [
+            {
+                label: 'Rata-rata Nilai',
+                backgroundColor: '#3b82f6',
+                borderColor: '#3b82f6',
+                borderWidth: 2,
+                pointBackgroundColor: '#ffffff',
+                pointBorderColor: '#3b82f6',
+                pointBorderWidth: 2,
+                pointRadius: 4,
+                tension: 0.3,
+                data: dataPoints
+            }
+        ]
+    }
+})
+
+const chartProgressOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+        legend: { display: false }
+    },
+    scales: {
+        y: {
+            beginAtZero: true,
+            max: 100,
+            grid: { borderDash: [2, 4], color: '#f1f5f9' },
+            ticks: { font: { size: 9, weight: 'bold' }, color: '#94a3b8' }
+        },
+        x: {
+            grid: { display: false },
+            ticks: { font: { size: 9, weight: 'bold' }, color: '#94a3b8' }
+        }
+    }
 }
 
 // --- Panduan Alur Kerja Walas ---

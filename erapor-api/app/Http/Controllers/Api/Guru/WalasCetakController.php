@@ -260,7 +260,7 @@ class WalasCetakController extends Controller
                 }
             }
             $nilaiAkhir['merged_kejuruan'] = [
-                'nilai' => $countValid > 0 ? round($totalKejuruan / count($kejuruanMapelIds)) : null,
+                'nilai' => $countValid > 0 ? round($totalKejuruan / $countValid) : null,
                 'deskripsi' => trim($descKejuruan) ?: "Menunjukkan pemahaman dasar program keahlian."
             ];
         }
@@ -623,7 +623,7 @@ class WalasCetakController extends Controller
                 }
                 
                 $nilaiMatriks[$s->id]['merged_kejuruan'] = $countValid > 0 
-                    ? round($totalKejuruan / $jumlahMapelProduktif, 2) 
+                    ? round($totalKejuruan / $countValid, 2) 
                     : null;
             }
         }
