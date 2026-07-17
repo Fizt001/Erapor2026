@@ -59,9 +59,16 @@ class DashboardController extends Controller
 
         $totalMapelDiajar = $mapelUmum + $mapelKejuruan;
 
+        $semuaPeriode = collect();
+        if ($tahunAktif) {
+            $semuaPeriode = \App\Models\Titimangsa::where('tahun_ajaran_id', $tahunAktif->id)->orderBy('id', 'asc')->get();
+        }
+
         // Data Grafik Nilai (Rata-rata Nilai Akhir per Kelas & Mapel yang Diampu)
         $grafikNilai = [];
-        if ($periodeAktif) {
+        $periodeLabels = $semuaPeriode->pluck('nama_periode')->toArray();
+
+        if ($tahunAktif && $semuaPeriode->count() > 0) {
             $pengampus = \App\Models\Pengampu::with(['kelas', 'strukturKurikulum.mapel', 'strukturKejuruan.mapel'])
                 ->where('guru_id', $user->id)
                 ->get();
@@ -76,16 +83,29 @@ class DashboardController extends Controller
                     }
 
                     if ($mapel) {
-                        $avg = \App\Models\SumatifNilai::where('kelas_id', $p->kelas_id)
-                            ->where('mapel_id', $mapel->id)
-                            ->where('titimangsa_id', $periodeAktif->id)
-                            ->avg('na_value');
-                            
-                        if ($avg !== null) {
+                        $seriesData = [];
+                        $hasData = false;
+
+                        foreach ($semuaPeriode as $periode) {
+                            $avg = \App\Models\SumatifNilai::where('kelas_id', $p->kelas_id)
+                                ->where('mapel_id', $mapel->id)
+                                ->where('titimangsa_id', $periode->id)
+                                ->avg('na_value');
+                                
+                            if ($avg !== null && $avg > 0) {
+                                $seriesData[] = round($avg, 1);
+                                $hasData = true;
+                            } else {
+                                $seriesData[] = null;
+                            }
+                        }
+
+                        if ($hasData) {
+                            $namaKelasLengkap = ($p->kelas->tingkat ? $p->kelas->tingkat . ' ' : '') . $p->kelas->nama_kelas;
                             $grafikNilai[] = [
-                                'kelas' => $p->kelas->nama_kelas,
+                                'kelas' => $namaKelasLengkap,
                                 'mapel' => $mapel->nama_mapel,
-                                'rata_rata' => round($avg, 1)
+                                'series' => $seriesData
                             ];
                         }
                     }
@@ -111,7 +131,8 @@ class DashboardController extends Controller
                     'total_mapel' => $totalMapelDiajar,
                     'total_siswa' => $totalSiswa
                 ],
-                'grafik_nilai' => $grafikNilai
+                'grafik_nilai' => $grafikNilai,
+                'periode_labels' => $periodeLabels
             ]
         ]);
     }

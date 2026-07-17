@@ -171,18 +171,25 @@ const dashboardData = computed(() => response.value?.data || null)
 
 const chartData = computed(() => {
   const dataList = dashboardData.value?.grafik_nilai || [];
+  const periodeLabels = dashboardData.value?.periode_labels || [];
+  
+  // Daftar warna untuk masing-masing periode
+  const bgColors = ['#6366f1', '#14b8a6', '#f59e0b', '#ef4444']; 
+  const hoverColors = ['#4f46e5', '#0d9488', '#d97706', '#dc2626'];
+
+  const datasets = periodeLabels.map((periodeName, index) => {
+    return {
+      label: periodeName,
+      backgroundColor: bgColors[index % bgColors.length],
+      hoverBackgroundColor: hoverColors[index % hoverColors.length],
+      borderRadius: 4,
+      data: dataList.map(item => item.series[index])
+    };
+  });
   
   return {
     labels: dataList.map(item => `${item.kelas} - ${item.mapel}`),
-    datasets: [
-      {
-        label: 'Rata-rata Nilai',
-        backgroundColor: '#6366f1', // indigo-500
-        hoverBackgroundColor: '#4f46e5', // indigo-600
-        borderRadius: 6,
-        data: dataList.map(item => item.rata_rata)
-      }
-    ]
+    datasets: datasets
   }
 })
 
@@ -191,10 +198,15 @@ const chartOptions = {
   maintainAspectRatio: false,
   indexAxis: 'y', // Horizontal bar chart
   plugins: {
-    legend: { display: false },
+    legend: { 
+      display: true,
+      position: 'top',
+      align: 'end',
+      labels: { font: { size: 10, weight: 'bold' }, usePointStyle: true, boxWidth: 8 }
+    },
     tooltip: {
       callbacks: {
-        label: (context) => ` Rata-rata: ${context.parsed.x}`
+        label: (context) => ` ${context.dataset.label}: ${context.parsed.x}`
       }
     }
   },
