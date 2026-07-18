@@ -199,10 +199,19 @@
                                 <p class="text-[10px] font-medium text-slate-500 uppercase tracking-widest">Pilih siswa untuk melihat tren</p>
                             </div>
                         </div>
-                        <div class="w-full sm:w-64 shrink-0">
-                            <select v-model="selectedChartSiswa" class="w-full px-4 py-2.5 rounded-xl border-2 border-slate-200/70 bg-white focus:bg-white focus:ring-4 focus:ring-sky-500/10 focus:border-sky-500 transition-all font-semibold text-xs text-slate-700 outline-none">
-                                <option v-for="s in wStats.grafik_siswa" :key="s.id" :value="s.id">{{ s.nama }}</option>
-                            </select>
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full sm:w-auto shrink-0 mt-3 sm:mt-0">
+                            <!-- Indikator Warna -->
+                            <div class="flex items-center gap-3 text-[9px] font-black tracking-widest uppercase bg-white px-3 py-2 rounded-xl border border-slate-200 shadow-sm">
+                                <span class="flex items-center gap-1.5 text-emerald-600" title="Aman (Nilai >= 80)"><div class="w-2 h-2 rounded-full bg-emerald-500"></div> &ge; 80</span>
+                                <span class="flex items-center gap-1.5 text-amber-600" title="Waspada (Nilai 70 - 79)"><div class="w-2 h-2 rounded-full bg-amber-500"></div> 70-79</span>
+                                <span class="flex items-center gap-1.5 text-rose-600" title="Bahaya (Nilai < 70)"><div class="w-2 h-2 rounded-full bg-rose-500"></div> &lt; 70</span>
+                            </div>
+
+                            <div class="w-full sm:w-64 shrink-0">
+                                <select v-model="selectedChartSiswa" class="w-full px-4 py-2.5 rounded-xl border-2 border-slate-200/70 bg-white focus:bg-white focus:ring-4 focus:ring-sky-500/10 focus:border-sky-500 transition-all font-semibold text-xs text-slate-700 outline-none">
+                                    <option v-for="s in wStats.grafik_siswa" :key="s.id" :value="s.id">{{ s.nama }}</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="p-6 h-72">
@@ -393,15 +402,30 @@ const chartProgressData = computed(() => {
         datasets: [
             {
                 label: 'Rata-rata Nilai',
-                backgroundColor: '#3b82f6',
-                borderColor: '#3b82f6',
-                borderWidth: 2,
-                pointBackgroundColor: '#ffffff',
-                pointBorderColor: '#3b82f6',
+                backgroundColor: '#cbd5e1', // default fallback
+                borderColor: '#cbd5e1',     // default fallback
+                borderWidth: 3,
+                pointBorderColor: '#ffffff',
                 pointBorderWidth: 2,
-                pointRadius: 4,
+                pointRadius: 5,
                 tension: 0.3,
-                data: dataPoints
+                data: dataPoints,
+                segment: {
+                    borderColor: (ctx) => {
+                        if (!ctx.p1) return '#cbd5e1';
+                        const val = ctx.p1.parsed.y;
+                        if (val >= 80) return '#10b981'; // Emerald/Green
+                        if (val >= 70) return '#eab308'; // Yellow
+                        return '#ef4444'; // Red
+                    }
+                },
+                pointBackgroundColor: (ctx) => {
+                    const val = ctx.raw;
+                    if (val === undefined || val === null) return '#cbd5e1';
+                    if (val >= 80) return '#10b981';
+                    if (val >= 70) return '#eab308';
+                    return '#ef4444';
+                }
             }
         ]
     }

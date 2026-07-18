@@ -22,10 +22,10 @@
 
         <!-- Role Information (Auto-rotating Card) -->
         <div class="flex flex-col flex-grow min-h-0 justify-center w-full max-w-md lg:max-w-xl mx-auto lg:ml-auto lg:mr-0 lg:w-[80%]">
-            <h2 class="text-2xl lg:text-5xl font-black text-white leading-tight mb-4 lg:mb-10">
-                Platform Terpadu<br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-200">
-                    Satu Akses, Semua Terhubung.
+            <h2 class="text-xl lg:text-4xl font-black text-white leading-tight mb-4 lg:mb-10">
+                PENGEMBANGAN DASHBOARD BUSINESS INTELLIGENCE<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-200 text-lg lg:text-2xl leading-snug mt-2 block">
+                    SEBAGAI EARLY WARNING SYSTEM PENCAPAIAN AKADEMIK SISWA
                 </span>
             </h2>
             

@@ -178,7 +178,7 @@
                       </div>
                   </div>
 
-                  <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden print:border-none print:shadow-none print:rounded-none">
+                  <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-x-auto custom-scrollbar print:overflow-visible print:border-none print:shadow-none print:rounded-none">
                       <table class="w-full text-left border-collapse min-w-[1200px] print:min-w-0 table-fixed">
                           <thead class="sticky top-0 z-20 print:static">
                               <tr class="text-[10px] font-black uppercase tracking-widest text-slate-500 bg-slate-100 print:text-[8px] print:text-black border-b border-slate-200">
