@@ -120,8 +120,28 @@
                 </NuxtLink>
               </div>
             </div>
+            
+            <!-- GRAFIK NILAI SISWA -->
+            <div v-if="dashboardData && dashboardData.grafik_nilai" class="mt-8">
+              <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center">📊 Rata-Rata Nilai Akhir Siswa (Per Kelas/Mapel)</h3>
+              <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden">
+                  <div class="h-64 sm:h-80" v-if="dashboardData.grafik_nilai.length > 0">
+                      <ClientOnly>
+                          <Bar :data="chartData" :options="chartOptions" />
+                          <template #fallback>
+                              <div class="flex items-center justify-center h-full text-slate-400 text-xs font-bold">Memuat Grafik...</div>
+                          </template>
+                      </ClientOnly>
+                  </div>
+                  <div v-else class="h-64 sm:h-80 flex flex-col items-center justify-center text-center">
+                      <div class="text-4xl mb-3 opacity-50 grayscale">📉</div>
+                      <p class="text-sm font-bold text-slate-600">Belum ada data nilai</p>
+                      <p class="text-[11px] text-slate-400 mt-1 max-w-sm">Grafik rata-rata akan muncul setelah Anda memasukkan dan menyimpan nilai akhir Sumatif (STS/SAS) untuk kelas dan mapel yang Anda ampu.</p>
+                  </div>
+              </div>
+            </div>
 
-
+            
             
         </div>
       </div>
@@ -131,6 +151,10 @@
 
 <script setup>
 import { computed } from 'vue'
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+import { Bar } from 'vue-chartjs'
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 definePageMeta({ layout: "guru", middleware: "guru", title: 'Dashboard Guru' })
 
@@ -144,6 +168,59 @@ const { data: response, pending: isLoading } = await useFetch('http://localhost:
 })
 
 const dashboardData = computed(() => response.value?.data || null)
+
+const chartData = computed(() => {
+  const dataList = dashboardData.value?.grafik_nilai || [];
+  
+  return {
+    labels: dataList.map(item => `${item.kelas} - ${item.mapel}`),
+    datasets: [
+      {
+        label: 'Rata-rata Nilai',
+        backgroundColor: '#6366f1', // indigo-500
+        hoverBackgroundColor: '#4f46e5', // indigo-600
+        borderRadius: 6,
+        data: dataList.map(item => item.rata_rata)
+      }
+    ]
+  }
+})
+
+const chartOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  indexAxis: 'y', // Horizontal bar chart
+  plugins: {
+    legend: { display: false },
+    tooltip: {
+      callbacks: {
+        label: (context) => ` Rata-rata: ${context.parsed.x}`
+      }
+    }
+  },
+  scales: {
+    x: {
+      beginAtZero: true,
+      max: 100,
+      grid: { borderDash: [2, 4], color: '#f1f5f9' },
+      ticks: { font: { size: 10, weight: 'bold' }, color: '#94a3b8' }
+    },
+    y: {
+      grid: { display: false },
+      ticks: { 
+          font: { size: 10, weight: 'bold' }, 
+          color: '#475569',
+          callback: function(value) {
+             let label = this.getLabelForValue(value);
+             if (label.length > 25) {
+                 return label.substr(0, 25) + '...';
+             }
+             return label;
+          }
+      }
+    }
+  }
+}
 </script>
 
 <style scoped>

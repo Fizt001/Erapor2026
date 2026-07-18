@@ -59,6 +59,40 @@ class DashboardController extends Controller
 
         $totalMapelDiajar = $mapelUmum + $mapelKejuruan;
 
+        // Data Grafik Nilai (Rata-rata Nilai Akhir per Kelas & Mapel yang Diampu)
+        $grafikNilai = [];
+        if ($periodeAktif) {
+            $pengampus = \App\Models\Pengampu::with(['kelas', 'strukturKurikulum.mapel', 'strukturKejuruan.mapel'])
+                ->where('guru_id', $user->id)
+                ->get();
+            
+            foreach($pengampus as $p) {
+                if ($p->kelas) {
+                    $mapel = null;
+                    if ($p->struktur_kurikulum_id && $p->strukturKurikulum) {
+                        $mapel = $p->strukturKurikulum->mapel;
+                    } else if ($p->struktur_kejuruan_id && $p->strukturKejuruan) {
+                        $mapel = $p->strukturKejuruan->mapel;
+                    }
+
+                    if ($mapel) {
+                        $avg = \App\Models\SumatifNilai::where('kelas_id', $p->kelas_id)
+                            ->where('mapel_id', $mapel->id)
+                            ->where('titimangsa_id', $periodeAktif->id)
+                            ->avg('na_value');
+                            
+                        if ($avg !== null) {
+                            $grafikNilai[] = [
+                                'kelas' => $p->kelas->nama_kelas,
+                                'mapel' => $mapel->nama_mapel,
+                                'rata_rata' => round($avg, 1)
+                            ];
+                        }
+                    }
+                }
+            }
+        }
+
         return response()->json([
             'success' => true,
             'data' => [
@@ -76,7 +110,8 @@ class DashboardController extends Controller
                     'total_kelas' => $totalKelasDiajar,
                     'total_mapel' => $totalMapelDiajar,
                     'total_siswa' => $totalSiswa
-                ]
+                ],
+                'grafik_nilai' => $grafikNilai
             ]
         ]);
     }
