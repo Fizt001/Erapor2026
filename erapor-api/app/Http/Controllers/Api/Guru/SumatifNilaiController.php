@@ -38,7 +38,19 @@ class SumatifNilaiController extends Controller
         $isTitimangsaAktif = $titimangsaData ? $titimangsaData->is_aktif : false;
         
         $namaPeriode = $titimangsaData ? strtolower($titimangsaData->nama_periode) : '';
-        $isPsts = str_contains($namaPeriode, 'psts') || str_contains($namaPeriode, 'asts') || str_contains($namaPeriode, 'pts') || str_contains($namaPeriode, 'tengah');
+        
+        // Cek dari master referensi (keterangan mengandung 'Tengah Semester')
+        $isPsts = false;
+        if ($titimangsaData) {
+            $ref = \App\Models\Referensi::where('jenis', 'nama_periode')
+                                        ->where('nama', $titimangsaData->nama_periode)
+                                        ->first();
+            if ($ref && stripos($ref->keterangan, 'Tengah Semester') !== false) {
+                $isPsts = true;
+            } else {
+                $isPsts = str_contains($namaPeriode, 'psts') || str_contains($namaPeriode, 'asts') || str_contains($namaPeriode, 'pts') || str_contains($namaPeriode, 'tengah');
+            }
+        }
 
         // 2. Filter Rombel & Mapel berdasarkan tugas mengajar guru (Paralel Data)
         $selectedKelasId = $request->kelas_id;
@@ -110,7 +122,18 @@ class SumatifNilaiController extends Controller
                 // Cari titimangsa PSTS di tahun ajaran & kurikulum yg sama
                 $pstsTitimangsa = Titimangsa::where('tahun_ajaran_id', $selectedTahunId)
                                     ->where('kurikulum_id', $selectedKurikulumId)
-                                    ->where('nama_periode', 'like', '%psts%')
+                                    ->where(function($q) {
+                                        $q->whereIn('nama_periode', function($sq) {
+                                            $sq->select('nama')
+                                              ->from('referensis')
+                                              ->where('jenis', 'nama_periode')
+                                              ->where('keterangan', 'like', '%Tengah Semester%');
+                                        })
+                                        ->orWhere('nama_periode', 'like', '%psts%')
+                                        ->orWhere('nama_periode', 'like', '%asts%')
+                                        ->orWhere('nama_periode', 'like', '%pts%')
+                                        ->orWhere('nama_periode', 'like', '%tengah%');
+                                    })
                                     ->where('id', '<', $selectedTitimangsaId)
                                     ->orderBy('id', 'desc')
                                     ->first();
