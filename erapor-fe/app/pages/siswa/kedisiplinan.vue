@@ -7,12 +7,23 @@
       <p class="text-slate-500 text-sm font-medium mt-1">Rekam jejak pelanggaran dan penghargaan selama tahun ajaran aktif.</p>
     </div>
 
+    <!-- Superadmin Empty State -->
+    <div v-if="isSuperadminWithoutImpersonation" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-12 flex flex-col items-center text-center">
+      <div class="w-20 h-20 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center mb-6 shadow-inner border border-amber-100">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+      </div>
+      <h3 class="text-2xl font-black text-slate-800 mb-2">Menunggu Pilihan Siswa</h3>
+      <p class="text-slate-500 text-base max-w-md mx-auto">Anda sedang dalam Mode Superadmin. Silakan pilih kelas dan nama siswa dari bilah menu di <strong class="text-amber-600 font-bold">pojok kanan atas</strong> untuk melihat Catatan Kedisiplinan.</p>
+    </div>
+
     <!-- Loading State -->
-    <div v-if="isLoading" class="flex flex-col items-center justify-center py-20">
+    <div v-else-if="isLoading" class="flex flex-col items-center justify-center py-20">
       <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-emerald-500 mb-4"></div>
       <p class="text-slate-500 font-medium">Memuat catatan kedisiplinan...</p>
     </div>
-
+    
     <!-- Error State -->
     <div v-else-if="errorMessage" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-10 flex flex-col items-center text-center">
       <div class="w-16 h-16 bg-rose-50 text-rose-500 rounded-full flex items-center justify-center text-2xl mb-4">
@@ -120,6 +131,21 @@ definePageMeta({
 const isLoading = ref(true)
 const errorMessage = ref('')
 const kedisiplinanData = ref(null)
+
+const userProfile = useCookie('user_profile')
+const isSuperadminWithoutImpersonation = computed(() => {
+  let role = null;
+  if (typeof userProfile.value === 'string') {
+    try {
+      role = JSON.parse(userProfile.value)?.role
+    } catch (e) {
+      role = null;
+    }
+  } else {
+    role = userProfile.value?.role
+  }
+  return role === 'superadmin' && !!errorMessage.value
+})
 
 const fetchData = async () => {
     isLoading.value = true

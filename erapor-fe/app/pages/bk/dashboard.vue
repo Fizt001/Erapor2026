@@ -53,8 +53,19 @@
           <div class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
             <div class="flex-1 overflow-y-auto custom-scrollbar p-6 lg:p-8 space-y-6">
         
+        <!-- Superadmin Empty State -->
+        <div v-if="isSuperadminWithoutImpersonation" class="flex-grow flex flex-col items-center justify-center py-20 text-center bg-white rounded-2xl shadow-sm border border-slate-200">
+          <div class="text-amber-500 mb-6 bg-amber-50 p-5 rounded-full border border-amber-100 shadow-inner">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+          </div>
+          <h3 class="text-2xl font-black text-slate-800 tracking-tight">Menunggu Pilihan Guru BK</h3>
+          <p class="text-base text-slate-500 mt-3 max-w-md">Anda sedang dalam Mode Superadmin. Silakan pilih nama guru BK dari bilah menu di <strong class="text-amber-600 font-bold">pojok kanan atas</strong> untuk melihat Dashboard BK.</p>
+        </div>
+
         <!-- Loading State -->
-        <div v-if="isLoading" class="flex-grow flex items-center justify-center py-12">
+        <div v-else-if="isLoading" class="flex-grow flex items-center justify-center py-12">
           <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-rose-600"></div>
         </div>
 
@@ -175,11 +186,25 @@ const tokenCookie = useCookie('auth_token')
 
 const userProfile = computed(() => {
   if (!userCookie.value) return null
-  return typeof userCookie.value === 'string' ? JSON.parse(userCookie.value) : userCookie.value
+  if (typeof userCookie.value === 'string') {
+      try {
+          return JSON.parse(userCookie.value)
+      } catch (e) {
+          return null
+      }
+  }
+  return userCookie.value
 })
 
-const { data: response, pending: isLoading } = await useFetch('http://localhost:8000/api/bk/dashboard', {
+const { data: response, pending: isLoading, error } = await useFetch('http://localhost:8000/api/bk/dashboard', {
   headers: { Authorization: `Bearer ${tokenCookie.value}` }
+})
+
+const errorMessage = computed(() => error.value?.message || (!response.value?.success && response.value?.message ? response.value?.message : ''))
+
+const isSuperadminWithoutImpersonation = computed(() => {
+  const role = userProfile.value?.role
+  return role === 'superadmin' && !!errorMessage.value
 })
 
 const stats = computed(() => response.value?.data || {})

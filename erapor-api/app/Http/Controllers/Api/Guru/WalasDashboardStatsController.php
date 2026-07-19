@@ -19,7 +19,11 @@ class WalasDashboardStatsController extends Controller
     {
         $user = Auth::user();
         
+        $currentMonth = (int) date('n');
+
+        // Cari tahun ajaran berdasarkan is_aktif
         $tahunAktif = TahunAjaran::where('is_aktif', true)->first();
+
         if (!$tahunAktif) {
             return response()->json(['success' => false, 'message' => 'Tidak ada tahun ajaran aktif']);
         }

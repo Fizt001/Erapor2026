@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             KurikulumSeeder::class,
             ReferensiSeeder::class,
             MapelSeeder::class,
+            SuperadminSeeder::class,
         ]);
     }
 }

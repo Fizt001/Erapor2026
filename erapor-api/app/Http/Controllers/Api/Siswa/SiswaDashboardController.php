@@ -37,31 +37,29 @@ class SiswaDashboardController extends Controller
             }
         }
 
-        $tahunAjaranAktif = TahunAjaran::where('is_aktif', true)->first();
-        
-        // Penentuan periode berdasarkan bulan berjalan
         $currentMonth = (int) date('n');
-        $periodeName = '';
-        if ($currentMonth >= 7 && $currentMonth <= 9) {
-            $periodeName = 'PSTS Ganjil';
-        } elseif ($currentMonth >= 10 && $currentMonth <= 12) {
-            $periodeName = 'PSAS';
-        } elseif ($currentMonth >= 1 && $currentMonth <= 3) {
-            $periodeName = 'PSTS Genap';
-        } else {
-            $periodeName = 'PSAT';
-        }
 
+        // Cari tahun ajaran berdasarkan is_aktif
+        $tahunAjaranAktif = TahunAjaran::where('is_aktif', true)->first();
+
+        // Dapatkan Titimangsa/Periode yang aktif berdasarkan bulan riil
         $titimangsaAktif = null;
         if ($tahunAjaranAktif) {
-            $titimangsaAktif = Titimangsa::where('nama_periode', $periodeName)
-                ->where('tahun_ajaran_id', $tahunAjaranAktif->id)
-                ->first();
-        }
-        
-        // Fallback jika tidak ditemukan
-        if (!$titimangsaAktif) {
-            $titimangsaAktif = Titimangsa::where('is_aktif', true)->first();
+            $allTitimangsa = \App\Models\Titimangsa::where('tahun_ajaran_id', $tahunAjaranAktif->id)
+                                ->orderBy('tanggal_cetak', 'asc')
+                                ->get();
+                                
+            if ($allTitimangsa->count() > 0) {
+                if ($currentMonth >= 7 && $currentMonth <= 9) {
+                    $titimangsaAktif = $allTitimangsa->get(0);
+                } elseif ($currentMonth >= 10 && $currentMonth <= 12) {
+                    $titimangsaAktif = $allTitimangsa->get(1) ?? $allTitimangsa->last();
+                } elseif ($currentMonth >= 1 && $currentMonth <= 3) {
+                    $titimangsaAktif = $allTitimangsa->get(2) ?? $allTitimangsa->last();
+                } else {
+                    $titimangsaAktif = $allTitimangsa->get(3) ?? $allTitimangsa->last();
+                }
+            }
         }
 
         $semesterGanjil = ['PSTS Ganjil', 'PSAS'];
@@ -180,7 +178,7 @@ class SiswaDashboardController extends Controller
                     'id' => $titimangsaAktif ? $titimangsaAktif->id : null
                 ],
                 'tahun_ajaran' => [
-                    'nama' => $tahunAjaranAktif ? $tahunAjaranAktif->tahun_ajaran : '-'
+                    'nama' => $tahunAjaranAktif ? $tahunAjaranAktif->tahun : '-'
                 ],
                 'semester' => $activeSemester,
                 'rekap' => [

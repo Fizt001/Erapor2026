@@ -25,6 +25,10 @@
 <span class="mr-3 text-lg">📄</span>
             <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Rapor Saya</span></NuxtLink>
 
+          <NuxtLink to="/siswa/absensi" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-indigo-600 text-white shadow">
+<span class="mr-3 text-lg">📅</span>
+            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Laporan Absensi</span></NuxtLink>
+
         </nav>
       </div>
     </aside>

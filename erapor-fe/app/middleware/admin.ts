@@ -3,6 +3,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
   
   if (userCookie.value) {
     const user = typeof userCookie.value === 'string' ? JSON.parse(userCookie.value) : userCookie.value
+    if (user.role === 'superadmin') return;
     
     if (user.role !== 'admin') {
       // Tendang jika bukan admin

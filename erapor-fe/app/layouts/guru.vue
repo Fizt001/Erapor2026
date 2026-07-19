@@ -15,72 +15,30 @@
       <div class="p-3">
 
         <nav class="space-y-1 h-[calc(100vh-140px)] overflow-y-auto custom-scrollbar pr-2">
-          <NuxtLink to="/guru/dashboard" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-sky-600 text-white shadow">
-            <span class="mr-3 text-lg">📊</span>
-              <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Dashboard</span></NuxtLink>
-
-          <NuxtLink to="/guru/absensi" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-sky-600 text-white shadow">
-            <span class="mr-3 text-lg">📆</span>
-              <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Absensi Pertemuan</span></NuxtLink>
-
-          <div class="pt-4 pb-1 px-3 text-[10px] font-bold text-sky-400 uppercase tracking-widest whitespace-nowrap opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">
-            Penilaian Formatif
-          </div>
-          <NuxtLink to="/guru/formatif/master" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-sky-600 text-white shadow">
-            <span class="mr-3 text-lg">📝</span>
-              <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Data TP Formatif</span></NuxtLink>
-          <NuxtLink to="/guru/formatif/nilai" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-sky-600 text-white shadow">
-            <span class="mr-3 text-lg">✏️</span>
-              <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Input Asessmen Formatif</span></NuxtLink>
-
-          <div class="pt-4 pb-1 px-3 text-[10px] font-bold text-sky-400 uppercase tracking-widest whitespace-nowrap opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">
-            Penilaian Sumatif
-          </div>
-          <NuxtLink to="/guru/sumatif/nilai" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-sky-600 text-white shadow">
-            <span class="mr-3 text-lg">📋</span>
-              <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Input Asessmen Sumatif</span></NuxtLink>
-          <NuxtLink to="/guru/sumatif/rekap" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-sky-600 text-white shadow">
-            <span class="mr-3 text-lg">📈</span>
-              <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Rekapitulasi Akhir</span></NuxtLink>
+          <template v-for="(menu, idx) in guruMenus" :key="idx">
+            <div v-if="menu.divider" class="pt-4 pb-1 px-3 text-[10px] font-bold text-sky-400 uppercase tracking-widest whitespace-nowrap opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">
+              {{ menu.dividerLabel }}
+            </div>
+            <NuxtLink v-else :to="menu.path" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-sky-600 text-white shadow">
+              <span class="mr-3 text-lg">{{ menu.icon }}</span>
+              <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">{{ menu.name }}</span>
+            </NuxtLink>
+          </template>
 
           <!-- KHUSUS WALI KELAS -->
           <template v-if="isWalas">
             <div class="pt-6 pb-1 px-3 text-[10px] font-black text-amber-400 uppercase tracking-widest border-t border-slate-700/50 mt-4 whitespace-nowrap opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">
               ✨ WALI KELAS
             </div>
-            <NuxtLink to="/guru/walas/dashboard" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-amber-600 text-white shadow">
-              <span class="mr-3 text-lg">📊</span>
-              <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Dashboard Walas</span></NuxtLink>
-            <NuxtLink to="/guru/walas/monitoring" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-amber-600 text-white shadow">
-              <span class="mr-3 text-lg">👀</span>
-              <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Monitoring Nilai</span></NuxtLink>
-            <NuxtLink to="/guru/walas/biodata" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-amber-600 text-white shadow">
-              <span class="mr-3 text-lg">🧑‍🎓</span>
-              <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Biodata Siswa</span></NuxtLink>
-            <NuxtLink to="/guru/walas/ekskul" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-amber-600 text-white shadow">
-              <span class="mr-3 text-lg">🏃</span>
-              <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Ekstrakurikuler</span></NuxtLink>
-            <NuxtLink to="/guru/walas/kokurikuler" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-amber-600 text-white shadow">
-              <span class="mr-3 text-lg">🌱</span>
-              <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Kokurikuler</span></NuxtLink>
-            <NuxtLink to="/guru/walas/bimbingan" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-amber-600 text-white shadow">
-              <span class="mr-3 text-lg">🤝</span>
-              <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Bimbingan Walas</span></NuxtLink>
-            <NuxtLink to="/guru/walas/catatan" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-amber-600 text-white shadow">
-              <span class="mr-3 text-lg">📝</span>
-              <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Catatan Walas</span></NuxtLink>
-            <NuxtLink to="/guru/walas/absensi" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-amber-600 text-white shadow">
-              <span class="mr-3 text-lg">📅</span>
-              <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Kalender Absensi</span></NuxtLink>
-            <NuxtLink to="/guru/walas/rekap" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-amber-600 text-white shadow">
-              <span class="mr-3 text-lg">📒</span>
-              <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Rekap Semester</span></NuxtLink>
-            <NuxtLink to="/guru/walas/rapor" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-amber-600 text-white shadow">
-              <span class="mr-3 text-lg">🖨️</span>
-              <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Cetak Leger & Rapor</span></NuxtLink>
-            <NuxtLink to="/guru/walas/kenaikan" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-amber-600 text-white shadow">
-              <span class="mr-3 text-lg">📈</span>
-              <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Catatan Kenaikan</span></NuxtLink>
+            <template v-for="(menu, idx) in walasMenus" :key="'w'+idx">
+              <div v-if="menu.divider" class="pt-4 pb-1 px-3 text-[10px] font-bold text-amber-400 uppercase tracking-widest whitespace-nowrap opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">
+                {{ menu.dividerLabel }}
+              </div>
+              <NuxtLink v-else :to="menu.path" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-amber-600 text-white shadow">
+                <span class="mr-3 text-lg">{{ menu.icon }}</span>
+                <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">{{ menu.name }}</span>
+              </NuxtLink>
+            </template>
           </template>
 
         </nav>
@@ -150,8 +108,9 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { guruMenus, walasMenus } from '~/utils/menus'
 
 const router = useRouter()
 const route = useRoute()

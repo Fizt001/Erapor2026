@@ -203,6 +203,12 @@ const handleLogin = async () => {
     })
     
     if (response.success) {
+      // Bersihkan cookie penyamaran dari sesi sebelumnya jika ada
+      const impersonateUserId = useCookie('impersonate_user_id')
+      const impersonateRole = useCookie('impersonate_role')
+      impersonateUserId.value = null
+      impersonateRole.value = null
+
       // Simpan token di cookie
       const tokenCookie = useCookie('auth_token')
       tokenCookie.value = response.data.token
@@ -228,6 +234,8 @@ const handleLogin = async () => {
         router.push('/kepsek/dashboard')
       } else if (user.role === 'bk') {
         router.push('/bk/dashboard')
+      } else if (user.role === 'superadmin') {
+        router.push('/admin/dashboard')
       } else {
         router.push('/dashboard')
       }

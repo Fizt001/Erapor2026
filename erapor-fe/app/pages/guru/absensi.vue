@@ -4,7 +4,16 @@
       
       <!-- Panel Dock Kiri -->
       <div class="xl:w-[360px] w-full bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full xl:z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] overflow-y-auto custom-scrollbar">
-        <div class="p-6 space-y-6">
+        
+        <!-- Mobile Tabs (Above Blue Card) -->
+        <div class="xl:hidden p-6 pb-0 shrink-0">
+          <div class="flex bg-slate-100 p-1 rounded-xl">
+             <button @click="activeMobileTab = 'filter'" :class="activeMobileTab === 'filter' ? 'bg-white text-sky-600 shadow-sm' : 'text-slate-500 hover:bg-slate-200'" class="flex-1 py-2.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all">Filter</button>
+             <button @click="activeMobileTab = 'pertemuan'" :class="activeMobileTab === 'pertemuan' ? 'bg-white text-sky-600 shadow-sm' : 'text-slate-500 hover:bg-slate-200'" class="flex-1 py-2.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all">Pertemuan</button>
+          </div>
+        </div>
+
+        <div class="p-6 space-y-6" :class="{'hidden xl:block': activeMobileTab !== 'filter'}">
           <div class="bg-gradient-to-r from-sky-500 to-sky-600 rounded-2xl p-5 border border-sky-400 shadow-sm relative overflow-hidden flex items-center gap-4">
             <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10">📝</div>
             <div class="relative z-10">
@@ -74,7 +83,7 @@
           </div>
         </div>
 
-        <div class="flex-1 p-6 bg-slate-50 border-t border-slate-200">
+        <div class="flex-1 p-6 bg-slate-50 border-t border-slate-200" :class="{'hidden xl:block': activeMobileTab !== 'pertemuan'}">
              <div v-if="isFilterComplete" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3">Daftar Pertemuan</div>
              <div v-if="isLoadingPertemuan" class="text-xs text-slate-400 text-center">Memuat pertemuan...</div>
              <div v-else-if="pertemuans.length === 0 && isFilterComplete" class="text-xs text-slate-400 text-center p-4 bg-white rounded-xl border border-slate-200 border-dashed">Belum ada pertemuan.</div>
@@ -230,6 +239,7 @@ definePageMeta({
 })
 
 const isLoading = ref(true)
+const activeMobileTab = ref('filter')
 
 const swal = useSwal()
 const token = useCookie('auth_token')

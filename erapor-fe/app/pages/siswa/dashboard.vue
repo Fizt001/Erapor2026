@@ -12,6 +12,17 @@
       <p class="mt-4 text-sm font-semibold text-slate-500 animate-pulse">Memuat data dashboard...</p>
     </div>
     
+    <!-- Superadmin Empty State -->
+    <div v-else-if="isSuperadminWithoutImpersonation" class="flex flex-col items-center justify-center py-20 text-center bg-white rounded-xl shadow-sm border border-slate-200">
+      <div class="text-amber-500 mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+      </div>
+      <h3 class="text-xl font-black text-slate-800">Menunggu Pilihan Siswa</h3>
+      <p class="text-sm font-semibold text-slate-500 mt-2 max-w-md">Anda masuk sebagai Superadmin. Silakan pilih kelas dan nama siswa dari menu di <strong class="text-amber-600">pojok kanan atas</strong> untuk melihat Dashboard Siswa ini.</p>
+    </div>
+
     <!-- Error State -->
     <div v-else-if="errorMessage" class="flex flex-col items-center justify-center py-20 text-center bg-white rounded-xl shadow-sm border border-slate-200">
       <div class="text-red-500 mb-4">
@@ -77,14 +88,22 @@
         <!-- Kiri: Kemajuan Akademik (Grafik) -->
         <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
           <div class="flex items-center justify-between mb-6">
-            <div>
-              <h3 class="text-lg font-black text-slate-800">Kemajuan Akademis (Grow)</h3>
-              <p class="text-xs font-semibold text-slate-500 mt-1">Rata-rata nilai akhir di setiap periode rapor</p>
+            <div class="flex items-center gap-3">
+              <div class="p-2 bg-blue-50 text-blue-600 rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-black text-slate-800">Kemajuan Akademis (Grow)</h3>
+                <p class="text-xs font-semibold text-slate-500 mt-1">Rata-rata nilai akhir di setiap periode rapor</p>
+              </div>
             </div>
-            <div class="p-2 bg-blue-50 text-blue-600 rounded-lg">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-              </svg>
+
+            <div class="flex items-center gap-3 text-[9px] font-black uppercase tracking-wider bg-slate-50 px-3 py-1.5 rounded-full border border-slate-100">
+                <div class="flex items-center gap-1 text-emerald-600"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> ≥ 80</div>
+                <div class="flex items-center gap-1 text-amber-600"><span class="w-2 h-2 rounded-full bg-amber-500"></span> 70-79</div>
+                <div class="flex items-center gap-1 text-rose-600"><span class="w-2 h-2 rounded-full bg-rose-500"></span> < 70</div>
             </div>
           </div>
 
@@ -224,7 +243,9 @@ definePageMeta({
 })
 
 const tokenCookie = useCookie('auth_token')
-const { data: response, pending: isLoading, error } = await useFetch('http://localhost:8000/api/siswa/dashboard', {
+const userProfile = useCookie('user_profile')
+
+const { data: response, pending: isLoading, error, execute: loadDashboard } = await useFetch('http://localhost:8000/api/siswa/dashboard', {
   headers: {
     'Authorization': `Bearer ${tokenCookie.value}`
   }
@@ -232,6 +253,20 @@ const { data: response, pending: isLoading, error } = await useFetch('http://loc
 
 const dashboardData = computed(() => response.value?.data || null)
 const errorMessage = computed(() => error.value?.message || (!response.value?.success && response.value?.message ? response.value?.message : ''))
+
+const isSuperadminWithoutImpersonation = computed(() => {
+  let role = null;
+  if (typeof userProfile.value === 'string') {
+    try {
+      role = JSON.parse(userProfile.value)?.role
+    } catch (e) {
+      role = null;
+    }
+  } else {
+    role = userProfile.value?.role
+  }
+  return role === 'superadmin' && !!errorMessage.value
+})
 
 const chartData = computed(() => {
   if (!dashboardData.value || !dashboardData.value.rekap.grafik_akademis) return { labels: [], datasets: [] };
@@ -242,18 +277,32 @@ const chartData = computed(() => {
     datasets: [
       {
         label: 'Rata-rata Nilai Rapor',
-        backgroundColor: 'rgba(99, 102, 241, 0.2)', // Indigo 500 with opacity
-        borderColor: '#6366f1', // Indigo 500
-        pointBackgroundColor: '#fff',
-        pointBorderColor: '#4f46e5', // Indigo 600
-        pointHoverBackgroundColor: '#6366f1',
-        pointHoverBorderColor: '#fff',
+        backgroundColor: '#cbd5e1', // default fallback
+        borderColor: '#cbd5e1', // default fallback
+        pointBorderColor: '#ffffff',
+        pointHoverBorderColor: '#ffffff',
         pointRadius: 5,
         pointHoverRadius: 7,
+        pointBorderWidth: 2,
         borderWidth: 3,
-        fill: true,
         data: grafik.map(item => item.rata_rata),
-        tension: 0.4 // Makes line smooth/curvy
+        tension: 0.3,
+        segment: {
+            borderColor: (ctx) => {
+                if (!ctx.p1) return '#cbd5e1';
+                const val = ctx.p1.parsed.y;
+                if (val >= 80) return '#10b981'; // Emerald/Green
+                if (val >= 70) return '#eab308'; // Yellow
+                return '#ef4444'; // Red
+            }
+        },
+        pointBackgroundColor: (ctx) => {
+            const val = ctx.raw;
+            if (val === undefined || val === null) return '#cbd5e1';
+            if (val >= 80) return '#10b981';
+            if (val >= 70) return '#eab308';
+            return '#ef4444';
+        }
       }
     ]
   }
@@ -282,9 +331,8 @@ const chartOptions = {
   },
   scales: {
     y: {
-      beginAtZero: false,
-      suggestedMin: 60,
-      suggestedMax: 100,
+      beginAtZero: true,
+      max: 100,
       grid: {
         color: '#f1f5f9', // Slate 100
         drawBorder: false,

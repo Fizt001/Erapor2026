@@ -11,6 +11,8 @@ export default defineNuxtRouteMiddleware((to, from) => {
         const user = typeof userProfile.value === 'string' 
           ? JSON.parse(userProfile.value) 
           : userProfile.value
+        
+        if (user.role === 'superadmin') return;
           
         if (user.role !== 'bk' && user.role !== 'admin') {
            if (user.role === 'admin') return navigateTo('/admin/dashboard')

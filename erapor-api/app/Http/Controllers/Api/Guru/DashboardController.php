@@ -14,7 +14,9 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         
-        // Cari tahun ajaran yang sedang aktif
+        $currentMonth = (int) date('n');
+
+        // Cari tahun ajaran berdasarkan is_aktif
         $tahunAktif = TahunAjaran::where('is_aktif', true)->first();
         
         $isWalas = false;
@@ -30,12 +32,24 @@ class DashboardController extends Controller
             }
         }
 
-        // Dapatkan Titimangsa/Periode yang aktif
+        // Dapatkan Titimangsa/Periode yang aktif berdasarkan bulan riil
         $periodeAktif = null;
         if ($tahunAktif) {
-            $periodeAktif = \App\Models\Titimangsa::where('tahun_ajaran_id', $tahunAktif->id)
-                                ->where('is_aktif', true)
-                                ->first();
+            $allTitimangsa = \App\Models\Titimangsa::where('tahun_ajaran_id', $tahunAktif->id)
+                                ->orderBy('tanggal_cetak', 'asc')
+                                ->get();
+                                
+            if ($allTitimangsa->count() > 0) {
+                if ($currentMonth >= 7 && $currentMonth <= 9) {
+                    $periodeAktif = $allTitimangsa->get(0);
+                } elseif ($currentMonth >= 10 && $currentMonth <= 12) {
+                    $periodeAktif = $allTitimangsa->get(1) ?? $allTitimangsa->last();
+                } elseif ($currentMonth >= 1 && $currentMonth <= 3) {
+                    $periodeAktif = $allTitimangsa->get(2) ?? $allTitimangsa->last();
+                } else {
+                    $periodeAktif = $allTitimangsa->get(3) ?? $allTitimangsa->last();
+                }
+            }
         }
 
         // Kalkulasi Statistik Guru
@@ -60,8 +74,19 @@ class DashboardController extends Controller
         $totalMapelDiajar = $mapelUmum + $mapelKejuruan;
 
         $semuaPeriode = collect();
+        $totalPertemuan = 0;
         if ($tahunAktif) {
             $semuaPeriode = \App\Models\Titimangsa::where('tahun_ajaran_id', $tahunAktif->id)->orderBy('id', 'asc')->get();
+            
+            $currentMonth = date('m');
+            $isGanjil = in_array($currentMonth, ['07', '08', '09', '10', '11', '12']);
+            
+            $totalPertemuan = \App\Models\PertemuanGuru::where('guru_id', $user->id)
+                ->whereHas('titimangsa', function($q) use ($tahunAktif) {
+                    $q->where('tahun_ajaran_id', $tahunAktif->id);
+                })
+                ->whereRaw($isGanjil ? 'MONTH(tanggal) IN (7,8,9,10,11,12)' : 'MONTH(tanggal) IN (1,2,3,4,5,6)')
+                ->count();
         }
 
         // Data Grafik Nilai (Rata-rata Nilai Akhir per Kelas & Mapel yang Diampu)
@@ -129,7 +154,8 @@ class DashboardController extends Controller
                 'stats' => [
                     'total_kelas' => $totalKelasDiajar,
                     'total_mapel' => $totalMapelDiajar,
-                    'total_siswa' => $totalSiswa
+                    'total_siswa' => $totalSiswa,
+                    'total_pertemuan' => $totalPertemuan
                 ],
                 'grafik_nilai' => $grafikNilai,
                 'periode_labels' => $periodeLabels

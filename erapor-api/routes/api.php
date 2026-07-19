@@ -191,6 +191,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('absensi/pertemuan/{id}', [\App\Http\Controllers\Api\Guru\AbsensiController::class, 'deletePertemuan']);
         Route::get('absensi/pertemuan/{id}/siswa', [\App\Http\Controllers\Api\Guru\AbsensiController::class, 'getAbsensiSiswa']);
         Route::post('absensi/pertemuan/{id}/simpan', [\App\Http\Controllers\Api\Guru\AbsensiController::class, 'simpanAbsensi']);
+
+        // JURNAL MENGAJAR (REKAP PERTEMUAN)
+        Route::get('jurnal-mengajar', [\App\Http\Controllers\Api\Guru\JurnalMengajarController::class, 'getJurnal']);
         
         // ==========================================
         // WALI KELAS
@@ -259,8 +262,17 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('analisis/target', [\App\Http\Controllers\Api\Siswa\SiswaAnalisisController::class, 'setTarget']);
 
         Route::get('kedisiplinan', [\App\Http\Controllers\Api\Siswa\SiswaKedisiplinanController::class, 'index']);
+        Route::get('absensi', [\App\Http\Controllers\Api\Siswa\SiswaAbsensiController::class, 'index']);
         
         Route::get('portofolio', [\App\Http\Controllers\Api\Siswa\SiswaPortofolioController::class, 'index']);
         Route::get('jadwal', [\App\Http\Controllers\Api\Siswa\SiswaJadwalController::class, 'index']);
+    });
+    // ==========================================
+    // MODULE SUPERADMIN
+    // ==========================================
+    Route::middleware(['auth:sanctum', 'role:superadmin'])->prefix('superadmin')->group(function () {
+        Route::get('/gurus', [\App\Http\Controllers\Api\SuperadminController::class, 'getGurus']);
+        Route::get('/walas-classes', [\App\Http\Controllers\Api\SuperadminController::class, 'getWalasClasses']);
+        Route::get('/siswas', [\App\Http\Controllers\Api\SuperadminController::class, 'getSiswas']);
     });
 });

@@ -15,55 +15,15 @@
 
 
         <nav class="space-y-1 h-[calc(100vh-140px)] overflow-y-auto custom-scrollbar pr-2">
-          <NuxtLink to="/admin/dashboard" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-emerald-600 text-white shadow">
-<span class="mr-3 text-lg">📊</span>
-            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Dashboard</span></NuxtLink>
-
-          <div class="pt-4 pb-1 px-3 text-[10px] font-bold text-emerald-500 uppercase tracking-widest whitespace-nowrap opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">
-            Master Data
-          </div>
-
-          <NuxtLink to="/admin/sekolah" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-emerald-600 text-white shadow">
-<span class="mr-3 text-lg">🏢</span>
-            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Data Sekolah</span></NuxtLink>
-          <NuxtLink to="/admin/users" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-emerald-600 text-white shadow">
-<span class="mr-3 text-lg">👥</span>
-            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Manajemen User</span></NuxtLink>
-          <NuxtLink to="/admin/master-database" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-emerald-600 text-white shadow">
-<span class="mr-3 text-lg">🗄️</span>
-            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Master Database</span></NuxtLink>
-          <NuxtLink to="/admin/kejuruan" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-emerald-600 text-white shadow">
-<span class="mr-3 text-lg">🛠️</span>
-            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Master Kejuruan</span></NuxtLink>
-          <NuxtLink to="/admin/kelas" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-emerald-600 text-white shadow">
-<span class="mr-3 text-lg">🏫</span>
-            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Master Kelas</span></NuxtLink>
-
-          <div class="pt-4 pb-1 px-3 text-[10px] font-bold text-emerald-500 uppercase tracking-widest whitespace-nowrap opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">
-            Sistem Akademik
-          </div>
-          <NuxtLink to="/admin/tahun-ajaran" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-emerald-600 text-white shadow">
-<span class="mr-3 text-lg">🗓️</span>
-            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Tahun Ajaran</span></NuxtLink>
-          <NuxtLink to="/admin/kurikulum" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-emerald-600 text-white shadow">
-<span class="mr-3 text-lg">📚</span>
-            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Master Kurikulum</span></NuxtLink>
-          <NuxtLink to="/admin/kenaikan-kelas" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-emerald-600 text-white shadow">
-<span class="mr-3 text-lg">🎓</span>
-            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Kenaikan Kelas</span></NuxtLink>
-          <NuxtLink to="/admin/riwayat-mutasi" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-emerald-600 text-white shadow">
-<span class="mr-3 text-lg">📝</span>
-            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Riwayat Mutasi</span></NuxtLink>
-
-          <div class="pt-4 pb-1 px-3 text-[10px] font-bold text-emerald-500 uppercase tracking-widest whitespace-nowrap opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">
-            Laporan & Arsip
-          </div>
-          <NuxtLink to="/admin/buku-induk" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-emerald-600 text-white shadow">
-<span class="mr-3 text-lg">📖</span>
-            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Buku Induk</span></NuxtLink>
-          <NuxtLink to="/admin/backup" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-emerald-600 text-white shadow">
-<span class="mr-3 text-lg">💾</span>
-            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Backup & Arsip</span></NuxtLink>
+          <template v-for="(menu, idx) in adminMenus" :key="idx">
+            <div v-if="menu.divider" class="pt-4 pb-1 px-3 text-[10px] font-bold text-emerald-500 uppercase tracking-widest whitespace-nowrap opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">
+              {{ menu.dividerLabel }}
+            </div>
+            <NuxtLink v-else :to="menu.path" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-emerald-600 text-white shadow">
+              <span class="mr-3 text-lg">{{ menu.icon }}</span>
+              <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">{{ menu.name }}</span>
+            </NuxtLink>
+          </template>
         </nav>
       </div>
     </aside>
@@ -131,8 +91,9 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { adminMenus } from '~/utils/menus'
 
 const router = useRouter()
 const route = useRoute()

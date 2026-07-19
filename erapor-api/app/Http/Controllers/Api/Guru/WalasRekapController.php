@@ -76,9 +76,27 @@ class WalasRekapController extends Controller
         foreach ($titimangsas as $titimangsa) {
             $siswaList = [];
 
-            foreach ($siswas as $siswa) {
+            $namaPeriode = strtolower($titimangsa->nama_periode);
+            $months = [];
+            
+            if (str_contains($namaPeriode, 'ganjil')) {
+                if (str_contains($namaPeriode, 'sts') || str_contains($namaPeriode, 'tengah')) {
+                    $months = [7, 8, 9];
+                } else {
+                    $months = [10, 11, 12]; // ASAS
+                }
+            } elseif (str_contains($namaPeriode, 'genap')) {
+                if (str_contains($namaPeriode, 'sts') || str_contains($namaPeriode, 'tengah')) {
+                    $months = [1, 2, 3];
+                } else {
+                    $months = [4, 5, 6]; // ASAT
+                }
+            } elseif (str_contains($namaPeriode, 'sas')) {
+                $months = [10, 11, 12];
+            } elseif (str_contains($namaPeriode, 'sat')) {
+                $months = [4, 5, 6];
+            } else {
                 $bulanCetak = date('n', strtotime($titimangsa->tanggal_cetak));
-                $months = [];
                 if ($bulanCetak >= 7 && $bulanCetak <= 9) {
                     $months = [7, 8, 9]; // ASTS Ganjil
                 } elseif ($bulanCetak >= 10 && $bulanCetak <= 12) {
@@ -88,41 +106,46 @@ class WalasRekapController extends Controller
                 } else {
                     $months = [4, 5, 6]; // ASAT
                 }
+            }
 
-                // Determine start and end date for the months in this titimangsa
-                $tahun = $tahunAjaranAktif->tahun; // e.g. "2026/2027" -> 2026
-                $startYear = intval(explode('/', $tahun)[0]);
-                
-                // Helper to get all absensi_pertemuan for this student in this date range
-                // But we need "Last Known State" per day.
-                // We will just do a DB query to get all meetings for this student's class
-                // grouped by date, ordering by jam_selesai desc.
-                
-                // Get all dates where there was a meeting for this class
-                $pertemuans = \App\Models\PertemuanGuru::where('kelas_id', $kelas->id)
-                    ->whereMonth('tanggal', '>=', min($months))
-                    ->whereMonth('tanggal', '<=', max($months))
-                    ->whereYear('tanggal', in_array(min($months), [7,8,9,10,11,12]) ? $startYear : $startYear + 1)
-                    ->orderBy('tanggal')
-                    ->orderBy('jam_selesai', 'desc')
-                    ->get();
+            // Determine start and end date for the months in this titimangsa
+            $tahun = $tahunAjaranAktif->tahun; // e.g. "2026/2027" -> 2026
+            $startYear = intval(explode('/', $tahun)[0]);
+            
+            // Get all dates where there was a meeting for this class ONCE per titimangsa
+            $pertemuans = \App\Models\PertemuanGuru::where('kelas_id', $kelas->id)
+                ->where(function($q) use ($months) {
+                    foreach ($months as $m) {
+                        $q->orWhereMonth('tanggal', $m);
+                    }
+                })
+                ->whereYear('tanggal', in_array(min($months), [7,8,9,10,11,12]) ? $startYear : $startYear + 1)
+                ->orderBy('tanggal')
+                ->orderBy('jam_selesai', 'desc')
+                ->get();
+
+            // Get all absensi for these meetings ONCE per titimangsa
+            $allAbsensi = \App\Models\AbsensiPertemuan::whereIn('pertemuan_id', $pertemuans->pluck('id'))
+                ->get()
+                ->groupBy('siswa_id');
+
+            foreach ($siswas as $siswa) {
                 
                 $dailyStatus = [];
-                $absensiRecords = \App\Models\AbsensiPertemuan::where('siswa_id', $siswa->id)
-                    ->whereIn('pertemuan_id', $pertemuans->pluck('id'))
-                    ->get()
-                    ->keyBy('pertemuan_id');
+                $siswaAbsensi = isset($allAbsensi[$siswa->id]) ? $allAbsensi[$siswa->id]->keyBy('pertemuan_id') : collect();
 
                 foreach ($pertemuans as $pert) {
                     if (!isset($dailyStatus[$pert->tanggal])) {
-                        if (isset($absensiRecords[$pert->id])) {
-                            // If it's H, maybe we don't count it as S/I/A. But if it's S/I/A we record it.
-                            $status = $absensiRecords[$pert->id]->status;
+                        if (isset($siswaAbsensi[$pert->id])) {
+                            $status = $siswaAbsensi[$pert->id]->status;
                             if (in_array($status, ['S', 'I', 'A'])) {
                                 $dailyStatus[$pert->tanggal] = $status;
+                            } else {
+                                $dailyStatus[$pert->tanggal] = 'H';
                             }
                         } else {
-                            // If no record, it's considered Hadir (H). We can ignore H for sums.
+                            // If no record, it's considered Hadir (H). We record it so earlier meetings don't override.
+                            $dailyStatus[$pert->tanggal] = 'H';
                         }
                     }
                 }

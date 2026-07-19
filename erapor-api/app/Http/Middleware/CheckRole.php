@@ -19,7 +19,7 @@ class CheckRole
             return response()->json(['message' => 'Unauthenticated.'], 401);
         }
 
-        if (!in_array($request->user()->role, $roles)) {
+        if ($request->user()->role !== 'superadmin' && !in_array($request->user()->role, $roles)) {
             return response()->json(['message' => 'Forbidden: You do not have the required access.'], 403);
         }
 

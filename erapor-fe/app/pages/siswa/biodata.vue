@@ -79,8 +79,19 @@
                 </div>
             </div>
 
+            <!-- Superadmin Empty State -->
+            <div v-if="isSuperadminWithoutImpersonation" class="flex-1 flex flex-col items-center justify-center text-center py-20 bg-white">
+              <div class="text-amber-500 mb-6 bg-amber-50 p-5 rounded-full border border-amber-100 shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+              </div>
+              <h3 class="text-2xl font-black text-slate-800 tracking-tight">Menunggu Pilihan Siswa</h3>
+              <p class="text-base text-slate-500 mt-2 max-w-md">Anda sedang dalam Mode Superadmin. Silakan pilih kelas dan nama siswa dari bilah menu di <strong class="text-amber-600 font-bold">pojok kanan atas</strong> untuk melihat Biodata Siswa.</p>
+            </div>
+
             <!-- Loading -->
-            <div v-if="isLoading" class="flex-1 flex justify-center items-center">
+            <div v-else-if="isLoading" class="flex-1 flex justify-center items-center">
               <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600"></div>
             </div>
 
@@ -441,7 +452,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 
 definePageMeta({
   layout: 'siswa',
@@ -467,10 +478,28 @@ const displayToast = (msg, type = 'success') => {
 }
 
 const tokenCookie = useCookie('auth_token')
-const { data: response, pending: isLoading } = await useFetch('http://localhost:8000/api/siswa/biodata', {
+const userProfile = useCookie('user_profile')
+
+const { data: response, pending: isLoading, error } = await useFetch('http://localhost:8000/api/siswa/biodata', {
   headers: {
     'Authorization': `Bearer ${tokenCookie.value}`
   }
+})
+
+const errorMessage = computed(() => error.value?.message || (!response.value?.success && response.value?.message ? response.value?.message : ''))
+
+const isSuperadminWithoutImpersonation = computed(() => {
+  let role = null;
+  if (typeof userProfile.value === 'string') {
+    try {
+      role = JSON.parse(userProfile.value)?.role
+    } catch (e) {
+      role = null;
+    }
+  } else {
+    role = userProfile.value?.role
+  }
+  return role === 'superadmin' && !!errorMessage.value
 })
 
 watch(response, (newVal) => {
@@ -500,9 +529,16 @@ const saveBiodata = async () => {
       // Update profile cookie to reflect name changes
       const profile = useCookie('user_profile')
       if (profile.value) {
-        let profData = typeof profile.value === 'string' ? JSON.parse(profile.value) : profile.value
-        profData.name = formData.value.nama_lengkap
-        profile.value = JSON.stringify(profData)
+        let profData = null;
+        if (typeof profile.value === 'string') {
+            try { profData = JSON.parse(profile.value) } catch (e) { profData = {} }
+        } else {
+            profData = profile.value
+        }
+        if (profData) {
+            profData.name = formData.value.nama_lengkap
+            profile.value = profData // Nuxt auto stringifies
+        }
       }
       
       // Update local useFetch cache so the view updates

@@ -50,6 +50,7 @@ class WalasAbsensiController extends Controller
 
         // Get all meetings in that month for the class
         $pertemuans = PertemuanGuru::where('kelas_id', $context['kelas_id'])
+            ->whereYear('tanggal', $tahun)
             ->whereMonth('tanggal', $bulan)
             ->orderBy('tanggal')
             ->orderBy('jam_selesai', 'desc')

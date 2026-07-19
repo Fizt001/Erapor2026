@@ -1,8 +1,37 @@
 <template>
-  <NuxtLayout>
+  <NuxtLayout :name="layoutName">
     <NuxtPage />
   </NuxtLayout>
 </template>
+
+<script setup>
+import { computed } from 'vue'
+import { useCookie, useRoute } from '#imports'
+
+const route = useRoute()
+const userCookie = useCookie('user_profile')
+
+const layoutName = computed(() => {
+  if (userCookie.value) {
+    let user = null;
+    if (typeof userCookie.value === 'string') {
+      try {
+        user = JSON.parse(userCookie.value)
+      } catch (e) {
+        user = {}
+      }
+    } else {
+      user = userCookie.value
+    }
+    
+    if (user?.role === 'superadmin') {
+      return 'superadmin'
+    }
+  }
+  
+  return route.meta.layout || 'default'
+})
+</script>
 
 <style>
 /* Global Page Transition: Vertical Fade & Slide */

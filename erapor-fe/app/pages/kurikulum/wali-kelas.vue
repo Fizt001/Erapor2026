@@ -201,7 +201,7 @@ const fetchData = async () => {
         }
         
         listKelas.value.forEach(k => {
-            form.value[k.id] = k.guru_id || ''
+            form.value[k.id] = k.wali_kelas?.guru_id || ''
         })
         
         if (!isDesktop.value) activeTabMobile.value = 'flow'
@@ -236,7 +236,10 @@ const saveWaliKelas = async (kelasId) => {
             useSwal().toast('Wali kelas berhasil disimpan', 'success')
             const kIdx = listKelas.value.findIndex(k => k.id === kelasId)
             if (kIdx !== -1) {
-                listKelas.value[kIdx].guru_id = guruId
+                if (!listKelas.value[kIdx].wali_kelas) {
+                    listKelas.value[kIdx].wali_kelas = {}
+                }
+                listKelas.value[kIdx].wali_kelas.guru_id = guruId
             }
         }
     } catch (error) {

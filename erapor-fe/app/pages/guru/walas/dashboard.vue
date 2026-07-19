@@ -51,8 +51,19 @@
       <!-- Panel Flow Kanan -->
       <div class="flex-1 bg-slate-50 flex flex-col h-full min-w-0 overflow-y-auto custom-scrollbar">
         
+        <!-- Superadmin Empty State -->
+        <div v-if="isSuperadminWithoutImpersonation" class="flex-grow flex flex-col items-center justify-center py-20 text-center bg-white rounded-2xl shadow-sm border border-slate-200 m-8">
+          <div class="text-amber-500 mb-6 bg-amber-50 p-5 rounded-full border border-amber-100 shadow-inner">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+          </div>
+          <h3 class="text-2xl font-black text-slate-800 tracking-tight">Menunggu Pilihan Wali Kelas</h3>
+          <p class="text-base text-slate-500 mt-3 max-w-md">Anda sedang dalam Mode Superadmin. Silakan pilih nama wali kelas dari bilah menu di <strong class="text-amber-600 font-bold">pojok kanan atas</strong> untuk melihat Dashboard Wali Kelas.</p>
+        </div>
+
         <!-- Loading State -->
-        <div v-if="isLoading" class="flex-grow flex items-center justify-center py-12">
+        <div v-else-if="isLoading || statsLoading" class="flex-grow flex items-center justify-center py-12">
           <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-sky-600"></div>
         </div>
 
@@ -334,7 +345,7 @@ definePageMeta({ layout: "guru", middleware: "guru", title: 'Dashboard Wali Kela
 
 const tokenCookie = useCookie('auth_token')
 
-const { data: response, pending: isLoading } = await useFetch('http://localhost:8000/api/guru/dashboard', {
+const { data: response, pending: isLoading, error: err1 } = await useFetch('http://localhost:8000/api/guru/dashboard', {
   headers: {
     'Authorization': `Bearer ${tokenCookie.value}`,
     'Accept': 'application/json'
@@ -342,11 +353,28 @@ const { data: response, pending: isLoading } = await useFetch('http://localhost:
 })
 const dashboardData = computed(() => response.value?.data || null)
 
-const { data: statsRes, pending: statsLoading } = await useFetch('http://localhost:8000/api/guru/walas/dashboard-stats', {
+const { data: statsRes, pending: statsLoading, error: err2 } = await useFetch('http://localhost:8000/api/guru/walas/dashboard-stats', {
   headers: {
     'Authorization': `Bearer ${tokenCookie.value}`,
     'Accept': 'application/json'
   }
+})
+
+const errorMessage = computed(() => err1.value?.message || err2.value?.message || (!response.value?.success && response.value?.message ? response.value?.message : '') || (!statsRes.value?.success && statsRes.value?.message ? statsRes.value?.message : ''))
+const userProfile = useCookie('user_profile')
+
+const isSuperadminWithoutImpersonation = computed(() => {
+  let role = null;
+  if (typeof userProfile.value === 'string') {
+    try {
+      role = JSON.parse(userProfile.value)?.role
+    } catch (e) {
+      role = null;
+    }
+  } else {
+    role = userProfile.value?.role
+  }
+  return role === 'superadmin' && !!errorMessage.value
 })
 const wStats = computed(() => statsRes.value?.data || null)
 

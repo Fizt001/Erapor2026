@@ -1,8 +1,19 @@
 <template>
   <div class="h-full flex flex-col min-h-0 bg-slate-50">
     
+    <!-- Superadmin Empty State -->
+    <div v-if="isSuperadminWithoutImpersonation" class="flex-1 flex flex-col items-center justify-center text-center py-20 bg-white">
+      <div class="text-amber-500 mb-6 bg-amber-50 p-5 rounded-full border border-amber-100 shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+      </div>
+      <h3 class="text-2xl font-black text-slate-800 tracking-tight">Menunggu Pilihan Siswa</h3>
+      <p class="text-base text-slate-500 mt-2 max-w-md">Anda sedang dalam Mode Superadmin. Silakan pilih kelas dan nama siswa dari bilah menu di <strong class="text-amber-600 font-bold">pojok kanan atas</strong> untuk melihat Rapor Siswa.</p>
+    </div>
+
     <!-- Loading State Awal -->
-    <div v-if="isLoading" class="flex-1 flex flex-col items-center justify-center">
+    <div v-else-if="isLoading" class="flex-1 flex flex-col items-center justify-center">
       <div class="w-10 h-10 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin"></div>
       <p class="mt-4 text-sm font-semibold text-slate-500 animate-pulse">Memuat data periode rapor...</p>
     </div>
@@ -501,12 +512,28 @@ definePageMeta({
 })
 
 const tokenCookie = useCookie('auth_token')
+const userProfile = useCookie('user_profile')
+
 const { data: response, pending: isLoading, error } = await useFetch('http://localhost:8000/api/siswa/rapor', {
   headers: { 'Authorization': `Bearer ${tokenCookie.value}` }
 })
 
 const pageData = computed(() => response.value?.data || null)
 const errorMessage = computed(() => error.value?.message || (!response.value?.success && response.value?.message ? response.value?.message : ''))
+
+const isSuperadminWithoutImpersonation = computed(() => {
+  let role = null;
+  if (typeof userProfile.value === 'string') {
+    try {
+      role = JSON.parse(userProfile.value)?.role
+    } catch (e) {
+      role = null;
+    }
+  } else {
+    role = userProfile.value?.role
+  }
+  return role === 'superadmin' && !!errorMessage.value
+})
 
 const activeTingkat = ref('X')
 const activeTitimangsaId = ref('')

@@ -10,49 +10,15 @@
       <div class="p-3">
 
         <nav class="space-y-1 h-[calc(100vh-140px)] overflow-y-auto custom-scrollbar pr-2">
-          <NuxtLink to="/bk/dashboard" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-rose-600 text-white shadow">
-<span class="mr-3 text-lg">📊</span>
-            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Dashboard BK</span></NuxtLink>
-
-          <div class="pt-4 pb-1 px-3 text-[10px] font-bold text-rose-400 uppercase tracking-widest whitespace-nowrap opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">
-            Kedisiplinan (Master)
-          </div>
-
-          <NuxtLink to="/bk/pelanggaran" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-rose-600 text-white shadow">
-<span class="mr-3 text-lg">📋</span>
-            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Master Pelanggaran</span></NuxtLink>
-
-          <div class="pt-4 pb-1 px-3 text-[10px] font-bold text-rose-400 uppercase tracking-widest whitespace-nowrap opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">
-            Layanan Konseling
-          </div>
-          
-          <NuxtLink to="/bk/poin" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-rose-600 text-white shadow">
-<span class="mr-3 text-lg">✍️</span>
-            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Input Poin Siswa</span></NuxtLink>
-          <NuxtLink to="/bk/penanganan" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-rose-600 text-white shadow">
-<span class="mr-3 text-lg">⚖️</span>
-            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Penanganan Kasus</span></NuxtLink>
-
-
-          <div class="pt-4 pb-1 px-3 text-[10px] font-bold text-rose-400 uppercase tracking-widest whitespace-nowrap opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">
-            Laporan
-          </div>
-
-          <NuxtLink to="/bk/laporan" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-rose-600 text-white shadow">
-<span class="mr-3 text-lg">📈</span>
-            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Grafik Kedisiplinan</span></NuxtLink>
-          <NuxtLink to="/bk/buku-kasus" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-rose-600 text-white shadow">
-<span class="mr-3 text-lg">📖</span>
-            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Buku Kasus Siswa</span></NuxtLink>
-            
-          <div class="pt-4 pb-1 px-3 text-[10px] font-bold text-rose-400 uppercase tracking-widest whitespace-nowrap opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">
-            Pengaturan
-          </div>
-
-          <NuxtLink to="/bk/master-database" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-rose-600 text-white shadow">
-<span class="mr-3 text-lg">🗄️</span>
-            <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Master Kategori</span></NuxtLink>
-          
+          <template v-for="(menu, idx) in bkMenus" :key="idx">
+            <div v-if="menu.divider" class="pt-4 pb-1 px-3 text-[10px] font-bold text-rose-400 uppercase tracking-widest whitespace-nowrap opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">
+              {{ menu.dividerLabel }}
+            </div>
+            <NuxtLink v-else :to="menu.path" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-rose-600 text-white shadow">
+              <span class="mr-3 text-lg">{{ menu.icon }}</span>
+              <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">{{ menu.name }}</span>
+            </NuxtLink>
+          </template>
         </nav>
       </div>
     </aside>
@@ -122,6 +88,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { bkMenus } from '~/utils/menus'
 
 const router = useRouter()
 const route = useRoute()
