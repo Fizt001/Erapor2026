@@ -326,3 +326,13 @@ onMounted(() => {
     loadImpersonationData()
 })
 </script>
+
+<style scoped>
+.custom-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.custom-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+</style>

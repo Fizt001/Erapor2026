@@ -14,32 +14,53 @@
       
       <div class="p-3">
 
-        <nav class="space-y-1 h-[calc(100vh-140px)] overflow-y-auto custom-scrollbar pr-2">
-          <template v-for="(menu, idx) in guruMenus" :key="idx">
-            <div v-if="menu.divider" class="pt-4 pb-1 px-3 text-[10px] font-bold text-sky-400 uppercase tracking-widest whitespace-nowrap opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">
-              {{ menu.dividerLabel }}
-            </div>
-            <NuxtLink v-else :to="menu.path" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-sky-600 text-white shadow">
-              <span class="mr-3 text-lg">{{ menu.icon }}</span>
-              <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">{{ menu.name }}</span>
-            </NuxtLink>
-          </template>
-
-          <!-- KHUSUS WALI KELAS -->
-          <template v-if="isWalas">
-            <div class="pt-6 pb-1 px-3 text-[10px] font-black text-amber-400 uppercase tracking-widest border-t border-slate-700/50 mt-4 whitespace-nowrap opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">
-              ✨ WALI KELAS
-            </div>
-            <template v-for="(menu, idx) in walasMenus" :key="'w'+idx">
-              <div v-if="menu.divider" class="pt-4 pb-1 px-3 text-[10px] font-bold text-amber-400 uppercase tracking-widest whitespace-nowrap opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">
-                {{ menu.dividerLabel }}
+        <nav class="space-y-2 h-[calc(100vh-140px)] overflow-y-auto custom-scrollbar pr-2">
+          
+          <!-- GURU MENGAJAR MODULE -->
+          <div class="border border-sky-900/30 rounded-xl overflow-hidden bg-slate-900/40">
+            <button @click="toggleMenu('guru')" class="w-full flex items-center px-3 py-3 hover:bg-slate-800 text-sky-100 transition-colors whitespace-nowrap" :class="{'bg-slate-800/80': openMenu === 'guru'}">
+              <span class="mr-3 text-lg shrink-0">👨‍🏫</span>
+              <div class="flex-1 flex items-center justify-between opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300 overflow-hidden">
+                 <span class="font-bold text-[13px] tracking-wide text-sky-400">Guru Mengajar</span>
+                 <span class="text-xs transition-transform duration-200 text-sky-500" :class="{ 'rotate-180': openMenu === 'guru' }">▼</span>
               </div>
-              <NuxtLink v-else :to="menu.path" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-amber-600 text-white shadow">
-                <span class="mr-3 text-lg">{{ menu.icon }}</span>
-                <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">{{ menu.name }}</span>
-              </NuxtLink>
-            </template>
-          </template>
+            </button>
+            
+            <div v-show="openMenu === 'guru'" class="bg-slate-950/40 py-2 flex flex-col space-y-1 border-t border-sky-900/30">
+              <template v-for="(menu, idx) in guruMenus" :key="idx">
+                <div v-if="menu.divider" class="pt-3 pb-1 px-3 text-[10px] font-bold text-sky-400 uppercase tracking-widest whitespace-nowrap opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">
+                  {{ menu.dividerLabel }}
+                </div>
+                <NuxtLink v-else :to="menu.path" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap mx-1" active-class="bg-sky-600 text-white shadow">
+                  <span class="mr-3 text-lg shrink-0">{{ menu.icon }}</span>
+                  <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">{{ menu.name }}</span>
+                </NuxtLink>
+              </template>
+            </div>
+          </div>
+
+          <!-- WALI KELAS MODULE -->
+          <div v-if="isWalas" class="border border-amber-900/30 rounded-xl overflow-hidden bg-slate-900/40">
+            <button @click="toggleMenu('walas')" class="w-full flex items-center px-3 py-3 hover:bg-slate-800 text-amber-100 transition-colors whitespace-nowrap" :class="{'bg-slate-800/80': openMenu === 'walas'}">
+              <span class="mr-3 text-lg shrink-0">👨‍👩‍👧</span>
+              <div class="flex-1 flex items-center justify-between opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300 overflow-hidden">
+                 <span class="font-bold text-[13px] tracking-wide text-amber-400">Wali Kelas</span>
+                 <span class="text-xs transition-transform duration-200 text-amber-500" :class="{ 'rotate-180': openMenu === 'walas' }">▼</span>
+              </div>
+            </button>
+            
+            <div v-show="openMenu === 'walas'" class="bg-slate-950/40 py-2 flex flex-col space-y-1 border-t border-amber-900/30">
+              <template v-for="(menu, idx) in walasMenus" :key="'w'+idx">
+                <div v-if="menu.divider" class="pt-3 pb-1 px-3 text-[10px] font-bold text-amber-500 uppercase tracking-widest whitespace-nowrap opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">
+                  {{ menu.dividerLabel }}
+                </div>
+                <NuxtLink v-else :to="menu.path" class="group flex items-center px-3 py-2 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap mx-1" active-class="bg-amber-600 text-white shadow">
+                  <span class="mr-3 text-lg shrink-0">{{ menu.icon }}</span>
+                  <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">{{ menu.name }}</span>
+                </NuxtLink>
+              </template>
+            </div>
+          </div>
 
         </nav>
       </div>
@@ -116,12 +137,23 @@ const router = useRouter()
 const route = useRoute()
 const sidebarOpen = ref(false)
 const profileDropdownOpen = ref(false)
+const openMenu = ref('guru')
 
 const { sekolah, fetchSekolah } = useSekolah()
 
 onMounted(() => {
   fetchSekolah()
+  const path = window.location.pathname;
+  if (path.startsWith('/guru/walas')) {
+      openMenu.value = 'walas'
+  } else {
+      openMenu.value = 'guru'
+  }
 })
+
+const toggleMenu = (menu) => {
+    openMenu.value = openMenu.value === menu ? null : menu;
+}
 
 const tokenCookie = useCookie('auth_token')
 const { data: dashboardStatus } = await useFetch('http://localhost:8000/api/guru/dashboard', {
@@ -166,8 +198,11 @@ const handleLogout = async () => {
 </script>
 
 <style scoped>
-.custom-scrollbar::-webkit-scrollbar { width: 4px; }
-.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-.custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
-.custom-scrollbar:hover::-webkit-scrollbar-thumb { background: #64748b; }
+.custom-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.custom-scrollbar::-webkit-scrollbar {
+  display: none;
+}
 </style>
