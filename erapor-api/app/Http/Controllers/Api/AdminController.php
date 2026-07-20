@@ -64,10 +64,13 @@ class AdminController extends Controller
                 'nama_yayasan' => '', 'akreditasi' => '', 'logo_kiri' => null
             ];
         }
+        
+        $taAktif = TahunAjaran::where('is_aktif', true)->first();
 
         return response()->json([
             'success' => true,
-            'data' => $sekolah
+            'data' => $sekolah,
+            'ta_aktif' => $taAktif
         ]);
     }
 

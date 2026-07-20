@@ -64,10 +64,6 @@
                         <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Kelola penugasan wali kelas</p>
                     </div>
                 </div>
-                <div v-if="activeTahunAjaran" class="px-3 py-1.5 bg-amber-50 border border-amber-200 rounded-lg shadow-sm flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-                    <span class="text-[10px] font-black uppercase tracking-widest text-amber-700">TA: {{ activeTahunAjaran.tahun }} ({{ activeTahunAjaran.semester }})</span>
-                </div>
             </div>
 
             <!-- Content Area -->

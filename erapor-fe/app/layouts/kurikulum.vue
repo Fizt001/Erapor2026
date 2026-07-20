@@ -44,6 +44,16 @@
         </div>
         
         <div class="flex-1 lg:flex-none flex justify-end items-center space-x-4">
+          <!-- Active TA Badge -->
+          <div class="hidden md:flex items-center space-x-2 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-full" v-if="ta_aktif">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">TA:</span>
+            <span class="text-sm font-black text-indigo-600">{{ ta_aktif.tahun }}</span>
+          </div>
+
           <!-- Profile Dropdown in Navbar -->
           <div class="relative">
             <button @click="profileDropdownOpen = !profileDropdownOpen" class="flex items-center space-x-3 text-right focus:outline-none bg-slate-50 hover:bg-slate-100 p-1.5 pl-3 rounded-full border border-slate-200 transition-all">
@@ -77,11 +87,11 @@
       </header>
 
       <!-- Page Content -->
-      <main class="flex-1 overflow-y-auto p-4 sm:p-5 bg-slate-100 relative print:p-0 print:bg-white print:overflow-visible print:block">
+      <main ref="mainScrollContainer" class="flex-1 overflow-y-auto p-4 sm:p-5 bg-slate-100 relative print:p-0 print:bg-white print:overflow-visible print:block">
         <NuxtPage />
         
         <!-- Footer Info -->
-        <div class="mt-10 pt-4 border-t border-slate-200 text-center pb-4 print:hidden">
+        <div ref="footerElement" class="mt-10 pt-4 border-t border-slate-200 text-center pb-4 print:hidden">
             <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Created by <span class="text-indigo-600">SMK-Yatindo</span></p>
         </div>
       </main>
@@ -98,11 +108,34 @@ const router = useRouter()
 const route = useRoute()
 const sidebarOpen = ref(false)
 const profileDropdownOpen = ref(false)
+const mainScrollContainer = ref(null)
+const footerElement = ref(null)
+let footerTimeout = null
 
-const { sekolah, fetchSekolah } = useSekolah()
+const { sekolah, ta_aktif, fetchSekolah } = useSekolah()
 
 onMounted(() => {
   fetchSekolah()
+  
+  // Logic to auto-hide footer after 2 seconds
+  const observer = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      // Start 2-second timer when footer is visible
+      footerTimeout = setTimeout(() => {
+        if (mainScrollContainer.value) {
+          // Scroll up slightly to hide the footer
+          mainScrollContainer.value.scrollBy({ top: -100, behavior: 'smooth' })
+        }
+      }, 2000)
+    } else {
+      // Clear timer if user scrolls away before 2 seconds
+      if (footerTimeout) clearTimeout(footerTimeout)
+    }
+  }, { threshold: 0.5 })
+  
+  if (footerElement.value) {
+    observer.observe(footerElement.value)
+  }
 })
 
 const userCookie = useCookie('user_profile')

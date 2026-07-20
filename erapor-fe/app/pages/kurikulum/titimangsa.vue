@@ -160,7 +160,7 @@
       </div>
     </div>
 
-     Konfirmasi Hapus -->
+    <!-- Konfirmasi Hapus -->
     <div v-if="isDeleteModalOpen" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
         <div class="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden animate-slideUpFade text-center">
             <div class="p-8">

@@ -73,6 +73,13 @@ class DashboardController extends Controller
             })->count(); 
             
             $mapelTanpaGuruCount = $mapelTanpaGuruUmumCount + $mapelTanpaGuruKejuruanCount;
+            
+            // Total Plot in Structure
+            $totalStrukturUmum = StrukturKurikulum::count();
+            $totalStrukturKejuruan = StrukturKejuruan::count();
+            $totalMapelTerstruktur = $totalStrukturUmum + $totalStrukturKejuruan;
+        } else {
+            $totalMapelTerstruktur = 0;
         }
 
         // 7. Notifikasi SP2 & SP3
@@ -129,7 +136,8 @@ class DashboardController extends Controller
                 ],
                 'alerts' => [
                     'kelasTanpaWalas' => $kelasTanpaWalasCount,
-                    'mapelTanpaGuru' => $mapelTanpaGuruCount
+                    'mapelTanpaGuru' => $mapelTanpaGuruCount,
+                    'totalMapelTerstruktur' => $totalMapelTerstruktur ?? 0
                 ],
                 'notifikasi' => $notifikasi
             ]

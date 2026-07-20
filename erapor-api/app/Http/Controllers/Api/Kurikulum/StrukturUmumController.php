@@ -77,7 +77,30 @@ class StrukturUmumController extends Controller
 
     public function strukturDestroy($id)
     {
-        StrukturKurikulum::findOrFail($id)->delete();
+        $struktur = StrukturKurikulum::with('pengampus')->findOrFail($id);
+
+        // 1. Cek apakah sudah ada guru yang diplot ke struktur ini
+        if ($struktur->pengampus->count() > 0) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal! Mapel ini sudah memiliki ' . $struktur->pengampus->count() . ' guru pengampu yang diplot. Hapus plot guru terlebih dahulu.'
+            ], 422);
+        }
+
+        // 2. Cek apakah sudah ada data nilai siswa untuk mapel ini di tingkat yang sama
+        $kelasIds = \App\Models\Kelas::where('tingkat', $struktur->tingkat)->pluck('id');
+        $adaNilai = \App\Models\SumatifNilai::where('mapel_id', $struktur->mapel_id)
+            ->whereIn('kelas_id', $kelasIds)
+            ->exists();
+
+        if ($adaNilai) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal! Sudah ada data nilai siswa yang terhubung dengan mapel ini. Hapus data nilai terlebih dahulu.'
+            ], 422);
+        }
+
+        $struktur->delete();
 
         return response()->json([
             'success' => true,

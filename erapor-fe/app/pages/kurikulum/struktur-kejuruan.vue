@@ -228,6 +228,7 @@ const selectedKurikulumId = ref('')
 const tingkat = ref('')
 const mapels = ref([])
 const dataUnit = ref([])
+const allDataUnit = ref({ X: [], XI: [], XII: [] })  // Cache all tingkat
 const refTingkatKelas = ref([])
 
 const isLoading = ref(true)
@@ -247,7 +248,16 @@ const resetForm = () => {
 watch(() => tingkat.value, () => {
     formData.unit_id = ''
     formData.mapel_id = ''
+    // Switch from cache - no API call, no loading!
+    if (allDataUnit.value[tingkat.value]?.length > 0) {
+        dataUnit.value = allDataUnit.value[tingkat.value]
+        formData.unit_id = dataUnit.value[0]?.id || ''
+    } else {
+        dataUnit.value = []
+    }
 })
+
+// selectedKurikulumId is triggered via @change="fetchData" on the select element directly
 
 const availableMapels = computed(() => {
     if (!formData.unit_id) return []
@@ -283,7 +293,7 @@ const fetchData = async () => {
     isLoading.value = true
     const token = useCookie('auth_token').value
     try {
-        const url = `http://localhost:8000/api/kurikulum/struktur-kejuruan?tingkat=${tingkat.value}` + (selectedKurikulumId.value ? `&kurikulum_id=${selectedKurikulumId.value}` : '')
+        const url = `http://localhost:8000/api/kurikulum/struktur-kejuruan` + (selectedKurikulumId.value ? `?kurikulum_id=${selectedKurikulumId.value}` : '')
         const response = await $fetch(url, {
             headers: { Authorization: `Bearer ${token}` }
         })
@@ -291,9 +301,14 @@ const fetchData = async () => {
             kurikulums.value = response.data.kurikulums
             selectedKurikulumId.value = response.data.selectedKurikulumId
             mapels.value = response.data.mapels
-            dataUnit.value = response.data.dataUnit
+            
+            // Cache all tingkat data
+            allDataUnit.value = response.data.allDataUnit || { X: [], XI: [], XII: [] }
+            
+            // Set current tingkat from cache
+            dataUnit.value = allDataUnit.value[tingkat.value] || []
 
-            // Reset selection to match UI
+            // Reset selection
             if (dataUnit.value.length > 0 && !formData.unit_id) {
                 formData.unit_id = dataUnit.value[0].id;
             }
@@ -371,10 +386,8 @@ onMounted(async () => {
         activeTabMobile.value = 'table'
     }
 
-    Promise.all([
-        fetchReferensi(),
-        fetchData()
-    ])
+    await fetchReferensi()
+    await fetchData()
 })
 </script>
 

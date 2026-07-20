@@ -249,6 +249,8 @@ watch(() => tingkat.value, () => {
     resetForm()
 })
 
+// selectedKurikulumId is triggered via @change="fetchData" on the select element directly
+
 watch(() => formData.kelompok_kode, () => {
     formData.mapel_id = ''
 })
@@ -383,10 +385,8 @@ onMounted(async () => {
         activeTabMobile.value = 'table'
     }
 
-    Promise.all([
-        fetchReferensi(),
-        fetchData()
-    ])
+    await fetchReferensi()
+    await fetchData()
 })
 </script>
 

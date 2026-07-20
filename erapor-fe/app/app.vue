@@ -96,4 +96,15 @@ const layoutName = computed(() => {
   opacity: 0;
   transform: translateY(20px);
 }
+
+/* Global Scrollbar Hiding */
+::-webkit-scrollbar {
+  display: none;
+  width: 0px;
+  height: 0px;
+}
+* {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
 </style>
