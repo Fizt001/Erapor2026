@@ -138,7 +138,7 @@
                         <th class="p-4 w-16 text-center">#</th>
                         <th class="p-4">Nama Kelas</th>
                         <th class="p-4">Tingkat</th>
-                        <th class="p-4">Program Keahlian</th>
+
                         <th class="p-4">Wali Kelas</th>
                         <th class="p-4 text-center w-48">Aksi</th>
                     </tr>
@@ -159,10 +159,7 @@
                                 {{ k.tingkat }}
                             </span>
                         </td>
-                        <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-2 sm:pb-4 mb-1 sm:mb-0">
-                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Program Keahlian</span>
-                            <span class="font-bold text-slate-600 text-xs">{{ k.program?.nama || '-' }}</span>
-                        </td>
+
                         <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-3 sm:pb-4 mb-2 sm:mb-0">
                             <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Wali Kelas</span>
                             <div class="flex items-center gap-2" v-if="k.wali_kelas?.guru">
