@@ -95,11 +95,14 @@ class AdminController extends Controller
             'logo_kiri' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'nama_yayasan' => 'nullable|string|max:255',
             'akreditasi' => 'nullable|string|max:50',
+            'foto_1' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'foto_2' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'foto_3' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $sekolah = Sekolah::first();
         
-        $data = $request->except(['logo', 'logo_kiri']);
+        $data = $request->except(['logo', 'logo_kiri', 'foto_1', 'foto_2', 'foto_3']);
 
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');
@@ -137,6 +140,63 @@ class AdminController extends Controller
             }
             
             $data['logo_kiri'] = 'uploads/logo/' . $filenameKiri;
+        }
+
+        // Handle foto_1
+        if ($request->hasFile('foto_1')) {
+            $fileFoto1 = $request->file('foto_1');
+            $filenameFoto1 = time() . '_foto1_' . $fileFoto1->getClientOriginalName();
+            
+            $fotoDir = public_path('uploads/sekolah');
+            if (!\Illuminate\Support\Facades\File::exists($fotoDir)) {
+                \Illuminate\Support\Facades\File::makeDirectory($fotoDir, 0755, true);
+            }
+            
+            $fileFoto1->move($fotoDir, $filenameFoto1);
+            
+            if ($sekolah && $sekolah->foto_1 && file_exists(public_path($sekolah->foto_1))) {
+                @unlink(public_path($sekolah->foto_1));
+            }
+            
+            $data['foto_1'] = 'uploads/sekolah/' . $filenameFoto1;
+        }
+
+        // Handle foto_2
+        if ($request->hasFile('foto_2')) {
+            $fileFoto2 = $request->file('foto_2');
+            $filenameFoto2 = time() . '_foto2_' . $fileFoto2->getClientOriginalName();
+            
+            $fotoDir = public_path('uploads/sekolah');
+            if (!\Illuminate\Support\Facades\File::exists($fotoDir)) {
+                \Illuminate\Support\Facades\File::makeDirectory($fotoDir, 0755, true);
+            }
+            
+            $fileFoto2->move($fotoDir, $filenameFoto2);
+            
+            if ($sekolah && $sekolah->foto_2 && file_exists(public_path($sekolah->foto_2))) {
+                @unlink(public_path($sekolah->foto_2));
+            }
+            
+            $data['foto_2'] = 'uploads/sekolah/' . $filenameFoto2;
+        }
+
+        // Handle foto_3
+        if ($request->hasFile('foto_3')) {
+            $fileFoto3 = $request->file('foto_3');
+            $filenameFoto3 = time() . '_foto3_' . $fileFoto3->getClientOriginalName();
+            
+            $fotoDir = public_path('uploads/sekolah');
+            if (!\Illuminate\Support\Facades\File::exists($fotoDir)) {
+                \Illuminate\Support\Facades\File::makeDirectory($fotoDir, 0755, true);
+            }
+            
+            $fileFoto3->move($fotoDir, $filenameFoto3);
+            
+            if ($sekolah && $sekolah->foto_3 && file_exists(public_path($sekolah->foto_3))) {
+                @unlink(public_path($sekolah->foto_3));
+            }
+            
+            $data['foto_3'] = 'uploads/sekolah/' . $filenameFoto3;
         }
 
         if ($sekolah) {

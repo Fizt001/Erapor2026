@@ -229,6 +229,85 @@
                     </div>
                 </div>
 
+                <!-- 5. GALERI FOTO -->
+                <div v-show="activeTab === 'foto'" class="animate-fadeIn space-y-8">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        
+                        <!-- Foto 1 -->
+                        <div>
+                            <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Foto 1 (Tampil di Login)</label>
+                            <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-2xl hover:bg-slate-50 transition-colors relative group">
+                                <div class="space-y-1 text-center">
+                                    <div v-if="foto1Preview" class="mx-auto h-32 w-full mb-4 relative rounded-xl overflow-hidden bg-white shadow-sm border border-slate-200">
+                                        <img :src="foto1Preview" alt="Foto 1 Preview" class="h-full w-full object-cover" />
+                                        <button @click.prevent="clearFoto1" class="absolute top-1 right-1 bg-rose-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                        </button>
+                                    </div>
+                                    <div v-else class="mx-auto h-12 w-12 text-slate-400 mb-4 text-4xl">📸</div>
+                                    <div class="flex text-sm text-slate-600 justify-center">
+                                        <label for="foto1-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-emerald-600 hover:text-emerald-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-emerald-500 px-2 py-1">
+                                            <span v-if="!foto1Preview">Upload file</span>
+                                            <span v-else>Ganti file</span>
+                                            <input id="foto1-upload" name="foto1-upload" type="file" class="sr-only" accept="image/*" @change="handleFoto1Upload">
+                                        </label>
+                                    </div>
+                                    <p class="text-[10px] font-bold text-slate-400">PNG, JPG up to 2MB</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Foto 2 -->
+                        <div>
+                            <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Foto 2</label>
+                            <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-2xl hover:bg-slate-50 transition-colors relative group">
+                                <div class="space-y-1 text-center">
+                                    <div v-if="foto2Preview" class="mx-auto h-32 w-full mb-4 relative rounded-xl overflow-hidden bg-white shadow-sm border border-slate-200">
+                                        <img :src="foto2Preview" alt="Foto 2 Preview" class="h-full w-full object-cover" />
+                                        <button @click.prevent="clearFoto2" class="absolute top-1 right-1 bg-rose-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                        </button>
+                                    </div>
+                                    <div v-else class="mx-auto h-12 w-12 text-slate-400 mb-4 text-4xl">🖼️</div>
+                                    <div class="flex text-sm text-slate-600 justify-center">
+                                        <label for="foto2-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-emerald-600 hover:text-emerald-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-emerald-500 px-2 py-1">
+                                            <span v-if="!foto2Preview">Upload file</span>
+                                            <span v-else>Ganti file</span>
+                                            <input id="foto2-upload" name="foto2-upload" type="file" class="sr-only" accept="image/*" @change="handleFoto2Upload">
+                                        </label>
+                                    </div>
+                                    <p class="text-[10px] font-bold text-slate-400">PNG, JPG up to 2MB</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Foto 3 -->
+                        <div>
+                            <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Foto 3</label>
+                            <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-2xl hover:bg-slate-50 transition-colors relative group">
+                                <div class="space-y-1 text-center">
+                                    <div v-if="foto3Preview" class="mx-auto h-32 w-full mb-4 relative rounded-xl overflow-hidden bg-white shadow-sm border border-slate-200">
+                                        <img :src="foto3Preview" alt="Foto 3 Preview" class="h-full w-full object-cover" />
+                                        <button @click.prevent="clearFoto3" class="absolute top-1 right-1 bg-rose-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                        </button>
+                                    </div>
+                                    <div v-else class="mx-auto h-12 w-12 text-slate-400 mb-4 text-4xl">🖼️</div>
+                                    <div class="flex text-sm text-slate-600 justify-center">
+                                        <label for="foto3-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-emerald-600 hover:text-emerald-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-emerald-500 px-2 py-1">
+                                            <span v-if="!foto3Preview">Upload file</span>
+                                            <span v-else>Ganti file</span>
+                                            <input id="foto3-upload" name="foto3-upload" type="file" class="sr-only" accept="image/*" @change="handleFoto3Upload">
+                                        </label>
+                                    </div>
+                                    <p class="text-[10px] font-bold text-slate-400">PNG, JPG up to 2MB</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
           </div>
         </div>
@@ -256,7 +335,8 @@ const tabs = [
   { id: 'identitas', title: 'Identitas Sekolah', shortTitle: 'Profil', subtitle: 'Informasi Dasar', icon: '🏫' },
   { id: 'pimpinan', title: 'Pimpinan Lembaga', shortTitle: 'Kepsek', subtitle: 'Kepala Sekolah', icon: '👨‍💼' },
   { id: 'media', title: 'Media & Digital', shortTitle: 'Sosmed', subtitle: 'Kontak & Website', icon: '🌐' },
-  { id: 'lokasi', title: 'Lokasi Geografis', shortTitle: 'Lokasi', subtitle: 'Alamat & Wilayah', icon: '📍' }
+  { id: 'lokasi', title: 'Lokasi Geografis', shortTitle: 'Lokasi', subtitle: 'Alamat & Wilayah', icon: '📍' },
+  { id: 'foto', title: 'Galeri Sekolah', shortTitle: 'Galeri', subtitle: 'Foto & Dokumentasi', icon: '📸' }
 ]
 
 const currentTab = computed(() => tabs.find(t => t.id === activeTab.value))
@@ -288,6 +368,15 @@ const logoPreview = ref(null)
 
 const logoKiriFile = ref(null)
 const logoKiriPreview = ref(null)
+
+const foto1File = ref(null)
+const foto1Preview = ref(null)
+
+const foto2File = ref(null)
+const foto2Preview = ref(null)
+
+const foto3File = ref(null)
+const foto3Preview = ref(null)
 
 const handleLogoUpload = (event) => {
   const file = event.target.files[0]
@@ -335,6 +424,41 @@ const clearLogoKiri = () => {
   logoKiriPreview.value = null
 }
 
+const handleFoto1Upload = (event) => {
+  const file = event.target.files[0]
+  if (!file) return
+  if (file.size > 2 * 1024 * 1024) { useSwal().toast('Ukuran file maksimal 2MB', 'warning'); return }
+  foto1File.value = file
+  const reader = new FileReader()
+  reader.onload = (e) => { foto1Preview.value = e.target.result }
+  reader.readAsDataURL(file)
+}
+
+const handleFoto2Upload = (event) => {
+  const file = event.target.files[0]
+  if (!file) return
+  if (file.size > 2 * 1024 * 1024) { useSwal().toast('Ukuran file maksimal 2MB', 'warning'); return }
+  foto2File.value = file
+  const reader = new FileReader()
+  reader.onload = (e) => { foto2Preview.value = e.target.result }
+  reader.readAsDataURL(file)
+}
+
+const handleFoto3Upload = (event) => {
+  const file = event.target.files[0]
+  if (!file) return
+  if (file.size > 2 * 1024 * 1024) { useSwal().toast('Ukuran file maksimal 2MB', 'warning'); return }
+  foto3File.value = file
+  const reader = new FileReader()
+  reader.onload = (e) => { foto3Preview.value = e.target.result }
+  reader.readAsDataURL(file)
+}
+
+const clearFoto1 = () => { foto1File.value = null; foto1Preview.value = null }
+const clearFoto2 = () => { foto2File.value = null; foto2Preview.value = null }
+const clearFoto3 = () => { foto3File.value = null; foto3Preview.value = null }
+
+
 // === FETCH DATA INITAL ===
 const fetchSekolah = async () => {
   const tokenCookie = useCookie('auth_token')
@@ -354,6 +478,15 @@ const fetchSekolah = async () => {
       }
       if (response.data.logo_kiri) {
         logoKiriPreview.value = `/${response.data.logo_kiri}`
+      }
+      if (response.data.foto_1) {
+        foto1Preview.value = `/${response.data.foto_1}`
+      }
+      if (response.data.foto_2) {
+        foto2Preview.value = `/${response.data.foto_2}`
+      }
+      if (response.data.foto_3) {
+        foto3Preview.value = `/${response.data.foto_3}`
       }
     }
   } catch (error) {
@@ -384,6 +517,15 @@ const saveData = async () => {
     }
     if (logoKiriFile.value) {
       formData.append('logo_kiri', logoKiriFile.value)
+    }
+    if (foto1File.value) {
+      formData.append('foto_1', foto1File.value)
+    }
+    if (foto2File.value) {
+      formData.append('foto_2', foto2File.value)
+    }
+    if (foto3File.value) {
+      formData.append('foto_3', foto3File.value)
     }
 
     const { fetchSekolah: fetchGlobalSekolah } = useSekolah()
