@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen lg:h-screen w-full flex flex-col lg:flex-row relative font-sans bg-slate-900 overflow-y-auto lg:overflow-hidden">
+  <div class="min-h-screen lg:h-screen w-full flex flex-col lg:flex-row relative font-sans bg-slate-900 overflow-x-hidden overflow-y-auto lg:overflow-hidden">
     
     <!-- Background Decorators (Abstract Blobs) -->
     <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-emerald-600/30 rounded-full blur-[120px] pointer-events-none"></div>
