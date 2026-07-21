@@ -95,36 +95,41 @@
                     </div>
                     
                     <div class="overflow-x-auto custom-scrollbar">
-                        <table class="w-full text-left border-collapse whitespace-nowrap">
-                            <thead>
+                        <table class="w-full text-left border-collapse min-w-full">
+                            <thead class="hidden sm:table-header-group">
                                 <tr class="bg-white text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 border-b border-slate-100">
                                     <th class="p-4 pl-6 w-16 text-center">#</th>
                                     <th class="p-4">Kode / Value</th>
                                     <th class="p-4">Nama (Display) & Keterangan</th>
-                                    <th class="p-4 text-right pr-6">Aksi</th>
+                                    <th class="p-4 text-center">Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody class="text-xs">
-                                <tr v-for="(item, index) in group" :key="item.id" class="border-b border-slate-50 hover:bg-emerald-50/30 transition-colors group">
-                                    <td class="p-4 pl-6 text-center text-[10px] font-bold text-slate-400">
-                                        {{ index + 1 }}
+                            <tbody class="text-xs flex flex-col sm:table-row-group">
+                                <tr v-for="(item, index) in group" :key="item.id" class="border-b border-slate-100 hover:bg-emerald-50/30 transition-colors group bg-white flex flex-col sm:table-row p-4 sm:p-0 relative">
+                                    <td class="px-0 py-1 sm:p-4 sm:pl-6 text-left sm:text-center text-[10px] font-bold text-slate-400 flex sm:table-cell items-center justify-between">
+                                        <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nomor</span>
+                                        <span>{{ index + 1 }}</span>
                                     </td>
-                                    <td class="p-4">
+                                    <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-2 sm:pb-4 mb-1 sm:mb-0">
+                                        <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Kode / Value</span>
                                         <span class="text-[10px] font-black uppercase tracking-widest px-2 py-1.5 rounded bg-slate-100 text-slate-600 border border-slate-200">{{ item.kode }}</span>
                                     </td>
-                                    <td class="p-4">
-                                        <p class="font-bold text-slate-800 text-[13px]">{{ item.nama }}</p>
-                                        <p v-if="item.keterangan" class="text-[10px] text-slate-500 mt-0.5">{{ item.keterangan }}</p>
+                                    <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-3 sm:pb-4 mb-2 sm:mb-0">
+                                        <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nama & Keterangan</span>
+                                        <div class="text-right sm:text-left">
+                                            <p class="font-bold text-slate-800 text-[13px]">{{ item.nama }}</p>
+                                            <p v-if="item.keterangan" class="text-[10px] text-slate-500 mt-0.5">{{ item.keterangan }}</p>
+                                        </div>
                                     </td>
-                                    <td class="p-4 pr-6 text-right">
-                                        <div class="flex items-center justify-end gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
-                                            <button @click="editData(item)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:text-emerald-500 hover:bg-emerald-50 hover:border-emerald-200 flex items-center justify-center transition-all shadow-sm" title="Edit">✏️</button>
-                                            <button @click="confirmDelete(item)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:text-rose-500 hover:bg-rose-50 hover:border-rose-200 flex items-center justify-center transition-all shadow-sm" title="Hapus">🗑️</button>
+                                    <td class="px-0 pt-2 sm:p-4 sm:pr-6 text-center">
+                                        <div class="flex items-center justify-center sm:justify-end gap-3 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
+                                            <button @click="editData(item)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-emerald-500 hover:bg-emerald-50 hover:border-emerald-200 flex items-center justify-center transition-all shadow-sm" title="Edit">✏️</button>
+                                            <button @click="confirmDelete(item)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-rose-500 hover:bg-rose-50 hover:border-rose-200 flex items-center justify-center transition-all shadow-sm" title="Hapus">🗑️</button>
                                         </div>
                                     </td>
                                 </tr>
-                                <tr v-if="group.length === 0">
-                                    <td colspan="4" class="py-8 text-center text-slate-400 text-xs font-bold italic">Belum ada data untuk jenis ini.</td>
+                                <tr v-if="group.length === 0" class="flex sm:table-row">
+                                    <td colspan="4" class="py-8 w-full text-center text-slate-400 text-xs font-bold italic block sm:table-cell">Belum ada data untuk jenis ini.</td>
                                 </tr>
                             </tbody>
                         </table>

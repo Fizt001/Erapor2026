@@ -50,8 +50,8 @@
           </div>
 
           <div v-else class="flex-1 overflow-auto custom-scrollbar">
-            <table class="w-full text-left border-collapse whitespace-nowrap">
-              <thead class="bg-slate-50/70 text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-200 sticky top-0 z-10">
+            <table class="w-full text-left border-collapse min-w-full">
+              <thead class="hidden sm:table-header-group bg-slate-50/70 text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-200 sticky top-0 z-10">
                 <tr>
                   <th class="py-3 px-4 w-8 text-center">No</th>
                   <th class="py-3 px-4">Tanggal Mutasi</th>
@@ -62,37 +62,53 @@
                   <th class="py-3 px-4 text-center">Aksi</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-slate-100">
-                <tr v-for="(m, idx) in mutasiList" :key="m.id" class="hover:bg-slate-50/80 transition-colors group bg-white">
-                  <td class="p-4 text-center text-xs font-bold text-slate-400">{{ idx + 1 }}</td>
-                  <td class="p-4">
-                    <p class="font-bold text-slate-700 text-xs">{{ formatDate(m.tanggal_mutasi) }}</p>
+              <tbody class="divide-y divide-slate-100 flex flex-col sm:table-row-group">
+                <tr v-for="(m, idx) in mutasiList" :key="m.id" class="hover:bg-slate-50/80 transition-colors group bg-white flex flex-col sm:table-row p-4 sm:p-0 relative">
+                  <td class="px-0 py-1 sm:p-4 text-left sm:text-center text-xs font-bold text-slate-400 flex sm:table-cell items-center justify-between">
+                      <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nomor</span>
+                      <span>{{ idx + 1 }}</span>
                   </td>
-                  <td class="p-4">
-                    <p class="font-black text-slate-800 text-[13px]">{{ m.siswa?.name || 'Unknown' }}</p>
-                    <p class="text-[10px] text-slate-400 font-bold">Asal: {{ m.kelas_asal?.nama_kelas || '-' }}</p>
+                  <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-2 sm:pb-4 mb-1 sm:mb-0">
+                      <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Tanggal</span>
+                      <p class="font-bold text-slate-700 text-xs">{{ formatDate(m.tanggal_mutasi) }}</p>
                   </td>
-                  <td class="p-4">
-                    <span class="inline-flex items-center px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 text-[11px] font-black uppercase tracking-widest border border-slate-200">
-                      {{ formatJenis(m.jenis_mutasi) }}
-                    </span>
-                    <p v-if="m.jenis_mutasi === 'pindah_kelas'" class="text-[10px] text-emerald-600 font-bold mt-1">
-                      Ke: {{ m.kelas_tujuan?.nama_kelas || '-' }}
-                    </p>
+                  <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-2 sm:pb-4 mb-1 sm:mb-0">
+                      <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Siswa</span>
+                      <div class="text-right sm:text-left">
+                          <p class="font-black text-slate-800 text-[13px]">{{ m.siswa?.name || 'Unknown' }}</p>
+                          <p class="text-[10px] text-slate-400 font-bold">Asal: {{ m.kelas_asal?.nama_kelas || '-' }}</p>
+                      </div>
                   </td>
-                  <td class="p-4">
-                    <p class="text-xs text-slate-600 max-w-[200px] truncate" :title="m.alasan">{{ m.alasan }}</p>
-                    <p class="text-[10px] text-slate-400 mt-0.5">Oleh: {{ m.diajukan_oleh?.name || '-' }}</p>
+                  <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-2 sm:pb-4 mb-1 sm:mb-0">
+                      <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Jenis</span>
+                      <div class="text-right sm:text-left">
+                          <span class="inline-flex items-center px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 text-[11px] font-black uppercase tracking-widest border border-slate-200">
+                            {{ formatJenis(m.jenis_mutasi) }}
+                          </span>
+                          <p v-if="m.jenis_mutasi === 'pindah_kelas'" class="text-[10px] text-emerald-600 font-bold mt-1">
+                            Ke: {{ m.kelas_tujuan?.nama_kelas || '-' }}
+                          </p>
+                      </div>
                   </td>
-                  <td class="p-4">
-                    <span :class="statusClass(m.status_approval)" class="inline-flex items-center px-2 py-1 rounded-md text-[10px] font-black uppercase tracking-widest border">
-                      {{ m.status_approval }}
-                    </span>
+                  <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-2 sm:pb-4 mb-1 sm:mb-0">
+                      <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Alasan</span>
+                      <div class="text-right sm:text-left">
+                          <p class="text-xs text-slate-600 max-w-[200px] truncate" :title="m.alasan">{{ m.alasan }}</p>
+                          <p class="text-[10px] text-slate-400 mt-0.5">Oleh: {{ m.diajukan_oleh?.name || '-' }}</p>
+                      </div>
                   </td>
-                  <td class="p-4 text-center">
-                    <button @click="cancelMutasi(m)" class="px-3 py-1.5 bg-rose-50 text-rose-600 hover:bg-rose-100 font-bold rounded-lg transition-colors text-[10px] uppercase tracking-widest flex items-center justify-center gap-1 mx-auto shadow-sm" title="Batalkan Mutasi ini">
-                      <span>🔙</span> Batal
-                    </button>
+                  <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-3 sm:pb-4 mb-2 sm:mb-0 sm:text-center">
+                      <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Status</span>
+                      <span :class="statusClass(m.status_approval)" class="inline-flex items-center px-2 py-1 rounded-md text-[10px] font-black uppercase tracking-widest border">
+                        {{ m.status_approval }}
+                      </span>
+                  </td>
+                  <td class="px-0 pt-2 sm:p-4 sm:pr-6 text-center">
+                      <div class="flex items-center justify-center sm:justify-end gap-3 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
+                          <button @click="cancelMutasi(m)" class="px-3 py-2 sm:py-1.5 bg-rose-50 text-rose-600 hover:bg-rose-100 font-bold rounded-xl sm:rounded-lg transition-colors text-[10px] uppercase tracking-widest flex items-center justify-center gap-1 mx-auto shadow-sm" title="Batalkan Mutasi ini">
+                            <span>🔙</span> Batal
+                          </button>
+                      </div>
                   </td>
                 </tr>
               </tbody>

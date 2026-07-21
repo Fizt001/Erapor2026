@@ -133,39 +133,52 @@
             </div>
 
             <!-- Desktop Table -->
-            <table v-else class="w-full text-left border-collapse min-w-[600px] whitespace-nowrap">
-                <thead class="sticky top-0 z-10 bg-slate-50 border-b border-slate-200 shadow-sm">
+            <table v-else class="w-full text-left border-collapse min-w-full">
+                <thead class="hidden sm:table-header-group sticky top-0 z-10 bg-slate-50 border-b border-slate-200 shadow-sm">
                     <tr class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-500">
                         <th class="p-4 w-16 text-center">#</th>
                         <th class="p-4">Nama Kelas</th>
-                        <th class="p-4">Konsentrasi</th>
-                        <th class="p-4">Kurikulum</th>
-                        <th class="p-4 text-center">Aksi</th>
+                        <th class="p-4">Tingkat</th>
+                        <th class="p-4">Program Keahlian</th>
+                        <th class="p-4">Wali Kelas</th>
+                        <th class="p-4 text-center w-48">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="text-xs">
-                    <tr v-for="(k, index) in kelasData.data" :key="k.id" class="border-b border-slate-100 hover:bg-slate-50/80 transition-colors group bg-white">
-                        <td class="p-4 text-center text-xs font-bold text-slate-400">
-                            {{ (kelasData.current_page - 1) * kelasData.per_page + index + 1 }}
+                <tbody class="text-xs flex flex-col sm:table-row-group">
+                    <tr v-for="(k, index) in kelasData.data" :key="k.id" class="border-b border-slate-100 hover:bg-slate-50/80 transition-colors group bg-white flex flex-col sm:table-row p-4 sm:p-0">
+                        <td class="px-0 py-1 sm:p-4 text-left sm:text-center text-[10px] font-bold text-slate-400 flex sm:table-cell items-center justify-between">
+                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nomor</span>
+                            <span>{{ (kelasData.current_page - 1) * kelasData.per_page + index + 1 }}</span>
                         </td>
-                        <td class="p-4">
-                            <!-- FORMATTING KELAS: {{ k.tingkat }} {{ k.nama_kelas }} -->
-                            <p class="font-black text-slate-800 text-[13px]">{{ k.tingkat }} {{ k.nama_kelas }}</p>
+                        <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-2 sm:pb-4 mb-1 sm:mb-0">
+                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nama Kelas</span>
+                            <span class="font-black text-emerald-700 text-sm tracking-wide">{{ k.nama_kelas }}</span>
                         </td>
-                        <td class="p-4">
-                            <p class="text-xs font-bold text-slate-700">{{ k.kejuruan?.nama_konsentrasi || '-' }}</p>
-                            <p class="text-[9px] font-black uppercase text-emerald-600 tracking-widest mt-0.5">{{ k.kejuruan?.kode_konsentrasi || '-' }}</p>
-                        </td>
-                        <td class="p-4">
-                            <span class="inline-flex items-center px-2.5 py-1.5 rounded-md text-[9px] font-black uppercase tracking-widest bg-slate-100 text-slate-600 border border-slate-200">
-                                {{ k.kurikulum?.singkatan || '-' }}
+                        <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-2 sm:pb-4 mb-1 sm:mb-0">
+                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Tingkat</span>
+                            <span class="inline-flex px-2.5 py-1 rounded-md text-[10px] font-bold bg-slate-100 text-slate-600 border border-slate-200">
+                                {{ k.tingkat }}
                             </span>
                         </td>
-                        <td class="p-4 text-center">
+                        <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-2 sm:pb-4 mb-1 sm:mb-0">
+                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Program Keahlian</span>
+                            <span class="font-bold text-slate-600 text-xs">{{ k.program?.nama || '-' }}</span>
+                        </td>
+                        <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-3 sm:pb-4 mb-2 sm:mb-0">
+                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Wali Kelas</span>
+                            <div class="flex items-center gap-2" v-if="k.wali_kelas">
+                                <div class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-[10px] font-bold shrink-0">
+                                    {{ k.wali_kelas.name.substring(0, 2).toUpperCase() }}
+                                </div>
+                                <span class="font-bold text-slate-700 text-[11px] truncate max-w-[150px]">{{ k.wali_kelas.name }}</span>
+                            </div>
+                            <span v-else class="text-[10px] font-bold text-slate-400 italic">Belum Diatur</span>
+                        </td>
+                        <td class="px-0 pt-2 sm:p-4 text-center">
                             <div class="flex items-center justify-center gap-2 opacity-100 xl:opacity-0 xl:group-hover:opacity-100 transition-opacity">
-                                <button @click="navigateToSiswa(k.id)" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-indigo-500 hover:border-indigo-200 hover:bg-indigo-50 flex items-center justify-center transition-all shadow-sm" title="Kelola Siswa">🧑‍🎓</button>
-                                <button @click="editKelas(k)" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-emerald-500 hover:border-emerald-200 hover:bg-emerald-50 flex items-center justify-center transition-all shadow-sm" title="Edit">✏️</button>
-                                <button @click="confirmDelete(k.id, `${k.tingkat} ${k.nama_kelas}`)" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-rose-500 hover:border-rose-200 hover:bg-rose-50 flex items-center justify-center transition-all shadow-sm" title="Hapus">🗑️</button>
+                                <NuxtLink :to="`/admin/kelas/${k.id}/siswa`" class="px-3 h-10 sm:h-8 rounded-xl sm:rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-600 hover:text-emerald-700 hover:bg-emerald-100 flex items-center justify-center transition-all shadow-sm font-bold text-[10px] uppercase tracking-wider" title="Anggota Rombel">👥 Anggota</NuxtLink>
+                                <button @click="editKelas(k)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-indigo-500 hover:border-indigo-200 hover:bg-indigo-50 flex items-center justify-center transition-all shadow-sm" title="Edit">✏️</button>
+                                <button @click="confirmDelete(k.id, k.nama_kelas)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-rose-500 hover:border-rose-200 hover:bg-rose-50 flex items-center justify-center transition-all shadow-sm" title="Hapus">🗑️</button>
                             </div>
                         </td>
                     </tr>

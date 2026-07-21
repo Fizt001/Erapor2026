@@ -121,42 +121,46 @@
                     </div>
                     
                     <div v-else class="overflow-x-auto flex-1">
-                        <table class="w-full text-left border-collapse whitespace-nowrap">
-                            <thead>
+                        <table class="w-full text-left border-collapse min-w-full">
+                            <thead class="hidden sm:table-header-group">
                                 <tr class="bg-slate-50/50 text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-200">
                                     <th class="py-4 px-4 pl-6 w-16 text-center">#</th>
                                     <th class="py-4 px-4">Nama Siswa / Akun</th>
                                     <th class="py-4 px-4 text-center">NIS</th>
                                     <th class="py-4 px-4 text-center">Status</th>
-                                    <th class="py-4 px-4 text-right pr-6">Aksi</th>
+                                    <th class="py-4 px-4 text-center">Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody class="text-sm">
-                                <tr v-for="(s, index) in paginatedStudents" :key="s.id" class="border-b border-slate-100 hover:bg-slate-50/80 transition-colors group bg-white">
-                                    <td class="p-4 pl-6 text-center text-xs font-bold text-slate-400">
-                                        {{ (currentPage - 1) * itemsPerPage + index + 1 }}
+                            <tbody class="text-sm flex flex-col sm:table-row-group">
+                                <tr v-for="(s, index) in paginatedStudents" :key="s.id" class="border-b border-slate-100 hover:bg-slate-50/80 transition-colors group bg-white flex flex-col sm:table-row p-4 sm:p-0 relative">
+                                    <td class="px-0 py-1 sm:p-4 sm:pl-6 text-left sm:text-center text-xs font-bold text-slate-400 flex sm:table-cell items-center justify-between">
+                                        <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nomor</span>
+                                        <span>{{ (currentPage - 1) * itemsPerPage + index + 1 }}</span>
                                     </td>
-                                    <td class="p-4">
+                                    <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-2 sm:pb-4 mb-1 sm:mb-0">
+                                        <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nama Siswa</span>
                                         <p class="font-black text-slate-800 text-[13px]">{{ s.user?.name || 'Unknown' }}</p>
                                     </td>
-                                    <td class="p-4 text-center">
+                                    <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-2 sm:pb-4 mb-1 sm:mb-0 sm:text-center">
+                                        <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">NIS</span>
                                         <span class="inline-flex items-center px-2.5 py-1.5 rounded-md bg-slate-100 text-slate-600 text-[11px] font-black uppercase tracking-widest border border-slate-200">
                                             {{ s.nis }}
                                         </span>
                                     </td>
-                                    <td class="p-4 text-center">
-                                        <div class="flex flex-col items-center justify-center">
+                                    <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-3 sm:pb-4 mb-2 sm:mb-0 sm:text-center">
+                                        <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Status</span>
+                                        <div class="flex flex-col items-end sm:items-center justify-center">
                                             <span :class="s.status_siswa === 'aktif' ? 'bg-emerald-100 text-emerald-700 border-emerald-200' : 'bg-rose-100 text-rose-700 border-rose-200'" class="inline-flex items-center px-2.5 py-1.5 rounded-md text-[11px] font-black uppercase tracking-widest border">
                                                 {{ s.status_siswa === 'pindah_sekolah' ? 'PINDAH SEKOLAH' : (s.status_siswa || 'aktif') }}
                                             </span>
                                             <span v-if="s.status_siswa !== 'aktif' && s.alasan_keluar" class="text-[9px] text-rose-500 font-bold mt-1 max-w-[120px] truncate" :title="s.alasan_keluar">{{ s.alasan_keluar }}</span>
                                         </div>
                                     </td>
-                                    <td class="p-4 pr-6 text-right">
-                                        <div class="flex items-center justify-end gap-2 opacity-100 xl:opacity-0 xl:group-hover:opacity-100 transition-opacity">
-                                            <button v-if="s.status_siswa === 'aktif'" @click="openMutasiModal(s)" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-amber-500 hover:border-amber-200 hover:bg-amber-50 flex items-center justify-center transition-all shadow-sm" title="Proses Mutasi">🔄</button>
-                                            <button @click="openEditNisModal(s)" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-emerald-500 hover:border-emerald-200 hover:bg-emerald-50 flex items-center justify-center transition-all shadow-sm" title="Edit NIS">✏️</button>
-                                            <button @click="confirmDelete(s.id, s.user?.name)" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-rose-500 hover:border-rose-200 hover:bg-rose-50 flex items-center justify-center transition-all shadow-sm" title="Hapus">🗑️</button>
+                                    <td class="px-0 pt-2 sm:p-4 sm:pr-6 text-center">
+                                        <div class="flex items-center justify-center sm:justify-end gap-3 opacity-100 xl:opacity-0 xl:group-hover:opacity-100 transition-opacity">
+                                            <button v-if="s.status_siswa === 'aktif'" @click="openMutasiModal(s)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-amber-500 hover:border-amber-200 hover:bg-amber-50 flex items-center justify-center transition-all shadow-sm" title="Proses Mutasi">🔄</button>
+                                            <button @click="openEditNisModal(s)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-emerald-500 hover:border-emerald-200 hover:bg-emerald-50 flex items-center justify-center transition-all shadow-sm" title="Edit NIS">✏️</button>
+                                            <button @click="confirmDelete(s.id, s.user?.name)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-rose-500 hover:border-rose-200 hover:bg-rose-50 flex items-center justify-center transition-all shadow-sm" title="Hapus">🗑️</button>
                                         </div>
                                     </td>
                                 </tr>

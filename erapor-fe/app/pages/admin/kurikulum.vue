@@ -93,27 +93,31 @@
             </div>
 
             <!-- Desktop Table -->
-            <table v-else class="w-full text-left border-collapse min-w-[500px] whitespace-nowrap">
-                <thead class="sticky top-0 z-10 bg-slate-50 border-b border-slate-200 shadow-sm">
+            <table v-else class="w-full text-left border-collapse min-w-full">
+                <thead class="hidden sm:table-header-group sticky top-0 z-10 bg-slate-50 border-b border-slate-200 shadow-sm">
                     <tr class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-500">
                         <th class="p-4 w-16 text-center">#</th>
                         <th class="p-4">Nama Kurikulum</th>
                         <th class="p-4 text-center">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="text-xs">
-                    <tr v-for="(k, index) in kurikulumData" :key="k.id" class="border-b border-slate-100 hover:bg-slate-50/80 transition-colors group bg-white">
-                        <td class="p-4 text-center text-[10px] font-bold text-slate-400">
-                            {{ index + 1 }}
+                <tbody class="text-xs flex flex-col sm:table-row-group">
+                    <tr v-for="(k, index) in kurikulumData" :key="k.id" class="border-b border-slate-100 hover:bg-slate-50/80 transition-colors group bg-white flex flex-col sm:table-row p-4 sm:p-0 relative">
+                        <td class="px-0 py-1 sm:p-4 text-left sm:text-center text-[10px] font-bold text-slate-400 flex sm:table-cell items-center justify-between">
+                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nomor</span>
+                            <span>{{ index + 1 }}</span>
                         </td>
-                        <td class="p-4">
-                            <p class="font-black text-slate-800 text-[13px]">{{ k.nama_kurikulum }}</p>
-                            <p class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mt-0.5">{{ k.singkatan }}</p>
+                        <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50/50 pb-3 sm:pb-4 mb-2 sm:mb-0">
+                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nama Kurikulum</span>
+                            <div class="text-right sm:text-left">
+                                <p class="font-black text-slate-800 text-[13px]">{{ k.nama_kurikulum }}</p>
+                                <p class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mt-0.5">{{ k.singkatan }}</p>
+                            </div>
                         </td>
-                        <td class="p-4 text-center">
-                            <div class="flex items-center justify-center gap-2 opacity-100 xl:opacity-0 xl:group-hover:opacity-100 transition-opacity">
-                                <button @click="editKurikulum(k)" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-indigo-500 hover:border-indigo-200 hover:bg-indigo-50 flex items-center justify-center transition-all shadow-sm" title="Edit">✏️</button>
-                                <button @click="confirmDelete(k.id, k.nama_kurikulum)" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-rose-500 hover:border-rose-200 hover:bg-rose-50 flex items-center justify-center transition-all shadow-sm" title="Hapus">🗑️</button>
+                        <td class="px-0 pt-2 sm:p-4 text-center">
+                            <div class="flex items-center justify-center gap-3 opacity-100 xl:opacity-0 xl:group-hover:opacity-100 transition-opacity">
+                                <button @click="editKurikulum(k)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-indigo-500 hover:border-indigo-200 hover:bg-indigo-50 flex items-center justify-center transition-all shadow-sm" title="Edit">✏️</button>
+                                <button @click="confirmDelete(k.id, k.nama_kurikulum)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-rose-500 hover:border-rose-200 hover:bg-rose-50 flex items-center justify-center transition-all shadow-sm" title="Hapus">🗑️</button>
                             </div>
                         </td>
                     </tr>

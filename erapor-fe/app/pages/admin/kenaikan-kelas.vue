@@ -131,62 +131,82 @@
 
             <!-- Tabel Siswa -->
             <div v-else class="flex-1 overflow-auto custom-scrollbar">
-              <table class="w-full text-left border-collapse whitespace-nowrap">
-                <thead class="bg-slate-50/70 text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-200 sticky top-0">
+              <table class="w-full text-left border-collapse min-w-full">
+                <thead class="hidden sm:table-header-group bg-slate-50/70 text-[10px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-200 sticky top-0">
                   <tr>
                     <th class="py-3 px-4 w-10 text-center"></th>
                     <th class="py-3 px-4 w-8 text-center">No</th>
-                    <th class="py-3 px-4 min-w-[180px]">Nama Siswa</th>
+                    <th class="py-3 px-4">Nama Siswa</th>
                     <th class="py-3 px-4 text-center">NIS</th>
-                    <th class="py-3 px-4 text-center min-w-[130px]">Rekomendasi Walas</th>
-                    <th class="py-3 px-4 text-center min-w-[160px]">Aksi Admin</th>
-                    <th class="py-3 px-4 text-center min-w-[200px]">Kelas Tujuan</th>
+                    <th class="py-3 px-4 text-center">Rekomendasi Walas</th>
+                    <th class="py-3 px-4 text-center">Aksi Admin</th>
+                    <th class="py-3 px-4 text-center">Kelas Tujuan</th>
                   </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-100">
+                <tbody class="divide-y divide-slate-100 flex flex-col sm:table-row-group">
                   <tr v-for="(s, idx) in siswaList" :key="s.id"
-                    :class="['hover:bg-slate-50/80 transition-colors group bg-white', selectedIds.includes(s.id) ? 'bg-emerald-50/50' : '']">
-                    <td class="p-4 text-center">
+                    :class="['hover:bg-slate-50/80 transition-colors group bg-white flex flex-col sm:table-row p-4 sm:p-0 relative', selectedIds.includes(s.id) ? 'bg-emerald-50/50' : '']">
+                    
+                    <td class="hidden sm:table-cell p-4 text-center">
                       <input type="checkbox" :value="s.id" v-model="selectedIds" class="w-4 h-4 text-emerald-600 rounded border-slate-300 focus:ring-emerald-500">
                     </td>
-                    <td class="p-4 text-center text-xs font-bold text-slate-400">{{ idx + 1 }}</td>
-                    <td class="p-4">
-                      <p class="font-black text-slate-800 text-[13px]">{{ s.name }}</p>
-                      <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wide">{{ s.status_siswa || 'aktif' }}</p>
+                    
+                    <td class="px-0 py-1 sm:p-4 text-left sm:text-center text-[10px] font-bold text-slate-400 flex sm:table-cell items-center justify-between">
+                        <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nomor</span>
+                        <div class="flex items-center gap-2">
+                            <input type="checkbox" :value="s.id" v-model="selectedIds" class="sm:hidden w-4 h-4 text-emerald-600 rounded border-slate-300 focus:ring-emerald-500">
+                            <span>{{ idx + 1 }}</span>
+                        </div>
                     </td>
-                    <td class="p-4 text-center">
-                      <span class="inline-flex items-center px-2 py-1 rounded-md bg-slate-100 text-slate-600 text-[11px] font-black uppercase tracking-widest border border-slate-200">{{ s.nis }}</span>
+                    
+                    <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-2 sm:pb-4 mb-1 sm:mb-0">
+                        <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nama Siswa</span>
+                        <div class="text-right sm:text-left">
+                          <p class="font-black text-slate-800 text-[13px]">{{ s.name }}</p>
+                          <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wide">{{ s.status_siswa || 'aktif' }}</p>
+                        </div>
                     </td>
-                    <td class="p-4 text-center">
-                      <span :class="rekomendasiClass(s.rekomendasi_walas)"
-                        class="inline-flex items-center px-2.5 py-1.5 rounded-lg text-[11px] font-black uppercase tracking-widest border">
-                        {{ rekomendasiLabel(s.rekomendasi_walas) }}
-                      </span>
+                    
+                    <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-2 sm:pb-4 mb-1 sm:mb-0 sm:text-center">
+                        <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">NIS</span>
+                        <span class="inline-flex items-center px-2 py-1 rounded-md bg-slate-100 text-slate-600 text-[11px] font-black uppercase tracking-widest border border-slate-200">{{ s.nis }}</span>
                     </td>
-                    <td class="p-4 text-center">
-                      <select v-model="s.aksi_admin"
-                        class="w-full text-[11px] font-bold border-2 rounded-xl px-2 py-1.5 outline-none transition-all bg-white border-slate-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 text-slate-700">
-                        <option value="">-- Pilih --</option>
-                        <option value="naik">✅ Naik Kelas</option>
-                        <option value="tinggal">⚠️ Tinggal Kelas</option>
-                        <option value="lulus">🎓 Lulus</option>
-                        <option value="pindah_sekolah">🚶 Pindah Sekolah</option>
-                        <option value="keluar">🚶 Keluar</option>
-                        <option value="tetap_aktif">🔄 Tetap Aktif</option>
-                      </select>
+                    
+                    <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-2 sm:pb-4 mb-1 sm:mb-0 sm:text-center">
+                        <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Rekomendasi Walas</span>
+                        <span :class="rekomendasiClass(s.rekomendasi_walas)"
+                          class="inline-flex items-center px-2.5 py-1.5 rounded-lg text-[11px] font-black uppercase tracking-widest border">
+                          {{ rekomendasiLabel(s.rekomendasi_walas) }}
+                        </span>
                     </td>
-                    <td class="p-4 text-center">
-                      <select v-model="s.kelas_tujuan_override"
-                        :disabled="!['naik','tinggal'].includes(s.aksi_admin)"
-                        class="w-full text-[11px] font-bold border-2 rounded-xl px-2 py-1.5 outline-none transition-all disabled:opacity-40 disabled:cursor-not-allowed"
-                        :class="['naik','tinggal'].includes(s.aksi_admin) ? 'bg-white border-emerald-200 focus:border-emerald-500' : 'bg-slate-50 border-slate-200 text-slate-400'">
-                        <option value="">{{ kelasTujuanId ? '(Pakai Default)' : '-- Pilih Kelas --' }}</option>
-                        <optgroup v-for="ta in setupData.tahun_ajaran" :key="ta.id" :label="`TA ${ta.tahun} Sem ${ta.semester}`">
-                          <option v-for="k in (setupData.kelas_by_tahun[ta.id] || [])" :key="k.id" :value="k.id">
-                            {{ k.tingkat }} {{ k.nama_kelas }}
-                          </option>
-                        </optgroup>
-                      </select>
+                    
+                    <td class="px-0 py-1 sm:p-4 flex flex-col sm:table-cell gap-1 pb-3 sm:pb-4 mb-2 sm:mb-0 sm:text-center">
+                        <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Aksi Admin</span>
+                        <select v-model="s.aksi_admin"
+                          class="w-full text-[11px] font-bold border-2 rounded-xl px-2 py-2 sm:py-1.5 outline-none transition-all bg-white border-slate-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 text-slate-700">
+                          <option value="">-- Pilih --</option>
+                          <option value="naik">✅ Naik Kelas</option>
+                          <option value="tinggal">⚠️ Tinggal Kelas</option>
+                          <option value="lulus">🎓 Lulus</option>
+                          <option value="pindah_sekolah">🚶 Pindah Sekolah</option>
+                          <option value="keluar">🚶 Keluar</option>
+                          <option value="tetap_aktif">🔄 Tetap Aktif</option>
+                        </select>
+                    </td>
+                    
+                    <td class="px-0 pt-2 sm:p-4 flex flex-col sm:table-cell gap-1 sm:text-center">
+                        <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Kelas Tujuan</span>
+                        <select v-model="s.kelas_tujuan_override"
+                          :disabled="!['naik','tinggal'].includes(s.aksi_admin)"
+                          class="w-full text-[11px] font-bold border-2 rounded-xl px-2 py-2 sm:py-1.5 outline-none transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                          :class="['naik','tinggal'].includes(s.aksi_admin) ? 'bg-white border-emerald-200 focus:border-emerald-500' : 'bg-slate-50 border-slate-200 text-slate-400'">
+                          <option value="">{{ kelasTujuanId ? '(Pakai Default)' : '-- Pilih Kelas --' }}</option>
+                          <optgroup v-for="ta in setupData.tahun_ajaran" :key="ta.id" :label="`TA ${ta.tahun} Sem ${ta.semester}`">
+                            <option v-for="k in (setupData.kelas_by_tahun[ta.id] || [])" :key="k.id" :value="k.id">
+                              {{ k.tingkat }} {{ k.nama_kelas }}
+                            </option>
+                          </optgroup>
+                        </select>
                     </td>
                   </tr>
                 </tbody>
