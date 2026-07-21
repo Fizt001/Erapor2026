@@ -27,7 +27,7 @@ jobs:
 
       - name: Generate Static Site
         working-directory: ./erapor-fe
-        run: npm run generate
+        run: npx nuxi generate --dotenv .env.production
 
       - name: Deploy to cPanel via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
