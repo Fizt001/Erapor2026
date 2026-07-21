@@ -62,10 +62,10 @@
 
       <!-- Panel Flow Kanan -->
       <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative', !isDesktop ? 'pt-[64px]' : '']">
-        <div class="p-2 lg:p-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
-          <div class="bg-white rounded-xl lg:rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
+        <div class="p-0 sm:p-6 lg:p-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
+          <div class="bg-white rounded-none sm:rounded-3xl shadow-none sm:shadow-sm border-0 sm:border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
             <!-- Table Header & Filters -->
-            <div class="px-3 py-3 lg:px-6 lg:py-5 border-b border-slate-200 flex justify-between items-center gap-2 lg:gap-4 shrink-0 z-10 bg-white">
+            <div class="px-4 py-3 sm:px-6 sm:py-5 border-b border-slate-200 flex justify-between items-center gap-3 lg:gap-4 shrink-0 z-10 bg-white">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 lg:w-12 lg:h-12 rounded-xl lg:rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-sm flex items-center justify-center text-xl lg:text-2xl text-white shrink-0">
                         {{ currentTab.icon }}
@@ -86,8 +86,8 @@
                 </div>
             </div>
 
-            <div class="flex-1 overflow-y-auto custom-scrollbar p-0 sm:p-2 md:p-6 bg-slate-50/30">
-                <div class="max-w-4xl mx-auto bg-white rounded-none sm:rounded-xl lg:rounded-2xl sm:shadow-sm sm:border border-slate-200/60 p-4 md:p-8 md:pb-10">
+            <div class="flex-1 overflow-y-auto custom-scrollbar p-4 md:p-8 bg-white">
+                <div class="max-w-4xl mx-auto pb-10">
                 
                 <!-- 1. IDENTITAS -->
                 <div v-show="activeTab === 'identitas'" class="animate-fadeIn space-y-4">
@@ -95,9 +95,9 @@
                         <div class="w-full md:w-1/2 grid grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1 truncate">Logo Sekolah</label>
-                                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-2xl hover:bg-slate-50 transition-colors relative group h-full">
+                                <div class="mt-1 flex justify-center px-4 pt-4 pb-4 border-2 border-slate-300 border-dashed rounded-2xl hover:bg-slate-50 transition-colors relative group">
                                     <div class="space-y-1 text-center">
-                                        <div v-if="logoPreview" class="mx-auto h-24 w-24 mb-4 relative rounded-xl overflow-hidden bg-white shadow-sm border border-slate-200">
+                                        <div v-if="logoPreview" class="mx-auto h-20 w-20 mb-3 relative rounded-xl overflow-hidden bg-white shadow-sm border border-slate-200">
                                             <img :src="logoPreview" alt="Logo Preview" class="h-full w-full object-contain p-2" />
                                             <button @click.prevent="clearLogo" class="absolute top-1 right-1 bg-rose-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -118,9 +118,9 @@
 
                             <div>
                                 <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1 truncate">Logo Dinas</label>
-                                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-2xl hover:bg-slate-50 transition-colors relative group h-full">
+                                <div class="mt-1 flex justify-center px-4 pt-4 pb-4 border-2 border-slate-300 border-dashed rounded-2xl hover:bg-slate-50 transition-colors relative group">
                                     <div class="space-y-1 text-center">
-                                        <div v-if="logoKiriPreview" class="mx-auto h-24 w-24 mb-4 relative rounded-xl overflow-hidden bg-white shadow-sm border border-slate-200">
+                                        <div v-if="logoKiriPreview" class="mx-auto h-20 w-20 mb-3 relative rounded-xl overflow-hidden bg-white shadow-sm border border-slate-200">
                                             <img :src="logoKiriPreview" alt="Logo Kiri Preview" class="h-full w-full object-contain p-2" />
                                             <button @click.prevent="clearLogoKiri" class="absolute top-1 right-1 bg-rose-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>

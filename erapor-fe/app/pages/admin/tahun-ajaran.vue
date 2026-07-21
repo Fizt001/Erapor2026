@@ -66,8 +66,8 @@
 
       <!-- Panel Flow Kanan -->
       <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative', activeTab === 'table' || isDesktop ? 'flex' : 'hidden', !isDesktop ? 'pt-[60px]' : '']">
-        <div class="p-6 lg:p-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
-          <div class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
+        <div class="p-0 sm:p-6 lg:p-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
+          <div class="bg-white rounded-none sm:rounded-3xl shadow-none sm:shadow-sm border-0 sm:border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
             <!-- Table Header & Filters -->
             <div class="px-6 py-5 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0 z-10 bg-white">
             <div class="flex items-center gap-4 w-full sm:w-auto">
@@ -94,8 +94,8 @@
             </div>
 
             <!-- Desktop Table -->
-            <table v-else class="w-full text-left border-collapse min-w-full whitespace-nowrap">
-                <thead class="sticky top-0 z-10 bg-slate-50 border-b border-slate-200 shadow-sm">
+            <table v-else class="w-full text-left border-collapse min-w-full">
+                <thead class="hidden sm:table-header-group sticky top-0 z-10 bg-slate-50 border-b border-slate-200 shadow-sm">
                     <tr class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-500">
                         <th class="p-4 w-16 text-center">#</th>
                         <th class="p-4">Tahun Ajaran</th>
@@ -103,23 +103,28 @@
                         <th class="p-4 text-center">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="text-xs">
-                    <tr v-for="(ta, index) in tahunAjaranData" :key="ta.id" class="border-b border-slate-100 hover:bg-slate-50/80 transition-colors group bg-white">
-                        <td class="p-4 text-center text-[10px] font-bold text-slate-400">
-                            {{ index + 1 }}
+                <tbody class="text-xs flex flex-col sm:table-row-group">
+                    <tr v-for="(ta, index) in tahunAjaranData" :key="ta.id" class="border-b border-slate-100 hover:bg-slate-50/80 transition-colors group bg-white flex flex-col sm:table-row p-4 sm:p-0">
+                        <td class="px-0 py-1 sm:p-4 text-left sm:text-center text-[10px] font-bold text-slate-400 flex sm:table-cell items-center justify-between">
+                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nomor</span>
+                            <span>{{ index + 1 }}</span>
                         </td>
-                        <td class="p-4">
+                        <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between">
+                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Tahun Ajaran</span>
                             <p class="font-black text-slate-800 text-[13px]">{{ ta.tahun }}</p>
                         </td>
-                        <td class="p-4">
-                            <span v-if="ta.is_aktif" class="inline-flex items-center px-2.5 py-1.5 rounded-md text-[9px] font-black uppercase tracking-widest bg-emerald-100 text-emerald-700 border border-emerald-200">
-                                Aktif
-                            </span>
-                            <span v-else class="inline-flex items-center px-2.5 py-1.5 rounded-md text-[9px] font-black uppercase tracking-widest bg-slate-100 text-slate-500 border border-slate-200">
-                                Tidak Aktif
-                            </span>
+                        <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between">
+                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Status</span>
+                            <div>
+                                <span v-if="ta.is_aktif" class="inline-flex items-center px-2.5 py-1.5 rounded-md text-[9px] font-black uppercase tracking-widest bg-emerald-100 text-emerald-700 border border-emerald-200">
+                                    Aktif
+                                </span>
+                                <span v-else class="inline-flex items-center px-2.5 py-1.5 rounded-md text-[9px] font-black uppercase tracking-widest bg-slate-100 text-slate-500 border border-slate-200">
+                                    Tidak Aktif
+                                </span>
+                            </div>
                         </td>
-                        <td class="p-4 text-center">
+                        <td class="px-0 pt-3 sm:p-4 text-center border-t sm:border-0 border-slate-100 mt-2 sm:mt-0 flex sm:table-cell justify-center">
                             <div class="flex items-center justify-center gap-2 opacity-100 xl:opacity-0 xl:group-hover:opacity-100 transition-opacity">
                                 <button v-if="!ta.is_aktif" @click="setAktif(ta)" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-emerald-500 hover:border-emerald-200 hover:bg-emerald-50 flex items-center justify-center transition-all shadow-sm" title="Jadikan Aktif">✅</button>
                                 <button @click="editTahunAjaran(ta)" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-indigo-500 hover:border-indigo-200 hover:bg-indigo-50 flex items-center justify-center transition-all shadow-sm" title="Edit">✏️</button>
