@@ -265,7 +265,7 @@ const handleLogin = async () => {
       
       const user = response.data.user
       const userCookie = useCookie('user_profile', { maxAge: 60 * 60 * 24 * 7, path: '/' })
-      userCookie.value = JSON.stringify(user)
+      userCookie.value = user
       
       useSwal().toast('Berhasil masuk!', 'success')
       

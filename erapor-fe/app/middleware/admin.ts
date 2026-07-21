@@ -2,10 +2,20 @@ export default defineNuxtRouteMiddleware((to, from) => {
   const userCookie = useCookie('user_profile')
   
   if (userCookie.value) {
-    const user = typeof userCookie.value === 'string' ? JSON.parse(userCookie.value) : userCookie.value
-    if (user.role === 'superadmin') return;
+    let user = null;
+    if (typeof userCookie.value === 'string') {
+      try {
+        user = JSON.parse(userCookie.value)
+      } catch (e) {
+        user = {}
+      }
+    } else {
+      user = userCookie.value
+    }
+
+    if (user?.role === 'superadmin') return;
     
-    if (user.role !== 'admin') {
+    if (user?.role !== 'admin') {
       // Tendang jika bukan admin
       return navigateTo('/login')
     }
