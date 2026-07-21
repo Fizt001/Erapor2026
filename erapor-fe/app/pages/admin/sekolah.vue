@@ -90,7 +90,7 @@
                 <!-- 1. IDENTITAS -->
                 <div v-show="activeTab === 'identitas'" class="animate-fadeIn space-y-6">
                     <div class="flex flex-col md:flex-row gap-6 items-start">
-                        <div class="w-full md:w-1/2 flex flex-col gap-4">
+                        <div class="w-full md:w-1/2 grid grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Logo Sekolah (Kanan)</label>
                                 <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-2xl hover:bg-slate-50 transition-colors relative group">
