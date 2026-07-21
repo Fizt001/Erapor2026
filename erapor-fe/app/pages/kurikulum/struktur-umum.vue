@@ -140,29 +140,34 @@
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse">
                             <thead>
-                                <tr class="bg-white text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 border-b border-slate-100">
+                                <tr class="hidden md:table-row bg-white text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 border-b border-slate-100">
                                     <th class="p-4 pl-6 w-16 text-center">No</th>
                                     <th class="p-4">Mata Pelajaran Umum</th>
                                     <th class="p-4 text-center w-24">JP</th>
                                     <th class="p-4 text-center w-24">Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody class="text-sm font-medium text-slate-700 divide-y divide-slate-50">
+                            <tbody class="text-sm font-medium text-slate-700 md:divide-y md:divide-slate-50">
                                 <tr v-if="filteredStrukturs(kelompok.kode).length === 0" class="bg-white">
                                     <td colspan="4" class="p-6 text-center text-xs font-bold text-slate-400">Belum ada mapel di kelompok ini untuk Kelas {{ tingkat }}.</td>
                                 </tr>
-                                <tr v-for="(struk, index) in filteredStrukturs(kelompok.kode)" :key="struk.id" class="hover:bg-slate-50/50 transition-colors bg-white group">
-                                    <td class="p-4 pl-6 text-center text-[11px] font-bold text-slate-400">{{ index + 1 }}</td>
-                                    <td class="p-4">
+                                <tr v-for="(struk, index) in filteredStrukturs(kelompok.kode)" :key="struk.id" class="hover:bg-slate-50/50 transition-colors bg-white group flex flex-col md:table-row border-b md:border-b-0 border-slate-100 p-4 md:p-0">
+                                    <td class="p-0 md:p-4 md:pl-6 text-left md:text-center text-[11px] font-bold text-slate-400 flex items-center justify-between md:table-cell mb-2 md:mb-0">
+                                        <span class="md:hidden font-black uppercase tracking-widest">No</span>
+                                        <span>{{ index + 1 }}</span>
+                                    </td>
+                                    <td class="p-0 md:p-4 flex flex-col md:table-cell mb-2 md:mb-0">
+                                        <span class="md:hidden text-[9px] font-black uppercase text-slate-400 tracking-widest mb-1">Mata Pelajaran Umum</span>
                                         <div class="font-black text-slate-800">{{ struk.mapel?.nama_mapel }}</div>
                                         <div class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">{{ struk.mapel?.kode_mapel }}</div>
                                     </td>
-                                    <td class="p-4 text-center">
+                                    <td class="p-0 md:p-4 text-left md:text-center flex items-center justify-between md:table-cell mb-3 md:mb-0">
+                                        <span class="md:hidden text-[9px] font-black uppercase text-slate-400 tracking-widest">JP</span>
                                         <span class="inline-flex items-center px-2 py-1 rounded-md text-[11px] font-black tracking-widest bg-indigo-50 text-indigo-600 border border-indigo-200">
                                             {{ struk.jp }} JP
                                         </span>
                                     </td>
-                                    <td class="p-4 text-center">
+                                    <td class="p-0 md:p-4 text-center border-t border-slate-50 pt-3 md:border-t-0 md:pt-0 flex items-center justify-end md:table-cell">
                                         <div class="flex items-center justify-center opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
                                             <button @click="confirmDeleteStruktur(struk)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-center transition-all shadow-sm" title="Hapus">🗑️</button>
                                         </div>
