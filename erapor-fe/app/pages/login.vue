@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen lg:h-screen w-full flex flex-col font-sans bg-slate-50 relative overflow-x-hidden lg:overflow-hidden">
+  <div class="h-screen w-full flex flex-col font-sans bg-slate-50 relative overflow-hidden">
     
     <!-- HEADER -->
     <header class="w-full bg-slate-900 h-16 flex items-center justify-between px-6 lg:px-12 relative z-20 shadow-md flex-shrink-0">
@@ -10,6 +10,7 @@
             </div>
             <h1 class="text-xl font-black text-white tracking-tight">e-Rapor <span class="text-emerald-400">SMK</span></h1>
         </div>
+        <!-- Desktop Menu -->
         <div class="hidden lg:flex items-center gap-6">
             <a href="#" class="text-[11px] uppercase tracking-widest font-black text-slate-300 hover:text-emerald-400 flex items-center gap-2 transition-colors">
                 <span>🔒</span> Masuk
@@ -21,10 +22,31 @@
                 <span>🔑</span> Reset Password
             </a>
         </div>
+
+        <!-- Mobile Hamburger Button -->
+        <button @click="showMobileMenu = !showMobileMenu" class="lg:hidden text-slate-300 hover:text-white p-2 focus:outline-none">
+            <svg v-if="!showMobileMenu" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            <svg v-else class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+
+        <!-- Mobile Menu Dropdown -->
+        <Transition name="fade-slide">
+            <div v-if="showMobileMenu" class="absolute top-16 left-0 w-full bg-slate-900 border-t border-slate-800 shadow-xl flex flex-col py-4 px-6 gap-2 lg:hidden z-40">
+                <a href="#" class="text-xs uppercase tracking-widest font-black text-slate-300 hover:text-emerald-400 flex items-center gap-3 py-3 transition-colors border-b border-slate-800/50">
+                    <span>🔒</span> Masuk
+                </a>
+                <a href="#" class="text-xs uppercase tracking-widest font-black text-emerald-400 hover:text-emerald-300 flex items-center gap-3 py-3 transition-colors border-b border-slate-800/50">
+                    <span>📘</span> Panduan Aplikasi
+                </a>
+                <a href="#" class="text-xs uppercase tracking-widest font-black text-amber-400 hover:text-amber-300 flex items-center gap-3 py-3 transition-colors">
+                    <span>🔑</span> Reset Password
+                </a>
+            </div>
+        </Transition>
     </header>
 
     <!-- MAIN SPLIT AREA -->
-    <main class="flex-1 flex flex-col-reverse lg:flex-row w-full relative z-10 min-h-0">
+    <main class="flex-1 flex flex-col-reverse lg:flex-row w-full relative z-10 min-h-0 overflow-y-auto lg:overflow-hidden">
         
         <!-- LEFT: BANNER -->
         <div class="w-full lg:w-[55%] h-full relative flex flex-col justify-center py-10 px-6 lg:p-10 bg-slate-800 lg:bg-transparent overflow-hidden">
@@ -150,6 +172,8 @@ import { reactive, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCookie } from '#app'
 
+const showMobileMenu = ref(false)
+
 const { sekolah } = useSekolah()
 
 onMounted(async () => {
@@ -229,5 +253,15 @@ const handleLogin = async () => {
 }
 .animate-fadeIn {
   animation: fadeIn 0.3s ease-out forwards;
+}
+
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+  transition: all 0.3s ease;
+}
+.fade-slide-enter-from,
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
 }
 </style>
