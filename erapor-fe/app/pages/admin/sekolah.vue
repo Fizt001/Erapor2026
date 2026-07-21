@@ -322,6 +322,15 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 
+const runtimeConfig = useRuntimeConfig()
+const apiUrl = import.meta.env.VITE_API_BASE_URL || runtimeConfig.public.apiBase || 'http://localhost:8000'
+
+const getImageUrl = (path) => {
+  if (!path) return ''
+  if (path.startsWith('http') || path.startsWith('blob:')) return path
+  return `${apiUrl}/${path.replace(/^\//, '')}`
+}
+
 definePageMeta({
   layout: 'admin',
   middleware: 'admin',
@@ -465,7 +474,7 @@ const clearFoto3 = () => { foto3File.value = null; foto3Preview.value = null }
 const fetchSekolah = async () => {
   const tokenCookie = useCookie('auth_token')
   try {
-    const response = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/admin/sekolah', {
+    const response = await $fetch(apiUrl + '/api/admin/sekolah', {
       headers: { Authorization: `Bearer ${tokenCookie.value}` }
     })
     
@@ -476,19 +485,19 @@ const fetchSekolah = async () => {
         }
       })
       if (response.data.logo) {
-        logoPreview.value = `/${response.data.logo}`
+        logoPreview.value = getImageUrl(response.data.logo)
       }
       if (response.data.logo_kiri) {
-        logoKiriPreview.value = `/${response.data.logo_kiri}`
+        logoKiriPreview.value = getImageUrl(response.data.logo_kiri)
       }
       if (response.data.foto_1) {
-        foto1Preview.value = `/${response.data.foto_1}`
+        foto1Preview.value = getImageUrl(response.data.foto_1)
       }
       if (response.data.foto_2) {
-        foto2Preview.value = `/${response.data.foto_2}`
+        foto2Preview.value = getImageUrl(response.data.foto_2)
       }
       if (response.data.foto_3) {
-        foto3Preview.value = `/${response.data.foto_3}`
+        foto3Preview.value = getImageUrl(response.data.foto_3)
       }
     }
   } catch (error) {
@@ -531,7 +540,7 @@ const saveData = async () => {
     }
 
     const { fetchSekolah: fetchGlobalSekolah } = useSekolah()
-    const response = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/admin/sekolah', {
+    const response = await $fetch(apiUrl + '/api/admin/sekolah', {
       method: 'POST', // POST instead of PUT for FormData handling in Laravel
       headers: { 
         Authorization: `Bearer ${tokenCookie.value}`,

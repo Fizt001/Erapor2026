@@ -5,7 +5,7 @@
     <header class="w-full bg-slate-900 h-16 flex items-center justify-between px-6 lg:px-12 relative z-20 shadow-md flex-shrink-0">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center">
-                <img v-if="sekolah?.logo" :src="`/${sekolah.logo}`" alt="Logo" class="w-7 h-7 object-contain">
+                <img v-if="sekolah?.logo" :src="getImageUrl(sekolah.logo)" alt="Logo" class="w-7 h-7 object-contain">
                 <span v-else class="text-xl">🎓</span>
             </div>
             <h1 class="text-xl font-black text-white tracking-tight">e-Rapor <span class="text-emerald-400">SMK</span></h1>
@@ -61,7 +61,7 @@
                 <!-- Photo Left -->
                 <div class="w-full sm:max-w-md lg:max-w-none lg:w-[45%] flex-shrink-0 relative group">
                     <div class="relative rounded-3xl border-4 border-white/20 overflow-hidden shadow-2xl shadow-emerald-900/50 flex items-center justify-center bg-slate-800 transition-transform duration-500 group-hover:scale-[1.02] aspect-[4/3]">
-                        <img v-if="sekolah?.foto_1" :src="`/${sekolah.foto_1}`" alt="Foto Sekolah" class="w-full h-full object-cover">
+                        <img v-if="sekolah?.foto_1" :src="getImageUrl(sekolah.foto_1)" alt="Foto Sekolah" class="w-full h-full object-cover">
                         <div v-else class="text-center text-slate-500 flex flex-col items-center justify-center h-full w-full">
                             <span class="text-5xl lg:text-6xl mb-2 block">🏫</span>
                             <span class="text-[10px] font-bold uppercase tracking-widest px-4 text-center">Foto 1 (Upload di Master)</span>
@@ -172,10 +172,17 @@ const showMobileMenu = ref(false)
 
 const { sekolah } = useSekolah()
 
+const runtimeConfig = useRuntimeConfig()
+const apiUrl = import.meta.env.VITE_API_BASE_URL || runtimeConfig.public.apiBase || 'http://localhost:8000'
+
+const getImageUrl = (path) => {
+  if (!path) return ''
+  if (path.startsWith('http') || path.startsWith('blob:')) return path
+  return `${apiUrl}/${path.replace(/^\//, '')}`
+}
+
 onMounted(async () => {
   try {
-    const runtimeConfig = useRuntimeConfig()
-    const apiUrl = import.meta.env.VITE_API_BASE_URL || runtimeConfig.public.apiBase || 'http://localhost:8000'
     const res = await $fetch(apiUrl + '/api/public/stats')
     if (res.success && res.data && res.data.sekolah) {
       sekolah.value = res.data.sekolah
