@@ -147,20 +147,20 @@
 
       <!-- Panel Flow Kanan -->
       <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative', activeTab === 'table' || isDesktop ? 'flex' : 'hidden', !isDesktop ? 'pt-[60px]' : '']">
-        <div class="p-0 sm:p-6 lg:p-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
-          <div class="bg-white rounded-none sm:rounded-3xl shadow-none sm:shadow-sm border-0 sm:border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
+        <div class="p-6 lg:p-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
+          <div class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
             <!-- Table Header & Filters -->
-            <div class="px-4 py-2 sm:px-6 sm:py-3 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 bg-white shrink-0 z-10">
-            <div class="flex items-center gap-2 w-full sm:w-auto">
-                <div class="w-8 h-8 rounded-xl bg-slate-50 shadow-sm border border-slate-200 flex items-center justify-center text-sm hidden sm:flex">📋</div>
-                <div class="flex items-baseline gap-2">
+            <div class="px-6 py-5 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white shrink-0 z-10">
+            <div class="flex items-center gap-4 w-full sm:w-auto">
+                <div class="w-10 h-10 rounded-2xl bg-white shadow-sm border border-slate-200 flex items-center justify-center text-xl hidden sm:flex">📋</div>
+                <div>
                     <h3 class="text-sm font-black uppercase tracking-widest text-emerald-700">Database</h3>
-                    <p class="text-[9px] font-bold text-slate-400 uppercase">Total: {{ pagination.total }} Akun</p>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Total: {{ pagination.total }} Akun</p>
                 </div>
             </div>
 
-            <div class="flex flex-row gap-2 w-full sm:w-auto">
-                <select v-model="roleFilter" @change="fetchUsers(1)" class="w-1/2 sm:w-40 py-2 px-3 rounded-xl border border-slate-200 bg-white focus:ring-2 focus:ring-emerald-500 text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-slate-600 cursor-pointer shadow-sm">
+            <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                <select v-model="roleFilter" @change="fetchUsers(1)" class="w-full sm:w-40 py-2 px-4 rounded-xl border border-slate-200 bg-white focus:ring-2 focus:ring-emerald-500 text-[11px] font-black uppercase tracking-wider text-slate-600 cursor-pointer shadow-sm">
                     <option value="">Semua Akses</option>
                     <option value="admin">Admin</option>
                     <option value="kepsek">Kepsek</option>
@@ -170,9 +170,9 @@
                     <option value="siswa">Siswa</option>
                 </select>
                 <!-- Search Input -->
-                <div class="relative w-1/2 sm:w-auto">
-                    <span class="absolute inset-y-0 left-0 pl-2.5 flex items-center text-slate-400">🔍</span>
-                    <input type="text" v-model="searchQuery" @input="debouncedFetch" placeholder="Cari..." class="w-full sm:w-48 pl-8 pr-3 py-2 rounded-xl border border-slate-200 bg-white focus:ring-2 focus:ring-emerald-500 text-xs font-bold transition-all shadow-sm">
+                <div class="relative w-full sm:w-auto">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">🔍</span>
+                    <input type="text" v-model="searchQuery" @input="debouncedFetch" placeholder="Cari nama/email..." class="w-full sm:w-48 pl-9 pr-4 py-2 rounded-xl border border-slate-200 bg-white focus:ring-2 focus:ring-emerald-500 text-xs font-bold transition-all shadow-sm">
                 </div>
             </div>
         </div>
@@ -185,7 +185,7 @@
 
         <!-- Table Data -->
         <div v-else class="flex-1 overflow-y-auto overflow-x-auto custom-scrollbar relative bg-white">
-            <table class="w-full text-left border-collapse min-w-full whitespace-nowrap">
+            <table class="w-full text-left border-collapse min-w-[600px] whitespace-nowrap">
                 <thead class="sticky top-0 z-10 bg-slate-50 border-b border-slate-200 shadow-sm">
                     <tr class="text-[9px] uppercase tracking-widest font-black text-slate-500">
                         <th class="py-3 px-4 w-12 text-center">No</th>
@@ -225,12 +225,12 @@
         </div>
 
         <!-- Pagination -->
-        <div class="p-3 sm:p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between shrink-0" v-if="pagination.lastPage > 1">
+        <div class="p-4 sm:p-6 bg-slate-50 border-t border-slate-200 flex items-center justify-between shrink-0" v-if="pagination.lastPage > 1">
             <span class="hidden sm:inline-block text-[10px] font-black uppercase text-slate-400 tracking-widest">Halaman {{ pagination.currentPage }} dari {{ pagination.lastPage }}</span>
             <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
-                <button @click="fetchUsers(pagination.currentPage - 1)" :disabled="pagination.currentPage === 1" class="px-4 py-2 bg-white border border-slate-200 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-600 hover:bg-slate-50 disabled:opacity-50 shadow-sm transition-all">Prev</button>
+                <button @click="fetchUsers(pagination.currentPage - 1)" :disabled="pagination.currentPage === 1" class="px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-600 hover:bg-slate-50 disabled:opacity-50 shadow-sm transition-all">Prev</button>
                 <span class="sm:hidden text-[10px] font-black uppercase text-slate-400 tracking-widest">{{ pagination.currentPage }} / {{ pagination.lastPage }}</span>
-                <button @click="fetchUsers(pagination.currentPage + 1)" :disabled="pagination.currentPage === pagination.lastPage" class="px-4 py-2 bg-emerald-50 border border-emerald-100 rounded-xl text-[10px] font-black uppercase tracking-widest text-emerald-700 hover:bg-emerald-100 disabled:opacity-50 shadow-sm transition-all">Next</button>
+                <button @click="fetchUsers(pagination.currentPage + 1)" :disabled="pagination.currentPage === pagination.lastPage" class="px-4 py-2.5 bg-emerald-50 border border-emerald-100 rounded-xl text-[10px] font-black uppercase tracking-widest text-emerald-700 hover:bg-emerald-100 disabled:opacity-50 shadow-sm transition-all">Next</button>
             </div>
         </div>
           </div>
