@@ -100,6 +100,12 @@ const route = useRoute()
 const sidebarOpen = ref(false)
 const profileDropdownOpen = ref(false)
 
+useHead({
+  style: [
+    { children: 'html { font-size: 80% !important; }' }
+  ]
+})
+
 const { sekolah, fetchSekolah } = useSekolah()
 
 onMounted(() => {
