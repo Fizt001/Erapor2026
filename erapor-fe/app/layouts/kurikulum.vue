@@ -97,6 +97,57 @@
         </div>
       </main>
     </div>
+
+    <!-- MOBILE BOTTOM NAV BAR -->
+    <nav class="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 shadow-[0_-4px_20px_-4px_rgba(0,0,0,0.1)] print:hidden">
+      <div class="flex items-stretch h-16">
+        <NuxtLink to="/kurikulum/dashboard" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="route.path === '/kurikulum/dashboard' ? 'text-indigo-600' : 'text-slate-400'">
+          <span class="text-xl leading-none">📊</span>
+          <span class="text-[9px] font-black uppercase tracking-wider">Dashboard</span>
+        </NuxtLink>
+        <button @click="openDrawer('struktur')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="activeDrawer === 'struktur' && drawerOpen ? 'text-indigo-600' : 'text-slate-400'">
+          <span class="text-xl leading-none">📑</span>
+          <span class="text-[9px] font-black uppercase tracking-wider">Struktur</span>
+        </button>
+        <button @click="openDrawer('tugas')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="activeDrawer === 'tugas' && drawerOpen ? 'text-indigo-600' : 'text-slate-400'">
+          <span class="text-xl leading-none">👨‍🏫</span>
+          <span class="text-[9px] font-black uppercase tracking-wider">Tugas</span>
+        </button>
+        <button @click="openDrawer('all')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="activeDrawer === 'all' && drawerOpen ? 'text-indigo-600' : 'text-slate-400'">
+          <span class="text-xl leading-none">☰</span>
+          <span class="text-[9px] font-black uppercase tracking-wider">Menu</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- DRAWER OVERLAY -->
+    <Transition name="drawer-overlay">
+      <div v-if="drawerOpen" @click="closeDrawer" class="lg:hidden fixed inset-0 bg-black/50 z-[70] backdrop-blur-sm print:hidden"></div>
+    </Transition>
+
+    <!-- DRAWER PANEL -->
+    <Transition name="drawer-panel">
+      <div v-if="drawerOpen" class="lg:hidden fixed bottom-0 left-0 right-0 z-[80] bg-white rounded-t-3xl shadow-2xl print:hidden" style="max-height: 75vh;">
+        <div class="flex justify-center pt-3 pb-2"><div class="w-10 h-1 bg-slate-300 rounded-full"></div></div>
+        <div class="flex items-center justify-between px-6 pb-3 border-b border-slate-100">
+          <h3 class="font-black text-slate-800 uppercase tracking-widest text-xs">{{ drawerTitle }}</h3>
+          <button @click="closeDrawer" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+          </button>
+        </div>
+        <div class="overflow-y-auto px-5 py-5" style="max-height: calc(75vh - 100px);">
+          <div class="grid grid-cols-4 gap-y-5 gap-x-3">
+            <template v-for="(menu, idx) in currentDrawerMenus" :key="'g-'+idx">
+              <NuxtLink v-if="!menu.divider" :to="menu.path" @click="closeDrawer" class="flex flex-col items-center gap-1.5 active:scale-95 transition-transform">
+                <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl shadow-sm transition-all" :class="route.path === menu.path ? 'bg-indigo-500 shadow-indigo-200 shadow-lg' : 'bg-slate-100'">{{ menu.icon }}</div>
+                <span class="text-[9px] font-bold text-center leading-tight w-full" :class="route.path === menu.path ? 'text-indigo-700' : 'text-slate-500'">{{ menu.name }}</span>
+              </NuxtLink>
+            </template>
+          </div>
+        </div>
+      </div>
+    </Transition>
+
   </div>
 </template>
 
@@ -113,6 +164,45 @@ const profileDropdownOpen = ref(false)
 const mainScrollContainer = ref(null)
 const footerElement = ref(null)
 let footerTimeout = null
+
+// DRAWER LOGIC
+const drawerOpen = ref(false)
+const activeDrawer = ref(null)
+
+const drawerTitle = computed(() => {
+  if (activeDrawer.value === 'struktur') return 'Persiapan & Struktur'
+  if (activeDrawer.value === 'tugas') return 'Pembagian Tugas'
+  if (activeDrawer.value === 'all') return 'Semua Menu'
+  return 'Menu'
+})
+
+const currentDrawerMenus = computed(() => {
+  let startIndex = 0
+  let endIndex = kurikulumMenus.length
+
+  if (activeDrawer.value === 'struktur') {
+    startIndex = 1
+    endIndex = 6
+  } else if (activeDrawer.value === 'tugas') {
+    startIndex = 7
+    endIndex = 9
+  }
+  
+  if (activeDrawer.value === 'all') {
+      return kurikulumMenus.filter(m => !m.divider)
+  }
+
+  return kurikulumMenus.slice(startIndex, endIndex)
+})
+
+const openDrawer = (drawerName) => {
+  activeDrawer.value = drawerName
+  drawerOpen.value = true
+}
+
+const closeDrawer = () => {
+  drawerOpen.value = false
+}
 
 const { sekolah, ta_aktif, fetchSekolah } = useSekolah()
 
@@ -190,6 +280,23 @@ const handleLogout = async () => {
 }
 .custom-scrollbar::-webkit-scrollbar {
   display: none;
+}
+.drawer-overlay-enter-active,
+.drawer-overlay-leave-active {
+  transition: opacity 0.3s ease;
+}
+.drawer-overlay-enter-from,
+.drawer-overlay-leave-to {
+  opacity: 0;
+}
+
+.drawer-panel-enter-active,
+.drawer-panel-leave-active {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.drawer-panel-enter-from,
+.drawer-panel-leave-to {
+  transform: translateY(100%);
 }
 </style>
 
