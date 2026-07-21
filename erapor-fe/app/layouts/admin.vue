@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen bg-slate-50 flex text-slate-800 text-sm print:bg-white print:block print:min-h-0">
-    <!-- Sidebar -->
-    <aside class="group bg-slate-900 text-white flex-shrink-0 min-h-screen fixed lg:static z-50 transform lg:translate-x-0 transition-all duration-300 ease-in-out overflow-x-hidden print:hidden" :class="[sidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full lg:translate-x-0 lg:w-[72px] lg:hover:w-64 w-64']">
+    <!-- Sidebar (Desktop Only) -->
+    <aside class="group bg-slate-900 text-white flex-shrink-0 min-h-screen hidden lg:flex flex-col fixed lg:static z-50 transition-all duration-300 ease-in-out overflow-x-hidden print:hidden" :class="[sidebarOpen ? 'w-64' : 'lg:w-[72px] lg:hover:w-64']">
       <div class="h-14 flex items-center pl-5 pr-4 bg-slate-950 font-bold text-base tracking-wider border-b border-slate-800 whitespace-nowrap overflow-hidden">
         <img v-if="sekolah?.logo" :src="sekolah.logo" alt="Logo" class="h-8 w-8 object-contain lg:mr-3 shrink-0" />
         <span v-else class="text-emerald-500 mr-1 text-xl shrink-0">e</span>
@@ -12,8 +12,6 @@
       </div>
       
       <div class="p-3">
-
-
         <nav class="space-y-1 h-[calc(100vh-140px)] overflow-y-auto custom-scrollbar pr-2">
           <template v-for="(menu, idx) in adminMenus" :key="idx">
             <div v-if="menu.divider" class="pt-4 pb-1 px-3 text-[10px] font-bold text-emerald-500 uppercase tracking-widest whitespace-nowrap opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">
@@ -28,19 +26,17 @@
       </div>
     </aside>
 
-    <!-- Overlay when sidebar is open on mobile -->
-    <div v-if="sidebarOpen" @click="sidebarOpen = false" class="fixed inset-0 bg-slate-900/50 z-40 lg:hidden backdrop-blur-sm print:hidden"></div>
-
     <!-- Main Content -->
     <div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden print:h-auto print:overflow-visible print:block">
       <!-- Navbar -->
       <header class="relative h-14 bg-white border-b border-slate-200 flex items-center justify-between px-4 sm:px-6 z-[60] shadow-sm flex-shrink-0 print:hidden">
         <div class="flex items-center">
-          <button @click="sidebarOpen = !sidebarOpen" class="lg:hidden text-slate-500 hover:text-emerald-600 transition-colors focus:outline-none">
-            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
+          <!-- Mobile: show logo + school name -->
+          <div class="lg:hidden flex items-center gap-2">
+            <img v-if="sekolah?.logo" :src="sekolah.logo" alt="Logo" class="h-7 w-7 object-contain" />
+            <span v-else class="text-emerald-600 font-black text-lg">e</span>
+            <span class="font-black text-slate-700 text-sm">e-Rapor <span class="text-emerald-600">Admin</span></span>
+          </div>
           <h2 class="hidden lg:block text-base font-bold text-slate-800 ml-3 border-l-2 border-emerald-500 pl-3 py-1 uppercase tracking-wider">{{ route.meta.title || 'Admin Workspace' }}</h2>
         </div>
         
@@ -78,7 +74,7 @@
       </header>
 
       <!-- Page Content -->
-      <main class="flex-1 overflow-y-auto p-4 sm:p-5 bg-slate-100 relative print:p-0 print:bg-white print:overflow-visible print:block">
+      <main class="flex-1 overflow-y-auto p-4 sm:p-5 bg-slate-100 relative print:p-0 print:bg-white print:overflow-visible print:block pb-20 lg:pb-5">
         <NuxtPage />
         
         <!-- Footer Info -->
@@ -87,11 +83,92 @@
         </div>
       </main>
     </div>
+
+    <!-- ===================== -->
+    <!-- MOBILE BOTTOM NAV BAR -->
+    <!-- ===================== -->
+    <nav class="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 shadow-[0_-4px_20px_-4px_rgba(0,0,0,0.1)] print:hidden">
+      <div class="flex items-stretch h-16">
+        <!-- Tab: Dashboard -->
+        <NuxtLink to="/admin/dashboard" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="route.path === '/admin/dashboard' ? 'text-emerald-600' : 'text-slate-400'">
+          <span class="text-xl leading-none">📊</span>
+          <span class="text-[9px] font-black uppercase tracking-wider">Dashboard</span>
+        </NuxtLink>
+
+        <!-- Tab: Data/Pengaturan -->
+        <button @click="openDrawer('pengaturan')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="activeDrawer === 'pengaturan' && drawerOpen ? 'text-emerald-600' : 'text-slate-400'">
+          <span class="text-xl leading-none">⚙️</span>
+          <span class="text-[9px] font-black uppercase tracking-wider">Pengaturan</span>
+        </button>
+
+        <!-- Tab: Master Data -->
+        <button @click="openDrawer('master')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="activeDrawer === 'master' && drawerOpen ? 'text-emerald-600' : 'text-slate-400'">
+          <span class="text-xl leading-none">🗄️</span>
+          <span class="text-[9px] font-black uppercase tracking-wider">Master</span>
+        </button>
+
+        <!-- Tab: Akademik -->
+        <button @click="openDrawer('akademik')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="activeDrawer === 'akademik' && drawerOpen ? 'text-emerald-600' : 'text-slate-400'">
+          <span class="text-xl leading-none">🎓</span>
+          <span class="text-[9px] font-black uppercase tracking-wider">Akademik</span>
+        </button>
+
+        <!-- Tab: More -->
+        <button @click="openDrawer('all')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="activeDrawer === 'all' && drawerOpen ? 'text-emerald-600' : 'text-slate-400'">
+          <span class="text-xl leading-none">☰</span>
+          <span class="text-[9px] font-black uppercase tracking-wider">Menu</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- ================ -->
+    <!-- BOTTOM SHEET DRAWER (Mobile) -->
+    <!-- ================ -->
+    <Transition name="drawer-overlay">
+      <div v-if="drawerOpen" @click="closeDrawer" class="lg:hidden fixed inset-0 bg-black/50 z-[70] backdrop-blur-sm print:hidden"></div>
+    </Transition>
+
+    <Transition name="drawer-panel">
+      <div v-if="drawerOpen" class="lg:hidden fixed bottom-0 left-0 right-0 z-[80] bg-white rounded-t-3xl shadow-2xl print:hidden" style="max-height: 75vh;">
+        <!-- Drawer Handle -->
+        <div class="flex justify-center pt-3 pb-2">
+          <div class="w-10 h-1 bg-slate-300 rounded-full"></div>
+        </div>
+
+        <!-- Drawer Header -->
+        <div class="flex items-center justify-between px-6 pb-3 border-b border-slate-100">
+          <h3 class="font-black text-slate-800 uppercase tracking-widest text-xs">{{ drawerTitle }}</h3>
+          <button @click="closeDrawer" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+          </button>
+        </div>
+
+        <!-- Drawer Menu List -->
+        <div class="overflow-y-auto px-4 py-4 space-y-1" style="max-height: calc(75vh - 100px);">
+          <template v-for="(menu, idx) in currentDrawerMenus" :key="idx">
+            <div v-if="menu.divider" class="pt-3 pb-1 px-2 text-[10px] font-black text-emerald-600 uppercase tracking-widest">
+              {{ menu.dividerLabel }}
+            </div>
+            <NuxtLink
+              v-else
+              :to="menu.path"
+              @click="closeDrawer"
+              class="flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all font-semibold text-sm"
+              :class="route.path === menu.path ? 'bg-emerald-50 text-emerald-700 font-bold' : 'text-slate-600 hover:bg-slate-50'"
+            >
+              <span class="text-xl w-8 text-center leading-none">{{ menu.icon }}</span>
+              <span>{{ menu.name }}</span>
+              <span class="ml-auto text-slate-300 text-xs">›</span>
+            </NuxtLink>
+          </template>
+        </div>
+      </div>
+    </Transition>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { adminMenus } from '~/utils/menus'
 
@@ -99,6 +176,62 @@ const router = useRouter()
 const route = useRoute()
 const sidebarOpen = ref(false)
 const profileDropdownOpen = ref(false)
+
+// === BOTTOM NAV DRAWER STATE ===
+const drawerOpen = ref(false)
+const activeDrawer = ref(null)
+
+const drawerMenuGroups = {
+  pengaturan: {
+    title: 'Pengaturan Sistem',
+    menus: [
+      { name: 'Data Sekolah', path: '/admin/sekolah', icon: '🏢' },
+      { name: 'Tahun Ajaran', path: '/admin/tahun-ajaran', icon: '🗓️' },
+      { name: 'Manajemen User', path: '/admin/users', icon: '👥' },
+    ]
+  },
+  master: {
+    title: 'Master Data',
+    menus: [
+      { name: 'Master Database', path: '/admin/master-database', icon: '🗄️' },
+      { name: 'Master Kejuruan', path: '/admin/kejuruan', icon: '🛠️' },
+      { name: 'Master Kurikulum', path: '/admin/kurikulum', icon: '📚' },
+      { name: 'Master Kelas', path: '/admin/kelas', icon: '🏫' },
+    ]
+  },
+  akademik: {
+    title: 'Administrasi Akademik',
+    menus: [
+      { name: 'Riwayat Mutasi', path: '/admin/riwayat-mutasi', icon: '📝' },
+      { name: 'Kenaikan Kelas', path: '/admin/kenaikan-kelas', icon: '🎓' },
+      { name: 'Buku Induk', path: '/admin/buku-induk', icon: '📖' },
+      { name: 'Backup & Arsip', path: '/admin/backup', icon: '💾' },
+    ]
+  },
+  all: {
+    title: 'Semua Menu Admin',
+    menus: adminMenus
+  }
+}
+
+const drawerTitle = computed(() => activeDrawer.value ? drawerMenuGroups[activeDrawer.value]?.title : '')
+const currentDrawerMenus = computed(() => activeDrawer.value ? drawerMenuGroups[activeDrawer.value]?.menus ?? [] : [])
+
+const openDrawer = (group) => {
+  if (drawerOpen.value && activeDrawer.value === group) {
+    closeDrawer()
+    return
+  }
+  activeDrawer.value = group
+  drawerOpen.value = true
+}
+
+const closeDrawer = () => {
+  drawerOpen.value = false
+  setTimeout(() => { activeDrawer.value = null }, 300)
+}
+
+watch(() => route.path, () => { closeDrawer() })
 
 useHead({
   style: [
@@ -163,5 +296,24 @@ const handleLogout = async () => {
 .custom-scrollbar::-webkit-scrollbar {
   display: none;
 }
-</style>
 
+/* Drawer Overlay Transition */
+.drawer-overlay-enter-active,
+.drawer-overlay-leave-active {
+  transition: opacity 0.3s ease;
+}
+.drawer-overlay-enter-from,
+.drawer-overlay-leave-to {
+  opacity: 0;
+}
+
+/* Drawer Panel Transition */
+.drawer-panel-enter-active,
+.drawer-panel-leave-active {
+  transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+}
+.drawer-panel-enter-from,
+.drawer-panel-leave-to {
+  transform: translateY(100%);
+}
+</style>
