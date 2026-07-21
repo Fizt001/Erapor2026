@@ -113,6 +113,10 @@
           <span class="text-xl leading-none">👨‍🏫</span>
           <span class="text-[9px] font-black uppercase tracking-wider">Tugas</span>
         </button>
+        <button @click="openDrawer('referensi')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="activeDrawer === 'referensi' && drawerOpen ? 'text-indigo-600' : 'text-slate-400'">
+          <span class="text-xl leading-none">🎯</span>
+          <span class="text-[9px] font-black uppercase tracking-wider">Referensi</span>
+        </button>
         <button @click="openDrawer('all')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="activeDrawer === 'all' && drawerOpen ? 'text-indigo-600' : 'text-slate-400'">
           <span class="text-xl leading-none">☰</span>
           <span class="text-[9px] font-black uppercase tracking-wider">Menu</span>
@@ -172,6 +176,7 @@ const activeDrawer = ref(null)
 const drawerTitle = computed(() => {
   if (activeDrawer.value === 'struktur') return 'Persiapan & Struktur'
   if (activeDrawer.value === 'tugas') return 'Pembagian Tugas'
+  if (activeDrawer.value === 'referensi') return 'Standar & Referensi'
   if (activeDrawer.value === 'all') return 'Semua Menu'
   return 'Menu'
 })
@@ -186,6 +191,9 @@ const currentDrawerMenus = computed(() => {
   } else if (activeDrawer.value === 'tugas') {
     startIndex = 7
     endIndex = 9
+  } else if (activeDrawer.value === 'referensi') {
+    startIndex = 10
+    endIndex = 13
   }
   
   if (activeDrawer.value === 'all') {
