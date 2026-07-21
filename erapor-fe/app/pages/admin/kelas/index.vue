@@ -97,9 +97,8 @@
             <div class="px-6 py-5 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0 z-10 bg-white">
             <div class="flex items-center gap-4 w-full sm:w-auto">
                 <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-sm flex items-center justify-center text-2xl text-white hidden sm:flex">📋</div>
-                <div>
+                <div class="flex items-baseline gap-2">
                     <h3 class="text-sm font-black uppercase tracking-widest text-emerald-700">Database Rombel</h3>
-                    <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">List Kelas Satuan Pendidikan</p>
                 </div>
             </div>
             

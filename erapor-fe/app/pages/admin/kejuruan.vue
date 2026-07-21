@@ -152,12 +152,11 @@
                     <div class="w-10 h-10 rounded-2xl bg-slate-50 shadow-sm border border-slate-200 flex items-center justify-center text-xl hidden sm:flex">📋</div>
                     <div>
                         <h3 class="text-sm font-black uppercase tracking-widest text-emerald-700">Database Kejuruan</h3>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Struktur Kurikulum Hierarkis</p>
                     </div>
                 </div>
                 <div class="flex gap-2 w-full sm:w-auto justify-end">
-                        <button @click="expandAll" class="px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-600 hover:bg-slate-50 shadow-sm transition-all">Buka Semua</button>
-                        <button @click="collapseAll" class="px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-600 hover:bg-slate-50 shadow-sm transition-all">Tutup Semua</button>
+                        <button @click="expandAll" class="w-1/2 sm:w-auto px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-600 hover:bg-slate-50 shadow-sm transition-all">Buka Semua</button>
+                        <button @click="collapseAll" class="w-1/2 sm:w-auto px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-600 hover:bg-slate-50 shadow-sm transition-all">Tutup Semua</button>
                 </div>
             </div>
 
