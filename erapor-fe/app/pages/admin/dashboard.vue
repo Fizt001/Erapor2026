@@ -4,7 +4,7 @@
     <div class="flex-1 flex flex-col xl:flex-row xl:overflow-hidden overflow-y-auto relative">
       
       <!-- Panel Dock Kiri -->
-      <div class="xl:w-[360px] w-full bg-white border-r border-slate-200 flex-shrink-0 flex flex-col xl:h-full xl:z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] overflow-y-auto custom-scrollbar">
+      <div class="xl:w-[360px] w-full bg-white border-r border-slate-200 flex-shrink-0 flex flex-col xl:h-full xl:z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] xl:overflow-y-auto custom-scrollbar">
         <div class="p-6 space-y-6">
           
           <!-- Welcome Widget -->
@@ -65,7 +65,7 @@
       </div>
 
       <!-- Panel Flow Kanan -->
-      <div class="flex-1 bg-slate-50 flex flex-col xl:h-full min-w-0 overflow-y-auto custom-scrollbar">
+      <div class="xl:flex-1 flex-shrink-0 bg-slate-50 flex flex-col xl:h-full min-w-0 xl:overflow-y-auto custom-scrollbar">
         
         <!-- Loading State -->
         <div v-if="pending" class="flex-grow flex items-center justify-center py-12">
