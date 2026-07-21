@@ -6,7 +6,9 @@ export const useSekolah = () => {
     logo: null,
     foto_1: null,
     foto_2: null,
-    foto_3: null
+    foto_3: null,
+    visi: null,
+    misi: null
   }))
 
   const ta_aktif = useState('ta_aktif', () => null)
@@ -33,7 +35,9 @@ export const useSekolah = () => {
           logo: getImageUrl(response.data.logo),
           foto_1: getImageUrl(response.data.foto_1),
           foto_2: getImageUrl(response.data.foto_2),
-          foto_3: getImageUrl(response.data.foto_3)
+          foto_3: getImageUrl(response.data.foto_3),
+          visi: response.data.visi,
+          misi: response.data.misi
         }
         if (response.ta_aktif) {
           ta_aktif.value = response.ta_aktif

@@ -14,6 +14,7 @@ class Sekolah extends Model
         'kelurahan', 'kecamatan', 'kota', 'provinsi', 'kode_pos', 
         'telepon', 'email', 'nama_kepsek', 'nip_kepsek', 'logo',
         'logo_kiri', 'nama_yayasan', 'akreditasi',
-        'foto_1', 'foto_2', 'foto_3'
+        'foto_1', 'foto_2', 'foto_3',
+        'visi', 'misi'
     ];
 }

@@ -171,6 +171,7 @@ const tokenCookie = useCookie('auth_token')
 const userCookie = useCookie('user_profile')
 const router = useRouter()
 const route = useRoute()
+const visiMisiDialog = ref(null)
 const { impersonateUserId, impersonateRole, setImpersonation, clearImpersonation } = useImpersonation()
 
 const isGuruMenu = computed(() => route.path.startsWith('/guru') && !route.path.startsWith('/guru/walas'))

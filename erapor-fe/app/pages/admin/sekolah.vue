@@ -162,6 +162,18 @@
                     </div>
                 </div>
 
+                <!-- 1.5 VISI & MISI -->
+                <div v-show="activeTab === 'visimisi'" class="animate-fadeIn space-y-6">
+                    <div class="space-y-2">
+                        <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Visi Sekolah</label>
+                        <textarea v-model="form.visi" rows="3" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400 italic" placeholder="Tuliskan Visi sekolah..."></textarea>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Misi Sekolah</label>
+                        <textarea v-model="form.misi" rows="6" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Tuliskan Misi sekolah..."></textarea>
+                    </div>
+                </div>
+
                 <!-- 2. PIMPINAN -->
                 <div v-show="activeTab === 'pimpinan'" class="animate-fadeIn space-y-4">
                     <div>
@@ -344,6 +356,7 @@ const isDesktop = computed(() => windowWidth.value >= 1280) // xl breakpoint
 const activeTab = ref('identitas')
 const tabs = [
   { id: 'identitas', title: 'Identitas Sekolah', shortTitle: 'Profil', subtitle: 'Informasi Dasar', icon: '🏫' },
+  { id: 'visimisi', title: 'Visi & Misi', shortTitle: 'Visi', subtitle: 'Arah Tujuan', icon: '🎯' },
   { id: 'pimpinan', title: 'Pimpinan Lembaga', shortTitle: 'Kepsek', subtitle: 'Kepala Sekolah', icon: '👨‍💼' },
   { id: 'media', title: 'Media & Digital', shortTitle: 'Sosmed', subtitle: 'Kontak & Website', icon: '🌐' },
   { id: 'lokasi', title: 'Lokasi Geografis', shortTitle: 'Lokasi', subtitle: 'Alamat & Wilayah', icon: '📍' },
@@ -369,7 +382,9 @@ const form = ref({
   kecamatan: '',
   kota: '',
   provinsi: '',
-  kode_pos: ''
+  kode_pos: '',
+  visi: '',
+  misi: ''
 })
 
 const isSaving = ref(false)

@@ -98,6 +98,8 @@ class AdminController extends Controller
             'foto_1' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'foto_2' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'foto_3' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'visi' => 'nullable|string',
+            'misi' => 'nullable|string',
         ]);
 
         $sekolah = Sekolah::first();

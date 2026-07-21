@@ -1,11 +1,12 @@
 <template>
   <div class="min-h-screen bg-slate-50 flex text-slate-800 text-sm print:bg-white print:block print:min-h-0">
+    <VisiMisiDialog ref="visiMisiDialog" />
     <!-- Sidebar (Desktop Only) -->
     <aside class="group bg-slate-900 text-white flex-shrink-0 min-h-screen hidden lg:flex flex-col fixed lg:static z-50 transition-all duration-300 ease-in-out overflow-x-hidden print:hidden" :class="[sidebarOpen ? 'w-64' : 'lg:w-[72px] lg:hover:w-64']">
       <div class="h-14 flex items-center pl-5 pr-4 bg-slate-950 font-bold text-base tracking-wider border-b border-slate-800 whitespace-nowrap overflow-hidden">
-        <img v-if="sekolah?.logo" :src="sekolah.logo" alt="Logo" class="h-8 w-8 object-contain lg:mr-3 shrink-0" />
-        <span v-else class="text-emerald-500 mr-1 text-xl shrink-0">e</span>
-        <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">
+        <img v-if="sekolah?.logo" :src="sekolah.logo" alt="Logo" class="h-8 w-8 object-contain lg:mr-3 shrink-0 cursor-pointer hover:scale-110 transition-transform" @click="visiMisiDialog?.open()" />
+        <span v-else class="text-emerald-500 mr-1 text-xl shrink-0 cursor-pointer hover:scale-110 transition-transform" @click="visiMisiDialog?.open()">e</span>
+        <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300 cursor-pointer" @click="visiMisiDialog?.open()">
           <span v-if="sekolah?.logo" class="ml-1">e-Rapor</span>
           <span v-else>-Rapor</span>
         </span>
@@ -27,7 +28,7 @@
     <div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden print:h-auto print:overflow-visible print:block">
       <header class="relative h-14 bg-white border-b border-slate-200 flex items-center justify-between px-4 sm:px-6 z-[60] shadow-sm flex-shrink-0 print:hidden">
         <div class="flex items-center">
-          <div class="lg:hidden flex items-center gap-2">
+          <div class="lg:hidden flex items-center gap-2 cursor-pointer hover:scale-105 transition-transform" @click="visiMisiDialog?.open()">
             <img v-if="sekolah?.logo" :src="sekolah.logo" alt="Logo" class="h-7 w-7 object-contain" />
             <span v-else class="text-emerald-600 font-black text-lg">e</span>
             <span class="font-black text-slate-700 text-sm">e-Rapor <span class="text-emerald-600">Admin</span></span>
@@ -130,6 +131,7 @@ import { adminMenus } from '~/utils/menus'
 
 const router = useRouter()
 const route = useRoute()
+const visiMisiDialog = ref(null)
 const sidebarOpen = ref(false)
 const profileDropdownOpen = ref(false)
 const drawerOpen = ref(false)

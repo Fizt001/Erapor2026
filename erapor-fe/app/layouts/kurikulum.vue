@@ -1,12 +1,13 @@
 <template>
   <div class="min-h-screen bg-slate-50 flex text-slate-800 text-sm print:bg-white print:block print:min-h-0">
+    <VisiMisiDialog ref="visiMisiDialog" />
     <!-- Sidebar -->
     <aside class="group bg-slate-900 text-white flex-shrink-0 min-h-screen fixed lg:static z-50 transform lg:translate-x-0 transition-all duration-300 ease-in-out overflow-x-hidden print:hidden" :class="[sidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full lg:translate-x-0 lg:w-[72px] lg:hover:w-64 w-64']">
       <div class="h-14 flex items-center pl-5 pr-4 bg-slate-950 font-bold text-base tracking-wider border-b border-slate-800 whitespace-nowrap overflow-hidden">
-        <img v-if="sekolah?.logo" :src="sekolah.logo" alt="Logo" class="h-8 w-8 object-contain lg:mr-3 shrink-0" />
-        <span v-else class="text-emerald-500 mr-1 text-xl shrink-0">e</span>
-        <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">
-            <span v-if="sekolah?.logo" class="ml-1">e-Rapor</span>
+        <img v-if="sekolah?.logo" :src="sekolah.logo" alt="Logo" class="h-8 w-8 object-contain lg:mr-3 shrink-0 cursor-pointer hover:scale-110 transition-transform" @click="visiMisiDialog?.open()" />
+        <span v-else class="text-emerald-500 mr-1 text-xl shrink-0 cursor-pointer hover:scale-110 transition-transform" @click="visiMisiDialog?.open()">e</span>
+        <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300 cursor-pointer" @click="visiMisiDialog?.open()">
+          <span v-if="sekolah?.logo" class="ml-1">e-Rapor</span>
             <span v-else>-Rapor</span>
         </span>
       </div>
@@ -106,6 +107,7 @@ import { kurikulumMenus } from '~/utils/menus'
 
 const router = useRouter()
 const route = useRoute()
+const visiMisiDialog = ref(null)
 const sidebarOpen = ref(false)
 const profileDropdownOpen = ref(false)
 const mainScrollContainer = ref(null)
