@@ -165,11 +165,11 @@
                         </td>
                         <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-3 sm:pb-4 mb-2 sm:mb-0">
                             <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Wali Kelas</span>
-                            <div class="flex items-center gap-2" v-if="k.wali_kelas">
+                            <div class="flex items-center gap-2" v-if="k.wali_kelas?.guru">
                                 <div class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-[10px] font-bold shrink-0">
-                                    {{ k.wali_kelas.name.substring(0, 2).toUpperCase() }}
+                                    {{ k.wali_kelas.guru.name.substring(0, 2).toUpperCase() }}
                                 </div>
-                                <span class="font-bold text-slate-700 text-[11px] truncate max-w-[150px]">{{ k.wali_kelas.name }}</span>
+                                <span class="font-bold text-slate-700 text-[11px] truncate max-w-[150px]">{{ k.wali_kelas.guru.name }}</span>
                             </div>
                             <span v-else class="text-[10px] font-bold text-slate-400 italic">Belum Diatur</span>
                         </td>

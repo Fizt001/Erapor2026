@@ -27,7 +27,7 @@ class AdminKelasController extends Controller
 
     public function index(Request $request)
     {
-        $query = Kelas::with(['kejuruan', 'kurikulum', 'tahunAjaran']);
+        $query = Kelas::with(['kejuruan', 'kurikulum', 'tahunAjaran', 'waliKelas.guru']);
 
         // Filter by tahun_ajaran_id or fallback to active tahun_ajaran
         if ($request->filled('tahun_ajaran_id')) {
