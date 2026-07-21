@@ -9,6 +9,10 @@ class TahunAjaran extends Model
 {
     protected $fillable = ['tahun', 'is_aktif'];
 
+    protected $casts = [
+        'is_aktif' => 'boolean'
+    ];
+
     // Menghubungkan Tahun ke banyak Titimangsa
     public function titimangsas(): HasMany
     {

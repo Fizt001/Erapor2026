@@ -86,12 +86,12 @@
                 </div>
             </div>
 
-            <div class="flex-1 overflow-y-auto custom-scrollbar p-0 sm:p-2 md:p-8 bg-slate-50/30">
-                <div class="max-w-4xl mx-auto bg-white rounded-none sm:rounded-xl lg:rounded-2xl sm:shadow-sm sm:border border-slate-200/60 p-4 md:p-10">
+            <div class="flex-1 overflow-y-auto custom-scrollbar p-0 sm:p-2 md:p-6 bg-slate-50/30">
+                <div class="max-w-4xl mx-auto bg-white rounded-none sm:rounded-xl lg:rounded-2xl sm:shadow-sm sm:border border-slate-200/60 p-4 md:p-8 md:pb-10">
                 
                 <!-- 1. IDENTITAS -->
-                <div v-show="activeTab === 'identitas'" class="animate-fadeIn space-y-6">
-                    <div class="flex flex-col md:flex-row gap-6 items-start">
+                <div v-show="activeTab === 'identitas'" class="animate-fadeIn space-y-4">
+                    <div class="flex flex-col md:flex-row gap-4 items-start">
                         <div class="w-full md:w-1/2 grid grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1 truncate">Logo Sekolah</label>
@@ -139,23 +139,23 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="w-full md:w-1/2 space-y-6">
+                        <div class="w-full md:w-1/2 space-y-4">
                             <div>
                                 <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Nama Yayasan</label>
-                                <input type="text" v-model="form.nama_yayasan" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Misal: YAYASAN TINTA EMAS INDONESIA">
+                                <input type="text" v-model="form.nama_yayasan" class="w-full px-4 py-2.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Misal: YAYASAN TINTA EMAS INDONESIA">
                             </div>
                             <div>
                                 <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Nama Sekolah Lengkap <span class="text-rose-500">*</span></label>
-                                <input type="text" v-model="form.nama_sekolah" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Misal: SMK TINTA EMAS INDONESIA">
+                                <input type="text" v-model="form.nama_sekolah" required class="w-full px-4 py-2.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Misal: SMK TINTA EMAS INDONESIA">
                             </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">NPSN</label>
-                                    <input type="text" v-model="form.npsn" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Nomor Pokok Sekolah Nasional">
+                                    <input type="text" v-model="form.npsn" class="w-full px-4 py-2.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Nomor Pokok Sekolah Nasional">
                                 </div>
                                 <div>
                                     <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Akreditasi</label>
-                                    <input type="text" v-model="form.akreditasi" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Misal: TERAKREDITASI 'A'">
+                                    <input type="text" v-model="form.akreditasi" class="w-full px-4 py-2.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Misal: TERAKREDITASI 'A'">
                                 </div>
                             </div>
                         </div>
@@ -163,77 +163,77 @@
                 </div>
 
                 <!-- 2. PIMPINAN -->
-                <div v-show="activeTab === 'pimpinan'" class="animate-fadeIn space-y-6">
+                <div v-show="activeTab === 'pimpinan'" class="animate-fadeIn space-y-4">
                     <div>
                         <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Nama Kepala Sekolah</label>
-                        <input type="text" v-model="form.nama_kepsek" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Masukkan nama lengkap beserta gelar">
+                        <input type="text" v-model="form.nama_kepsek" class="w-full px-4 py-2.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Masukkan nama lengkap beserta gelar">
                     </div>
                     <div>
                         <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">NIP Kepala Sekolah</label>
-                        <input type="text" v-model="form.nip_kepsek" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Nomor Induk Pegawai (Opsional)">
+                        <input type="text" v-model="form.nip_kepsek" class="w-full px-4 py-2.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Nomor Induk Pegawai (Opsional)">
                     </div>
                 </div>
 
                 <!-- 3. MEDIA -->
-                <div v-show="activeTab === 'media'" class="animate-fadeIn space-y-6">
+                <div v-show="activeTab === 'media'" class="animate-fadeIn space-y-4">
                     <div>
                         <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Situs Web Resmi</label>
                         <div class="relative">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">🌐</span>
-                        <input type="url" v-model="form.website" class="w-full pl-11 pr-5 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="https://www.sekolahanda.sch.id">
+                        <input type="url" v-model="form.website" class="w-full pl-11 pr-5 py-2.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="https://www.sekolahanda.sch.id">
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                         <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Alamat Email</label>
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">✉️</span>
-                            <input type="email" v-model="form.email" class="w-full pl-11 pr-5 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="info@sekolahanda.sch.id">
+                            <input type="email" v-model="form.email" class="w-full pl-11 pr-5 py-2.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="info@sekolahanda.sch.id">
                         </div>
                         </div>
                         <div>
                         <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Nomor Telepon</label>
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">📞</span>
-                            <input type="text" v-model="form.telepon" class="w-full pl-11 pr-5 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="(021) 1234567">
+                            <input type="text" v-model="form.telepon" class="w-full pl-11 pr-5 py-2.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="(021) 1234567">
                         </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- 4. LOKASI -->
-                <div v-show="activeTab === 'lokasi'" class="animate-fadeIn space-y-6">
+                <div v-show="activeTab === 'lokasi'" class="animate-fadeIn space-y-4">
                     <div>
                         <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Alamat Lengkap</label>
-                        <textarea v-model="form.alamat" rows="3" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400 leading-relaxed custom-scrollbar" placeholder="Tuliskan nama jalan, RT/RW, dan patokan..."></textarea>
+                        <textarea v-model="form.alamat" rows="3" class="w-full px-4 py-2.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400 leading-relaxed custom-scrollbar" placeholder="Tuliskan nama jalan, RT/RW, dan patokan..."></textarea>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                         <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Kelurahan / Desa</label>
-                        <input type="text" v-model="form.kelurahan" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Nama Kelurahan">
+                        <input type="text" v-model="form.kelurahan" class="w-full px-4 py-2.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Nama Kelurahan">
                         </div>
                         <div>
                         <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Kecamatan</label>
-                        <input type="text" v-model="form.kecamatan" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Nama Kecamatan">
+                        <input type="text" v-model="form.kecamatan" class="w-full px-4 py-2.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Nama Kecamatan">
                         </div>
                         <div>
                         <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Kabupaten / Kota</label>
-                        <input type="text" v-model="form.kota" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Nama Kota">
+                        <input type="text" v-model="form.kota" class="w-full px-4 py-2.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Nama Kota">
                         </div>
                         <div>
                         <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Provinsi</label>
-                        <input type="text" v-model="form.provinsi" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Nama Provinsi">
+                        <input type="text" v-model="form.provinsi" class="w-full px-4 py-2.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Nama Provinsi">
                         </div>
                         <div class="md:col-span-2">
                         <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Kode Pos</label>
-                        <input type="text" v-model="form.kode_pos" class="w-full md:w-1/2 px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="12345">
+                        <input type="text" v-model="form.kode_pos" class="w-full md:w-1/2 px-4 py-2.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="12345">
                         </div>
                     </div>
                 </div>
 
                 <!-- 5. GALERI FOTO -->
                 <div v-show="activeTab === 'foto'" class="animate-fadeIn space-y-8">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         
                         <!-- Foto 1 -->
                         <div>

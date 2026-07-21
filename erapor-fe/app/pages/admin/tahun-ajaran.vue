@@ -94,7 +94,7 @@
             </div>
 
             <!-- Desktop Table -->
-            <table v-else class="w-full text-left border-collapse min-w-[500px] whitespace-nowrap">
+            <table v-else class="w-full text-left border-collapse min-w-full whitespace-nowrap">
                 <thead class="sticky top-0 z-10 bg-slate-50 border-b border-slate-200 shadow-sm">
                     <tr class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-500">
                         <th class="p-4 w-16 text-center">#</th>

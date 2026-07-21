@@ -61,7 +61,7 @@
       </header>
       <main class="flex-1 overflow-y-auto p-4 sm:p-5 bg-slate-100 relative print:p-0 print:bg-white print:overflow-visible print:block pb-20 lg:pb-5">
         <NuxtPage />
-        <div class="mt-10 pt-4 border-t border-slate-200 text-center pb-4 print:hidden">
+        <div ref="footerRef" :class="showFooter ? 'mt-10 pt-4 pb-4 border-t border-slate-200 opacity-100' : 'h-0 opacity-0 overflow-hidden'" class="text-center print:hidden transition-all duration-1000">
           <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Created by <span class="text-emerald-600">SMK-Yatindo</span></p>
         </div>
       </main>
@@ -134,6 +134,22 @@ const sidebarOpen = ref(false)
 const profileDropdownOpen = ref(false)
 const drawerOpen = ref(false)
 const activeDrawer = ref(null)
+
+const footerRef = ref(null)
+const showFooter = ref(true)
+
+onMounted(() => {
+  if (footerRef.value) {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && showFooter.value) {
+        setTimeout(() => {
+          showFooter.value = false
+        }, 1000)
+      }
+    }, { threshold: 0.1 })
+    observer.observe(footerRef.value)
+  }
+})
 
 const drawerMenuGroups = {
   pengaturan: {
