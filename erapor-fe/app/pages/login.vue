@@ -255,16 +255,16 @@ const handleLogin = async () => {
     })
     
     if (response.success) {
-      const impersonateUserId = useCookie('impersonate_user_id', { maxAge: 60 * 60 * 24 * 7 })
-      const impersonateRole = useCookie('impersonate_role', { maxAge: 60 * 60 * 24 * 7 })
+      const impersonateUserId = useCookie('impersonate_user_id', { maxAge: 60 * 60 * 24 * 7, path: '/' })
+      const impersonateRole = useCookie('impersonate_role', { maxAge: 60 * 60 * 24 * 7, path: '/' })
       impersonateUserId.value = null
       impersonateRole.value = null
 
-      const tokenCookie = useCookie('auth_token', { maxAge: 60 * 60 * 24 * 7 })
+      const tokenCookie = useCookie('auth_token', { maxAge: 60 * 60 * 24 * 7, path: '/' })
       tokenCookie.value = response.data.token
       
       const user = response.data.user
-      const userCookie = useCookie('user_profile', { maxAge: 60 * 60 * 24 * 7 })
+      const userCookie = useCookie('user_profile', { maxAge: 60 * 60 * 24 * 7, path: '/' })
       userCookie.value = JSON.stringify(user)
       
       useSwal().toast('Berhasil masuk!', 'success')
