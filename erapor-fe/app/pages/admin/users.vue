@@ -147,7 +147,7 @@
 
       <!-- Panel Flow Kanan -->
       <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative', activeTab === 'table' || isDesktop ? 'flex' : 'hidden', !isDesktop ? 'pt-[60px]' : '']">
-        <div class="p-2 sm:p-6 lg:p-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
+        <div class="p-2 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full h-full flex flex-col relative z-0">
           <div class="bg-white rounded-xl sm:rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
             <!-- Table Header & Filters -->
             <div class="px-4 py-3 sm:px-6 sm:py-4 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white shrink-0 z-10">
@@ -188,10 +188,10 @@
             <table class="w-full text-left border-collapse min-w-[600px] whitespace-nowrap">
                 <thead class="sticky top-0 z-10 bg-slate-50 border-b border-slate-200 shadow-sm">
                     <tr class="text-[9px] uppercase tracking-widest font-black text-slate-500">
-                        <th class="py-3 px-4 w-12 text-center">No</th>
-                        <th class="py-3 px-4">Pengguna</th>
-                        <th class="py-3 px-4 w-32">Hak Akses</th>
-                        <th class="py-3 px-4 w-24 text-center">Aksi</th>
+                        <th class="py-3 px-4 w-12 text-center bg-slate-50">No</th>
+                        <th class="py-3 px-4 sticky left-0 z-20 bg-slate-50 after:absolute after:inset-y-0 after:right-0 after:w-px after:bg-slate-200">Pengguna</th>
+                        <th class="py-3 px-4 w-32 bg-slate-50">Hak Akses</th>
+                        <th class="py-3 px-4 w-24 text-center bg-slate-50">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="text-xs font-medium text-slate-700 divide-y divide-slate-100">
@@ -202,17 +202,17 @@
                         </td>
                     </tr>
                     <tr v-for="(u, index) in users" :key="u.id" class="hover:bg-slate-50/80 transition-colors bg-white group">
-                        <td class="p-4 text-center text-slate-400 font-bold">{{ (pagination.currentPage - 1) * 15 + index + 1 }}</td>
-                        <td class="p-4">
+                        <td class="p-4 text-center text-slate-400 font-bold bg-white group-hover:bg-slate-50/80">{{ (pagination.currentPage - 1) * 15 + index + 1 }}</td>
+                        <td class="p-4 sticky left-0 z-10 bg-white group-hover:bg-slate-50/80 after:absolute after:inset-y-0 after:right-0 after:w-px after:bg-slate-100 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.05)]">
                             <div class="font-black text-slate-800 text-[13px]">{{ u.name }}</div>
                             <div class="text-[10px] font-bold text-slate-400 mt-0.5">{{ u.email }}</div>
                         </td>
-                        <td class="p-4">
+                        <td class="p-4 bg-white group-hover:bg-slate-50/80">
                             <span class="px-3 py-1.5 rounded-md text-[9px] font-black uppercase tracking-widest border" :class="getRoleBadgeClass(u.role)">
                                 {{ u.role }}
                             </span>
                         </td>
-                        <td class="p-4">
+                        <td class="p-4 bg-white group-hover:bg-slate-50/80">
                             <div class="flex items-center justify-center gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
                                 <button @click="resetPassword(u)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:border-amber-200 hover:bg-amber-50 hover:text-amber-600 flex items-center justify-center transition-colors shadow-sm" title="Reset Password">🔑</button>
                                 <button @click="openEditModal(u)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-600 flex items-center justify-center transition-colors shadow-sm" title="Edit">✏️</button>
