@@ -1,4 +1,5 @@
 export default defineNuxtRouteMiddleware((to, from) => {
+  if (import.meta.server) return;
   const token = useCookie('auth_token')
 
   // Jika tidak ada token dan bukan sedang ke halaman login
