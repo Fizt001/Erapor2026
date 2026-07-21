@@ -362,11 +362,6 @@
 
     </div>
 
-    <!-- Footer Info -->
-    <div class="bg-slate-100 border-t border-slate-200 text-center py-3 shrink-0 print:hidden z-20">
-        <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Created by <span class="text-emerald-600">SMK-Yatindo</span></p>
-    </div>
-
   </div>
 </template>
 
