@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen w-full flex flex-col font-sans bg-slate-50 relative overflow-x-hidden">
+  <div class="min-h-screen lg:h-screen w-full flex flex-col font-sans bg-slate-50 relative overflow-x-hidden lg:overflow-hidden">
     
     <!-- HEADER -->
     <header class="w-full bg-slate-900 h-16 flex items-center justify-between px-6 lg:px-12 relative z-20 shadow-md flex-shrink-0">
@@ -24,10 +24,10 @@
     </header>
 
     <!-- MAIN SPLIT AREA -->
-    <main class="flex-1 flex flex-col lg:flex-row w-full relative z-10 min-h-0">
+    <main class="flex-1 flex flex-col-reverse lg:flex-row w-full relative z-10 min-h-0">
         
         <!-- LEFT: BANNER -->
-        <div class="w-full lg:w-[55%] relative flex flex-col py-10 px-6 lg:p-12 bg-slate-800 lg:bg-transparent overflow-hidden">
+        <div class="w-full lg:w-[55%] h-full relative flex flex-col justify-center py-10 px-6 lg:p-10 bg-slate-800 lg:bg-transparent overflow-hidden">
             <!-- Background Gradient & Patterns -->
             <div class="absolute inset-0 bg-gradient-to-br from-emerald-800 to-slate-900 z-0">
                 <div class="absolute top-[-20%] left-[-10%] w-[70%] h-[70%] bg-emerald-600/20 rounded-full blur-[80px] pointer-events-none"></div>
@@ -41,18 +41,18 @@
                     <div class="inline-block bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-3 py-1 mb-4">
                         <span class="text-emerald-300 font-bold uppercase tracking-widest text-[10px]">Aplikasi Penilaian Akademik</span>
                     </div>
-                    <h2 class="text-3xl lg:text-5xl font-black text-white leading-tight drop-shadow-md">
+                    <h2 class="text-3xl lg:text-4xl xl:text-5xl font-black text-white leading-tight drop-shadow-md">
                         Laporan Hasil Belajar <br>
-                        <span class="text-emerald-400 mt-2 block">Jenjang SMK</span>
+                        <span class="text-emerald-400 mt-1 block">Jenjang SMK</span>
                     </h2>
-                    <div class="mt-6 flex items-center justify-center lg:justify-start gap-4">
+                    <div class="mt-4 flex items-center justify-center lg:justify-start gap-4">
                         <span class="px-4 py-1.5 rounded-full bg-emerald-500 text-white font-black text-xs uppercase tracking-wider shadow-lg">Versi 2026.1</span>
                         <span class="text-slate-300 font-medium text-xs">{{ sekolah?.nama_sekolah || 'Sistem E-Rapor Terpadu' }}</span>
                     </div>
                 </div>
 
                 <!-- Big Circular Frame -->
-                <div class="relative w-64 h-64 lg:w-[450px] lg:h-[450px] mx-auto lg:mx-0 lg:mt-auto mb-4 lg:mb-10 flex-shrink-0 group">
+                <div class="relative w-56 h-56 lg:w-[350px] lg:h-[350px] xl:w-[420px] xl:h-[420px] mx-auto lg:mx-0 mt-4 lg:mt-auto flex-shrink-0 group">
                     <!-- Decorative Outlines -->
                     <div class="absolute inset-[-8%] rounded-full border-2 border-emerald-400/30 lg:animate-[spin_20s_linear_infinite]"></div>
                     <div class="absolute inset-[-15%] rounded-full border border-teal-500/20 lg:animate-[spin_25s_linear_infinite_reverse]"></div>
@@ -71,7 +71,7 @@
         </div>
 
         <!-- RIGHT: FORM -->
-        <div class="w-full lg:w-[45%] bg-white flex flex-col justify-center items-center py-12 px-6 lg:p-12 relative z-20 shadow-[-20px_0_40px_-10px_rgba(0,0,0,0.2)]">
+        <div class="w-full lg:w-[45%] h-full bg-white flex flex-col justify-center items-center py-10 px-6 lg:p-8 relative z-20 shadow-[-20px_0_40px_-10px_rgba(0,0,0,0.2)] lg:overflow-y-auto">
             <div class="w-full max-w-sm lg:max-w-md xl:max-w-lg">
                 
                 <div class="text-center mb-8 lg:mb-10 pb-6 border-b-2 border-slate-100 relative">
