@@ -1,10 +1,10 @@
 <template>
   <div class="h-full flex flex-col min-h-0 bg-slate-50">
     <!-- Layout 2 Panel Dock & Flow -->
-    <div class="flex-1 flex flex-col xl:flex-row overflow-hidden relative">
+    <div class="flex-1 flex flex-col xl:flex-row xl:overflow-hidden overflow-y-auto relative">
       
       <!-- Panel Dock Kiri -->
-      <div class="xl:w-[360px] w-full bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full xl:z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] overflow-y-auto custom-scrollbar">
+      <div class="xl:w-[360px] w-full bg-white border-r border-slate-200 flex-shrink-0 flex flex-col xl:h-full xl:z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] overflow-y-auto custom-scrollbar">
         <div class="p-6 space-y-6">
           
           <!-- Welcome Widget -->
@@ -49,7 +49,7 @@
       </div>
 
       <!-- Panel Flow Kanan -->
-      <div class="flex-1 bg-slate-50 flex flex-col h-full min-w-0 overflow-y-auto custom-scrollbar">
+      <div class="flex-1 bg-slate-50 flex flex-col xl:h-full min-w-0 overflow-y-auto custom-scrollbar">
         
         <!-- Superadmin Empty State -->
         <div v-if="isSuperadminWithoutImpersonation" class="flex-grow flex flex-col items-center justify-center py-20 text-center bg-white rounded-2xl shadow-sm border border-slate-200 m-8">

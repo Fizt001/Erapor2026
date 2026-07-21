@@ -1,10 +1,10 @@
 <template>
   <div class="h-full flex flex-col min-h-0 bg-slate-50">
     <!-- Layout 2 Panel Dock & Flow -->
-    <div class="flex-1 flex flex-col xl:flex-row overflow-hidden relative">
+    <div class="flex-1 flex flex-col xl:flex-row xl:overflow-hidden overflow-y-auto relative">
       
       <!-- Panel Dock Kiri -->
-      <div class="xl:w-[360px] w-full bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full xl:z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] overflow-y-auto custom-scrollbar">
+      <div class="xl:w-[360px] w-full bg-white border-r border-slate-200 flex-shrink-0 flex flex-col xl:h-full xl:z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] overflow-y-auto custom-scrollbar">
         <div class="p-6 space-y-6">
           
           <!-- Welcome Widget -->
@@ -48,7 +48,7 @@
       </div>
 
       <!-- Panel Flow Kanan -->
-      <div class="flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative">
+      <div class="flex-1 bg-slate-50 flex flex-col xl:h-full min-w-0 relative">
         <div class="p-6 lg:p-8 max-w-7xl mx-auto w-full h-full flex flex-col relative z-0">
           <div class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
             <div class="flex-1 overflow-y-auto custom-scrollbar p-6 lg:p-8 space-y-6">

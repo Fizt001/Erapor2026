@@ -1,8 +1,8 @@
 <template>
   <div class="h-full flex flex-col min-h-0 bg-slate-50">
-    <div class="flex-1 flex overflow-hidden relative">
+    <div class="flex-1 flex xl:overflow-hidden overflow-y-auto relative">
       <!-- Panel Flow Kanan -->
-      <div class="flex-1 bg-slate-50 flex flex-col h-full min-w-0">
+      <div class="flex-1 bg-slate-50 flex flex-col xl:h-full min-w-0">
         <div class="w-full h-full flex flex-col relative z-0">
           <div class="bg-transparent flex flex-col flex-1 relative min-h-0">
             
