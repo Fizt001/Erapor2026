@@ -62,8 +62,8 @@
 
       <!-- Panel Flow Kanan -->
       <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative', !isDesktop ? 'pt-[64px]' : '']">
-        <div class="p-0 sm:p-6 lg:p-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
-          <div class="bg-white rounded-none sm:rounded-3xl shadow-none sm:shadow-sm border-0 sm:border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
+        <div class="p-2 sm:p-6 lg:p-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
+          <div class="bg-white rounded-xl sm:rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
             <!-- Table Header & Filters -->
             <div class="px-4 py-3 sm:px-6 sm:py-5 border-b border-slate-200 flex justify-between items-center gap-3 lg:gap-4 shrink-0 z-10 bg-white">
                 <div class="flex items-center gap-3">

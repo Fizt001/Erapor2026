@@ -147,15 +147,15 @@
 
       <!-- Panel Flow Kanan -->
       <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative', activeTab === 'table' || isDesktop ? 'flex' : 'hidden', !isDesktop ? 'pt-[60px]' : '']">
-        <div class="p-6 lg:p-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
-          <div class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
+        <div class="p-2 sm:p-6 lg:p-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
+          <div class="bg-white rounded-xl sm:rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
             <!-- Table Header & Filters -->
-            <div class="px-6 py-5 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white shrink-0 z-10">
-            <div class="flex items-center gap-4 w-full sm:w-auto">
-                <div class="w-10 h-10 rounded-2xl bg-white shadow-sm border border-slate-200 flex items-center justify-center text-xl hidden sm:flex">📋</div>
-                <div>
+            <div class="px-4 py-3 sm:px-6 sm:py-4 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white shrink-0 z-10">
+            <div class="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
+                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-white shadow-sm border border-slate-200 flex items-center justify-center text-sm sm:text-xl hidden sm:flex">📋</div>
+                <div class="flex items-baseline gap-2">
                     <h3 class="text-sm font-black uppercase tracking-widest text-emerald-700">Database</h3>
-                    <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Total: {{ pagination.total }} Akun</p>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase">Total: {{ pagination.total }} Akun</p>
                 </div>
             </div>
 
