@@ -5,7 +5,7 @@
     <header class="w-full bg-slate-900 h-16 flex items-center justify-between px-6 lg:px-12 relative z-20 shadow-md flex-shrink-0">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center">
-                <img v-if="sekolah?.logo" :src="getImageUrl(sekolah.logo)" alt="Logo" class="w-7 h-7 object-contain">
+                <img v-if="sekolah?.logo" :src="sekolah.logo" alt="Logo" class="w-7 h-7 object-contain">
                 <span v-else class="text-xl">🎓</span>
             </div>
             <h1 class="text-xl font-black text-white tracking-tight">e-Rapor <span class="text-emerald-400">SMK</span></h1>
@@ -58,13 +58,27 @@
 
             <div class="relative z-10 flex flex-col lg:flex-row items-center gap-8 lg:gap-12 w-full max-w-5xl mx-auto mt-4 lg:mt-0">
                 
-                <!-- Photo Left -->
+                <!-- Slideshow Left -->
                 <div class="w-full sm:max-w-md lg:max-w-none lg:w-[45%] flex-shrink-0 relative group">
-                    <div class="relative rounded-3xl border-4 border-white/20 overflow-hidden shadow-2xl shadow-emerald-900/50 flex items-center justify-center bg-slate-800 transition-transform duration-500 group-hover:scale-[1.02] aspect-[4/3]">
-                        <img v-if="sekolah?.foto_1" :src="getImageUrl(sekolah.foto_1)" alt="Foto Sekolah" class="w-full h-full object-cover">
+                    <div class="relative rounded-3xl border-4 border-white/20 overflow-hidden shadow-2xl shadow-emerald-900/50 aspect-[4/3] bg-slate-800">
+                        <!-- Slideshow Images -->
+                        <template v-if="slidePhotos.length > 0">
+                            <div v-for="(photo, idx) in slidePhotos" :key="idx"
+                                class="absolute inset-0 w-full h-full transition-opacity duration-1000"
+                                :class="currentSlide === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'">
+                                <img :src="photo" alt="Foto Sekolah" class="w-full h-full object-cover">
+                            </div>
+                            <!-- Dots -->
+                            <div v-if="slidePhotos.length > 1" class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+                                <button v-for="(_, idx) in slidePhotos" :key="idx" @click="currentSlide = idx"
+                                    class="w-2 h-2 rounded-full transition-all"
+                                    :class="currentSlide === idx ? 'bg-white scale-125' : 'bg-white/40'"
+                                ></button>
+                            </div>
+                        </template>
                         <div v-else class="text-center text-slate-500 flex flex-col items-center justify-center h-full w-full">
                             <span class="text-5xl lg:text-6xl mb-2 block">🏫</span>
-                            <span class="text-[10px] font-bold uppercase tracking-widest px-4 text-center">Foto 1 (Upload di Master)</span>
+                            <span class="text-[10px] font-bold uppercase tracking-widest px-4 text-center">Foto Sekolah (Upload di Master)</span>
                         </div>
                     </div>
                 </div>
@@ -164,7 +178,7 @@
 </template>
 
 <script setup>
-import { reactive, ref, onMounted } from 'vue'
+import { reactive, ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCookie } from '#app'
 
@@ -181,16 +195,41 @@ const getImageUrl = (path) => {
   return `${apiUrl}/${path.replace(/^\//, '')}`
 }
 
+// === SLIDESHOW ===
+const currentSlide = ref(0)
+const slidePhotos = computed(() => {
+  const photos = [sekolah.value?.foto_1, sekolah.value?.foto_2, sekolah.value?.foto_3]
+  return photos.filter(Boolean)
+})
+
+let slideTimer = null
+const startSlideshow = () => {
+  slideTimer = setInterval(() => {
+    if (slidePhotos.value.length > 1) {
+      currentSlide.value = (currentSlide.value + 1) % slidePhotos.value.length
+    }
+  }, 4000)
+}
 onMounted(async () => {
   try {
     const res = await $fetch(apiUrl + '/api/public/stats')
     if (res.success && res.data && res.data.sekolah) {
-      sekolah.value = res.data.sekolah
+      sekolah.value = {
+        ...sekolah.value,
+        nama_sekolah: res.data.sekolah.nama_sekolah,
+        logo: getImageUrl(res.data.sekolah.logo),
+        foto_1: getImageUrl(res.data.sekolah.foto_1),
+        foto_2: getImageUrl(res.data.sekolah.foto_2),
+        foto_3: getImageUrl(res.data.sekolah.foto_3)
+      }
     }
   } catch (err) {
     console.error('Gagal mengambil data sekolah publik:', err)
   }
+  startSlideshow()
 })
+
+onUnmounted(() => { if (slideTimer) clearInterval(slideTimer) })
 
 const router = useRouter()
 

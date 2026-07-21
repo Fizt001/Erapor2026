@@ -3,7 +3,7 @@
     <!-- Sidebar -->
     <aside class="group bg-slate-900 text-white flex-shrink-0 min-h-screen fixed lg:static z-50 transform lg:translate-x-0 transition-all duration-300 ease-in-out overflow-x-hidden print:hidden" :class="[sidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full lg:translate-x-0 lg:w-[72px] lg:hover:w-64 w-64']">
       <div class="h-14 flex items-center pl-5 pr-4 bg-slate-950 font-bold text-base tracking-wider border-b border-slate-800 whitespace-nowrap overflow-hidden">
-        <img v-if="sekolah?.logo" :src="`/${sekolah.logo}`" alt="Logo" class="h-8 w-8 object-contain lg:mr-3 shrink-0" />
+        <img v-if="sekolah?.logo" :src="sekolah.logo" alt="Logo" class="h-8 w-8 object-contain lg:mr-3 shrink-0" />
         <span v-else class="text-sky-500 mr-1 text-xl shrink-0">e</span>
         <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300 flex items-center">
             <span v-if="sekolah?.logo" class="ml-1">e-Rapor</span>
@@ -206,3 +206,4 @@ const handleLogout = async () => {
   display: none;
 }
 </style>
+
