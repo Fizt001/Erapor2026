@@ -95,7 +95,7 @@
                         <div class="w-full md:w-1/2 grid grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1 truncate">Logo Sekolah</label>
-                                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-2xl hover:bg-slate-50 transition-colors relative group">
+                                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-2xl hover:bg-slate-50 transition-colors relative group h-full">
                                     <div class="space-y-1 text-center">
                                         <div v-if="logoPreview" class="mx-auto h-24 w-24 mb-4 relative rounded-xl overflow-hidden bg-white shadow-sm border border-slate-200">
                                             <img :src="logoPreview" alt="Logo Preview" class="h-full w-full object-contain p-2" />
@@ -111,14 +111,14 @@
                                                 <input id="logo-upload" name="logo-upload" type="file" class="sr-only" accept="image/*" @change="handleLogoUpload">
                                             </label>
                                         </div>
-                                        <p class="text-xs text-slate-500">PNG, JPG, GIF up to 2MB</p>
+                                        <p class="text-[10px] text-slate-500 mt-2 font-semibold">Maks 2MB</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div>
                                 <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1 truncate">Logo Dinas</label>
-                                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-2xl hover:bg-slate-50 transition-colors relative group">
+                                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-2xl hover:bg-slate-50 transition-colors relative group h-full">
                                     <div class="space-y-1 text-center">
                                         <div v-if="logoKiriPreview" class="mx-auto h-24 w-24 mb-4 relative rounded-xl overflow-hidden bg-white shadow-sm border border-slate-200">
                                             <img :src="logoKiriPreview" alt="Logo Kiri Preview" class="h-full w-full object-contain p-2" />
@@ -134,7 +134,7 @@
                                                 <input id="logo-kiri-upload" name="logo-kiri-upload" type="file" class="sr-only" accept="image/*" @change="handleLogoKiriUpload">
                                             </label>
                                         </div>
-                                        <p class="text-xs text-slate-500">Untuk KOP Rapor</p>
+                                        <p class="text-[10px] text-slate-500 mt-2 font-semibold">Kop Rapor</p>
                                     </div>
                                 </div>
                             </div>
