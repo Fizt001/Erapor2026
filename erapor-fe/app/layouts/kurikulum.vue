@@ -186,14 +186,14 @@ const currentDrawerMenus = computed(() => {
   let endIndex = kurikulumMenus.length
 
   if (activeDrawer.value === 'struktur') {
-    startIndex = 1
-    endIndex = 6
+    startIndex = 2
+    endIndex = 7
   } else if (activeDrawer.value === 'tugas') {
-    startIndex = 7
-    endIndex = 9
+    startIndex = 8
+    endIndex = 10
   } else if (activeDrawer.value === 'referensi') {
-    startIndex = 10
-    endIndex = 13
+    startIndex = 11
+    endIndex = 14
   }
   
   if (activeDrawer.value === 'all') {
