@@ -8,6 +8,15 @@ use App\Http\Controllers\Api\AdminController;
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/public/stats', [App\Http\Controllers\Api\PublicController::class, 'stats']);
 
+Route::get('/run-migration-live', function () {
+    try {
+        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+        return response()->json(['message' => 'Migrasi berhasil dijalankan!', 'output' => \Illuminate\Support\Facades\Artisan::output()]);
+    } catch (\Exception $e) {
+        return response()->json(['message' => 'Gagal migrate: ' . $e->getMessage()]);
+    }
+});
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'user']);
