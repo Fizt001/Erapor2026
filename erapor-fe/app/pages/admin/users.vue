@@ -15,7 +15,7 @@
       </div>
 
       <!-- Panel Dock Kiri -->
-      <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', (activeTab === 'form' || activeTab === 'import') || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[60px]' : '']">
+      <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', (activeTab === 'form' || activeTab === 'import') || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[76px]' : '']">
         
         <!-- Desktop Tabs (Toggle Form vs Import) -->
         <div class="hidden xl:flex bg-slate-50/50 border-b border-slate-200 p-2 shrink-0">
@@ -146,7 +146,7 @@
       </div>
 
       <!-- Panel Flow Kanan -->
-      <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative', activeTab === 'table' || isDesktop ? 'flex' : 'hidden', !isDesktop ? 'pt-[60px]' : '']">
+      <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative', activeTab === 'table' || isDesktop ? 'flex' : 'hidden', !isDesktop ? 'pt-[76px]' : '']">
         <div class="p-2 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full h-full flex flex-col relative z-0">
           <div class="bg-white rounded-xl sm:rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
             <!-- Table Header & Filters -->
