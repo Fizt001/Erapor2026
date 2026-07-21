@@ -66,7 +66,7 @@
                 <tr v-for="(m, idx) in mutasiList" :key="m.id" class="hover:bg-slate-50/80 transition-colors group bg-white flex flex-col sm:table-row p-4 sm:p-0 relative">
                   <td class="px-0 py-1 sm:p-4 text-left sm:text-center text-xs font-bold text-slate-400 flex sm:table-cell items-center justify-between">
                       <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nomor</span>
-                      <span>{{ idx + 1 }}</span>
+                      <span>{{ (pagination.currentPage - 1) * 15 + idx + 1 }}</span>
                   </td>
                   <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-2 sm:pb-4 mb-1 sm:mb-0">
                       <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Tanggal</span>
@@ -114,6 +114,16 @@
               </tbody>
             </table>
           </div>
+
+          <!-- Pagination -->
+          <div class="p-4 sm:p-6 bg-slate-50 border-t border-slate-200 flex items-center justify-between shrink-0" v-if="pagination.lastPage > 1">
+              <span class="hidden sm:inline-block text-[10px] font-black uppercase text-slate-400 tracking-widest">Halaman {{ pagination.currentPage }} dari {{ pagination.lastPage }}</span>
+              <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
+                  <button @click="fetchMutasi(pagination.currentPage - 1)" :disabled="pagination.currentPage === 1" class="px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-600 hover:bg-slate-50 disabled:opacity-50 shadow-sm transition-all">Prev</button>
+                  <span class="sm:hidden text-[10px] font-black uppercase text-slate-400 tracking-widest">{{ pagination.currentPage }} / {{ pagination.lastPage }}</span>
+                  <button @click="fetchMutasi(pagination.currentPage + 1)" :disabled="pagination.currentPage === pagination.lastPage" class="px-4 py-2.5 bg-emerald-50 border border-emerald-100 rounded-xl text-[10px] font-black uppercase tracking-widest text-emerald-700 hover:bg-emerald-100 disabled:opacity-50 shadow-sm transition-all">Next</button>
+              </div>
+          </div>
         </div>
     </div>
     </div>
@@ -132,6 +142,7 @@ definePageMeta({
 
 const token = useCookie('auth_token')
 const mutasiList = ref([])
+const pagination = ref({ currentPage: 1, lastPage: 1 })
 const isLoading = ref(true)
 const filterStatus = ref('')
 const isProcessing = ref(false)
@@ -154,13 +165,17 @@ const cancelMutasi = async (m) => {
   }
 }
 
-const fetchMutasi = async () => {
+const fetchMutasi = async (page = 1) => {
   isLoading.value = true
   try {
-    const res = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/mutasi?status_approval=${filterStatus.value}`, {
+    const res = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/mutasi?status_approval=${filterStatus.value}&page=${page}`, {
       headers: { Authorization: `Bearer ${token.value}` }
     })
-    mutasiList.value = res.data
+    mutasiList.value = res.data.data
+    pagination.value = {
+      currentPage: res.data.current_page,
+      lastPage: res.data.last_page
+    }
   } catch (error) {
     useSwal().toast('Gagal mengambil data mutasi', 'error')
   } finally {

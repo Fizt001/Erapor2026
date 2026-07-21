@@ -15,11 +15,11 @@ class AdminMutasiController extends Controller
     {
         $query = MutasiSiswa::with(['siswa', 'kelas_asal', 'kelas_tujuan', 'diajukanOleh', 'diaccOleh']);
 
-        if ($request->has('status_approval')) {
+        if ($request->has('status_approval') && $request->status_approval != '') {
             $query->where('status_approval', $request->status_approval);
         }
 
-        $mutasi = $query->orderBy('created_at', 'desc')->get();
+        $mutasi = $query->orderBy('created_at', 'desc')->paginate(15);
 
         return response()->json([
             'success' => true,
