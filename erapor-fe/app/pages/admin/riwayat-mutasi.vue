@@ -2,8 +2,8 @@
   <div class="h-full flex flex-col md:flex-row bg-slate-50 relative overflow-hidden">
 
     <!-- PANEL KIRI (DOCK) -->
-    <div class="w-full md:w-[360px] bg-white border-r border-slate-200 shrink-0 flex flex-col h-[40vh] md:h-full z-10 transition-all duration-300 relative">
-      <div class="p-6 border-b border-slate-200 bg-white/80 backdrop-blur-md sticky top-0 z-20">
+    <div class="w-full md:w-[360px] bg-white border-b md:border-b-0 md:border-r border-slate-200 shrink-0 flex flex-col z-10 transition-all duration-300 relative">
+      <div class="p-6 border-b border-slate-200 bg-white/80 backdrop-blur-md sticky top-0 z-20 shrink-0">
         <h1 class="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-3">
           <span class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shadow-sm">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -13,7 +13,7 @@
         <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest mt-2 ml-13">Arsip Mutasi & Siswa Keluar</p>
       </div>
 
-      <div class="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6">
+      <div class="md:flex-1 md:overflow-y-auto custom-scrollbar p-6 space-y-6">
         <div class="space-y-4">
           <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-5 border border-emerald-500 shadow-sm relative overflow-hidden">
             <div class="relative z-10">
@@ -35,7 +35,7 @@
     </div>
 
     <!-- PANEL KANAN (FLOW) -->
-    <div class="flex-1 min-w-0 flex flex-col h-[60vh] md:h-full bg-slate-50 relative z-0">
+    <div class="flex-1 min-w-0 flex flex-col bg-slate-50 relative z-0 min-h-0">
       <div class="flex-1 p-6 md:p-8 overflow-hidden flex flex-col">
         <div class="bg-white rounded-3xl border border-slate-200 shadow-sm shadow-slate-200/50 flex-1 flex flex-col overflow-hidden relative">
           
