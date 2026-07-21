@@ -1,5 +1,5 @@
 <template>
-  <div class="absolute inset-0 flex flex-col min-h-0 bg-slate-50 z-10">
+  <div class="h-full flex flex-col min-h-0 bg-slate-50 z-10">
     
 <!-- Layout 2 Panel Dock & Flow -->
     <div class="flex-1 flex overflow-hidden relative">
