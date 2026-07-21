@@ -89,12 +89,17 @@
             <div v-else class="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6 bg-slate-50/30">
                 <!-- Group Data -->
                 <div v-for="(group, jenis) in groupedData" :key="jenis" class="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col min-h-[100px]">
-                    <div class="px-6 py-4 bg-slate-50/50 border-b border-slate-100 flex items-center justify-between">
+                    <div @click="toggleGroup(jenis)" class="px-6 py-4 bg-slate-50/50 border-b border-slate-100 flex items-center justify-between cursor-pointer hover:bg-slate-100/50 transition-colors">
                         <h3 class="font-black text-slate-700 text-sm uppercase tracking-widest">{{ formatJenis(jenis) }}</h3>
-                        <span class="text-[10px] font-black uppercase tracking-widest text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md border border-emerald-100">{{ group.length }} Item</span>
+                        <div class="flex items-center gap-3">
+                            <span class="text-[10px] font-black uppercase tracking-widest text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md border border-emerald-100">{{ group.length }} Item</span>
+                            <span class="text-slate-400 transition-transform duration-300 flex items-center justify-center" :class="{ 'rotate-180': !isGroupExpanded(jenis) }">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
+                            </span>
+                        </div>
                     </div>
                     
-                    <div class="overflow-x-auto custom-scrollbar">
+                    <div v-show="isGroupExpanded(jenis)" class="overflow-x-auto custom-scrollbar">
                         <table class="w-full text-left border-collapse min-w-full">
                             <thead class="hidden sm:table-header-group">
                                 <tr class="bg-white text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 border-b border-slate-100">
@@ -196,6 +201,14 @@ const isEditing = ref(false)
 const isDeleteModalOpen = ref(false)
 const itemToDelete = ref(null)
 const isDeleting = ref(false)
+
+const expandedGroups = ref({})
+const toggleGroup = (jenis) => {
+    expandedGroups.value[jenis] = !expandedGroups.value[jenis]
+}
+const isGroupExpanded = (jenis) => {
+    return expandedGroups.value[jenis] !== false
+}
 
 const formData = ref({
     id: null,
