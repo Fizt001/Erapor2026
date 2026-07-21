@@ -49,7 +49,7 @@
     <main class="flex-1 flex flex-col-reverse lg:flex-row w-full relative z-10 min-h-0 overflow-y-auto lg:overflow-hidden">
         
         <!-- LEFT: BANNER -->
-        <div class="w-full lg:w-[70%] h-auto lg:h-full relative flex flex-col justify-center py-12 px-6 lg:p-16 bg-slate-800 lg:bg-transparent overflow-hidden">
+        <div class="w-full lg:w-[70%] h-auto lg:h-full flex-shrink-0 lg:flex-shrink relative flex flex-col justify-center py-12 px-6 lg:p-16 bg-slate-800 lg:bg-transparent overflow-hidden">
             <!-- Background Gradient & Patterns -->
             <div class="absolute inset-0 bg-gradient-to-br from-emerald-800 to-slate-900 z-0">
                 <div class="absolute top-[-20%] left-[-10%] w-[70%] h-[70%] bg-emerald-600/20 rounded-full blur-[80px] pointer-events-none"></div>
@@ -89,7 +89,7 @@
         </div>
 
         <!-- RIGHT: FORM -->
-        <div class="w-full lg:w-[30%] h-full bg-white flex flex-col justify-center items-center py-10 px-6 lg:p-8 relative z-20 shadow-[-20px_0_40px_-10px_rgba(0,0,0,0.2)] lg:overflow-y-auto">
+        <div class="w-full lg:w-[30%] h-auto lg:h-full flex-shrink-0 lg:flex-shrink bg-white flex flex-col justify-center items-center py-10 px-6 lg:p-8 relative z-20 shadow-[-20px_0_40px_-10px_rgba(0,0,0,0.2)] lg:overflow-y-auto">
             <div class="w-full max-w-sm lg:max-w-md xl:max-w-lg">
                 
                 <div class="text-center mb-8 lg:mb-10 pb-6 border-b-2 border-slate-100 relative">
