@@ -171,7 +171,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useCookie } from '#app'
 
 definePageMeta({
-    layout: 'guru',
+    layout: "walas",
     title: 'Bimbingan Wali Kelas'
 })
 

@@ -341,7 +341,7 @@ import { Doughnut, Line } from 'vue-chartjs'
 
 ChartJS.register(ArcElement, Tooltip, Legend, LineElement, PointElement, LineController, CategoryScale, LinearScale)
 
-definePageMeta({ layout: "guru", middleware: "guru", title: 'Dashboard Wali Kelas' })
+definePageMeta({ layout: "walas", middleware: "guru", title: 'Dashboard Wali Kelas' })
 
 const tokenCookie = useCookie('auth_token')
 

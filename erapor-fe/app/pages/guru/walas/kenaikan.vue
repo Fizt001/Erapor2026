@@ -123,7 +123,7 @@
 import { ref, onMounted, computed } from 'vue'
 
 definePageMeta({
-  layout: 'guru',
+  layout: "walas",
   title: 'Catatan Kenaikan',
   middleware: 'guru'
 })

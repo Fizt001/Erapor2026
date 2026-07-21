@@ -136,7 +136,7 @@
 import { ref, onMounted } from 'vue'
 
 definePageMeta({
-    layout: 'guru',
+    layout: "walas",
     middleware: 'guru'
 })
 
