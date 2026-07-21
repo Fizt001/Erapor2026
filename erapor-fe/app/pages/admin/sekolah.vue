@@ -5,12 +5,12 @@
     <form @submit.prevent="saveData" class="flex-1 flex overflow-hidden relative">
       
       <!-- MOBILE VIEW TABS -->
-      <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-2 flex overflow-x-auto gap-2 z-20 hide-scrollbar">
+      <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 z-20 shadow-sm">
         <button v-for="tab in tabs" :key="'mob-'+tab.id" type="button" @click="activeTab = tab.id"
-          :class="activeTab === tab.id ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="rounded-xl flex-shrink-0 flex flex-col items-center justify-center py-2 px-4 transition-all active:scale-95 min-w-[76px]">
+          :class="activeTab === tab.id ? 'bg-emerald-500 text-white shadow-sm ring-1 ring-emerald-400 ring-offset-1' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'"
+          class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-0.5 transition-all active:scale-95">
           <span class="text-lg mb-0.5 transition-transform" :class="activeTab === tab.id ? 'scale-110' : ''">{{ tab.icon }}</span>
-          <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">{{ tab.shortTitle }}</span>
+          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">{{ tab.shortTitle }}</span>
         </button>
       </div>
 
@@ -61,11 +61,11 @@
       </div>
 
       <!-- Panel Flow Kanan -->
-      <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative', !isDesktop ? 'pt-[60px]' : '']">
-        <div class="p-6 lg:p-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
-          <div class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
+      <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative', !isDesktop ? 'pt-[64px]' : '']">
+        <div class="p-2 lg:p-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
+          <div class="bg-white rounded-xl lg:rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
             <!-- Table Header & Filters -->
-            <div class="px-4 py-3 lg:px-6 lg:py-5 border-b border-slate-200 flex justify-between items-center gap-2 lg:gap-4 shrink-0 z-10 bg-white">
+            <div class="px-3 py-3 lg:px-6 lg:py-5 border-b border-slate-200 flex justify-between items-center gap-2 lg:gap-4 shrink-0 z-10 bg-white">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 lg:w-12 lg:h-12 rounded-xl lg:rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-sm flex items-center justify-center text-xl lg:text-2xl text-white shrink-0">
                         {{ currentTab.icon }}
@@ -86,8 +86,8 @@
                 </div>
             </div>
 
-            <div class="flex-1 overflow-y-auto custom-scrollbar p-6 md:p-8 bg-slate-50/30">
-                <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-slate-200/60 p-6 md:p-10">
+            <div class="flex-1 overflow-y-auto custom-scrollbar p-0 sm:p-2 md:p-8 bg-slate-50/30">
+                <div class="max-w-4xl mx-auto bg-white rounded-none sm:rounded-xl lg:rounded-2xl sm:shadow-sm sm:border border-slate-200/60 p-4 md:p-10">
                 
                 <!-- 1. IDENTITAS -->
                 <div v-show="activeTab === 'identitas'" class="animate-fadeIn space-y-6">
