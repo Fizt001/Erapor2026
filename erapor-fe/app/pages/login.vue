@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen w-full flex flex-col font-sans bg-slate-50 relative overflow-hidden">
+  <div class="min-h-screen w-full flex flex-col font-sans bg-slate-50 relative">
     
     <!-- HEADER -->
     <header class="w-full bg-slate-900 h-16 flex items-center justify-between px-6 lg:px-12 relative z-20 shadow-md flex-shrink-0">
@@ -46,7 +46,7 @@
     </header>
 
     <!-- MAIN SPLIT AREA -->
-    <main class="flex-1 flex flex-col-reverse lg:flex-row w-full relative z-10 min-h-0 overflow-y-auto lg:overflow-hidden">
+    <main class="flex-1 flex flex-col lg:flex-row w-full relative z-10">
         
         <!-- LEFT: BANNER -->
         <div class="w-full lg:w-[70%] h-auto lg:h-full flex-shrink-0 lg:flex-shrink relative flex flex-col justify-center py-12 px-6 lg:p-16 bg-slate-800 lg:bg-transparent overflow-hidden">
