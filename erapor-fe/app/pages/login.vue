@@ -49,51 +49,47 @@
     <main class="flex-1 flex flex-col-reverse lg:flex-row w-full relative z-10 min-h-0 overflow-y-auto lg:overflow-hidden">
         
         <!-- LEFT: BANNER -->
-        <div class="w-full lg:w-[55%] h-full relative flex flex-col justify-center py-10 px-6 lg:p-10 bg-slate-800 lg:bg-transparent overflow-hidden">
+        <div class="w-full lg:w-[70%] h-auto lg:h-full relative flex flex-col justify-center py-12 px-6 lg:p-16 bg-slate-800 lg:bg-transparent overflow-hidden">
             <!-- Background Gradient & Patterns -->
             <div class="absolute inset-0 bg-gradient-to-br from-emerald-800 to-slate-900 z-0">
                 <div class="absolute top-[-20%] left-[-10%] w-[70%] h-[70%] bg-emerald-600/20 rounded-full blur-[80px] pointer-events-none"></div>
                 <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-teal-600/20 rounded-full blur-[80px] pointer-events-none"></div>
             </div>
 
-            <div class="relative z-10 flex flex-col h-full w-full max-w-2xl mx-auto lg:mx-0 lg:ml-12">
+            <div class="relative z-10 flex flex-col lg:flex-row items-center gap-8 lg:gap-12 w-full max-w-5xl mx-auto mt-4 lg:mt-0">
                 
-                <!-- Banner Text -->
-                <div class="mb-8 lg:mb-16 text-center lg:text-left pt-4 lg:pt-8">
-                    <div class="inline-block bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-3 py-1 mb-4">
-                        <span class="text-emerald-300 font-bold uppercase tracking-widest text-[10px]">Aplikasi Penilaian Akademik</span>
-                    </div>
-                    <h2 class="text-3xl lg:text-4xl xl:text-5xl font-black text-white leading-tight drop-shadow-md">
-                        Laporan Hasil Belajar <br>
-                        <span class="text-emerald-400 mt-1 block">Jenjang SMK</span>
-                    </h2>
-                    <div class="mt-4 flex items-center justify-center lg:justify-start gap-4">
-                        <span class="px-4 py-1.5 rounded-full bg-emerald-500 text-white font-black text-xs uppercase tracking-wider shadow-lg">Versi 2026.1</span>
-                        <span class="text-slate-300 font-medium text-xs">{{ sekolah?.nama_sekolah || 'Sistem E-Rapor Terpadu' }}</span>
+                <!-- Photo Left -->
+                <div class="w-full sm:max-w-md lg:max-w-none lg:w-[45%] flex-shrink-0 relative group">
+                    <div class="relative rounded-3xl border-4 border-white/20 overflow-hidden shadow-2xl shadow-emerald-900/50 flex items-center justify-center bg-slate-800 transition-transform duration-500 group-hover:scale-[1.02] aspect-[4/3]">
+                        <img v-if="sekolah?.foto_1" :src="`/${sekolah.foto_1}`" alt="Foto Sekolah" class="w-full h-full object-cover">
+                        <div v-else class="text-center text-slate-500 flex flex-col items-center justify-center h-full w-full">
+                            <span class="text-5xl lg:text-6xl mb-2 block">🏫</span>
+                            <span class="text-[10px] font-bold uppercase tracking-widest px-4 text-center">Foto 1 (Upload di Master)</span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Big Circular Frame -->
-                <div class="relative w-56 h-56 lg:w-[350px] lg:h-[350px] xl:w-[420px] xl:h-[420px] mx-auto lg:mx-0 mt-4 lg:mt-auto flex-shrink-0 group">
-                    <!-- Decorative Outlines -->
-                    <div class="absolute inset-[-8%] rounded-full border-2 border-emerald-400/30 lg:animate-[spin_20s_linear_infinite]"></div>
-                    <div class="absolute inset-[-15%] rounded-full border border-teal-500/20 lg:animate-[spin_25s_linear_infinite_reverse]"></div>
-                    <div class="absolute inset-[-25%] rounded-full border border-slate-500/10 lg:animate-[spin_30s_linear_infinite]"></div>
-                    
-                    <!-- Main Image Frame -->
-                    <div class="absolute inset-0 rounded-full border-8 border-white/20 overflow-hidden shadow-2xl shadow-emerald-900/50 flex items-center justify-center bg-slate-800 transition-transform duration-500 group-hover:scale-105">
-                        <img v-if="sekolah?.foto_1" :src="`/${sekolah.foto_1}`" alt="Foto Sekolah" class="w-full h-full object-cover">
-                        <div v-else class="text-center text-slate-500">
-                            <span class="text-6xl mb-2 block">🏫</span>
-                            <span class="text-[10px] font-bold uppercase tracking-widest">Foto 1 (Upload di Master)</span>
-                        </div>
+                <!-- Text Right -->
+                <div class="w-full lg:w-[55%] text-center lg:text-left mt-4 lg:mt-0">
+                    <div class="inline-block bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-3 py-1 mb-4 lg:mb-6">
+                        <span class="text-emerald-300 font-bold uppercase tracking-widest text-[10px]">Versi 2026.1 - {{ sekolah?.nama_sekolah || 'Sistem E-Rapor Terpadu' }}</span>
                     </div>
+                    
+                    <h2 class="text-4xl lg:text-5xl xl:text-6xl font-black text-white leading-tight drop-shadow-md mb-4 lg:mb-6">
+                        e-Rapor <span class="text-emerald-400">SMK</span>
+                    </h2>
+                    
+                    <p class="text-base lg:text-lg xl:text-xl text-slate-300 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0">
+                        DASHBOARD BUSINESS INTELLIGENCE<br>
+                        SEBAGAI EARLY WARNING SYSTEM<br>
+                        PENCAPAIAN AKADEMIK SISWA
+                    </p>
                 </div>
             </div>
         </div>
 
         <!-- RIGHT: FORM -->
-        <div class="w-full lg:w-[45%] h-full bg-white flex flex-col justify-center items-center py-10 px-6 lg:p-8 relative z-20 shadow-[-20px_0_40px_-10px_rgba(0,0,0,0.2)] lg:overflow-y-auto">
+        <div class="w-full lg:w-[30%] h-full bg-white flex flex-col justify-center items-center py-10 px-6 lg:p-8 relative z-20 shadow-[-20px_0_40px_-10px_rgba(0,0,0,0.2)] lg:overflow-y-auto">
             <div class="w-full max-w-sm lg:max-w-md xl:max-w-lg">
                 
                 <div class="text-center mb-8 lg:mb-10 pb-6 border-b-2 border-slate-100 relative">
