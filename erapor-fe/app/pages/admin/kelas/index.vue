@@ -103,16 +103,16 @@
                 </div>
             </div>
             
-            <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-                <select v-model="tingkatFilter" @change="fetchKelas(1)" class="w-full sm:w-40 px-4 py-2.5 rounded-xl border border-slate-200 bg-white focus:ring-2 focus:ring-emerald-500/20 text-[11px] font-bold text-slate-600 uppercase tracking-widest cursor-pointer shadow-sm appearance-none">
+            <div class="flex flex-row gap-2 w-full sm:w-auto">
+                <select v-model="tingkatFilter" @change="fetchKelas(1)" class="w-1/2 sm:w-40 py-2 px-3 sm:px-4 rounded-xl border border-slate-200 bg-white focus:ring-2 focus:ring-emerald-500 text-[9px] sm:text-[11px] font-black uppercase tracking-wider text-slate-600 cursor-pointer shadow-sm appearance-none">
                     <option value="">Semua Tingkat</option>
                     <option value="X">Kelas X</option>
                     <option value="XI">Kelas XI</option>
                     <option value="XII">Kelas XII</option>
                 </select>
-                <div class="relative w-full sm:w-64">
-                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">🔍</span>
-                    <input type="text" v-model="searchQuery" @input="debouncedFetch" placeholder="Cari Kelas..." class="w-full pl-9 pr-4 py-2.5 rounded-xl border border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all text-xs font-semibold bg-white shadow-sm placeholder-slate-400">
+                <div class="relative w-1/2 sm:w-auto">
+                    <span class="absolute inset-y-0 left-0 pl-2.5 sm:pl-3 flex items-center text-slate-400">🔍</span>
+                    <input type="text" v-model="searchQuery" @input="debouncedFetch" placeholder="Cari Kelas..." class="w-full sm:w-48 pl-8 sm:pl-9 pr-3 sm:pr-4 py-2 rounded-xl border border-slate-200 bg-white focus:ring-2 focus:ring-emerald-500 text-[10px] sm:text-xs font-bold transition-all shadow-sm placeholder-slate-400">
                 </div>
             </div>
         </div>
