@@ -185,38 +185,45 @@
 
         <!-- Table Data -->
         <div v-else class="flex-1 overflow-y-auto overflow-x-auto custom-scrollbar relative bg-white">
-            <table class="w-full text-left border-collapse min-w-[600px] whitespace-nowrap">
-                <thead class="sticky top-0 z-10 bg-slate-50 border-b border-slate-200 shadow-sm">
+            <table class="w-full text-left border-collapse min-w-full">
+                <thead class="hidden sm:table-header-group sticky top-0 z-10 bg-slate-50 border-b border-slate-200 shadow-sm">
                     <tr class="text-[9px] uppercase tracking-widest font-black text-slate-500">
-                        <th class="py-3 px-4 w-12 text-center bg-slate-50">No</th>
-                        <th class="py-3 px-4 sticky left-0 z-20 bg-slate-50 after:absolute after:inset-y-0 after:right-0 after:w-px after:bg-slate-200">Pengguna</th>
-                        <th class="py-3 px-4 w-32 bg-slate-50">Hak Akses</th>
-                        <th class="py-3 px-4 w-24 text-center bg-slate-50">Aksi</th>
+                        <th class="py-3 px-4 w-12 text-center">No</th>
+                        <th class="py-3 px-4">Pengguna</th>
+                        <th class="py-3 px-4 w-32">Hak Akses</th>
+                        <th class="py-3 px-4 w-24 text-center">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="text-xs font-medium text-slate-700 divide-y divide-slate-100">
-                    <tr v-if="users.length === 0">
-                        <td colspan="4" class="p-16 text-center text-slate-400 font-bold bg-white">
+                <tbody class="text-xs font-medium text-slate-700 divide-y divide-slate-100 flex flex-col sm:table-row-group">
+                    <tr v-if="users.length === 0" class="flex sm:table-row">
+                        <td colspan="4" class="p-16 w-full text-center text-slate-400 font-bold bg-white block sm:table-cell">
                             <span class="text-4xl block mb-2 opacity-30">📋</span>
                             Tidak ada data pengguna ditemukan.
                         </td>
                     </tr>
-                    <tr v-for="(u, index) in users" :key="u.id" class="hover:bg-slate-50/80 transition-colors bg-white group">
-                        <td class="p-4 text-center text-slate-400 font-bold bg-white group-hover:bg-slate-50/80">{{ (pagination.currentPage - 1) * 15 + index + 1 }}</td>
-                        <td class="p-4 sticky left-0 z-10 bg-white group-hover:bg-slate-50/80 after:absolute after:inset-y-0 after:right-0 after:w-px after:bg-slate-100 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.05)]">
-                            <div class="font-black text-slate-800 text-[13px]">{{ u.name }}</div>
-                            <div class="text-[10px] font-bold text-slate-400 mt-0.5">{{ u.email }}</div>
+                    <tr v-for="(u, index) in users" :key="u.id" class="hover:bg-slate-50/80 transition-colors bg-white group flex flex-col sm:table-row p-4 sm:p-0 relative">
+                        <td class="px-0 py-1 sm:p-4 text-left sm:text-center text-slate-400 font-bold flex sm:table-cell items-center justify-between">
+                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nomor</span>
+                            <span>{{ (pagination.currentPage - 1) * 15 + index + 1 }}</span>
                         </td>
-                        <td class="p-4 bg-white group-hover:bg-slate-50/80">
+                        <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-2 sm:pb-4 mb-1 sm:mb-0">
+                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Pengguna</span>
+                            <div class="text-right sm:text-left">
+                                <div class="font-black text-slate-800 text-[13px]">{{ u.name }}</div>
+                                <div class="text-[10px] font-bold text-slate-400 mt-0.5">{{ u.email }}</div>
+                            </div>
+                        </td>
+                        <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-2 sm:pb-4 mb-1 sm:mb-0">
+                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Hak Akses</span>
                             <span class="px-3 py-1.5 rounded-md text-[9px] font-black uppercase tracking-widest border" :class="getRoleBadgeClass(u.role)">
                                 {{ u.role }}
                             </span>
                         </td>
-                        <td class="p-4 bg-white group-hover:bg-slate-50/80">
-                            <div class="flex items-center justify-center gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
-                                <button @click="resetPassword(u)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:border-amber-200 hover:bg-amber-50 hover:text-amber-600 flex items-center justify-center transition-colors shadow-sm" title="Reset Password">🔑</button>
-                                <button @click="openEditModal(u)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-600 flex items-center justify-center transition-colors shadow-sm" title="Edit">✏️</button>
-                                <button @click="confirmDelete(u)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-center transition-colors shadow-sm" title="Hapus">🗑️</button>
+                        <td class="px-0 pt-2 sm:p-4 sm:pr-6 text-center">
+                            <div class="flex items-center justify-center sm:justify-end gap-3 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
+                                <button @click="resetPassword(u)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-amber-200 hover:bg-amber-50 hover:text-amber-600 flex items-center justify-center transition-colors shadow-sm" title="Reset Password">🔑</button>
+                                <button @click="openEditModal(u)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-600 flex items-center justify-center transition-colors shadow-sm" title="Edit">✏️</button>
+                                <button @click="confirmDelete(u)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-center transition-colors shadow-sm" title="Hapus">🗑️</button>
                             </div>
                         </td>
                     </tr>
