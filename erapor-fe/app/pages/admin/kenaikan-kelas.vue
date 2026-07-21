@@ -2,8 +2,20 @@
   <div class="h-full flex flex-col min-h-0 bg-slate-50">
     <div class="flex-1 flex flex-col xl:flex-row overflow-hidden relative">
 
+      <!-- MOBILE VIEW TABS -->
+      <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-2 grid grid-cols-2 gap-2 z-20">
+        <button type="button" @click="activeTab = 'filter'" :class="activeTab === 'filter' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="rounded-xl flex items-center justify-center py-2 px-1 transition-all active:scale-95">
+          <span class="text-lg mr-1.5 transition-transform" :class="activeTab === 'filter' ? 'scale-110' : ''">🔍</span>
+          <span class="text-[10px] font-black uppercase tracking-wider">Filter Data</span>
+        </button>
+        <button type="button" @click="activeTab = 'table'" :class="activeTab === 'table' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="rounded-xl flex items-center justify-center py-2 px-1 transition-all active:scale-95">
+          <span class="text-lg mr-1.5 transition-transform" :class="activeTab === 'table' ? 'scale-110' : ''">📋</span>
+          <span class="text-[10px] font-black uppercase tracking-wider">Data Siswa</span>
+        </button>
+      </div>
+
       <!-- ============ PANEL DOCK KIRI (Filter) ============ -->
-      <div class="xl:w-[360px] w-full bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full xl:z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)]">
+      <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full xl:z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', activeTab === 'filter' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[60px]' : '']">
         <div class="p-6 space-y-5 overflow-y-auto custom-scrollbar flex-1">
 
           <!-- Header Dock -->
@@ -88,8 +100,8 @@
         </div>
       </div>
 
-      <!-- ============ PANEL FLOW KANAN (Tabel) ============ -->
-      <div class="flex-1 bg-slate-50 flex flex-col h-full min-w-0">
+      <!-- ============ PANEL FLOW KANAN (Daftar Siswa) ============ -->
+      <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative', activeTab === 'table' || isDesktop ? 'flex' : 'hidden', !isDesktop ? 'pt-[60px]' : '']">
         <div class="p-2 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full h-full flex flex-col relative z-0">
           <div class="bg-white rounded-xl sm:rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
 
@@ -262,6 +274,10 @@ const setupData = ref({ tahun_ajaran: [], kelas_by_tahun: {} })
 const selectedTahunAjaran = ref('')
 const selectedKelas = ref('')
 const kelasTujuanId = ref('')
+
+const windowWidth = ref(1024)
+const isDesktop = computed(() => windowWidth.value >= 1280) // xl breakpoint for new dock
+const activeTab = ref('filter')
 const siswaList = ref([])
 const selectedIds = ref([])
 const isLoading = ref(false)
@@ -338,6 +354,7 @@ const loadSiswa = async () => {
         aksi_admin: '',
         kelas_tujuan_override: ''
       }))
+      if (!isDesktop.value && siswaList.value.length > 0) activeTab.value = 'table'
     }
   } catch (e) {
     useSwal().toast('Gagal memuat data siswa.', 'error')
@@ -402,6 +419,8 @@ const executeProses = async () => {
 }
 
 onMounted(() => {
+  windowWidth.value = window.innerWidth
+  window.addEventListener('resize', () => { windowWidth.value = window.innerWidth })
   fetchSetup()
 })
 </script>
