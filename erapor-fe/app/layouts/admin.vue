@@ -10,7 +10,6 @@
             <span v-else>-Rapor</span>
         </span>
       </div>
-      
       <div class="p-3">
         <nav class="space-y-1 h-[calc(100vh-140px)] overflow-y-auto custom-scrollbar pr-2">
           <template v-for="(menu, idx) in adminMenus" :key="idx">
@@ -31,7 +30,6 @@
       <!-- Navbar -->
       <header class="relative h-14 bg-white border-b border-slate-200 flex items-center justify-between px-4 sm:px-6 z-[60] shadow-sm flex-shrink-0 print:hidden">
         <div class="flex items-center">
-          <!-- Mobile: show logo + school name -->
           <div class="lg:hidden flex items-center gap-2">
             <img v-if="sekolah?.logo" :src="sekolah.logo" alt="Logo" class="h-7 w-7 object-contain" />
             <span v-else class="text-emerald-600 font-black text-lg">e</span>
@@ -39,9 +37,7 @@
           </div>
           <h2 class="hidden lg:block text-base font-bold text-slate-800 ml-3 border-l-2 border-emerald-500 pl-3 py-1 uppercase tracking-wider">{{ route.meta.title || 'Admin Workspace' }}</h2>
         </div>
-        
         <div class="flex-1 lg:flex-none flex justify-end items-center space-x-4">
-          <!-- Profile Dropdown in Navbar -->
           <div class="relative">
             <button @click="profileDropdownOpen = !profileDropdownOpen" class="flex items-center space-x-3 text-right focus:outline-none bg-slate-50 hover:bg-slate-100 p-1.5 pl-3 rounded-full border border-slate-200 transition-all">
               <div class="hidden sm:block min-w-0 pr-2">
@@ -52,22 +48,18 @@
                 {{ userInitials }}
               </div>
             </button>
-
-            <!-- Dropdown Menu -->
             <div v-show="profileDropdownOpen" class="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-xl border border-slate-200 py-2 z-[60] origin-top-right overflow-hidden flex flex-col">
               <div class="px-4 py-2 border-b border-slate-100 mb-1 block">
                 <p class="text-[13px] font-bold text-slate-700 truncate">{{ userProfile?.name || 'Administrator' }}</p>
                 <p class="text-[10px] text-slate-500 truncate">{{ userProfile?.email || 'admin@erapor.com' }}</p>
               </div>
               <button @click="router.push('/admin/profil'); profileDropdownOpen = false" type="button" class="flex items-center px-4 py-2 text-sm text-slate-700 hover:bg-emerald-50 hover:text-emerald-700 transition-colors w-full text-left">
-                <span class="mr-2">👤</span> Profil Saya
+                <span class="mr-2">&#128100;</span> Profil Saya
               </button>
               <button @click="handleLogout" type="button" class="flex items-center px-4 py-2 text-sm text-rose-600 hover:bg-rose-50 transition-colors w-full text-left">
-                <span class="mr-2">🚪</span> Logout
+                <span class="mr-2">&#128682;</span> Logout
               </button>
             </div>
-            
-            <!-- Close on click outside -->
             <div v-if="profileDropdownOpen" @click="profileDropdownOpen = false" class="fixed inset-0 z-40 bg-transparent"></div>
           </div>
         </div>
@@ -76,91 +68,76 @@
       <!-- Page Content -->
       <main class="flex-1 overflow-y-auto p-4 sm:p-5 bg-slate-100 relative print:p-0 print:bg-white print:overflow-visible print:block pb-20 lg:pb-5">
         <NuxtPage />
-        
-        <!-- Footer Info -->
         <div class="mt-10 pt-4 border-t border-slate-200 text-center pb-4 print:hidden">
             <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Created by <span class="text-emerald-600">SMK-Yatindo</span></p>
         </div>
       </main>
     </div>
 
-    <!-- ===================== -->
     <!-- MOBILE BOTTOM NAV BAR -->
-    <!-- ===================== -->
     <nav class="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 shadow-[0_-4px_20px_-4px_rgba(0,0,0,0.1)] print:hidden">
       <div class="flex items-stretch h-16">
-        <!-- Tab: Dashboard -->
         <NuxtLink to="/admin/dashboard" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="route.path === '/admin/dashboard' ? 'text-emerald-600' : 'text-slate-400'">
-          <span class="text-xl leading-none">📊</span>
+          <span class="text-xl leading-none">&#128202;</span>
           <span class="text-[9px] font-black uppercase tracking-wider">Dashboard</span>
         </NuxtLink>
-
-        <!-- Tab: Data/Pengaturan -->
         <button @click="openDrawer('pengaturan')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="activeDrawer === 'pengaturan' && drawerOpen ? 'text-emerald-600' : 'text-slate-400'">
-          <span class="text-xl leading-none">⚙️</span>
+          <span class="text-xl leading-none">&#9881;&#65039;</span>
           <span class="text-[9px] font-black uppercase tracking-wider">Pengaturan</span>
         </button>
-
-        <!-- Tab: Master Data -->
         <button @click="openDrawer('master')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="activeDrawer === 'master' && drawerOpen ? 'text-emerald-600' : 'text-slate-400'">
-          <span class="text-xl leading-none">🗄️</span>
+          <span class="text-xl leading-none">???</span>
           <span class="text-[9px] font-black uppercase tracking-wider">Master</span>
         </button>
-
-        <!-- Tab: Akademik -->
         <button @click="openDrawer('akademik')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="activeDrawer === 'akademik' && drawerOpen ? 'text-emerald-600' : 'text-slate-400'">
-          <span class="text-xl leading-none">🎓</span>
+          <span class="text-xl leading-none">??</span>
           <span class="text-[9px] font-black uppercase tracking-wider">Akademik</span>
         </button>
-
-        <!-- Tab: More -->
         <button @click="openDrawer('all')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="activeDrawer === 'all' && drawerOpen ? 'text-emerald-600' : 'text-slate-400'">
-          <span class="text-xl leading-none">☰</span>
+          <span class="text-xl leading-none">&#9776;</span>
           <span class="text-[9px] font-black uppercase tracking-wider">Menu</span>
         </button>
       </div>
     </nav>
 
-    <!-- ================ -->
-    <!-- BOTTOM SHEET DRAWER (Mobile) -->
-    <!-- ================ -->
+    <!-- DRAWER OVERLAY -->
     <Transition name="drawer-overlay">
       <div v-if="drawerOpen" @click="closeDrawer" class="lg:hidden fixed inset-0 bg-black/50 z-[70] backdrop-blur-sm print:hidden"></div>
     </Transition>
 
+    <!-- DRAWER PANEL -->
     <Transition name="drawer-panel">
       <div v-if="drawerOpen" class="lg:hidden fixed bottom-0 left-0 right-0 z-[80] bg-white rounded-t-3xl shadow-2xl print:hidden" style="max-height: 75vh;">
-        <!-- Drawer Handle -->
         <div class="flex justify-center pt-3 pb-2">
           <div class="w-10 h-1 bg-slate-300 rounded-full"></div>
         </div>
-
-        <!-- Drawer Header -->
         <div class="flex items-center justify-between px-6 pb-3 border-b border-slate-100">
           <h3 class="font-black text-slate-800 uppercase tracking-widest text-xs">{{ drawerTitle }}</h3>
           <button @click="closeDrawer" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 transition-colors">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
           </button>
         </div>
-
-        <!-- Drawer Menu List -->
-        <div class="overflow-y-auto px-4 py-4 space-y-1" style="max-height: calc(75vh - 100px);">
-          <template v-for="(menu, idx) in currentDrawerMenus" :key="idx">
-            <div v-if="menu.divider" class="pt-3 pb-1 px-2 text-[10px] font-black text-emerald-600 uppercase tracking-widest">
-              {{ menu.dividerLabel }}
-            </div>
-            <NuxtLink
-              v-else
-              :to="menu.path"
-              @click="closeDrawer"
-              class="flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all font-semibold text-sm"
-              :class="route.path === menu.path ? 'bg-emerald-50 text-emerald-700 font-bold' : 'text-slate-600 hover:bg-slate-50'"
-            >
-              <span class="text-xl w-8 text-center leading-none">{{ menu.icon }}</span>
-              <span>{{ menu.name }}</span>
-              <span class="ml-auto text-slate-300 text-xs">›</span>
-            </NuxtLink>
-          </template>
+        <!-- ICON GRID -->
+        <div class="overflow-y-auto px-5 py-5" style="max-height: calc(75vh - 100px);">
+          <div class="grid grid-cols-4 gap-y-5 gap-x-3">
+            <template v-for="(menu, idx) in currentDrawerMenus" :key="'g-'+idx">
+              <NuxtLink
+                v-if="!menu.divider"
+                :to="menu.path"
+                @click="closeDrawer"
+                class="flex flex-col items-center gap-1.5 active:scale-95 transition-transform"
+              >
+                <div
+                  class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl shadow-sm transition-all"
+                  :class="route.path === menu.path ? 'bg-emerald-500 shadow-emerald-200 shadow-lg' : 'bg-slate-100'"
+                >{{ menu.icon }}</div>
+                <span
+                  class="text-[9px] font-bold text-center leading-tight w-full"
+                  :class="route.path === menu.path ? 'text-emerald-700' : 'text-slate-500'"
+                >{{ menu.name }}</span>
+              </NuxtLink>
+            </template>
+          </div>
         </div>
       </div>
     </Transition>
@@ -177,7 +154,6 @@ const route = useRoute()
 const sidebarOpen = ref(false)
 const profileDropdownOpen = ref(false)
 
-// === BOTTOM NAV DRAWER STATE ===
 const drawerOpen = ref(false)
 const activeDrawer = ref(null)
 
@@ -185,27 +161,27 @@ const drawerMenuGroups = {
   pengaturan: {
     title: 'Pengaturan Sistem',
     menus: [
-      { name: 'Data Sekolah', path: '/admin/sekolah', icon: '🏢' },
-      { name: 'Tahun Ajaran', path: '/admin/tahun-ajaran', icon: '🗓️' },
-      { name: 'Manajemen User', path: '/admin/users', icon: '👥' },
+      { name: 'Data Sekolah', path: '/admin/sekolah', icon: '??' },
+      { name: 'Tahun Ajaran', path: '/admin/tahun-ajaran', icon: '???' },
+      { name: 'Manajemen User', path: '/admin/users', icon: '??' },
     ]
   },
   master: {
     title: 'Master Data',
     menus: [
-      { name: 'Master Database', path: '/admin/master-database', icon: '🗄️' },
-      { name: 'Master Kejuruan', path: '/admin/kejuruan', icon: '🛠️' },
-      { name: 'Master Kurikulum', path: '/admin/kurikulum', icon: '📚' },
-      { name: 'Master Kelas', path: '/admin/kelas', icon: '🏫' },
+      { name: 'Master Database', path: '/admin/master-database', icon: '???' },
+      { name: 'Master Kejuruan', path: '/admin/kejuruan', icon: '???' },
+      { name: 'Master Kurikulum', path: '/admin/kurikulum', icon: '??' },
+      { name: 'Master Kelas', path: '/admin/kelas', icon: '??' },
     ]
   },
   akademik: {
     title: 'Administrasi Akademik',
     menus: [
-      { name: 'Riwayat Mutasi', path: '/admin/riwayat-mutasi', icon: '📝' },
-      { name: 'Kenaikan Kelas', path: '/admin/kenaikan-kelas', icon: '🎓' },
-      { name: 'Buku Induk', path: '/admin/buku-induk', icon: '📖' },
-      { name: 'Backup & Arsip', path: '/admin/backup', icon: '💾' },
+      { name: 'Riwayat Mutasi', path: '/admin/riwayat-mutasi', icon: '??' },
+      { name: 'Kenaikan Kelas', path: '/admin/kenaikan-kelas', icon: '??' },
+      { name: 'Buku Induk', path: '/admin/buku-induk', icon: '??' },
+      { name: 'Backup & Arsip', path: '/admin/backup', icon: '??' },
     ]
   },
   all: {
@@ -219,8 +195,7 @@ const currentDrawerMenus = computed(() => activeDrawer.value ? drawerMenuGroups[
 
 const openDrawer = (group) => {
   if (drawerOpen.value && activeDrawer.value === group) {
-    closeDrawer()
-    return
+    closeDrawer(); return
   }
   activeDrawer.value = group
   drawerOpen.value = true
@@ -233,17 +208,10 @@ const closeDrawer = () => {
 
 watch(() => route.path, () => { closeDrawer() })
 
-useHead({
-  style: [
-    { children: 'html { font-size: 80% !important; }' }
-  ]
-})
+useHead({ style: [{ children: 'html { font-size: 80% !important; }' }] })
 
 const { sekolah, fetchSekolah } = useSekolah()
-
-onMounted(() => {
-  fetchSekolah()
-})
+onMounted(() => { fetchSekolah() })
 
 const userCookie = useCookie('user_profile')
 const userProfile = computed(() => {
@@ -259,20 +227,14 @@ const userInitials = computed(() => {
 const handleLogout = async () => {
   try {
     const tokenCookie = useCookie('auth_token')
-    
-    // Panggil API logout 
     if (tokenCookie.value) {
       await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/logout', {
         method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${tokenCookie.value}`
-        }
+        headers: { 'Authorization': `Bearer ${tokenCookie.value}` }
       })
     }
-  } catch (error) {
-    console.error('Logout error', error)
-  } finally {
-    // Hapus cookies dan arahkan ke login
+  } catch (error) { console.error('Logout error', error) }
+  finally {
     useCookie('auth_token').value = null
     useCookie('user_profile').value = null
     router.push('/login')
@@ -281,39 +243,11 @@ const handleLogout = async () => {
 </script>
 
 <style scoped>
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
-.animate-fadeIn {
-  animation: fadeIn 0.15s ease-out forwards;
-}
-
-.custom-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-.custom-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-/* Drawer Overlay Transition */
-.drawer-overlay-enter-active,
-.drawer-overlay-leave-active {
-  transition: opacity 0.3s ease;
-}
-.drawer-overlay-enter-from,
-.drawer-overlay-leave-to {
-  opacity: 0;
-}
-
-/* Drawer Panel Transition */
-.drawer-panel-enter-active,
-.drawer-panel-leave-active {
-  transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
-}
-.drawer-panel-enter-from,
-.drawer-panel-leave-to {
-  transform: translateY(100%);
-}
+.custom-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.custom-scrollbar::-webkit-scrollbar { display: none; }
+.drawer-overlay-enter-active, .drawer-overlay-leave-active { transition: opacity 0.3s ease; }
+.drawer-overlay-enter-from, .drawer-overlay-leave-to { opacity: 0; }
+.drawer-panel-enter-active, .drawer-panel-leave-active { transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1); }
+.drawer-panel-enter-from, .drawer-panel-leave-to { transform: translateY(100%); }
 </style>
+
