@@ -82,6 +82,16 @@ class AdminBackupController extends Controller
                     $growDataQueries['siswa'] = $query;
                 }
 
+                if (class_exists(\App\Models\MutasiSiswa::class)) {
+                    $queryMutasi = \App\Models\MutasiSiswa::query();
+                    if ($mode === 'psas') {
+                        $queryMutasi->whereMonth('created_at', '>=', 7)->whereMonth('created_at', '<=', 12);
+                    } else if ($mode === 'psat') {
+                        $queryMutasi->whereMonth('created_at', '>=', 1)->whereMonth('created_at', '<=', 6);
+                    }
+                    $growDataQueries['mutasi_siswas'] = $queryMutasi;
+                }
+
             } elseif ($role === 'kurikulum') {
                 $mainDataTables = [
                     'struktur_kurikulum' => \App\Models\StrukturKurikulum::class,
