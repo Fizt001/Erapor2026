@@ -65,21 +65,23 @@
         <div class="p-6 lg:p-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
           <div class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
             <!-- Table Header & Filters -->
-            <div class="px-6 py-5 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0 z-10 bg-white">
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-sm flex items-center justify-center text-2xl text-white">
+            <div class="px-4 py-3 lg:px-6 lg:py-5 border-b border-slate-200 flex justify-between items-center gap-2 lg:gap-4 shrink-0 z-10 bg-white">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 lg:w-12 lg:h-12 rounded-xl lg:rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-sm flex items-center justify-center text-xl lg:text-2xl text-white shrink-0">
                         {{ currentTab.icon }}
                     </div>
                     <div>
-                        <h3 class="text-sm font-black uppercase tracking-widest text-emerald-700">{{ currentTab.title }}</h3>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">{{ currentTab.subtitle }}</p>
+                        <h3 class="text-xs lg:text-sm font-black uppercase tracking-widest text-emerald-700 leading-tight">{{ currentTab.title }}</h3>
+                        <p class="text-[9px] lg:text-[10px] font-bold text-slate-400 uppercase mt-0.5 hidden sm:block">{{ currentTab.subtitle }}</p>
                     </div>
                 </div>
                 
-                <div class="xl:hidden">
-                    <button type="submit" :disabled="isSaving" class="w-full sm:w-auto px-6 py-2.5 bg-emerald-500 text-white font-bold rounded-xl shadow-md disabled:opacity-70 flex items-center justify-center gap-2 text-xs uppercase tracking-widest transition-all">
+                <div class="xl:hidden shrink-0">
+                    <button type="submit" :disabled="isSaving" class="px-4 py-2 bg-emerald-500 text-white font-bold rounded-xl shadow-md disabled:opacity-70 flex items-center justify-center gap-1.5 text-[10px] uppercase tracking-widest transition-all">
                         <span v-if="isSaving" class="animate-spin">⏳</span>
-                        <span v-else>💾 Simpan</span>
+                        <span v-else>💾</span>
+                        <span class="hidden sm:inline">Simpan</span>
+                        <span class="sm:hidden">Simpan</span>
                     </button>
                 </div>
             </div>
@@ -92,7 +94,7 @@
                     <div class="flex flex-col md:flex-row gap-6 items-start">
                         <div class="w-full md:w-1/2 grid grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Logo Sekolah (Kanan)</label>
+                                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1 truncate">Logo Sekolah</label>
                                 <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-2xl hover:bg-slate-50 transition-colors relative group">
                                     <div class="space-y-1 text-center">
                                         <div v-if="logoPreview" class="mx-auto h-24 w-24 mb-4 relative rounded-xl overflow-hidden bg-white shadow-sm border border-slate-200">
@@ -115,7 +117,7 @@
                             </div>
 
                             <div>
-                                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Logo Kiri (Dinas/Pemda)</label>
+                                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1 truncate">Logo Dinas</label>
                                 <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-2xl hover:bg-slate-50 transition-colors relative group">
                                     <div class="space-y-1 text-center">
                                         <div v-if="logoKiriPreview" class="mx-auto h-24 w-24 mb-4 relative rounded-xl overflow-hidden bg-white shadow-sm border border-slate-200">
