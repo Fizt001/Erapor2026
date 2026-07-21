@@ -1,8 +1,8 @@
 <template>
   <div class="min-h-screen bg-slate-50 flex text-slate-800 text-sm print:bg-white print:block print:min-h-0">
     <VisiMisiDialog ref="visiMisiDialog" />
-    <!-- Sidebar -->
-    <aside class="group bg-slate-900 text-white flex-shrink-0 min-h-screen fixed lg:static z-50 transform lg:translate-x-0 transition-all duration-300 ease-in-out overflow-x-hidden print:hidden" :class="[sidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full lg:translate-x-0 lg:w-[72px] lg:hover:w-64 w-64']">
+    <!-- Sidebar (Desktop Only) -->
+    <aside class="group bg-slate-900 text-white flex-shrink-0 min-h-screen hidden lg:flex flex-col fixed lg:static z-50 transition-all duration-300 ease-in-out overflow-x-hidden print:hidden" :class="[sidebarOpen ? 'w-64' : 'lg:w-[72px] lg:hover:w-64']">
       <div class="h-14 flex items-center pl-5 pr-4 bg-slate-950 font-bold text-base tracking-wider border-b border-slate-800 whitespace-nowrap overflow-hidden">
         <img v-if="sekolah?.logo" :src="sekolah.logo" alt="Logo" class="h-8 w-8 object-contain lg:mr-3 shrink-0 cursor-pointer hover:scale-110 transition-transform" @click="visiMisiDialog?.open()" />
         <span v-else class="text-emerald-500 mr-1 text-xl shrink-0 cursor-pointer hover:scale-110 transition-transform" @click="visiMisiDialog?.open()">e</span>
@@ -28,19 +28,18 @@
       </div>
     </aside>
 
-    <!-- Overlay when sidebar is open on mobile -->
-    <div v-if="sidebarOpen" @click="sidebarOpen = false" class="fixed inset-0 bg-slate-900/50 z-40 lg:hidden backdrop-blur-sm print:hidden"></div>
+
 
     <!-- Main Content -->
     <div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden print:h-auto print:overflow-visible print:block">
       <!-- Navbar -->
       <header class="relative h-14 bg-white border-b border-slate-200 flex items-center justify-between px-4 sm:px-6 z-[60] shadow-sm flex-shrink-0 print:hidden">
         <div class="flex items-center">
-          <button @click="sidebarOpen = !sidebarOpen" class="lg:hidden text-slate-500 hover:text-indigo-600 transition-colors focus:outline-none">
-            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
+          <div class="lg:hidden flex items-center gap-2 cursor-pointer hover:scale-105 transition-transform" @click="visiMisiDialog?.open()">
+            <img v-if="sekolah?.logo" :src="sekolah.logo" alt="Logo" class="h-7 w-7 object-contain" />
+            <span v-else class="text-indigo-600 font-black text-lg">e</span>
+            <span class="font-black text-slate-700 text-sm">e-Rapor <span class="text-indigo-600">Kurikulum</span></span>
+          </div>
           <h2 class="hidden lg:block text-base font-bold text-slate-800 ml-3 border-l-2 border-indigo-500 pl-3 py-1 uppercase tracking-wider">{{ route.meta.title || 'Kurikulum Workspace' }}</h2>
         </div>
         
