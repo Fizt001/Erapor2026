@@ -243,7 +243,7 @@ function closeAdsModal() {
   sessionStorage.setItem('hasSeenGuruAdsModal', 'true')
 }
 
-const { data: response, pending: isLoading, error } = await useFetch('http://localhost:8000/api/guru/dashboard', {
+const { data: response, pending: isLoading, error } = await useFetch(import.meta.env.VITE_API_BASE_URL + '/api/guru/dashboard', {
   headers: {
     'Authorization': `Bearer ${tokenCookie.value}`,
     'Accept': 'application/json'

@@ -292,7 +292,7 @@ const fetchReferensi = async () => {
         const queryParams = new URLSearchParams()
         Object.keys(filter.value).forEach(key => { if (filter.value[key]) queryParams.append(key, filter.value[key]) })
         
-        const res = await $fetch(`http://localhost:8000/api/guru/absensi/referensi?${queryParams.toString()}`, {
+        const res = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/guru/absensi/referensi?${queryParams.toString()}`, {
             headers: { Authorization: `Bearer ${token.value}` }
         })
         
@@ -347,7 +347,7 @@ const fetchLastJam = async () => {
     if (formPertemuan.value.id || !filter.value.kelas_id || !formPertemuan.value.tanggal) return
     isFetchingJam.value = true
     try {
-        const res = await $fetch(`http://localhost:8000/api/guru/absensi/last-jam?kelas_id=${filter.value.kelas_id}&tanggal=${formPertemuan.value.tanggal}`, {
+        const res = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/guru/absensi/last-jam?kelas_id=${filter.value.kelas_id}&tanggal=${formPertemuan.value.tanggal}`, {
             headers: { Authorization: `Bearer ${token.value}` }
         })
         if (res.success) {
@@ -409,7 +409,7 @@ const fetchPertemuan = async () => {
     isLoadingPertemuan.value = true
     isLoadingSiswa.value = true
     try {
-        const res = await $fetch('http://localhost:8000/api/guru/absensi/pertemuan', {
+        const res = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/guru/absensi/pertemuan', {
             params: {
                 kelas_id: filter.value.kelas_id,
                 mapel_id: filter.value.mapel_id,
@@ -437,7 +437,7 @@ const fetchAllAbsensiSiswa = async (perts) => {
     }
     
     try {
-        const res = await $fetch(`http://localhost:8000/api/guru/absensi/pertemuan/${perts[0].id}/siswa`, {
+        const res = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/guru/absensi/pertemuan/${perts[0].id}/siswa`, {
             headers: { Authorization: `Bearer ${token.value}` }
         })
         if (res.success) {
@@ -453,7 +453,7 @@ const fetchAllAbsensiSiswa = async (perts) => {
             matrix[s.siswa_id] = {}
         })
         
-        const promises = perts.map(p => $fetch(`http://localhost:8000/api/guru/absensi/pertemuan/${p.id}/siswa`, {
+        const promises = perts.map(p => $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/guru/absensi/pertemuan/${p.id}/siswa`, {
             headers: { Authorization: `Bearer ${token.value}` }
         }))
         const results = await Promise.all(promises)
@@ -482,8 +482,8 @@ const submitPertemuan = async () => {
     isSubmitting.value = true
     try {
         const url = formPertemuan.value.id 
-            ? `http://localhost:8000/api/guru/absensi/pertemuan/${formPertemuan.value.id}`
-            : 'http://localhost:8000/api/guru/absensi/pertemuan'
+            ? `${import.meta.env.VITE_API_BASE_URL}/api/guru/absensi/pertemuan/${formPertemuan.value.id}`
+            : import.meta.env.VITE_API_BASE_URL + '/api/guru/absensi/pertemuan'
             
         const method = formPertemuan.value.id ? 'PUT' : 'POST'
 
@@ -528,7 +528,7 @@ const deletePertemuan = async (id) => {
     
     if (result.isConfirmed) {
         try {
-            const res = await $fetch(`http://localhost:8000/api/guru/absensi/pertemuan/${id}`, { 
+            const res = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/guru/absensi/pertemuan/${id}`, { 
                 method: 'DELETE',
                 headers: { Authorization: `Bearer ${token.value}` }
             })
@@ -571,7 +571,7 @@ const simpanAbsensi = async () => {
                 siswa_id: s.siswa_id,
                 status: absensiData.value[s.siswa_id][pert.id]
             }))
-            return $fetch(`http://localhost:8000/api/guru/absensi/pertemuan/${pert.id}/simpan`, {
+            return $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/guru/absensi/pertemuan/${pert.id}/simpan`, {
                 method: 'POST',
                 body: { absensi: payload },
                 headers: { Authorization: `Bearer ${token.value}` }

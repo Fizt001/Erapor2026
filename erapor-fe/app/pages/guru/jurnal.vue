@@ -157,7 +157,7 @@ const tokenCookie = useCookie('auth_token')
 const activeSemester = ref('ganjil')
 const detailModal = ref({ show: false, bulan: '', mapelKelas: '', pertemuans: [] })
 
-const { data: response, pending: isLoading } = await useFetch('http://localhost:8000/api/guru/jurnal-mengajar', {
+const { data: response, pending: isLoading } = await useFetch(import.meta.env.VITE_API_BASE_URL + '/api/guru/jurnal-mengajar', {
   headers: {
     'Authorization': `Bearer ${tokenCookie.value}`,
     'Accept': 'application/json'

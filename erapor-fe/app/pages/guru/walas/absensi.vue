@@ -243,7 +243,7 @@ const fetchReferensi = async () => {
         const queryParams = new URLSearchParams()
         Object.keys(filter.value).forEach(key => { if (filter.value[key]) queryParams.append(key, filter.value[key]) })
         
-        const res = await $fetch(`http://localhost:8000/api/guru/absensi/referensi?${queryParams.toString()}`, {
+        const res = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/guru/absensi/referensi?${queryParams.toString()}`, {
             headers: { Authorization: `Bearer ${token.value}` }
         })
         
@@ -282,7 +282,7 @@ const fetchData = async () => {
     
     isLoading.value = true
     try {
-        const res = await $fetch('http://localhost:8000/api/guru/walas/absensi/kalender', {
+        const res = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/guru/walas/absensi/kalender', {
             params: { 
                 bulan: selectedBulan.value,
                 tahun_ajaran_id: filter.value.tahun_ajaran_id

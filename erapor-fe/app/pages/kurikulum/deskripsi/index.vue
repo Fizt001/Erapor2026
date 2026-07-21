@@ -189,13 +189,13 @@ const fetchData = async () => {
   try {
     // Parallel Fetching using Promise.all
     const [dataRef, pengampuResp, tplData] = await Promise.all([
-        $fetch('http://localhost:8000/api/kurikulum/titimangsa', {
+        $fetch(import.meta.env.VITE_API_BASE_URL + '/api/kurikulum/titimangsa', {
             headers: { 'Authorization': `Bearer ${tokenCookie.value}` }
         }),
-        $fetch('http://localhost:8000/api/kurikulum/pengampu', {
+        $fetch(import.meta.env.VITE_API_BASE_URL + '/api/kurikulum/pengampu', {
             headers: { 'Authorization': `Bearer ${tokenCookie.value}` }
         }),
-        $fetch('http://localhost:8000/api/kurikulum/deskripsi-template', {
+        $fetch(import.meta.env.VITE_API_BASE_URL + '/api/kurikulum/deskripsi-template', {
             headers: { 'Authorization': `Bearer ${tokenCookie.value}` }
         })
     ])
@@ -247,7 +247,7 @@ const saveTemplate = async () => {
   const { $swal } = useNuxtApp()
   
   try {
-    const res = await $fetch('http://localhost:8000/api/kurikulum/deskripsi-template', {
+    const res = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/kurikulum/deskripsi-template', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${tokenCookie.value}`,

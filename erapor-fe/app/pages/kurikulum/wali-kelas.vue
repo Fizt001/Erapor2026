@@ -178,10 +178,10 @@ const fetchData = async () => {
     try {
         const [resTingkat, resKurikulum, resWaliKelas] = await Promise.all([
             fetchReferensi('TINGKAT_KELAS'),
-            $fetch('http://localhost:8000/api/kurikulum/titimangsa', {
+            $fetch(import.meta.env.VITE_API_BASE_URL + '/api/kurikulum/titimangsa', {
                 headers: { Authorization: `Bearer ${token}` }
             }),
-            $fetch('http://localhost:8000/api/kurikulum/wali-kelas', {
+            $fetch(import.meta.env.VITE_API_BASE_URL + '/api/kurikulum/wali-kelas', {
                 headers: { Authorization: `Bearer ${token}` }
             })
         ])
@@ -219,7 +219,7 @@ const saveWaliKelas = async (kelasId) => {
     const token = useCookie('auth_token').value
     
     try {
-        const response = await $fetch('http://localhost:8000/api/kurikulum/wali-kelas', {
+        const response = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/kurikulum/wali-kelas', {
             method: 'POST',
             headers: { Authorization: `Bearer ${token}` },
             body: {

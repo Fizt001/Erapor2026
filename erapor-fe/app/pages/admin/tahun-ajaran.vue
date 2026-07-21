@@ -226,7 +226,7 @@ const fetchTahunAjaran = async () => {
     isLoading.value = true
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch(`http://localhost:8000/api/admin/tahun-ajaran`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/tahun-ajaran`, {
             headers: { Authorization: `Bearer ${token}` }
         })
         if (response.success) {
@@ -244,8 +244,8 @@ const saveTahunAjaran = async () => {
     const token = useCookie('auth_token').value
     const method = isEditing.value ? 'PUT' : 'POST'
     const url = isEditing.value 
-        ? `http://localhost:8000/api/admin/tahun-ajaran/${form.value.id}`
-        : `http://localhost:8000/api/admin/tahun-ajaran`
+        ? `${import.meta.env.VITE_API_BASE_URL}/api/admin/tahun-ajaran/${form.value.id}`
+        : `${import.meta.env.VITE_API_BASE_URL}/api/admin/tahun-ajaran`
     
     try {
         const response = await $fetch(url, {
@@ -288,7 +288,7 @@ const executeActivate = async () => {
     const token = useCookie('auth_token').value
     
     try {
-        const response = await $fetch(`http://localhost:8000/api/admin/tahun-ajaran/${activateTarget.value.id}`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/tahun-ajaran/${activateTarget.value.id}`, {
             method: 'PUT',
             headers: { Authorization: `Bearer ${token}` },
             body: { 
@@ -328,7 +328,7 @@ const executeDelete = async () => {
     isSaving.value = true
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch(`http://localhost:8000/api/admin/tahun-ajaran/${deleteTarget.value.id}`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/tahun-ajaran/${deleteTarget.value.id}`, {
             method: 'DELETE',
             headers: { Authorization: `Bearer ${token}` }
         })

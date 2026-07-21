@@ -244,9 +244,9 @@ const loadImpersonationData = async () => {
         }
 
         const [gurusRes, walasRes, siswaRes] = await Promise.all([
-            $fetch('http://localhost:8000/api/superadmin/gurus', { headers }).catch(() => ({ data: [] })),
-            $fetch('http://localhost:8000/api/superadmin/walas-classes', { headers }).catch(() => ({ data: [] })),
-            $fetch('http://localhost:8000/api/superadmin/siswas', { headers }).catch(() => ({ data: [] }))
+            $fetch(import.meta.env.VITE_API_BASE_URL + '/api/superadmin/gurus', { headers }).catch(() => ({ data: [] })),
+            $fetch(import.meta.env.VITE_API_BASE_URL + '/api/superadmin/walas-classes', { headers }).catch(() => ({ data: [] })),
+            $fetch(import.meta.env.VITE_API_BASE_URL + '/api/superadmin/siswas', { headers }).catch(() => ({ data: [] }))
         ])
 
         gurus.value = gurusRes.data || []
@@ -299,7 +299,7 @@ const clearImpersonationMode = () => {
 
 const logout = async () => {
     try {
-        await $fetch('http://localhost:8000/api/logout', {
+        await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/logout', {
             method: 'POST',
             headers: { 'Authorization': `Bearer ${tokenCookie.value}` }
         })

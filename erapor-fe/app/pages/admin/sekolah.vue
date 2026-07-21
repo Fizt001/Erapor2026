@@ -339,7 +339,7 @@ const clearLogoKiri = () => {
 const fetchSekolah = async () => {
   const tokenCookie = useCookie('auth_token')
   try {
-    const response = await $fetch('http://localhost:8000/api/admin/sekolah', {
+    const response = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/admin/sekolah', {
       headers: { Authorization: `Bearer ${tokenCookie.value}` }
     })
     
@@ -350,10 +350,10 @@ const fetchSekolah = async () => {
         }
       })
       if (response.data.logo) {
-        logoPreview.value = `http://localhost:8000/${response.data.logo}`
+        logoPreview.value = `/${response.data.logo}`
       }
       if (response.data.logo_kiri) {
-        logoKiriPreview.value = `http://localhost:8000/${response.data.logo_kiri}`
+        logoKiriPreview.value = `/${response.data.logo_kiri}`
       }
     }
   } catch (error) {
@@ -387,7 +387,7 @@ const saveData = async () => {
     }
 
     const { fetchSekolah: fetchGlobalSekolah } = useSekolah()
-    const response = await $fetch('http://localhost:8000/api/admin/sekolah', {
+    const response = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/admin/sekolah', {
       method: 'POST', // POST instead of PUT for FormData handling in Laravel
       headers: { 
         Authorization: `Bearer ${tokenCookie.value}`,

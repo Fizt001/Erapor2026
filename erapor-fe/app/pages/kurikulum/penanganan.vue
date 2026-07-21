@@ -186,7 +186,7 @@ const fetchKasus = async () => {
     isLoading.value = true
     const token = useCookie('auth_token').value
     try {
-        const data = await $fetch<any>('http://localhost:8000/api/kurikulum/penanganan', {
+        const data = await $fetch<any>(import.meta.env.VITE_API_BASE_URL + '/api/kurikulum/penanganan', {
             headers: { Authorization: `Bearer ${token}` }
         })
         if (data?.success) {
@@ -219,7 +219,7 @@ const submitAcc = async () => {
     isSubmitting.value = true
     const token = useCookie('auth_token').value
     try {
-        const data = await $fetch<any>(`http://localhost:8000/api/kurikulum/penanganan/${selectedKasus.value.id}/acc`, {
+        const data = await $fetch<any>(`${import.meta.env.VITE_API_BASE_URL}/api/kurikulum/penanganan/${selectedKasus.value.id}/acc`, {
             method: 'PUT',
             headers: { Authorization: `Bearer ${token}` },
             body: form.value

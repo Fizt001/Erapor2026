@@ -227,7 +227,7 @@ const form = ref({
 const fetchData = async () => {
   try {
     const token = useCookie('auth_token').value
-    const response = await $fetch('http://localhost:8000/api/kurikulum/titimangsa', {
+    const response = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/kurikulum/titimangsa', {
       headers: { Authorization: `Bearer ${token}` }
     })
     
@@ -270,8 +270,8 @@ const saveData = async () => {
   try {
     const token = useCookie('auth_token').value
     const url = isEdit.value 
-      ? `http://localhost:8000/api/kurikulum/titimangsa/${form.value.id}`
-      : 'http://localhost:8000/api/kurikulum/titimangsa'
+      ? `${import.meta.env.VITE_API_BASE_URL}/api/kurikulum/titimangsa/${form.value.id}`
+      : import.meta.env.VITE_API_BASE_URL + '/api/kurikulum/titimangsa'
     
     const method = isEdit.value ? 'PUT' : 'POST'
     
@@ -308,7 +308,7 @@ const saveData = async () => {
 const toggleStatus = async (id) => {
   try {
     const token = useCookie('auth_token').value
-    const response = await $fetch(`http://localhost:8000/api/kurikulum/titimangsa/${id}/toggle`, {
+    const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/kurikulum/titimangsa/${id}/toggle`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}` }
     })
@@ -331,7 +331,7 @@ const executeDelete = async () => {
   isSaving.value = true
   try {
     const token = useCookie('auth_token').value
-    const response = await $fetch(`http://localhost:8000/api/kurikulum/titimangsa/${deleteTarget.value.id}`, {
+    const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/kurikulum/titimangsa/${deleteTarget.value.id}`, {
       method: 'DELETE',
       headers: { Authorization: `Bearer ${token}` }
     })

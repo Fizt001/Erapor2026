@@ -6,5 +6,11 @@ export default defineNuxtConfig({
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
     layoutTransition: { name: 'layout', mode: 'out-in' }
+  },
+  // TAMBAHKAN INI:
+  runtimeConfig: {
+    public: {
+      apiBase: 'https://api.erapor.yatindosystem.net'
+    }
   }
 })

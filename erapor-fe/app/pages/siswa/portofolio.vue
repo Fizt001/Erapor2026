@@ -131,7 +131,7 @@ const fetchData = async () => {
     
     try {
         const tokenCookie = useCookie('auth_token')
-        const res = await $fetch('http://localhost:8000/api/siswa/portofolio', {
+        const res = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/siswa/portofolio', {
             headers: {
                 'Authorization': `Bearer ${tokenCookie.value}`,
                 'Accept': 'application/json'

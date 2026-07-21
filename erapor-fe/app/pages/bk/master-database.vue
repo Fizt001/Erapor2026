@@ -182,7 +182,7 @@ const fetchData = async () => {
     isLoading.value = true
     try {
         const token = useCookie('auth_token').value
-        const { data } = await useFetch('http://localhost:8000/api/bk/referensi', {
+        const { data } = await useFetch(import.meta.env.VITE_API_BASE_URL + '/api/bk/referensi', {
             headers: { Authorization: `Bearer ${token}` }
         })
         if (data.value && data.value.success) {
@@ -232,8 +232,8 @@ const saveData = async () => {
     isSaving.value = true
     try {
         const url = isEditing.value 
-            ? `http://localhost:8000/api/bk/referensi/${editId.value}`
-            : 'http://localhost:8000/api/bk/referensi'
+            ? `${import.meta.env.VITE_API_BASE_URL}/api/bk/referensi/${editId.value}`
+            : import.meta.env.VITE_API_BASE_URL + '/api/bk/referensi'
         
         const method = isEditing.value ? 'PUT' : 'POST'
         const token = useCookie('auth_token').value
@@ -263,7 +263,7 @@ const deleteData = async (id) => {
     
     try {
         const token = useCookie('auth_token').value
-        const { data, error } = await useFetch(`http://localhost:8000/api/bk/referensi/${id}`, {
+        const { data, error } = await useFetch(`${import.meta.env.VITE_API_BASE_URL}/api/bk/referensi/${id}`, {
             method: 'DELETE',
             headers: { Authorization: `Bearer ${token}` }
         })

@@ -288,7 +288,7 @@ const rekomendasiClass = (r) => {
 const fetchSetup = async () => {
   try {
     const token = useCookie('auth_token').value
-    const res = await $fetch('http://localhost:8000/api/admin/kenaikan-kelas/setup', {
+    const res = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/admin/kenaikan-kelas/setup', {
       headers: { Authorization: `Bearer ${token}` }
     })
     if (res.success) setupData.value = res
@@ -309,7 +309,7 @@ const loadSiswa = async () => {
   selectedIds.value = []
   try {
     const token = useCookie('auth_token').value
-    const res = await $fetch(`http://localhost:8000/api/admin/kenaikan-kelas/${selectedKelas.value}/siswa`, {
+    const res = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/kenaikan-kelas/${selectedKelas.value}/siswa`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     if (res.success) {
@@ -363,7 +363,7 @@ const executeProses = async () => {
         kelas_tujuan_id: s.kelas_tujuan_override || kelasTujuanId.value || null
       }))
 
-    const res = await $fetch('http://localhost:8000/api/admin/kenaikan-kelas/proses', {
+    const res = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/admin/kenaikan-kelas/proses', {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}` },
       body: { siswa: payload }
@@ -392,4 +392,5 @@ onMounted(() => {
 .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 </style>
-
+
+

@@ -146,7 +146,7 @@ const isActiveTahunAjaran = computed(() => {
 const fetchTahunAjaran = async () => {
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch('http://localhost:8000/api/kurikulum/pengampu', {
+        const response = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/kurikulum/pengampu', {
             headers: { Authorization: `Bearer ${token}` }
         })
         if (response.success) {
@@ -175,7 +175,7 @@ const fetchData = async () => {
     isLoading.value = true
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch(`http://localhost:8000/api/kurikulum/kkm?tahun_ajaran_id=${activeTahunAjaranId.value}`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/kurikulum/kkm?tahun_ajaran_id=${activeTahunAjaranId.value}`, {
             headers: { Authorization: `Bearer ${token}` }
         })
         if (response.success) {
@@ -205,7 +205,7 @@ const saveKkm = async (kurikulum_id, tingkat, nilai) => {
     
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch('http://localhost:8000/api/kurikulum/kkm', {
+        const response = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/kurikulum/kkm', {
             method: 'POST',
             headers: { Authorization: `Bearer ${token}` },
             body: { 

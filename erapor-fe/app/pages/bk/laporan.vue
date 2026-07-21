@@ -272,7 +272,7 @@ const fetchStats = async () => {
     isLoading.value = true
     const token = useCookie('auth_token').value
     try {
-        let url = 'http://localhost:8000/api/bk/laporan'
+        let url = import.meta.env.VITE_API_BASE_URL + '/api/bk/laporan'
         if (selectedKelasId.value) {
             url += `?kelas_id=${selectedKelasId.value}`
         }

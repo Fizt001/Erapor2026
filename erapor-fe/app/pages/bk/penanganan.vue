@@ -329,7 +329,7 @@ const fetchInitialData = async () => {
     isLoadingKelas.value = true
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch('http://localhost:8000/api/bk/penanganan', {
+        const response = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/bk/penanganan', {
             headers: { Authorization: `Bearer ${token}` }
         })
         if (response.success) {
@@ -354,7 +354,7 @@ const selectKelas = async (id) => {
     if (!isDesktop.value) activeTabMobile.value = 'flow'
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch(`http://localhost:8000/api/bk/penanganan?kelas_id=${id}`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/bk/penanganan?kelas_id=${id}`, {
             headers: { Authorization: `Bearer ${token}` }
         })
         if (response.success) {
@@ -442,8 +442,8 @@ const saveData = async () => {
     const token = useCookie('auth_token').value
     try {
         const url = editId.value 
-            ? `http://localhost:8000/api/bk/penanganan/${editId.value}`
-            : `http://localhost:8000/api/bk/penanganan`
+            ? `${import.meta.env.VITE_API_BASE_URL}/api/bk/penanganan/${editId.value}`
+            : `${import.meta.env.VITE_API_BASE_URL}/api/bk/penanganan`
             
         const method = editId.value ? 'PUT' : 'POST'
         
@@ -479,7 +479,7 @@ const executeDelete = async () => {
     if (!deleteTargetId.value) return
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch(`http://localhost:8000/api/bk/penanganan/${deleteTargetId.value}`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/bk/penanganan/${deleteTargetId.value}`, {
             method: 'DELETE',
             headers: { Authorization: `Bearer ${token}` }
         })

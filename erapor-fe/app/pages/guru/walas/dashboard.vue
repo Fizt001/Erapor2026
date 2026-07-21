@@ -345,7 +345,7 @@ definePageMeta({ layout: "guru", middleware: "guru", title: 'Dashboard Wali Kela
 
 const tokenCookie = useCookie('auth_token')
 
-const { data: response, pending: isLoading, error: err1 } = await useFetch('http://localhost:8000/api/guru/dashboard', {
+const { data: response, pending: isLoading, error: err1 } = await useFetch(import.meta.env.VITE_API_BASE_URL + '/api/guru/dashboard', {
   headers: {
     'Authorization': `Bearer ${tokenCookie.value}`,
     'Accept': 'application/json'
@@ -353,7 +353,7 @@ const { data: response, pending: isLoading, error: err1 } = await useFetch('http
 })
 const dashboardData = computed(() => response.value?.data || null)
 
-const { data: statsRes, pending: statsLoading, error: err2 } = await useFetch('http://localhost:8000/api/guru/walas/dashboard-stats', {
+const { data: statsRes, pending: statsLoading, error: err2 } = await useFetch(import.meta.env.VITE_API_BASE_URL + '/api/guru/walas/dashboard-stats', {
   headers: {
     'Authorization': `Bearer ${tokenCookie.value}`,
     'Accept': 'application/json'

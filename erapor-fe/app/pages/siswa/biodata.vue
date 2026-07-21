@@ -480,7 +480,7 @@ const displayToast = (msg, type = 'success') => {
 const tokenCookie = useCookie('auth_token')
 const userProfile = useCookie('user_profile')
 
-const { data: response, pending: isLoading, error } = await useFetch('http://localhost:8000/api/siswa/biodata', {
+const { data: response, pending: isLoading, error } = await useFetch(import.meta.env.VITE_API_BASE_URL + '/api/siswa/biodata', {
   headers: {
     'Authorization': `Bearer ${tokenCookie.value}`
   }
@@ -514,7 +514,7 @@ const saveBiodata = async () => {
   isSaving.value = true
   
   try {
-    const res = await $fetch(`http://localhost:8000/api/siswa/biodata`, {
+    const res = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/siswa/biodata`, {
       method: 'PUT',
       headers: {
         'Authorization': `Bearer ${tokenCookie.value}`,

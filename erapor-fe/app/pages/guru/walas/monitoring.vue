@@ -205,7 +205,7 @@ const fetchData = async () => {
   pending.value = true
   error.value = null
   try {
-    const res = await $fetch('http://localhost:8000/api/guru/walas/monitoring', {
+    const res = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/guru/walas/monitoring', {
       headers: { Authorization: `Bearer ${token.value}` }
     })
     

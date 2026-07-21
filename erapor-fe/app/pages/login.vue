@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen w-full flex flex-col lg:flex-row relative font-sans bg-slate-900 overflow-hidden">
+  <div class="min-h-screen lg:h-screen w-full flex flex-col lg:flex-row relative font-sans bg-slate-900 overflow-y-auto lg:overflow-hidden">
     
     <!-- Background Decorators (Abstract Blobs) -->
     <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-emerald-600/30 rounded-full blur-[120px] pointer-events-none"></div>
@@ -11,7 +11,7 @@
         <!-- Header & Logo -->
         <div class="flex items-center gap-3 mb-6 lg:mb-12 mt-4 lg:mt-0 w-full max-w-md lg:max-w-xl mx-auto lg:ml-auto lg:mr-0 lg:w-[80%]">
             <div class="w-12 h-12 lg:w-16 lg:h-16 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center shadow-xl border border-white/20">
-                <img v-if="sekolah && sekolah.logo" :src="`http://localhost:8000/${sekolah.logo}`" alt="Logo" class="w-8 h-8 lg:w-12 lg:h-12 object-contain drop-shadow-md">
+                <img v-if="sekolah && sekolah.logo" :src="`/${sekolah.logo}`" alt="Logo" class="w-8 h-8 lg:w-12 lg:h-12 object-contain drop-shadow-md">
                 <span v-else class="text-2xl">🎓</span>
             </div>
             <div>
@@ -30,7 +30,7 @@
             </h2>
             
             <!-- Single Rotating Card -->
-            <div class="relative w-full h-[160px] lg:h-[220px]">
+            <div class="hidden lg:block relative w-full h-[160px] lg:h-[220px]">
                 <TransitionGroup name="fade">
                     <div v-for="(card, index) in cards" :key="'card-'+index" v-show="activeIndex === index" 
                          class="absolute inset-0 p-5 lg:p-8 rounded-3xl bg-white/5 backdrop-blur-sm border border-white/10 shadow-lg shadow-emerald-500/10 flex flex-col justify-center">
@@ -44,7 +44,7 @@
             </div>
             
             <!-- Indicator Dots -->
-            <div class="flex gap-1.5 mt-4 lg:mt-6 ml-2 lg:ml-4">
+            <div class="hidden lg:flex gap-1.5 mt-4 lg:mt-6 ml-2 lg:ml-4">
                 <div v-for="(_, index) in cards" :key="'dot-'+index" 
                      class="h-1.5 rounded-full transition-all duration-500 ease-out"
                      :class="activeIndex === index ? 'w-6 bg-emerald-500' : 'w-1.5 bg-white/20'">
@@ -162,7 +162,7 @@ onMounted(async () => {
   window.addEventListener('resize', () => { windowWidth.value = window.innerWidth })
 
   try {
-    const res = await $fetch('http://localhost:8000/api/public/stats')
+    const res = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/public/stats')
     if (res.success && res.data) {
         statsData.value = res.data
         if (res.data.sekolah) {
@@ -197,7 +197,7 @@ const handleLogin = async () => {
   errorMessage.value = ''
   
   try {
-    const response = await $fetch('http://localhost:8000/api/login', {
+    const response = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/login', {
       method: 'POST',
       body: form
     })

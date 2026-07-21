@@ -247,7 +247,7 @@ const tokenCookie = useCookie('auth_token')
 const fetchPelanggarans = async (page = 1) => {
     isLoading.value = true
     try {
-        let url = `http://localhost:8000/api/bk/pelanggaran?page=${page}&jenis=${filterJenis.value}`
+        let url = `${import.meta.env.VITE_API_BASE_URL}/api/bk/pelanggaran?page=${page}&jenis=${filterJenis.value}`
         if (searchQuery.value) url += `&search=${searchQuery.value}`
         
         const response = await $fetch(url, {
@@ -304,8 +304,8 @@ const saveData = async () => {
     isSaving.value = true
     try {
         const url = editId.value 
-            ? `http://localhost:8000/api/bk/pelanggaran/${editId.value}`
-            : `http://localhost:8000/api/bk/pelanggaran`
+            ? `${import.meta.env.VITE_API_BASE_URL}/api/bk/pelanggaran/${editId.value}`
+            : `${import.meta.env.VITE_API_BASE_URL}/api/bk/pelanggaran`
         
         const method = editId.value ? 'PUT' : 'POST'
         
@@ -339,7 +339,7 @@ const confirmDelete = (p) => {
 
 const executeDelete = async () => {
     try {
-        const response = await $fetch(`http://localhost:8000/api/bk/pelanggaran/${deleteTarget.value.id}`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/bk/pelanggaran/${deleteTarget.value.id}`, {
             method: 'DELETE',
             headers: { Authorization: `Bearer ${tokenCookie.value}` }
         })

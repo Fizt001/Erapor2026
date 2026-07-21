@@ -177,7 +177,7 @@ const saveProfile = async () => {
       payload.password = form.value.password
     }
 
-    const response = await $fetch('http://localhost:8000/api/user/profile', {
+    const response = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/user/profile', {
       method: 'PUT',
       headers: { 
         Authorization: `Bearer ${tokenCookie.value}`,

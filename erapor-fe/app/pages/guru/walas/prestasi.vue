@@ -319,7 +319,7 @@ const fetchData = async () => {
     
     try {
         const tokenCookie = useCookie('auth_token')
-        const res = await $fetch('http://localhost:8000/api/guru/walas/prestasi', {
+        const res = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/guru/walas/prestasi', {
             headers: {
                 'Authorization': `Bearer ${tokenCookie.value}`,
                 'Accept': 'application/json'
@@ -366,8 +366,8 @@ const submitForm = async () => {
     try {
         const tokenCookie = useCookie('auth_token')
         const url = isEditing.value 
-            ? `http://localhost:8000/api/guru/walas/prestasi/${editId.value}`
-            : 'http://localhost:8000/api/guru/walas/prestasi'
+            ? `${import.meta.env.VITE_API_BASE_URL}/api/guru/walas/prestasi/${editId.value}`
+            : import.meta.env.VITE_API_BASE_URL + '/api/guru/walas/prestasi'
             
         const method = isEditing.value ? 'PUT' : 'POST'
         
@@ -426,7 +426,7 @@ const confirmDelete = async (item) => {
     if (answer.isConfirmed) {
         try {
             const tokenCookie = useCookie('auth_token')
-            const res = await $fetch(`http://localhost:8000/api/guru/walas/prestasi/${item.id}`, {
+            const res = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/guru/walas/prestasi/${item.id}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${tokenCookie.value}`,

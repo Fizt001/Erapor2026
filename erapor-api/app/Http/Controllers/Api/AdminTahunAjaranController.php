@@ -64,7 +64,7 @@ class AdminTahunAjaranController extends Controller
         try {
             $tahunAjaran = TahunAjaran::findOrFail($id);
 
-            if ($request->is_aktif && !$tahunAjaran->is_aktif) {
+            if ($request->is_aktif) {
                 // Nonaktifkan semua tahun ajaran lain jika yang ini diaktifkan
                 TahunAjaran::where('id', '!=', $id)->update(['is_aktif' => false]);
             }

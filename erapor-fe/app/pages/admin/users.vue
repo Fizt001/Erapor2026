@@ -396,7 +396,7 @@ const selectedFile = ref(null)
 const downloadTemplate = async () => {
     const token = useCookie('auth_token').value
     try {
-        const blob = await $fetch('http://localhost:8000/api/admin/users/template', {
+        const blob = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/admin/users/template', {
             headers: { Authorization: `Bearer ${token}` },
             responseType: 'blob'
         })
@@ -435,7 +435,7 @@ const uploadImportFile = async () => {
     formData.append('file', selectedFile.value)
 
     try {
-        const response = await $fetch('http://localhost:8000/api/admin/users/import', {
+        const response = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/admin/users/import', {
             method: 'POST',
             headers: { Authorization: `Bearer ${token}` },
             body: formData
@@ -506,7 +506,7 @@ const fetchUsers = async (page = 1) => {
         if (roleFilter.value) queryParams.append('role', roleFilter.value)
         if (searchQuery.value) queryParams.append('search', searchQuery.value)
 
-        const response = await $fetch(`http://localhost:8000/api/admin/users?${queryParams.toString()}`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/users?${queryParams.toString()}`, {
             headers: { Authorization: `Bearer ${token}` }
         })
 
@@ -530,7 +530,7 @@ const saveUser = async () => {
     isSaving.value = true
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch('http://localhost:8000/api/admin/users', {
+        const response = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/admin/users', {
             method: 'POST',
             headers: { Authorization: `Bearer ${token}` },
             body: form.value
@@ -572,7 +572,7 @@ const updateUser = async () => {
     isSaving.value = true
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch(`http://localhost:8000/api/admin/users/${editForm.value.id}`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/users/${editForm.value.id}`, {
             method: 'PUT',
             headers: { Authorization: `Bearer ${token}` },
             body: editForm.value
@@ -604,7 +604,7 @@ const executeDelete = async () => {
     
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch(`http://localhost:8000/api/admin/users/${userToDelete.value.id}`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/users/${userToDelete.value.id}`, {
             method: 'DELETE',
             headers: { Authorization: `Bearer ${token}` }
         })
@@ -634,7 +634,7 @@ const executeReset = async () => {
     
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch(`http://localhost:8000/api/admin/users/${userToReset.value.id}/reset-password`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/users/${userToReset.value.id}/reset-password`, {
             method: 'POST',
             headers: { Authorization: `Bearer ${token}` }
         })

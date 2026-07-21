@@ -359,7 +359,7 @@ const fetchBackups = async () => {
     isLoading.value = true
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch(`http://localhost:8000/api/admin/backup/list`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/backup/list`, {
             headers: { Authorization: `Bearer ${token}` }
         })
         if (response.success) {
@@ -376,7 +376,7 @@ const generateBackup = async (mode) => {
     isGenerating.value = true
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch(`http://localhost:8000/api/admin/backup/generate`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/backup/generate`, {
             method: 'POST',
             headers: { Authorization: `Bearer ${token}` },
             body: {
@@ -400,7 +400,7 @@ const generateBackup = async (mode) => {
 const downloadBackup = (filename, format = 'json') => {
     const token = useCookie('auth_token').value
     
-    $fetch(`http://localhost:8000/api/admin/backup/download/${filename}?format=${format}`, {
+    $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/backup/download/${filename}?format=${format}`, {
         headers: { Authorization: `Bearer ${token}` },
         responseType: 'blob'
     }).then(blob => {
@@ -441,7 +441,7 @@ const handleFileUpload = async (event) => {
 
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch('http://localhost:8000/api/admin/backup/upload', {
+        const response = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/admin/backup/upload', {
             method: 'POST',
             headers: { Authorization: `Bearer ${token}` },
             body: formData
@@ -478,7 +478,7 @@ const executeRestore = async () => {
                 useSwal().showLoading()
             }
         })
-        const response = await $fetch(`http://localhost:8000/api/admin/backup/restore/${filename}`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/backup/restore/${filename}`, {
             method: 'POST',
             headers: { Authorization: `Bearer ${token}` }
         })
@@ -506,7 +506,7 @@ const executeDelete = async () => {
     const filename = deleteTarget.value
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch(`http://localhost:8000/api/admin/backup/${filename}`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/backup/${filename}`, {
             method: 'DELETE',
             headers: { Authorization: `Bearer ${token}` }
         })

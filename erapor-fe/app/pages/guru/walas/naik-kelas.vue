@@ -201,7 +201,7 @@ const loadData = async () => {
   loading.value = true
   try {
     const token = useCookie('auth_token').value
-    const res = await $fetch('http://localhost:8000/api/guru/walas/cetak', {
+    const res = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/guru/walas/cetak', {
       headers: { Authorization: `Bearer ${token}` }
     })
     
@@ -225,7 +225,7 @@ const saveNaikKelas = async () => {
   isSaving.value = true
   try {
     const token = useCookie('auth_token').value
-    const res = await $fetch('http://localhost:8000/api/guru/walas/naik-kelas', {
+    const res = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/guru/walas/naik-kelas', {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}` },
       body: {

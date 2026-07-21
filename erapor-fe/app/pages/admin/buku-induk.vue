@@ -288,7 +288,7 @@ const currentStudent = computed(() => {
 
 const fetchDependencies = async () => {
     try {
-        const res = await $fetch('http://localhost:8000/api/admin/buku-induk/dependencies', {
+        const res = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/admin/buku-induk/dependencies', {
             headers: { Authorization: `Bearer ${token.value}` }
         })
         if (res) {
@@ -302,7 +302,7 @@ const fetchDependencies = async () => {
         }
         
         // Fetch sekolah profile
-        const resSekolah = await $fetch('http://localhost:8000/api/admin/sekolah', {
+        const resSekolah = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/admin/sekolah', {
             headers: { Authorization: `Bearer ${token.value}` }
         })
         if (resSekolah.success) {
@@ -321,7 +321,7 @@ const loadStudents = async () => {
     }
     try {
         // Fetch data siswa
-        const res = await $fetch(`http://localhost:8000/api/admin/buku-induk/biodata?tahun_ajaran_id=${selectedTahunAjaranId.value}&kurikulum_id=${selectedKurikulumId.value}`, {
+        const res = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/buku-induk/biodata?tahun_ajaran_id=${selectedTahunAjaranId.value}&kurikulum_id=${selectedKurikulumId.value}`, {
             headers: { Authorization: `Bearer ${token.value}` }
         })
         
@@ -345,7 +345,7 @@ const fetchNilaiSiswa = async () => {
     if (!currentStudent.value) return
     isLoadingNilai.value = true
     try {
-        const res = await $fetch(`http://localhost:8000/api/admin/buku-induk/siswa/${currentStudent.value.id}/nilai`, {
+        const res = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/buku-induk/siswa/${currentStudent.value.id}/nilai`, {
             headers: { Authorization: `Bearer ${token.value}` }
         })
         if (res) {
@@ -365,7 +365,7 @@ watch(currentStudent, async () => {
         
         // Load mapel struktur for this student's class
         try {
-            const resMapel = await $fetch(`http://localhost:8000/api/admin/buku-induk/${currentStudent.value.kelas_id}/mapel-struktur`, {
+            const resMapel = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/buku-induk/${currentStudent.value.kelas_id}/mapel-struktur`, {
                 headers: { Authorization: `Bearer ${token.value}` }
             })
             if (resMapel) {

@@ -355,7 +355,7 @@ const fetchTreeData = async () => {
     isLoading.value = true
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch('http://localhost:8000/api/admin/kejuruan/data', {
+        const response = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/admin/kejuruan/data', {
             headers: { Authorization: `Bearer ${token}` }
         })
         if (response.success) {
@@ -391,8 +391,8 @@ const submitForm = async (type, payload) => {
     const isUpdate = payload.id !== null
     const method = isUpdate ? 'PUT' : 'POST'
     const url = isUpdate 
-        ? `http://localhost:8000/api/admin/kejuruan/${type}/${payload.id}`
-        : `http://localhost:8000/api/admin/kejuruan/${type}`
+        ? `${import.meta.env.VITE_API_BASE_URL}/api/admin/kejuruan/${type}/${payload.id}`
+        : `${import.meta.env.VITE_API_BASE_URL}/api/admin/kejuruan/${type}`
     
     try {
         const response = await $fetch(url, {
@@ -436,7 +436,7 @@ const executeDelete = async () => {
     isSaving.value = true
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch(`http://localhost:8000/api/admin/kejuruan/${deleteTarget.value.type}/${deleteTarget.value.id}`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/kejuruan/${deleteTarget.value.type}/${deleteTarget.value.id}`, {
             method: 'DELETE',
             headers: { Authorization: `Bearer ${token}` }
         })

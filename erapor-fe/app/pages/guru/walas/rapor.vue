@@ -629,7 +629,7 @@ const loadData = async () => {
     try {
         const token = useCookie('auth_token').value
         
-        const res = await $fetch(`http://localhost:8000/api/guru/walas/cetak`, {
+        const res = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/guru/walas/cetak`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
 
@@ -658,7 +658,7 @@ const bukaPreviewRapor = async (siswa) => {
     try {
         const token = useCookie('auth_token').value
         
-        const res = await $fetch(`http://localhost:8000/api/guru/walas/cetak/rapor`, {
+        const res = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/guru/walas/cetak/rapor`, {
             params: {
                 siswa_id: siswa.id,
                 titimangsa_id: activeTitimangsaId.value
@@ -762,7 +762,7 @@ const loadLegerData = async () => {
     try {
         const token = useCookie('auth_token').value
         
-        const res = await $fetch(`http://localhost:8000/api/guru/walas/cetak/leger`, {
+        const res = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/guru/walas/cetak/leger`, {
             params: {
                 titimangsa_id: activeTitimangsaId.value
             },

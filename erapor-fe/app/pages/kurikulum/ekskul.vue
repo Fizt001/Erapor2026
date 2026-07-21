@@ -181,7 +181,7 @@ const fetchData = async () => {
     isLoading.value = true
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch(`http://localhost:8000/api/kurikulum/ekskul`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/kurikulum/ekskul`, {
             headers: { Authorization: `Bearer ${token}` }
         })
         if (response.success) {
@@ -198,8 +198,8 @@ const saveData = async () => {
     isSaving.value = true
     const token = useCookie('auth_token').value
     const url = isEditing.value 
-        ? `http://localhost:8000/api/kurikulum/ekskul/${formData.value.id}` 
-        : `http://localhost:8000/api/kurikulum/ekskul`
+        ? `${import.meta.env.VITE_API_BASE_URL}/api/kurikulum/ekskul/${formData.value.id}` 
+        : `${import.meta.env.VITE_API_BASE_URL}/api/kurikulum/ekskul`
     const method = isEditing.value ? 'PUT' : 'POST'
 
     try {
@@ -252,7 +252,7 @@ const executeDelete = async () => {
     isSaving.value = true
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch(`http://localhost:8000/api/kurikulum/ekskul/${deleteTarget.value.id}`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/kurikulum/ekskul/${deleteTarget.value.id}`, {
             method: 'DELETE',
             headers: { Authorization: `Bearer ${token}` }
         })

@@ -269,7 +269,7 @@ const fetchReferences = async () => {
       if (filter[key]) queryParams.append(key, filter[key])
     })
 
-    const res = await $fetch(`http://localhost:8000/api/guru/sumatif/nilai?${queryParams.toString()}`, {
+    const res = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/guru/sumatif/nilai?${queryParams.toString()}`, {
       headers: { 'Authorization': `Bearer ${tokenCookie.value}` }
     })
     
@@ -305,7 +305,7 @@ const fetchData = async () => {
   siswas.value = []
 
   try {
-    const res = await $fetch('http://localhost:8000/api/guru/sumatif/rekap', {
+    const res = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/guru/sumatif/rekap', {
       params: {
         kelas_id: filter.kelas_id,
         mapel_id: filter.mapel_id,

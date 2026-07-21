@@ -77,7 +77,7 @@ const _sfc_main = {
       if (!currentStudent.value) return;
       isLoadingNilai.value = true;
       try {
-        const res = await $fetch(`http://localhost:8000/api/admin/buku-induk/siswa/${currentStudent.value.id}/nilai`, {
+        const res = await $fetch(`https://api.erapor.yatindosystem.net/api/admin/buku-induk/siswa/${currentStudent.value.id}/nilai`, {
           headers: { Authorization: `Bearer ${token.value}` }
         
 });

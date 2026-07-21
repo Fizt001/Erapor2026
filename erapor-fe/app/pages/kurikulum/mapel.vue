@@ -325,10 +325,10 @@ const fetchReferensi = async () => {
     try {
         const timestamp = Date.now()
         const [resKat, resKel] = await Promise.all([
-            $fetch(`http://localhost:8000/api/referensi?jenis=kategori_mapel`, {
+            $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/referensi?jenis=kategori_mapel`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             }),
-            $fetch(`http://localhost:8000/api/referensi?jenis=kelompok_mapel`, {
+            $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/referensi?jenis=kelompok_mapel`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             })
         ])
@@ -362,7 +362,7 @@ const fetchData = async () => {
     isLoading.value = true
     const token = useCookie('auth_token').value
     try {
-        let url = `http://localhost:8000/api/kurikulum/mapel?kategori=${kategoriTab.value}`
+        let url = `${import.meta.env.VITE_API_BASE_URL}/api/kurikulum/mapel?kategori=${kategoriTab.value}`
         if (filterKurikulum.value) {
             url += `&kurikulum_id=${filterKurikulum.value}`
         }
@@ -386,8 +386,8 @@ const saveData = async () => {
     isSaving.value = true
     const token = useCookie('auth_token').value
     const url = isEditing.value 
-        ? `http://localhost:8000/api/kurikulum/mapel/${formData.value.id}` 
-        : `http://localhost:8000/api/kurikulum/mapel`
+        ? `${import.meta.env.VITE_API_BASE_URL}/api/kurikulum/mapel/${formData.value.id}` 
+        : `${import.meta.env.VITE_API_BASE_URL}/api/kurikulum/mapel`
     const method = isEditing.value ? 'PUT' : 'POST'
 
     try {
@@ -454,7 +454,7 @@ const executeDelete = async () => {
     
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch(`http://localhost:8000/api/kurikulum/mapel/${deleteTarget.value.id}`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/kurikulum/mapel/${deleteTarget.value.id}`, {
             method: 'DELETE',
             headers: { Authorization: `Bearer ${token}` }
         })

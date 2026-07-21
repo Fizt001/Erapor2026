@@ -245,7 +245,7 @@ const fetchData = async () => {
     const queryParams = new URLSearchParams()
     Object.keys(filter.value).forEach(key => { if (filter.value[key]) queryParams.append(key, filter.value[key]) })
 
-    const res = await $fetch(`http://localhost:8000/api/guru/formatif/nilai?${queryParams.toString()}`, {
+    const res = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/guru/formatif/nilai?${queryParams.toString()}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
 
@@ -298,7 +298,7 @@ const executeManualSave = async () => {
   saveStatus.value = 'saving'
   try {
     const token = useCookie('auth_token').value
-    const res = await $fetch('http://localhost:8000/api/guru/formatif/nilai/store', {
+    const res = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/guru/formatif/nilai/store', {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}` },
       body: { ...filter.value, data: nilaiMatrix.value }

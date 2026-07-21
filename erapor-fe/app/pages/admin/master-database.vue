@@ -230,7 +230,7 @@ const formatJenis = (jenis) => {
 const fetchData = async () => {
     isLoading.value = true
     try {
-        const response = await $fetch('http://localhost:8000/api/admin/referensi', {
+        const response = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/admin/referensi', {
             headers: { 'Authorization': `Bearer ${tokenCookie.value}` }
         })
         referensis.value = response.data || []
@@ -262,8 +262,8 @@ const saveData = async () => {
     isSaving.value = true
     try {
         const url = isEditing.value 
-            ? `http://localhost:8000/api/admin/referensi/${formData.value.id}`
-            : 'http://localhost:8000/api/admin/referensi'
+            ? `${import.meta.env.VITE_API_BASE_URL}/api/admin/referensi/${formData.value.id}`
+            : import.meta.env.VITE_API_BASE_URL + '/api/admin/referensi'
             
         const response = await $fetch(url, {
             method: isEditing.value ? 'PUT' : 'POST',
@@ -295,7 +295,7 @@ const executeDelete = async () => {
     if (!itemToDelete.value) return
     isDeleting.value = true
     try {
-        const response = await $fetch(`http://localhost:8000/api/admin/referensi/${itemToDelete.value.id}`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/referensi/${itemToDelete.value.id}`, {
             method: 'DELETE',
             headers: { 'Authorization': `Bearer ${tokenCookie.value}` }
         })

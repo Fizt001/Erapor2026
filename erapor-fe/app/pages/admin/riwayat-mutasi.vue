@@ -131,7 +131,7 @@ const cancelMutasi = async (m) => {
 
   isProcessing.value = true
   try {
-    const res = await $fetch(`http://localhost:8000/api/admin/mutasi/${m.id}`, {
+    const res = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/mutasi/${m.id}`, {
       method: 'DELETE',
       headers: { Authorization: `Bearer ${token.value}` }
     })
@@ -147,7 +147,7 @@ const cancelMutasi = async (m) => {
 const fetchMutasi = async () => {
   isLoading.value = true
   try {
-    const res = await $fetch(`http://localhost:8000/api/admin/mutasi?status_approval=${filterStatus.value}`, {
+    const res = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/mutasi?status_approval=${filterStatus.value}`, {
       headers: { Authorization: `Bearer ${token.value}` }
     })
     mutasiList.value = res.data

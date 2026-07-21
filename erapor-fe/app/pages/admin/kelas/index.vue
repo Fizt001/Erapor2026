@@ -270,7 +270,7 @@ const navigateToSiswa = (id) => {
 const fetchDependencies = async () => {
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch('http://localhost:8000/api/admin/kelas/dependencies', {
+        const response = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/admin/kelas/dependencies', {
             headers: { Authorization: `Bearer ${token}` }
         })
         if (response.success) {
@@ -289,7 +289,7 @@ const fetchKelas = async (page = 1) => {
     isLoading.value = true
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch(`http://localhost:8000/api/admin/kelas?page=${page}`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/kelas?page=${page}`, {
             headers: { Authorization: `Bearer ${token}` },
             query: {
                 search: searchQuery.value,
@@ -328,8 +328,8 @@ const saveKelas = async () => {
     const token = useCookie('auth_token').value
     const method = isEditing.value ? 'PUT' : 'POST'
     const url = isEditing.value 
-        ? `http://localhost:8000/api/admin/kelas/${kelasForm.value.id}`
-        : `http://localhost:8000/api/admin/kelas`
+        ? `${import.meta.env.VITE_API_BASE_URL}/api/admin/kelas/${kelasForm.value.id}`
+        : `${import.meta.env.VITE_API_BASE_URL}/api/admin/kelas`
     
     try {
         const response = await $fetch(url, {
@@ -386,7 +386,7 @@ const executeDelete = async () => {
     isDeleting.value = true
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch(`http://localhost:8000/api/admin/kelas/${deleteTarget.value.id}`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/kelas/${deleteTarget.value.id}`, {
             method: 'DELETE',
             headers: { Authorization: `Bearer ${token}` }
         })

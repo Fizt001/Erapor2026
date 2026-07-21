@@ -514,7 +514,7 @@ definePageMeta({
 const tokenCookie = useCookie('auth_token')
 const userProfile = useCookie('user_profile')
 
-const { data: response, pending: isLoading, error } = await useFetch('http://localhost:8000/api/siswa/rapor', {
+const { data: response, pending: isLoading, error } = await useFetch(import.meta.env.VITE_API_BASE_URL + '/api/siswa/rapor', {
   headers: { 'Authorization': `Bearer ${tokenCookie.value}` }
 })
 
@@ -571,7 +571,7 @@ const bukaPreviewRapor = async () => {
     try {
         const token = useCookie('auth_token').value
         
-        const res = await $fetch(`http://localhost:8000/api/siswa/rapor/cetak`, {
+        const res = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/siswa/rapor/cetak`, {
             params: {
                 titimangsa_id: activeTitimangsaId.value
             },

@@ -235,7 +235,7 @@ const fetchData = async () => {
     error.value = null
     try {
         const token = useCookie('auth_token')
-        const res = await $fetch(`http://localhost:8000/api/guru/walas/rekap`, {
+        const res = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/guru/walas/rekap`, {
             headers: {
                 'Authorization': `Bearer ${token.value}`
             }
@@ -277,7 +277,7 @@ const saveCatatan = async (siswaId, catatanText, rekomendasi) => {
             rekomendasi_kenaikan: rekomendasi
         }
 
-        const res = await $fetch(`http://localhost:8000/api/guru/walas/rekap/catatan`, {
+        const res = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/guru/walas/rekap/catatan`, {
             method: 'POST',
             headers: { Authorization: `Bearer ${token.value}` },
             body: payload
@@ -302,7 +302,7 @@ const saveKurikulum = async (kurikulumId) => {
     try {
         const token = useCookie('auth_token')
         // We reuse the ekskul endpoint since it just updates the class' kurikulum_id
-        const res = await $fetch('http://localhost:8000/api/guru/walas/ekskul/kurikulum', {
+        const res = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/guru/walas/ekskul/kurikulum', {
             method: 'POST',
             headers: { Authorization: `Bearer ${token.value}` },
             body: {

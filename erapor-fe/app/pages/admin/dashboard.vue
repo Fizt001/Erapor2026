@@ -178,7 +178,7 @@ const userProfile = computed(() => {
   return typeof userCookie.value === 'string' ? JSON.parse(userCookie.value) : userCookie.value
 })
 
-const { data: response, pending } = await useFetch('http://localhost:8000/api/admin/dashboard', {
+const { data: response, pending } = await useFetch(import.meta.env.VITE_API_BASE_URL + '/api/admin/dashboard', {
   headers: {
     Authorization: `Bearer ${tokenCookie.value}`
   }

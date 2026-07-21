@@ -232,7 +232,7 @@ const fetchData = async () => {
       if (filter.value[key]) queryParams.append(key, filter.value[key])
     })
 
-    const res = await $fetch(`http://localhost:8000/api/guru/formatif/master?${queryParams.toString()}`, {
+    const res = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/guru/formatif/master?${queryParams.toString()}`, {
       headers: { 
         Authorization: `Bearer ${token}`,
         Accept: 'application/json'
@@ -312,7 +312,7 @@ const autoSaveElemen = async (elemen) => {
       nama_elemen: elemen.nama_elemen
     }
 
-    const res = await $fetch('http://localhost:8000/api/guru/formatif/master/elemen', {
+    const res = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/guru/formatif/master/elemen', {
       method: 'POST',
       headers: { 
         Authorization: `Bearer ${token}`,
@@ -349,7 +349,7 @@ const autoSaveTp = async (tp, elemen) => {
       nama_tp: tp.nama_tp
     }
 
-    const res = await $fetch('http://localhost:8000/api/guru/formatif/master/tp', {
+    const res = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/guru/formatif/master/tp', {
       method: 'POST',
       headers: { 
         Authorization: `Bearer ${token}`,
@@ -387,7 +387,7 @@ const hapusElemen = async (elemen, index) => {
     saveStatus.value = 'saving'
     try {
       const token = useCookie('auth_token').value
-      await $fetch(`http://localhost:8000/api/guru/formatif/master/elemen/${elemen.id}`, {
+      await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/guru/formatif/master/elemen/${elemen.id}`, {
         method: 'DELETE',
         headers: { 
           Authorization: `Bearer ${token}`,
@@ -412,7 +412,7 @@ const hapusTp = async (tp, elemen, index) => {
     saveStatus.value = 'saving'
     try {
       const token = useCookie('auth_token').value
-      await $fetch(`http://localhost:8000/api/guru/formatif/master/tp/${tp.id}`, {
+      await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/guru/formatif/master/tp/${tp.id}`, {
         method: 'DELETE',
         headers: { 
           Authorization: `Bearer ${token}`,

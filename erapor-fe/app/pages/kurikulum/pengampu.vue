@@ -212,7 +212,7 @@ const fetchInitial = async () => {
     try {
         const [resTingkat, resKurikulum] = await Promise.all([
             fetchReferensi('TINGKAT_KELAS'),
-            $fetch('http://localhost:8000/api/kurikulum/titimangsa', {
+            $fetch(import.meta.env.VITE_API_BASE_URL + '/api/kurikulum/titimangsa', {
                 headers: { Authorization: `Bearer ${token}` }
             })
         ])
@@ -240,7 +240,7 @@ const fetchPengampu = async () => {
     isLoading.value = true
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch(`http://localhost:8000/api/kurikulum/pengampu?kurikulum_id=${selectedKurikulumId.value}&tingkat=${selectedTingkat.value}&kategori=${activeKategori.value}`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/kurikulum/pengampu?kurikulum_id=${selectedKurikulumId.value}&tingkat=${selectedTingkat.value}&kategori=${activeKategori.value}`, {
             headers: { Authorization: `Bearer ${token}` }
         })
         
@@ -308,7 +308,7 @@ const assignGuru = async (struktur, kelasId) => {
     const token = useCookie('auth_token').value
     
     try {
-        const res = await $fetch('http://localhost:8000/api/kurikulum/pengampu', {
+        const res = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/kurikulum/pengampu', {
             method: 'POST',
             headers: { Authorization: `Bearer ${token}` },
             body: {
@@ -354,7 +354,7 @@ const confirmDelete = async (id) => {
 
     const token = useCookie('auth_token').value
     try {
-        const res = await $fetch(`http://localhost:8000/api/kurikulum/pengampu/${id}`, {
+        const res = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/kurikulum/pengampu/${id}`, {
             method: 'DELETE',
             headers: { Authorization: `Bearer ${token}` }
         })

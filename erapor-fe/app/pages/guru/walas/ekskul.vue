@@ -290,7 +290,7 @@ const fetchData = async () => {
     pending.value = true
     error.value = null
     try {
-        const res = await $fetch('http://localhost:8000/api/guru/walas/ekskul', {
+        const res = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/guru/walas/ekskul', {
             headers: { Authorization: `Bearer ${token.value}` }
         })
         
@@ -312,7 +312,7 @@ const fetchData = async () => {
 
 const saveKurikulum = async (kurikulumId) => {
     try {
-        const res = await $fetch('http://localhost:8000/api/guru/walas/ekskul/kurikulum', {
+        const res = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/guru/walas/ekskul/kurikulum', {
             method: 'POST',
             headers: { Authorization: `Bearer ${token.value}` },
             body: {
@@ -354,7 +354,7 @@ const submitEkskul = async () => {
             ekskul: formEkskul.value
         }
 
-        const res = await $fetch('http://localhost:8000/api/guru/walas/ekskul/store', {
+        const res = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/guru/walas/ekskul/store', {
             method: 'POST',
             headers: { Authorization: `Bearer ${token.value}` },
             body: payload

@@ -245,7 +245,7 @@ definePageMeta({
 const tokenCookie = useCookie('auth_token')
 const userProfile = useCookie('user_profile')
 
-const { data: response, pending: isLoading, error, execute: loadDashboard } = await useFetch('http://localhost:8000/api/siswa/dashboard', {
+const { data: response, pending: isLoading, error, execute: loadDashboard } = await useFetch(import.meta.env.VITE_API_BASE_URL + '/api/siswa/dashboard', {
   headers: {
     'Authorization': `Bearer ${tokenCookie.value}`
   }

@@ -386,7 +386,7 @@ const fetchData = async () => {
     isLoading.value = true
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch(`http://localhost:8000/api/admin/kelas/${kelasId}/siswa?show_inactive=${showInactive.value ? '1' : '0'}`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/kelas/${kelasId}/siswa?show_inactive=${showInactive.value ? '1' : '0'}`, {
             headers: { Authorization: `Bearer ${token}` }
         })
         if (response.success) {
@@ -436,7 +436,7 @@ const assignBulkUser = async () => {
     const token = useCookie('auth_token').value
     
     try {
-        const response = await $fetch(`http://localhost:8000/api/admin/kelas/${kelasId}/siswa`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/kelas/${kelasId}/siswa`, {
             method: 'POST',
             headers: { Authorization: `Bearer ${token}` },
             body: { siswa: payloadSiswa }
@@ -475,7 +475,7 @@ const executeEditNis = async () => {
     isSaving.value = true
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch(`http://localhost:8000/api/admin/siswa/${editForm.value.id}`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/siswa/${editForm.value.id}`, {
             method: 'PUT',
             headers: { Authorization: `Bearer ${token}` },
             body: { 
@@ -507,7 +507,7 @@ const executeDelete = async () => {
     isDeleting.value = true
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch(`http://localhost:8000/api/admin/siswa/${deleteTarget.value.id}`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/siswa/${deleteTarget.value.id}`, {
             method: 'DELETE',
             headers: { Authorization: `Bearer ${token}` }
         })
@@ -540,7 +540,7 @@ const executeMutasi = async () => {
     isSaving.value = true
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch(`http://localhost:8000/api/admin/mutasi/proses`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/mutasi/proses`, {
             method: 'POST',
             headers: { Authorization: `Bearer ${token}` },
             body: mutasiForm.value

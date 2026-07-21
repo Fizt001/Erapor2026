@@ -460,7 +460,7 @@ const fetchData = async () => {
   pending.value = true
   error.value = null
   try {
-    const res = await $fetch('http://localhost:8000/api/guru/walas/biodata', {
+    const res = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/guru/walas/biodata', {
       headers: { Authorization: `Bearer ${token.value}` }
     })
     
@@ -495,7 +495,7 @@ const submitEdit = async () => {
     try {
         const payload = { ...editForm.value }
         
-        const res = await $fetch(`http://localhost:8000/api/guru/walas/biodata/${payload.id}`, {
+        const res = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/guru/walas/biodata/${payload.id}`, {
             method: 'PUT',
             headers: { Authorization: `Bearer ${token.value}` },
             body: payload
@@ -536,7 +536,7 @@ const submitEdit = async () => {
 
 const fetchAgamaOptions = async () => {
     try {
-        const res = await $fetch('http://localhost:8000/api/admin/referensi?jenis=Kategori%20Agama', {
+        const res = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/admin/referensi?jenis=Kategori%20Agama', {
             headers: { Authorization: `Bearer ${token.value}` }
         })
         if (res.success) {

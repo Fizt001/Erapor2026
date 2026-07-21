@@ -137,7 +137,7 @@ const loadData = async () => {
     error.value = null
     try {
         const token = useCookie('auth_token').value
-        const res = await $fetch(`http://localhost:8000/api/guru/walas/kenaikan-kelas`, {
+        const res = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/guru/walas/kenaikan-kelas`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
         if (res && res.success) {

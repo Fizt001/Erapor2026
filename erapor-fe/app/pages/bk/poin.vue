@@ -407,7 +407,7 @@ const fetchInitialData = async () => {
     isLoadingKelas.value = true
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch('http://localhost:8000/api/bk/poin', {
+        const response = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/bk/poin', {
             headers: { Authorization: `Bearer ${token}` }
         })
         if (response.success) {
@@ -452,7 +452,7 @@ const selectKelas = async (id) => {
     if (!isDesktop.value) activeTabMobile.value = 'flow'
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch(`http://localhost:8000/api/bk/poin?kelas_id=${id}&periode=${selectedPeriode.value}`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/bk/poin?kelas_id=${id}&periode=${selectedPeriode.value}`, {
             headers: { Authorization: `Bearer ${token}` }
         })
         if (response.success) {
@@ -519,7 +519,7 @@ const savePoin = async () => {
     isSaving.value = true
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch('http://localhost:8000/api/bk/poin', {
+        const response = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/bk/poin', {
             method: 'POST',
             headers: { Authorization: `Bearer ${token}` },
             body: {
@@ -554,7 +554,7 @@ const executeDeletePoin = async () => {
     if (!deleteTargetId.value) return
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch(`http://localhost:8000/api/bk/poin/${deleteTargetId.value}`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/bk/poin/${deleteTargetId.value}`, {
             method: 'DELETE',
             headers: { Authorization: `Bearer ${token}` }
         })

@@ -228,7 +228,7 @@ const formatDate = (dateString) => {
 const fetchData = async () => {
     pending.value = true
     try {
-        const res = await $fetch('http://localhost:8000/api/guru/walas/bimbingan', {
+        const res = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/guru/walas/bimbingan', {
             headers: { Authorization: `Bearer ${token.value}` }
         })
         if (res.success) {
@@ -265,7 +265,7 @@ const saveTindakLanjut = async () => {
     
     isSubmitting.value = true
     try {
-        const res = await $fetch(`http://localhost:8000/api/guru/walas/bimbingan/${selectedKasus.value.id}`, {
+        const res = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/guru/walas/bimbingan/${selectedKasus.value.id}`, {
             method: 'PUT',
             body: {
                 tindakan_penyelesaian: form.value.tindakan_penyelesaian,

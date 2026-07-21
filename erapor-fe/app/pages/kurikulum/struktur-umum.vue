@@ -281,7 +281,7 @@ const deleteTarget = ref({ id: null, nama: '' })
 const fetchReferensi = async () => {
     const token = useCookie('auth_token').value
     try {
-        const res = await $fetch(`http://localhost:8000/api/referensi?jenis=tingkat_kelas`, {
+        const res = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/referensi?jenis=tingkat_kelas`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
         if (res.data) {
@@ -299,7 +299,7 @@ const fetchData = async () => {
     isLoading.value = true
     const token = useCookie('auth_token').value
     try {
-        const url = `http://localhost:8000/api/kurikulum/struktur-umum` + (selectedKurikulumId.value ? `?kurikulum_id=${selectedKurikulumId.value}` : '')
+        const url = `${import.meta.env.VITE_API_BASE_URL}/api/kurikulum/struktur-umum` + (selectedKurikulumId.value ? `?kurikulum_id=${selectedKurikulumId.value}` : '')
         const response = await $fetch(url, {
             headers: { Authorization: `Bearer ${token}` }
         })
@@ -327,7 +327,7 @@ const saveData = async () => {
     isSaving.value = true
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch('http://localhost:8000/api/kurikulum/struktur-umum', {
+        const response = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/kurikulum/struktur-umum', {
             method: 'POST',
             headers: { Authorization: `Bearer ${token}` },
             body: {
@@ -360,7 +360,7 @@ const executeDelete = async () => {
     if(!deleteTarget.value.id) return
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch(`http://localhost:8000/api/kurikulum/struktur-umum/${deleteTarget.value.id}`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/kurikulum/struktur-umum/${deleteTarget.value.id}`, {
             method: 'DELETE',
             headers: { Authorization: `Bearer ${token}` }
         })

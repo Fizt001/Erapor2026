@@ -381,7 +381,7 @@ const fetchInitialData = async () => {
     isLoadingKelas.value = true
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch('http://localhost:8000/api/bk/buku-kasus', {
+        const response = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/bk/buku-kasus', {
             headers: { Authorization: `Bearer ${token}` }
         })
         if (response.success) {
@@ -405,7 +405,7 @@ const selectKelas = async (id) => {
     isLoadingSiswa.value = true
     const token = useCookie('auth_token').value
     try {
-        const response = await $fetch(`http://localhost:8000/api/bk/buku-kasus?kelas_id=${id}`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/bk/buku-kasus?kelas_id=${id}`, {
             headers: { Authorization: `Bearer ${token}` }
         })
         if (response.success) {

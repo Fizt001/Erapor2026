@@ -10,7 +10,7 @@ export const useReferensi = () => {
 
     try {
       const token = useCookie('auth_token')
-      const response = await $fetch<{ success: boolean, data: any[] }>('http://localhost:8000/api/referensi', {
+      const response = await $fetch<{ success: boolean, data: any[] }>(import.meta.env.VITE_API_BASE_URL + '/api/referensi', {
         params: { jenis },
         headers: {
           Authorization: `Bearer ${token.value}`

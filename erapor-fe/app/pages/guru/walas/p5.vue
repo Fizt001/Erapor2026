@@ -158,7 +158,7 @@ const fetchData = async () => {
     error.value = null
     try {
         const token = useCookie('auth_token')
-        const response = await $fetch(`http://localhost:8000/api/guru/walas/kokurikuler`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/guru/walas/kokurikuler`, {
             headers: {
                 'Authorization': `Bearer ${token.value}`,
                 'Accept': 'application/json'
@@ -209,7 +209,7 @@ const saveData = async (siswaId, tmId) => {
         const token = useCookie('auth_token')
         const keterangan = formKo.value[siswaId][tmId]
         
-        const response = await $fetch(`http://localhost:8000/api/guru/walas/kokurikuler/store`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/guru/walas/kokurikuler/store`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token.value}`,
@@ -240,7 +240,7 @@ const saveData = async (siswaId, tmId) => {
 const saveKurikulum = async (kurikulumId) => {
     try {
         const token = useCookie('auth_token')
-        const response = await $fetch(`http://localhost:8000/api/guru/walas/kokurikuler/kurikulum`, {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/guru/walas/kokurikuler/kurikulum`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token.value}`,

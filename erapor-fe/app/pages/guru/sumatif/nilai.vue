@@ -389,7 +389,7 @@ const fetchData = async () => {
       if (filter.value[key]) queryParams.append(key, filter.value[key])
     })
 
-    const res = await $fetch(`http://localhost:8000/api/guru/sumatif/nilai?${queryParams.toString()}`, {
+    const res = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/guru/sumatif/nilai?${queryParams.toString()}`, {
       headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' }
     })
 
@@ -540,7 +540,7 @@ const executeManualSave = async () => {
       data: bulkData
     }
 
-    const res = await $fetch('http://localhost:8000/api/guru/sumatif/nilai/store', {
+    const res = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/guru/sumatif/nilai/store', {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
       body: payload

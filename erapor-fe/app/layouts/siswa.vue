@@ -3,7 +3,7 @@
     <!-- Sidebar -->
     <aside class="group bg-slate-900 text-white flex-shrink-0 min-h-screen fixed lg:static z-50 transform lg:translate-x-0 transition-all duration-300 ease-in-out overflow-x-hidden print:hidden" :class="[sidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full lg:translate-x-0 lg:w-[72px] lg:hover:w-64 w-64']">
       <div class="h-14 flex items-center px-4 bg-slate-950 font-bold text-base tracking-wider border-b border-slate-800 whitespace-nowrap overflow-hidden">
-        <img v-if="sekolah?.logo" :src="`http://localhost:8000/${sekolah.logo}`" alt="Logo" class="h-8 w-8 object-contain mr-2" />
+        <img v-if="sekolah?.logo" :src="`/${sekolah.logo}`" alt="Logo" class="h-8 w-8 object-contain mr-2" />
         <span v-else class="text-emerald-500 mr-2 ml-1 text-xl">e</span><span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">-Rapor</span>
       </div>
       
@@ -127,7 +127,7 @@ const handleLogout = async () => {
     
     // Panggil API logout 
     if (tokenCookie.value) {
-      await $fetch('http://localhost:8000/api/logout', {
+      await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/logout', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${tokenCookie.value}`

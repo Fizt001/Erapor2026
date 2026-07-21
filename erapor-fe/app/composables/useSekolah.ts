@@ -11,7 +11,7 @@ export const useSekolah = () => {
   const fetchSekolah = async () => {
     try {
       const tokenCookie = useCookie('auth_token')
-      const response = await $fetch('http://localhost:8000/api/admin/sekolah', {
+      const response = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/admin/sekolah', {
         headers: {
           Authorization: `Bearer ${tokenCookie.value}`
         }

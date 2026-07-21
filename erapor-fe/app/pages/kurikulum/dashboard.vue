@@ -208,7 +208,7 @@ const userProfile = computed(() => {
   return typeof userCookie.value === 'string' ? JSON.parse(userCookie.value) : userCookie.value
 })
 
-const { data: response, pending: isLoading } = await useFetch('http://localhost:8000/api/kurikulum/dashboard', {
+const { data: response, pending: isLoading } = await useFetch(import.meta.env.VITE_API_BASE_URL + '/api/kurikulum/dashboard', {
   headers: { Authorization: `Bearer ${tokenCookie.value}` }
 })
 
