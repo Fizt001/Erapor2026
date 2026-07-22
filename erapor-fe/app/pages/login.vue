@@ -99,7 +99,7 @@
             </div>
 
             <!-- Swipe Up Indicator (Mobile Only) -->
-            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center lg:hidden animate-bounce text-slate-400">
+            <div class="absolute bottom-8 inset-x-0 w-full flex flex-col items-center justify-center lg:hidden animate-bounce text-slate-400">
                 <span class="text-[10px] font-bold uppercase tracking-widest mb-2">Usap ke atas</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" /></svg>
             </div>
@@ -109,6 +109,12 @@
         <div class="w-full lg:w-[35%] h-[90vh] lg:h-full absolute bottom-0 left-0 lg:static z-20 bg-white flex flex-col justify-center items-center py-10 px-6 lg:p-10 shadow-[0_-30px_60px_-15px_rgba(0,0,0,0.5)] lg:shadow-[-30px_0_60px_-15px_rgba(0,0,0,0.5)] rounded-t-[2.5rem] lg:rounded-none transition-transform duration-[800ms] ease-[cubic-bezier(0.23,1,0.32,1)]"
              :class="isMobileFormActive ? 'translate-y-0' : 'translate-y-full lg:translate-y-0'">
             
+            <!-- Swipe Down Indicator (Above the white card) -->
+            <div class="absolute -top-16 inset-x-0 w-full flex flex-col items-center justify-center lg:hidden animate-bounce text-slate-400">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                <span class="text-[10px] font-bold uppercase tracking-widest">Usap ke bawah</span>
+            </div>
+
             <!-- Mobile Drag Handle -->
             <div class="w-12 h-1.5 bg-slate-200 rounded-full absolute top-4 left-1/2 -translate-x-1/2 lg:hidden"></div>
 
@@ -176,9 +182,8 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="w-full bg-[#05070A] text-slate-500 py-4 px-6 text-center text-[10px] font-bold uppercase tracking-widest z-50 flex-shrink-0 flex flex-col lg:flex-row justify-between items-center gap-2 border-t border-white/5">
+    <footer class="w-full bg-[#05070A] text-slate-500 py-4 px-6 text-center text-[10px] font-bold uppercase tracking-widest z-50 flex-shrink-0 flex items-center justify-center border-t border-white/5">
         <span>Aplikasi e-Rapor SMK | Versi 2026.1</span>
-        <span>Direktorat SMK | Ditjen Pendidikan Vokasi</span>
     </footer>
     
   </div>
