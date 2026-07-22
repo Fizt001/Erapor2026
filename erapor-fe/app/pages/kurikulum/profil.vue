@@ -38,11 +38,11 @@
 
       <!-- Panel Flow Kanan -->
       <div class="flex-1 bg-slate-50 flex flex-col h-full min-w-0">
-        <div class="p-6 lg:p-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
+        <div class="p-2 sm:p-6 lg:p-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
           <div class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
             
             <!-- Header -->
-            <div class="px-6 py-5 border-b border-slate-100 flex items-center justify-between sticky top-0 bg-white/80 backdrop-blur-xl z-20">
+            <div class="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-white z-20">
                 <div class="flex items-center gap-4">
                     <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 shadow-sm flex items-center justify-center text-2xl text-white">
                         <AppIcon name="shield-check" class="w-5 h-5 inline-block mr-1" />

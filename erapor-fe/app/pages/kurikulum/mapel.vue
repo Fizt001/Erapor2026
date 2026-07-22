@@ -7,9 +7,9 @@
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-2 grid grid-cols-2 gap-2 z-20">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
           :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-amber-500 to-amber-600 text-white shadow-md shadow-amber-500/20 ring-2 ring-amber-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
+          class="rounded-xl flex items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon :name="tab.icon" class="w-6 h-6 mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
-          <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
 
@@ -80,12 +80,12 @@
       </div>
 
       <!-- Panel Flow Kanan (Tabel) -->
-      <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0', activeTabMobile === 'table' || isDesktop ? 'flex' : 'hidden', !isDesktop ? 'pt-[60px]' : '']">
-        <div class="p-6 lg:p-8 max-w-7xl mx-auto w-full h-full flex flex-col relative z-0">
+      <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative', activeTabMobile === 'table' || isDesktop ? 'flex' : 'hidden', !isDesktop ? 'pt-[60px]' : '']">
+        <div class="p-2 sm:p-2 sm:p-6 lg:p-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
           <div class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
             
             <!-- Header Flow -->
-            <div class="px-6 py-5 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0 z-10 sticky top-0 bg-white/80 backdrop-blur-xl">
+            <div class="px-6 py-5 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0 z-10 bg-white">
                 <div class="flex items-center gap-4">
                     <div class="w-10 h-10 rounded-2xl bg-amber-50 shadow-sm border border-amber-100 flex items-center justify-center text-xl hidden sm:flex text-amber-500"><AppIcon name="book-open" class="w-6 h-6" /></div>
                     <div>
@@ -157,20 +157,26 @@
                                         <th class="py-3 px-4 text-center w-24">Aksi</th>
                                     </tr>
                                 </thead>
-                                <tbody class="text-sm">
-                                    <tr v-for="(item, index) in groupList" :key="item.id" class="border-b border-slate-50 hover:bg-slate-50/80 transition-colors bg-white group">
-                                        <td class="py-2 px-4 pl-6 text-center text-[11px] font-bold text-slate-400">{{ index + 1 }}</td>
-                                        <td class="py-2 px-4">
-                                            <p class="font-black text-slate-700 text-xs">{{ item.nama_mapel }}</p>
-                                            <div class="flex items-center gap-1.5 mt-0.5">
-                                                <span class="text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded bg-slate-100 text-slate-500 border border-slate-200">{{ item.kode_mapel }}</span>
-                                                <span class="text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded border border-amber-100 bg-amber-50 text-amber-600" v-if="item.kurikulum">{{ item.kurikulum.nama_kurikulum }}</span>
+                                <tbody class="flex flex-col sm:table-row-group text-sm">
+                                    <tr v-for="(item, index) in groupList" :key="item.id" class="border-b border-slate-100 hover:bg-slate-50/80 transition-colors bg-white group flex flex-col sm:table-row p-4 sm:p-0 relative">
+                                        <td class="px-0 py-1 sm:p-4 text-left sm:text-center text-[10px] font-bold text-slate-400 flex sm:table-cell items-center justify-between">
+                                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">No</span>
+                                            {{ index + 1 }}
+                                        </td>
+                                        <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between">
+                                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Mapel</span>
+                                            <div class="text-right sm:text-left">
+                                                <p class="font-black text-slate-700 text-xs">{{ item.nama_mapel }}</p>
+                                                <div class="flex items-center justify-end sm:justify-start gap-1.5 mt-0.5">
+                                                    <span class="text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded bg-slate-100 text-slate-500 border border-slate-200">{{ item.kode_mapel }}</span>
+                                                    <span class="text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded border border-amber-100 bg-amber-50 text-amber-600" v-if="item.kurikulum">{{ item.kurikulum.nama_kurikulum }}</span>
+                                                </div>
                                             </div>
                                         </td>
-                                        <td class="py-2 px-4 text-center">
-                                            <div class="flex items-center justify-center gap-1.5 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
-                                                <button @click.stop="editData(item)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:border-amber-200 hover:bg-amber-50 hover:text-amber-600 flex items-center justify-center transition-all shadow-sm" title="Edit"><AppIcon name="pencil-square" class="w-4 h-4" /></button>
-                                                <button @click.stop="confirmDelete(item)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-center transition-all shadow-sm" title="Hapus"><AppIcon name="trash" class="w-4 h-4" /></button>
+                                        <td class="px-0 pt-3 sm:p-4 text-center border-t sm:border-0 border-slate-100 mt-2 sm:mt-0 flex sm:table-cell justify-center">
+                                            <div class="flex items-center justify-center gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
+                                                <button @click.stop="editData(item)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-amber-200 hover:bg-amber-50 hover:text-amber-600 flex items-center justify-center transition-all shadow-sm" title="Edit"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg></button>
+                                                <button @click.stop="confirmDelete(item)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-center transition-all shadow-sm" title="Hapus"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg></button>
                                             </div>
                                         </td>
                                     </tr>
@@ -191,20 +197,26 @@
                                 <th class="py-3 px-4 text-center w-24">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody class="text-sm">
-                            <tr v-for="(item, index) in mapels" :key="item.id" class="border-b border-slate-100 hover:bg-slate-50 transition-colors bg-white group">
-                                <td class="py-3 px-4 pl-6 text-center text-[11px] font-bold text-slate-400">{{ index + 1 }}</td>
-                                <td class="py-3 px-4">
-                                    <p class="font-black text-slate-800 text-xs">{{ item.nama_mapel }}</p>
-                                    <div class="flex items-center gap-1.5 mt-0.5">
-                                        <span class="text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded bg-slate-100 text-slate-500 border border-slate-200">{{ item.kode_mapel }}</span>
-                                        <span class="text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded border border-amber-100 bg-amber-50 text-amber-600" v-if="item.kurikulum">{{ item.kurikulum.nama_kurikulum }}</span>
+                        <tbody class="flex flex-col sm:table-row-group text-sm">
+                            <tr v-for="(item, index) in mapels" :key="item.id" class="border-b border-slate-100 hover:bg-slate-50 transition-colors bg-white group flex flex-col sm:table-row p-4 sm:p-0 relative">
+                                <td class="px-0 py-1 sm:p-4 text-left sm:text-center text-[10px] font-bold text-slate-400 flex sm:table-cell items-center justify-between">
+                                    <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">No</span>
+                                    {{ index + 1 }}
+                                </td>
+                                <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between">
+                                    <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Mapel</span>
+                                    <div class="text-right sm:text-left">
+                                        <p class="font-black text-slate-800 text-xs">{{ item.nama_mapel }}</p>
+                                        <div class="flex items-center justify-end sm:justify-start gap-1.5 mt-0.5">
+                                            <span class="text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded bg-slate-100 text-slate-500 border border-slate-200">{{ item.kode_mapel }}</span>
+                                            <span class="text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded border border-amber-100 bg-amber-50 text-amber-600" v-if="item.kurikulum">{{ item.kurikulum.nama_kurikulum }}</span>
+                                        </div>
                                     </div>
                                 </td>
-                                <td class="py-3 px-4 text-center">
-                                    <div class="flex items-center justify-center gap-1.5 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
-                                        <button @click="editData(item)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:border-amber-200 hover:bg-amber-50 hover:text-amber-600 flex items-center justify-center transition-all shadow-sm" title="Edit"><AppIcon name="pencil-square" class="w-4 h-4" /></button>
-                                        <button @click="confirmDelete(item)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-center transition-all shadow-sm" title="Hapus"><AppIcon name="trash" class="w-4 h-4" /></button>
+                                <td class="px-0 pt-3 sm:p-4 text-center border-t sm:border-0 border-slate-100 mt-2 sm:mt-0 flex sm:table-cell justify-center">
+                                    <div class="flex items-center justify-center gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
+                                        <button @click="editData(item)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-amber-200 hover:bg-amber-50 hover:text-amber-600 flex items-center justify-center transition-all shadow-sm" title="Edit"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg></button>
+                                        <button @click="confirmDelete(item)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-center transition-all shadow-sm" title="Hapus"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg></button>
                                     </div>
                                 </td>
                             </tr>
@@ -257,7 +269,7 @@ const isDesktop = computed(() => windowWidth.value >= 1280) // xl breakpoint
 const activeTabMobile = ref('table')
 const mobileTabs = [
   { id: 'form', title: 'Form Data', icon: 'document-text' },
-  { id: 'table', title: 'Database', icon: 'clipboard-document-list' }
+  { id: 'table', title: 'Database', icon: 'clipboard' }
 ]
 
 const kategoriTab = ref('')

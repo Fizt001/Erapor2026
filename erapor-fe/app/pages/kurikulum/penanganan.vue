@@ -33,9 +33,9 @@
 
       <!-- Panel Flow Kanan -->
       <div class="flex-1 bg-slate-50 flex flex-col h-full min-w-0">
-        <div class="p-6 lg:p-8 max-w-7xl mx-auto w-full h-full flex flex-col relative z-0">
+        <div class="p-2 sm:p-2 sm:p-6 lg:p-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
           <div class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
-            <div class="px-6 py-5 border-b border-slate-100 flex items-center justify-between sticky top-0 bg-white/80 backdrop-blur-xl z-20">
+            <div class="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-white z-20">
                 <div class="flex items-center gap-4">
                     <div class="w-10 h-10 rounded-2xl bg-rose-100 shadow-inner flex items-center justify-center text-xl border border-rose-200 text-rose-600"><AppIcon name="shield-check" class="w-6 h-6" /></div>
                     <div>

@@ -7,9 +7,9 @@
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-2 grid grid-cols-2 gap-2 z-20">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
           :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-amber-500 to-amber-600 text-white shadow-md shadow-amber-500/20 ring-2 ring-amber-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
+          class="rounded-xl flex items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon :name="tab.icon" class="w-6 h-6 mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
-          <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
 
@@ -87,11 +87,11 @@
       </div>
 
       <!-- Panel Flow Kanan (Tabel) -->
-      <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0', activeTabMobile === 'table' || isDesktop ? 'flex' : 'hidden', !isDesktop ? 'pt-[60px]' : '']">
-        <div class="p-6 lg:p-8 max-w-7xl mx-auto w-full h-full flex flex-col relative z-0">
+      <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative', activeTabMobile === 'table' || isDesktop ? 'flex' : 'hidden', !isDesktop ? 'pt-[60px]' : '']">
+        <div class="p-2 sm:p-2 sm:p-6 lg:p-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
           <div class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
         <!-- Header Flow -->
-        <div class="px-6 py-5 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0 z-10 sticky top-0 bg-white/80 backdrop-blur-xl">
+        <div class="px-6 py-5 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0 z-10 bg-white">
             <div class="flex items-center gap-4">
                 <div class="w-10 h-10 rounded-2xl bg-amber-50 shadow-sm border border-amber-100 flex items-center justify-center text-xl hidden sm:flex text-amber-500"><AppIcon name="book-open" class="w-6 h-6" /></div>
                 <div>
@@ -147,7 +147,7 @@
                                     <th class="p-4 text-center w-24">Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody class="text-sm font-medium text-slate-700 md:divide-y md:divide-slate-50">
+                            <tbody class="flex flex-col md:table-row-group text-sm font-medium text-slate-700 md:divide-y md:divide-slate-50">
                                 <tr v-if="filteredStrukturs(kelompok.kode).length === 0" class="bg-white">
                                     <td colspan="4" class="p-6 text-center text-xs font-bold text-slate-400">Belum ada mapel di kelompok ini untuk Kelas {{ tingkat }}.</td>
                                 </tr>
@@ -169,7 +169,7 @@
                                     </td>
                                     <td class="p-0 md:p-4 text-center border-t border-slate-50 pt-3 md:border-t-0 md:pt-0 flex items-center justify-end md:table-cell">
                                         <div class="flex items-center justify-center opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
-                                            <button @click="confirmDeleteStruktur(struk)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-center transition-all shadow-sm" title="Hapus"><AppIcon name="trash" class="w-4 h-4" /></button>
+                                            <button @click="confirmDeleteStruktur(struk)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-center transition-all shadow-sm" title="Hapus"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -225,7 +225,7 @@ const isDesktop = computed(() => windowWidth.value >= 1280) // xl breakpoint
 const activeTabMobile = ref('form')
 const mobileTabs = [
   { id: 'form', title: 'Plotting Mapel', icon: 'document-text' },
-  { id: 'table', title: 'Database', icon: 'clipboard-document-list' }
+  { id: 'table', title: 'Database', icon: 'clipboard' }
 ]
 
 const kurikulums = ref([])
