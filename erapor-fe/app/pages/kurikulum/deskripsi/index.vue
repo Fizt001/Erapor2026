@@ -6,7 +6,7 @@
       <!-- MOBILE VIEW TABS -->
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-2 grid grid-cols-2 gap-2 z-20">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
-          :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-indigo-500 to-indigo-600 text-white shadow-md shadow-indigo-500/20 ring-2 ring-indigo-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
+          :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-amber-500 to-amber-600 text-white shadow-md shadow-amber-500/20 ring-2 ring-amber-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
           class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <span class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''">{{ tab.icon }}</span>
           <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
@@ -17,19 +17,19 @@
       <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', activeTabMobile === 'kurikulum' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[60px]' : '']">
         
         <div class="p-6 shrink-0 z-10 relative">
-          <div class="bg-gradient-to-r from-indigo-600 to-blue-700 rounded-2xl p-5 border border-indigo-500 shadow-sm relative overflow-hidden flex items-center gap-4">
+          <div class="bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl p-5 border border-amber-500 shadow-sm relative overflow-hidden flex items-center gap-4">
             <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10">📚</div>
             <div class="relative z-10">
                 <h3 class="text-sm font-black uppercase tracking-widest text-white">Kurikulum</h3>
-                <p class="text-[10px] text-indigo-100 font-semibold uppercase mt-0.5">Pilih kurikulum</p>
+                <p class="text-[10px] text-amber-100 font-semibold uppercase mt-0.5">Pilih kurikulum</p>
             </div>
           </div>
         </div>
 
         <div class="flex-1 overflow-y-auto px-6 pb-6 space-y-2 custom-scrollbar">
             <div v-if="isLoadingKurikulum" class="text-center p-8 opacity-50 flex flex-col items-center justify-center">
-              <span class="animate-spin text-2xl inline-block mb-2 text-indigo-500">↻</span>
-              <p class="text-[10px] font-bold uppercase tracking-widest text-indigo-500">Memuat data...</p>
+              <span class="animate-spin text-2xl inline-block mb-2 text-amber-500">↻</span>
+              <p class="text-[10px] font-bold uppercase tracking-widest text-amber-500">Memuat data...</p>
             </div>
             
             <div v-else-if="kurikulums.length === 0" class="text-center p-8 text-slate-400 text-sm">
@@ -41,10 +41,10 @@
                 v-for="kur in kurikulums" :key="kur.id"
                 @click="selectKurikulum(kur)"
                 class="w-full text-left px-4 py-3 rounded-xl border transition-all duration-200 group flex items-center justify-between"
-                :class="selectedKurikulum?.id === kur.id ? 'bg-indigo-50 border-indigo-200 shadow-sm' : 'bg-white border-slate-200 hover:border-indigo-300 hover:bg-slate-50'"
+                :class="selectedKurikulum?.id === kur.id ? 'bg-amber-50 border-amber-200 shadow-sm' : 'bg-white border-slate-200 hover:border-amber-300 hover:bg-slate-50'"
               >
                 <div>
-                  <h4 class="font-bold text-sm group-hover:text-indigo-700" :class="selectedKurikulum?.id === kur.id ? 'text-indigo-700' : 'text-slate-800'">{{ kur.nama_kurikulum }}</h4>
+                  <h4 class="font-bold text-sm group-hover:text-amber-700" :class="selectedKurikulum?.id === kur.id ? 'text-amber-700' : 'text-slate-800'">{{ kur.nama_kurikulum }}</h4>
                   <p class="text-[10px] text-slate-500 uppercase tracking-widest mt-1">Status: Aktif</p>
                 </div>
                 <div v-if="hasTemplate(kur.id)" class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-xs">
@@ -61,9 +61,9 @@
             <!-- Header Flow -->
             <div class="p-4 bg-white border-b border-slate-200 flex justify-between items-center gap-4 shrink-0 z-10 shadow-sm">
                 <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-2xl bg-indigo-50 shadow-sm border border-indigo-100 flex items-center justify-center text-xl hidden sm:flex text-indigo-500">📝</div>
+                    <div class="w-10 h-10 rounded-2xl bg-amber-50 shadow-sm border border-amber-100 flex items-center justify-center text-xl hidden sm:flex text-amber-500">📝</div>
                     <div>
-                        <h3 class="text-sm font-black uppercase tracking-widest text-indigo-700">Template Deskripsi</h3>
+                        <h3 class="text-sm font-black uppercase tracking-widest text-amber-700">Template Deskripsi</h3>
                         <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">
                             {{ selectedKurikulum ? `Kurikulum: ${selectedKurikulum.nama_kurikulum}` : 'Pilih kurikulum di panel kiri' }}
                         </p>
@@ -76,7 +76,7 @@
                 
                 <!-- Loading State -->
                 <div v-if="isLoadingKurikulum" class="flex flex-col items-center justify-center h-full">
-                    <div class="w-10 h-10 border-4 border-indigo-400 border-t-transparent rounded-full animate-spin mb-4"></div>
+                    <div class="w-10 h-10 border-4 border-amber-400 border-t-transparent rounded-full animate-spin mb-4"></div>
                     <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Memuat Data...</span>
                 </div>
 
@@ -114,7 +114,7 @@
                         <textarea 
                         v-model="form.teks_tertinggi" 
                         rows="4"
-                        class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm font-medium text-slate-700 outline-none resize-none shadow-sm"
+                        class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all text-sm font-medium text-slate-700 outline-none resize-none shadow-sm"
                         placeholder="Contoh: Peserta didik sangat menguasai materi [NAMA_TP] pada saat kegiatan pembelajaran di sekolah."
                         ></textarea>
                         <p class="text-[10px] text-slate-500 mt-2">Teks ini akan muncul dengan menyisipkan nilai TP siswa yang tertinggi.</p>
@@ -136,7 +136,7 @@
                     <div class="mt-8 pt-6 border-t border-slate-200 flex justify-end">
                         <button 
                         @click="saveTemplate" 
-                        class="flex items-center space-x-2 text-[12px] font-black uppercase tracking-widest px-6 py-3 bg-indigo-600 text-white rounded-xl shadow-md hover:bg-indigo-700 hover:shadow-lg transition-all active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
+                        class="flex items-center space-x-2 text-[12px] font-black uppercase tracking-widest px-6 py-3 bg-amber-600 text-white rounded-xl shadow-md hover:bg-amber-700 hover:shadow-lg transition-all active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
                         :disabled="isSaving"
                         >
                         <span v-if="isSaving" class="animate-spin text-lg">↻</span>

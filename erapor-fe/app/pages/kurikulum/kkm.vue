@@ -6,7 +6,7 @@
       <!-- MOBILE VIEW TABS -->
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-2 grid grid-cols-2 gap-2 z-20">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
-          :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-indigo-500 to-indigo-600 text-white shadow-md shadow-indigo-500/20 ring-2 ring-indigo-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
+          :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-amber-500 to-amber-600 text-white shadow-md shadow-amber-500/20 ring-2 ring-amber-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
           class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <span class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''">{{ tab.icon }}</span>
           <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
@@ -17,19 +17,19 @@
       <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', activeTabMobile === 'info' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[60px]' : '']">
         
         <div class="p-6 shrink-0 z-10 relative">
-          <div class="bg-gradient-to-r from-indigo-600 to-blue-700 rounded-2xl p-5 border border-indigo-500 shadow-sm relative overflow-hidden flex items-center gap-4">
+          <div class="bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl p-5 border border-amber-500 shadow-sm relative overflow-hidden flex items-center gap-4">
             <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10">💯</div>
             <div class="relative z-10">
                 <h3 class="text-sm font-black uppercase tracking-widest text-white">Standar Nilai</h3>
-                <p class="text-[10px] text-indigo-100 font-semibold uppercase mt-0.5">Petunjuk Pengaturan</p>
+                <p class="text-[10px] text-amber-100 font-semibold uppercase mt-0.5">Petunjuk Pengaturan</p>
             </div>
           </div>
         </div>
 
         <div class="flex-1 overflow-y-auto px-6 pb-6 space-y-6">
-            <div class="bg-indigo-50 border border-indigo-100 p-4 rounded-2xl">
-                <h4 class="text-xs font-black text-indigo-800 uppercase tracking-widest mb-2">Cara Mengisi KKM:</h4>
-                <ul class="text-[11px] text-indigo-700 space-y-2 list-disc pl-4 font-medium leading-relaxed">
+            <div class="bg-amber-50 border border-amber-100 p-4 rounded-2xl">
+                <h4 class="text-xs font-black text-amber-800 uppercase tracking-widest mb-2">Cara Mengisi KKM:</h4>
+                <ul class="text-[11px] text-amber-700 space-y-2 list-disc pl-4 font-medium leading-relaxed">
                     <li>Input nilai batas ketuntasan (KKM) pada kotak yang tersedia di tiap tingkat kelas.</li>
                     <li>Nilai harus berkisar antara <strong>0 hingga 100</strong>.</li>
                     <li>Tekan tombol <strong>Enter</strong> pada keyboard untuk menyimpan nilai tersebut.</li>
@@ -37,7 +37,7 @@
                 </ul>
             </div>
 
-            <button @click="fetchData" class="w-full py-4 bg-indigo-600 hover:bg-indigo-700 active:scale-[0.98] rounded-2xl text-white shadow-lg shadow-indigo-200 transition-all flex items-center justify-center gap-2 group">
+            <button @click="fetchData" class="w-full py-4 bg-amber-600 hover:bg-amber-700 active:scale-[0.98] rounded-2xl text-white shadow-lg shadow-amber-200 transition-all flex items-center justify-center gap-2 group">
                 <span class="text-[11px] font-black uppercase tracking-widest group-hover:tracking-wider transition-all">Refresh Data</span>
                 <span class="group-hover:rotate-180 transition-transform duration-500">🔄</span>
             </button>
@@ -50,9 +50,9 @@
             <!-- Header Flow -->
             <div class="p-4 bg-white border-b border-slate-200 flex justify-between items-center gap-4 shrink-0 z-10 shadow-sm">
                 <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-2xl bg-indigo-50 shadow-sm border border-indigo-100 flex items-center justify-center text-xl hidden sm:flex text-indigo-500">💯</div>
+                    <div class="w-10 h-10 rounded-2xl bg-amber-50 shadow-sm border border-amber-100 flex items-center justify-center text-xl hidden sm:flex text-amber-500">💯</div>
                     <div>
-                        <h3 class="text-sm font-black uppercase tracking-widest text-indigo-700">Kriteria Ketuntasan Minimal</h3>
+                        <h3 class="text-sm font-black uppercase tracking-widest text-amber-700">Kriteria Ketuntasan Minimal</h3>
                         <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Kelola batas lulus per tingkat</p>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
                 
                 <!-- Loading State -->
                 <div v-if="isLoading" class="flex flex-col items-center justify-center h-full">
-                    <div class="w-10 h-10 border-4 border-indigo-400 border-t-transparent rounded-full animate-spin mb-4"></div>
+                    <div class="w-10 h-10 border-4 border-amber-400 border-t-transparent rounded-full animate-spin mb-4"></div>
                     <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Memuat Data...</span>
                 </div>
 
@@ -96,9 +96,9 @@
                                         :disabled="!isActiveTahunAjaran"
                                         min="0" max="100" 
                                         placeholder="0" 
-                                        class="w-full px-5 py-4 bg-slate-50 border-2 border-slate-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all text-2xl font-black text-slate-800 outline-none text-left disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-slate-100">
+                                        class="w-full px-5 py-4 bg-slate-50 border-2 border-slate-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-2xl font-black text-slate-800 outline-none text-left disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-slate-100">
                                     
-                                    <span v-if="isSaving[kur.kurikulum_id + '_' + item.tingkat]" class="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin"></span>
+                                    <span v-if="isSaving[kur.kurikulum_id + '_' + item.tingkat]" class="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 border-2 border-amber-400 border-t-transparent rounded-full animate-spin"></span>
                                     <span v-else-if="item.nilai !== null" class="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-500 font-black text-xl">✓</span>
                                 </div>
                                 <p class="text-[9px] text-slate-400 text-left ml-1 font-bold mt-1">Tekan <kbd class="px-1 py-0.5 bg-slate-100 border border-slate-200 rounded">Enter</kbd> untuk simpan</p>

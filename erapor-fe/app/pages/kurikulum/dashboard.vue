@@ -12,7 +12,7 @@
                 
                 <!-- Loading State -->
                 <div v-if="isLoading" class="flex-grow flex items-center justify-center py-12">
-                  <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600"></div>
+                  <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-amber-600"></div>
                 </div>
 
                 <div v-else class="p-6 lg:p-8 space-y-6 w-full">
@@ -20,11 +20,11 @@
                     <!-- Welcome & Quick Actions Row -->
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <!-- Welcome Widget -->
-                        <div class="lg:col-span-2 bg-gradient-to-r from-indigo-600 to-blue-700 rounded-2xl p-6 border border-indigo-500 shadow-sm relative overflow-hidden flex flex-col justify-center">
+                        <div class="lg:col-span-2 bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl p-6 border border-amber-500 shadow-sm relative overflow-hidden flex flex-col justify-center">
                             <div class="relative z-10">
                                 <h2 class="text-2xl font-extrabold mb-2 text-white">Halo, {{ userProfile?.name?.split(' ')[0] || 'Waka Kurikulum' }} 👋</h2>
-                                <p class="text-indigo-100 text-sm leading-relaxed">
-                                    Selamat datang di Manajemen <span class="font-bold text-white bg-indigo-900/50 px-2 py-1 rounded">Kurikulum</span>
+                                <p class="text-amber-100 text-sm leading-relaxed">
+                                    Selamat datang di Manajemen <span class="font-bold text-white bg-amber-900/50 px-2 py-1 rounded">Kurikulum</span>
                                 </p>
                             </div>
                             <div class="absolute right-0 bottom-0 opacity-20 text-white">
@@ -36,15 +36,15 @@
                         <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex flex-col justify-center">
                             <h3 class="text-xs font-bold uppercase tracking-widest mb-3 text-slate-700 flex items-center">⚡ Akses Cepat</h3>
                             <div class="space-y-2">
-                                <NuxtLink to="/kurikulum/mapel" class="block bg-slate-50 hover:bg-indigo-50 border border-slate-100 hover:border-indigo-200 text-slate-700 hover:text-indigo-700 transition-colors p-3 rounded-xl text-xs font-semibold flex justify-between items-center group">
+                                <NuxtLink to="/kurikulum/mapel" class="block bg-slate-50 hover:bg-amber-50 border border-slate-100 hover:border-amber-200 text-slate-700 hover:text-amber-700 transition-colors p-3 rounded-xl text-xs font-semibold flex justify-between items-center group">
                                     Master Mata Pelajaran
                                     <span class="opacity-0 group-hover:opacity-100 transition-opacity">→</span>
                                 </NuxtLink>
-                                <NuxtLink to="/kurikulum/pengampu" class="block bg-slate-50 hover:bg-indigo-50 border border-slate-100 hover:border-indigo-200 text-slate-700 hover:text-indigo-700 transition-colors p-3 rounded-xl text-xs font-semibold flex justify-between items-center group">
+                                <NuxtLink to="/kurikulum/pengampu" class="block bg-slate-50 hover:bg-amber-50 border border-slate-100 hover:border-amber-200 text-slate-700 hover:text-amber-700 transition-colors p-3 rounded-xl text-xs font-semibold flex justify-between items-center group">
                                     Plot Guru Pengampu
                                     <span class="opacity-0 group-hover:opacity-100 transition-opacity">→</span>
                                 </NuxtLink>
-                                <NuxtLink to="/kurikulum/wali-kelas" class="block bg-slate-50 hover:bg-indigo-50 border border-slate-100 hover:border-indigo-200 text-slate-700 hover:text-indigo-700 transition-colors p-3 rounded-xl text-xs font-semibold flex justify-between items-center group">
+                                <NuxtLink to="/kurikulum/wali-kelas" class="block bg-slate-50 hover:bg-amber-50 border border-slate-100 hover:border-amber-200 text-slate-700 hover:text-amber-700 transition-colors p-3 rounded-xl text-xs font-semibold flex justify-between items-center group">
                                     Penugasan Wali Kelas
                                     <span class="opacity-0 group-hover:opacity-100 transition-opacity">→</span>
                                 </NuxtLink>
@@ -161,7 +161,7 @@
                                 </div>
                                 
                                 <div class="pt-6 border-t border-slate-100 mt-auto">
-                                    <NuxtLink to="/kurikulum/struktur-umum" class="w-full block text-center py-3 bg-slate-50 hover:bg-indigo-50 border border-slate-200 hover:border-indigo-200 text-slate-700 hover:text-indigo-700 font-bold text-xs uppercase tracking-widest rounded-xl transition-colors">
+                                    <NuxtLink to="/kurikulum/struktur-umum" class="w-full block text-center py-3 bg-slate-50 hover:bg-amber-50 border border-slate-200 hover:border-amber-200 text-slate-700 hover:text-amber-700 font-bold text-xs uppercase tracking-widest rounded-xl transition-colors">
                                         Buka Pengaturan
                                     </NuxtLink>
                                 </div>

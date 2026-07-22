@@ -6,7 +6,7 @@
       <!-- MOBILE VIEW TABS -->
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-2 grid grid-cols-2 gap-2 z-20">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
-          :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-indigo-500 to-indigo-600 text-white shadow-md shadow-indigo-500/20 ring-2 ring-indigo-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
+          :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-amber-500 to-amber-600 text-white shadow-md shadow-amber-500/20 ring-2 ring-amber-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
           class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <span class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''">{{ tab.icon }}</span>
           <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
@@ -17,11 +17,11 @@
       <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', activeTabMobile === 'form' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[60px]' : '']">
         
         <div class="p-6 shrink-0 z-10 relative">
-          <div class="bg-gradient-to-r from-indigo-600 to-blue-700 rounded-2xl p-5 border border-indigo-500 shadow-sm relative overflow-hidden flex items-center gap-4">
+          <div class="bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl p-5 border border-amber-500 shadow-sm relative overflow-hidden flex items-center gap-4">
             <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10">📚</div>
             <div class="relative z-10">
                 <h3 class="text-sm font-black uppercase tracking-widest text-white">{{ isEditing ? 'Edit Mata Pelajaran' : 'Mapel Baru' }}</h3>
-                <p class="text-[10px] text-indigo-100 font-semibold uppercase mt-0.5">{{ isEditing ? 'Perbarui Data' : 'Tambah Data Manual' }}</p>
+                <p class="text-[10px] text-amber-100 font-semibold uppercase mt-0.5">{{ isEditing ? 'Perbarui Data' : 'Tambah Data Manual' }}</p>
             </div>
             <div class="absolute right-0 bottom-0 opacity-20 text-white">
               <svg class="w-20 h-20 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path></svg>
@@ -34,7 +34,7 @@
                 
                 <div>
                     <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Pilih Kurikulum</label>
-                    <select v-model="formData.kurikulum_id" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all text-sm font-bold text-slate-700 outline-none cursor-pointer">
+                    <select v-model="formData.kurikulum_id" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-700 outline-none cursor-pointer">
                         <option value="" disabled>-- Pilih Kurikulum --</option>
                         <option v-for="kur in kurikulums" :key="kur.id" :value="kur.id">{{ kur.nama_kurikulum }}</option>
                     </select>
@@ -42,14 +42,14 @@
 
                 <div>
                     <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Kategori</label>
-                    <select v-model="formData.kategori" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all text-sm font-bold text-slate-700 outline-none cursor-pointer" @change="fetchData">
+                    <select v-model="formData.kategori" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-700 outline-none cursor-pointer" @change="fetchData">
                         <option v-for="kat in refKategoriMapel" :key="kat.kode" :value="kat.kode">{{ kat.nama }}</option>
                     </select>
                 </div>
 
                 <div v-if="refKelompokMapel.length > 0">
                     <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Kelompok (Opsional)</label>
-                    <select v-model="formData.kelompok" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all text-sm font-bold text-slate-700 outline-none cursor-pointer">
+                    <select v-model="formData.kelompok" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-700 outline-none cursor-pointer">
                         <option value="">-- Tanpa Kelompok --</option>
                         <option v-for="kel in refKelompokMapel" :key="kel.kode" :value="kel.kode">{{ kel.nama }}</option>
                     </select>
@@ -57,19 +57,19 @@
 
                 <div>
                     <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Kode Mapel</label>
-                    <input type="text" v-model="formData.kode_mapel" required placeholder="Contoh: B.IND, MTK" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all text-sm font-bold text-slate-800 placeholder:text-slate-400 outline-none">
+                    <input type="text" v-model="formData.kode_mapel" required placeholder="Contoh: B.IND, MTK" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-800 placeholder:text-slate-400 outline-none">
                 </div>
 
                 <div>
                     <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Nama Mapel</label>
-                    <input type="text" v-model="formData.nama_mapel" required placeholder="Nama lengkap mata pelajaran" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all text-sm font-bold text-slate-800 placeholder:text-slate-400 outline-none">
+                    <input type="text" v-model="formData.nama_mapel" required placeholder="Nama lengkap mata pelajaran" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-800 placeholder:text-slate-400 outline-none">
                 </div>
                 
                 <div class="pt-4 border-t border-slate-100 flex gap-3">
                     <button v-if="isEditing" type="button" @click="resetForm" class="flex-1 py-3 bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold rounded-2xl transition-all text-xs uppercase tracking-widest border border-rose-200">
                         Batal
                     </button>
-                    <button type="submit" :disabled="isSaving" class="flex-[2] py-3 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white font-bold rounded-2xl shadow-lg shadow-indigo-500/30 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 text-xs uppercase tracking-widest disabled:opacity-50">
+                    <button type="submit" :disabled="isSaving" class="flex-[2] py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold rounded-2xl shadow-lg shadow-amber-500/30 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 text-xs uppercase tracking-widest disabled:opacity-50">
                         <span v-if="isSaving" class="animate-spin">⏳</span>
                         <span v-else>{{ isEditing ? '💾' : '➕' }}</span> 
                         {{ isEditing ? 'Simpan' : 'Tambah' }}
@@ -87,14 +87,14 @@
             <!-- Header Flow -->
             <div class="px-6 py-5 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0 z-10 sticky top-0 bg-white/80 backdrop-blur-xl">
                 <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-2xl bg-indigo-50 shadow-sm border border-indigo-100 flex items-center justify-center text-xl hidden sm:flex text-indigo-500">📚</div>
+                    <div class="w-10 h-10 rounded-2xl bg-amber-50 shadow-sm border border-amber-100 flex items-center justify-center text-xl hidden sm:flex text-amber-500">📚</div>
                     <div>
-                        <h3 class="text-sm font-black uppercase tracking-widest text-indigo-700">Tahun Ajaran: {{ tahunAjaranAktif?.nama || 'Belum Diatur' }}</h3>
+                        <h3 class="text-sm font-black uppercase tracking-widest text-amber-700">Tahun Ajaran: {{ tahunAjaranAktif?.nama || 'Belum Diatur' }}</h3>
                         <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Filter Kategori & Kurikulum</p>
                     </div>
                 </div>
                 <div class="flex items-center gap-2">
-                    <select v-model="filterKurikulum" @change="fetchData" class="px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-xs font-bold text-slate-700 outline-none cursor-pointer">
+                    <select v-model="filterKurikulum" @change="fetchData" class="px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 text-xs font-bold text-slate-700 outline-none cursor-pointer">
                         <option value="">Semua Kurikulum</option>
                         <option v-for="kur in kurikulums" :key="kur.id" :value="kur.id">{{ kur.nama_kurikulum }}</option>
                     </select>
@@ -109,7 +109,7 @@
                 <button v-for="kat in refKategoriMapel" :key="kat.kode"
                     @click="kategoriTab = kat.kode; fetchData()" 
                     class="px-6 py-3 rounded-t-xl text-xs font-black uppercase tracking-widest transition-all whitespace-nowrap"
-                    :class="kategoriTab === kat.kode ? 'bg-indigo-50 text-indigo-600 border-b-2 border-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-50'">
+                    :class="kategoriTab === kat.kode ? 'bg-amber-50 text-amber-600 border-b-2 border-amber-600 shadow-sm' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-50'">
                     {{ kat.nama }}
                 </button>
                 <div v-if="refKategoriMapel.length === 0" class="py-3 px-6 text-sm text-rose-500 font-bold w-full text-center">
@@ -121,8 +121,8 @@
             <div class="flex-1 overflow-y-auto custom-scrollbar relative bg-slate-50">
                 <!-- Loading State -->
                 <div v-if="isLoading" class="flex-grow flex items-center justify-center flex-col p-10 opacity-60 h-full">
-                    <div class="w-8 h-8 border-4 border-indigo-400 border-t-transparent rounded-full animate-spin mb-4"></div>
-                    <span class="text-xs font-black text-indigo-500 uppercase tracking-widest">Memuat Data...</span>
+                    <div class="w-8 h-8 border-4 border-amber-400 border-t-transparent rounded-full animate-spin mb-4"></div>
+                    <span class="text-xs font-black text-amber-500 uppercase tracking-widest">Memuat Data...</span>
                 </div>
 
                 <!-- Empty State -->
@@ -140,7 +140,7 @@
                                 <h4 class="font-black text-slate-700 text-xs uppercase tracking-widest">Kelompok {{ kelompok }}</h4>
                             </div>
                             <div class="flex items-center gap-4">
-                                <span class="text-[10px] font-black uppercase tracking-widest text-indigo-600 bg-indigo-50 px-2 py-1 rounded border border-indigo-100">{{ groupList.length }} Mapel</span>
+                                <span class="text-[10px] font-black uppercase tracking-widest text-amber-600 bg-amber-50 px-2 py-1 rounded border border-amber-100">{{ groupList.length }} Mapel</span>
                                 <span class="text-slate-400 text-lg transition-transform duration-300" :class="{ 'rotate-180': isCollapsed[kelompok] }">👇</span>
                             </div>
                         </div>
@@ -164,12 +164,12 @@
                                             <p class="font-black text-slate-700 text-xs">{{ item.nama_mapel }}</p>
                                             <div class="flex items-center gap-1.5 mt-0.5">
                                                 <span class="text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded bg-slate-100 text-slate-500 border border-slate-200">{{ item.kode_mapel }}</span>
-                                                <span class="text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded border border-indigo-100 bg-indigo-50 text-indigo-600" v-if="item.kurikulum">{{ item.kurikulum.nama_kurikulum }}</span>
+                                                <span class="text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded border border-amber-100 bg-amber-50 text-amber-600" v-if="item.kurikulum">{{ item.kurikulum.nama_kurikulum }}</span>
                                             </div>
                                         </td>
                                         <td class="py-2 px-4 text-center">
                                             <div class="flex items-center justify-center gap-1.5 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
-                                                <button @click.stop="editData(item)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-600 flex items-center justify-center transition-all shadow-sm" title="Edit">✏️</button>
+                                                <button @click.stop="editData(item)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:border-amber-200 hover:bg-amber-50 hover:text-amber-600 flex items-center justify-center transition-all shadow-sm" title="Edit">✏️</button>
                                                 <button @click.stop="confirmDelete(item)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-center transition-all shadow-sm" title="Hapus">🗑️</button>
                                             </div>
                                         </td>
@@ -198,12 +198,12 @@
                                     <p class="font-black text-slate-800 text-xs">{{ item.nama_mapel }}</p>
                                     <div class="flex items-center gap-1.5 mt-0.5">
                                         <span class="text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded bg-slate-100 text-slate-500 border border-slate-200">{{ item.kode_mapel }}</span>
-                                        <span class="text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded border border-indigo-100 bg-indigo-50 text-indigo-600" v-if="item.kurikulum">{{ item.kurikulum.nama_kurikulum }}</span>
+                                        <span class="text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded border border-amber-100 bg-amber-50 text-amber-600" v-if="item.kurikulum">{{ item.kurikulum.nama_kurikulum }}</span>
                                     </div>
                                 </td>
                                 <td class="py-3 px-4 text-center">
                                     <div class="flex items-center justify-center gap-1.5 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
-                                        <button @click="editData(item)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-600 flex items-center justify-center transition-all shadow-sm" title="Edit">✏️</button>
+                                        <button @click="editData(item)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:border-amber-200 hover:bg-amber-50 hover:text-amber-600 flex items-center justify-center transition-all shadow-sm" title="Edit">✏️</button>
                                         <button @click="confirmDelete(item)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-center transition-all shadow-sm" title="Hapus">🗑️</button>
                                     </div>
                                 </td>

@@ -8,11 +8,11 @@
       <div class="w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all hidden xl:flex">
         
         <div class="p-6 shrink-0 relative z-10">
-          <div class="bg-gradient-to-r from-indigo-600 to-blue-700 rounded-2xl p-5 border border-indigo-500 shadow-sm relative overflow-hidden flex items-center gap-4">
+          <div class="bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl p-5 border border-amber-500 shadow-sm relative overflow-hidden flex items-center gap-4">
             <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10">👤</div>
             <div class="relative z-10">
                 <h3 class="text-sm font-black uppercase tracking-widest text-white">Profil Pengelola</h3>
-                <p class="text-[10px] text-indigo-100 font-semibold uppercase mt-0.5">Identitas Kurikulum</p>
+                <p class="text-[10px] text-amber-100 font-semibold uppercase mt-0.5">Identitas Kurikulum</p>
             </div>
             <div class="absolute right-0 bottom-0 opacity-20 text-white">
               <svg class="w-20 h-20 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>
@@ -23,9 +23,9 @@
         <div class="flex-1 overflow-y-auto p-4 space-y-2 custom-scrollbar">
             <button 
                 type="button" 
-                class="w-full flex items-center gap-4 p-4 rounded-2xl transition-all duration-300 text-left relative group overflow-hidden border bg-indigo-50 border-indigo-200 text-indigo-700"
+                class="w-full flex items-center gap-4 p-4 rounded-2xl transition-all duration-300 text-left relative group overflow-hidden border bg-amber-50 border-amber-200 text-amber-700"
             >
-                <div class="w-10 h-10 rounded-xl flex items-center justify-center text-xl transition-all duration-300 shrink-0 bg-white text-indigo-600 shadow-sm">
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center text-xl transition-all duration-300 shrink-0 bg-white text-amber-600 shadow-sm">
                     🛡️
                 </div>
                 <div class="overflow-hidden">
@@ -44,15 +44,15 @@
             <!-- Header -->
             <div class="px-6 py-5 border-b border-slate-100 flex items-center justify-between sticky top-0 bg-white/80 backdrop-blur-xl z-20">
                 <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-400 to-indigo-600 shadow-sm flex items-center justify-center text-2xl text-white">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 shadow-sm flex items-center justify-center text-2xl text-white">
                         🛡️
                     </div>
                     <div>
-                        <h3 class="text-sm font-black uppercase tracking-widest text-indigo-700">Data Akun Kurikulum</h3>
+                        <h3 class="text-sm font-black uppercase tracking-widest text-amber-700">Data Akun Kurikulum</h3>
                         <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Informasi Kredensial Login</p>
                     </div>
                 </div>
-                <button @click="saveProfile" :disabled="isSaving" class="px-6 py-2.5 bg-indigo-500 hover:bg-emerald-600 text-white font-bold rounded-xl shadow-md disabled:opacity-70 flex items-center justify-center gap-2 text-xs uppercase tracking-widest transition-all">
+                <button @click="saveProfile" :disabled="isSaving" class="px-6 py-2.5 bg-amber-500 hover:bg-emerald-600 text-white font-bold rounded-xl shadow-md disabled:opacity-70 flex items-center justify-center gap-2 text-xs uppercase tracking-widest transition-all">
                     <span v-if="isSaving" class="animate-spin">⏳</span>
                     <span v-else>💾 Simpan</span>
                 </button>
@@ -62,12 +62,12 @@
                 <div class="animate-fadeIn space-y-8">
                     <!-- Avatar Banner -->
                     <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6 border-b border-slate-100 pb-8">
-                        <div class="w-24 h-24 rounded-3xl bg-gradient-to-br from-indigo-500 to-blue-600 shadow-lg shadow-indigo-500/30 flex items-center justify-center text-white text-4xl font-black border-4 border-white shrink-0">
+                        <div class="w-24 h-24 rounded-3xl bg-gradient-to-br from-amber-500 to-blue-600 shadow-lg shadow-amber-500/30 flex items-center justify-center text-white text-4xl font-black border-4 border-white shrink-0">
                             {{ userInitials }}
                         </div>
                         <div class="text-center sm:text-left pt-2">
                             <h2 class="text-2xl font-black text-slate-800">{{ userProfile?.name || 'Kurikulum' }}</h2>
-                            <p class="text-sm font-semibold text-indigo-600 tracking-wider uppercase mt-1">{{ userProfile?.role || 'Admin' }} Sistem Erapor</p>
+                            <p class="text-sm font-semibold text-amber-600 tracking-wider uppercase mt-1">{{ userProfile?.role || 'Admin' }} Sistem Erapor</p>
                             <span class="inline-block mt-3 px-3 py-1 bg-slate-100 text-slate-500 text-xs font-bold rounded-lg border border-slate-200">
                                 🟢 Akun Aktif
                             </span>
@@ -76,7 +76,7 @@
 
                     <!-- Informasi Akun -->
                     <form @submit.prevent="saveProfile">
-                        <h4 class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-4 border-l-4 border-indigo-500 pl-3">Rincian Profil</h4>
+                        <h4 class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-4 border-l-4 border-amber-500 pl-3">Rincian Profil</h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             
                             <!-- Nama Lengkap -->
@@ -84,7 +84,7 @@
                                 <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Nama Lengkap</label>
                                 <div class="relative">
                                     <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">👤</span>
-                                    <input type="text" v-model="form.name" required class="w-full pl-11 pr-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Masukkan nama lengkap">
+                                    <input type="text" v-model="form.name" required class="w-full pl-11 pr-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Masukkan nama lengkap">
                                 </div>
                             </div>
 
@@ -93,7 +93,7 @@
                                 <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Alamat Email (Login)</label>
                                 <div class="relative">
                                     <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">✉️</span>
-                                    <input type="email" v-model="form.email" required class="w-full pl-11 pr-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="email@contoh.com">
+                                    <input type="email" v-model="form.email" required class="w-full pl-11 pr-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="email@contoh.com">
                                 </div>
                             </div>
 
@@ -102,7 +102,7 @@
                                 <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Ubah Password (Opsional)</label>
                                 <div class="relative">
                                     <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">🔑</span>
-                                    <input type="password" v-model="form.password" class="w-full pl-11 pr-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Biarkan kosong jika tidak ingin mengubah password">
+                                    <input type="password" v-model="form.password" class="w-full pl-11 pr-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Biarkan kosong jika tidak ingin mengubah password">
                                 </div>
                             </div>
 

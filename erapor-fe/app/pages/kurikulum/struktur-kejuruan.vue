@@ -6,7 +6,7 @@
       <!-- MOBILE VIEW TABS -->
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-2 grid grid-cols-2 gap-2 z-20">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
-          :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-indigo-500 to-indigo-600 text-white shadow-md shadow-indigo-500/20 ring-2 ring-indigo-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
+          :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-amber-500 to-amber-600 text-white shadow-md shadow-amber-500/20 ring-2 ring-amber-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
           class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <span class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''">{{ tab.icon }}</span>
           <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
@@ -17,12 +17,12 @@
       <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', activeTabMobile === 'form' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[60px]' : '']">
         
         <div class="p-6 shrink-0 z-10 relative">
-          <div class="bg-gradient-to-r from-indigo-600 to-blue-700 rounded-2xl p-5 border border-indigo-500 shadow-sm relative overflow-hidden flex flex-col gap-4">
+          <div class="bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl p-5 border border-amber-500 shadow-sm relative overflow-hidden flex flex-col gap-4">
             <div class="flex items-center gap-4 relative z-10">
                 <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0">💼</div>
                 <div>
                     <h3 class="text-sm font-black uppercase tracking-widest text-white">Struktur Kejuruan</h3>
-                    <p class="text-[10px] text-indigo-200 font-semibold uppercase mt-0.5">Plotting Mapel Kejuruan</p>
+                    <p class="text-[10px] text-amber-200 font-semibold uppercase mt-0.5">Plotting Mapel Kejuruan</p>
                 </div>
             </div>
             
@@ -32,12 +32,12 @@
 
             <!-- Kurikulum & Tingkat Selector -->
             <div class="space-y-2 relative z-10">
-                <select v-model="selectedKurikulumId" @change="fetchData" class="w-full px-3 py-2 rounded-xl bg-indigo-900/40 border border-indigo-500/50 text-sm font-bold text-white focus:ring-2 focus:ring-white/50 outline-none">
+                <select v-model="selectedKurikulumId" @change="fetchData" class="w-full px-3 py-2 rounded-xl bg-amber-900/40 border border-amber-500/50 text-sm font-bold text-white focus:ring-2 focus:ring-white/50 outline-none">
                     <option value="" disabled>-- Pilih Kurikulum --</option>
                     <option v-for="kur in kurikulums" :key="kur.id" :value="kur.id" class="text-slate-800">{{ kur.nama_kurikulum }}</option>
                 </select>
                 <div class="grid gap-1" :style="`grid-template-columns: repeat(${refTingkatKelas.length || 3}, minmax(0, 1fr))`">
-                    <button v-for="tk in refTingkatKelas" :key="tk.kode" @click="tingkat = tk.kode" :class="tingkat === tk.kode ? 'bg-white text-indigo-700 shadow-sm' : 'bg-indigo-900/40 text-indigo-200 hover:bg-indigo-900/60'" class="py-1.5 rounded-lg font-black text-[10px] uppercase tracking-widest transition-all">{{ tk.nama }}</button>
+                    <button v-for="tk in refTingkatKelas" :key="tk.kode" @click="tingkat = tk.kode" :class="tingkat === tk.kode ? 'bg-white text-amber-700 shadow-sm' : 'bg-amber-900/40 text-amber-200 hover:bg-amber-900/60'" class="py-1.5 rounded-lg font-black text-[10px] uppercase tracking-widest transition-all">{{ tk.nama }}</button>
                 </div>
             </div>
           </div>
@@ -52,7 +52,7 @@
                 
                 <div>
                     <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">{{ tingkat === 'X' ? 'Program Keahlian' : 'Konsentrasi Keahlian' }}</label>
-                    <select v-model="formData.unit_id" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all text-sm font-bold text-slate-800 outline-none cursor-pointer">
+                    <select v-model="formData.unit_id" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-800 outline-none cursor-pointer">
                         <option value="" disabled>-- Pilih Unit --</option>
                         <option v-for="unit in dataUnit" :key="unit.id" :value="unit.id">{{ unit.nama_program || unit.nama_kejuruan }}</option>
                     </select>
@@ -60,7 +60,7 @@
 
                 <div>
                     <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Mata Pelajaran</label>
-                    <select v-model="formData.mapel_id" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all text-sm font-bold text-slate-800 outline-none cursor-pointer">
+                    <select v-model="formData.mapel_id" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-800 outline-none cursor-pointer">
                         <option value="" disabled>-- Pilih Mapel Kejuruan --</option>
                         <option v-for="mapel in availableMapels" :key="mapel.id" :value="mapel.id">{{ mapel.nama_mapel }}</option>
                     </select>
@@ -69,14 +69,14 @@
 
                 <div>
                     <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Jumlah Jam Pelajaran (JP)</label>
-                    <input type="number" v-model="formData.jp" required min="1" max="50" placeholder="Contoh: 4" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all text-sm font-bold text-slate-800 outline-none">
+                    <input type="number" v-model="formData.jp" required min="1" max="50" placeholder="Contoh: 4" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-800 outline-none">
                 </div>
                 
                 <div class="pt-4 border-t border-slate-100 flex gap-3">
                     <button type="button" @click="resetForm" class="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-2xl transition-all text-xs uppercase tracking-widest">
                         Reset
                     </button>
-                    <button type="submit" :disabled="isSaving || !formData.mapel_id || availableMapels.length === 0" class="flex-[2] py-3 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white font-bold rounded-2xl shadow-lg shadow-indigo-500/30 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 text-xs uppercase tracking-widest disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0">
+                    <button type="submit" :disabled="isSaving || !formData.mapel_id || availableMapels.length === 0" class="flex-[2] py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold rounded-2xl shadow-lg shadow-amber-500/30 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 text-xs uppercase tracking-widest disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0">
                         <span v-if="isSaving" class="animate-spin">⏳</span>
                         <span v-else>➕</span> 
                         Tambahkan
@@ -93,9 +93,9 @@
         <!-- Header Flow -->
         <div class="px-6 py-5 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0 z-10 sticky top-0 bg-white/80 backdrop-blur-xl">
             <div class="flex items-center gap-4">
-                <div class="w-10 h-10 rounded-2xl bg-indigo-50 shadow-sm border border-indigo-100 flex items-center justify-center text-xl hidden sm:flex text-indigo-500">⚙️</div>
+                <div class="w-10 h-10 rounded-2xl bg-amber-50 shadow-sm border border-amber-100 flex items-center justify-center text-xl hidden sm:flex text-amber-500">⚙️</div>
                 <div>
-                    <h3 class="text-sm font-black uppercase tracking-widest text-indigo-700">Database Struktur Kejuruan</h3>
+                    <h3 class="text-sm font-black uppercase tracking-widest text-amber-700">Database Struktur Kejuruan</h3>
                     <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Daftar mapel produktif Kelas {{ tingkat }}</p>
                 </div>
             </div>
@@ -108,8 +108,8 @@
         <div class="flex-1 overflow-y-auto custom-scrollbar relative bg-slate-50 p-4 sm:p-6">
             <!-- Loading State -->
             <div v-if="isLoading" class="flex-grow flex items-center justify-center flex-col p-10 opacity-60 h-full">
-                <div class="w-8 h-8 border-4 border-indigo-400 border-t-transparent rounded-full animate-spin mb-4"></div>
-                <span class="text-xs font-black text-indigo-500 uppercase tracking-widest">Memuat Data...</span>
+                <div class="w-8 h-8 border-4 border-amber-400 border-t-transparent rounded-full animate-spin mb-4"></div>
+                <span class="text-xs font-black text-amber-500 uppercase tracking-widest">Memuat Data...</span>
             </div>
 
             <div v-else-if="!selectedKurikulumId" class="flex-grow flex items-center justify-center flex-col p-10 opacity-60 h-full text-center">
@@ -129,7 +129,7 @@
                 <div v-for="unit in dataUnit" :key="unit.id" class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                     <div class="px-5 py-4 bg-slate-50 border-b border-slate-100 flex items-center justify-between gap-3">
                         <div class="flex items-center gap-3">
-                            <span class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center font-black text-sm">🛠️</span>
+                            <span class="w-8 h-8 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center font-black text-sm">🛠️</span>
                             <div>
                                 <p class="text-[9px] font-black uppercase text-slate-400 tracking-widest">{{ tingkat === 'X' ? 'Program Keahlian' : 'Konsentrasi Keahlian' }}</p>
                                 <h4 class="font-black text-slate-800 text-sm uppercase tracking-wider mt-0.5">{{ unit.nama_program || unit.nama_kejuruan }}</h4>
@@ -163,7 +163,7 @@
                                     </td>
                                     <td class="p-0 md:p-4 text-left md:text-center flex items-center justify-between md:table-cell mb-3 md:mb-0">
                                         <span class="md:hidden text-[9px] font-black uppercase text-slate-400 tracking-widest">JP</span>
-                                        <span class="inline-flex items-center px-2 py-1 rounded-md text-[11px] font-black tracking-widest bg-indigo-50 text-indigo-600 border border-indigo-200">
+                                        <span class="inline-flex items-center px-2 py-1 rounded-md text-[11px] font-black tracking-widest bg-amber-50 text-amber-600 border border-amber-200">
                                             {{ struk.jp }} JP
                                         </span>
                                     </td>
