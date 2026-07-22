@@ -82,16 +82,16 @@
 
                 <!-- Text Right -->
                 <div class="w-full lg:w-[60%] xl:w-[55%] text-center lg:text-left mt-6 lg:mt-0 flex flex-col items-center lg:items-start px-4 lg:px-0">
-                    <h2 class="text-4xl sm:text-5xl lg:text-6xl xl:text-[4rem] font-black text-white leading-tight mb-2 tracking-tight sm:whitespace-nowrap">
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black text-white leading-tight mb-2 tracking-tight sm:whitespace-nowrap">
                         e-Rapor <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-rose-400">SMK</span>
                     </h2>
                     
-                    <h3 class="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-slate-200 mb-6 uppercase tracking-widest drop-shadow-md leading-snug">
+                    <h3 class="text-sm sm:text-base lg:text-lg xl:text-xl font-bold text-slate-200 mb-6 uppercase tracking-widest drop-shadow-md leading-snug">
                         {{ sekolah?.nama_sekolah || 'Tinta Emas Indonesia' }}
                     </h3>
                     
-                    <div class="inline-block bg-white/5 backdrop-blur-md border border-white/10 rounded-full px-5 py-2 mb-6 shadow-xl">
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-rose-400 font-black uppercase tracking-widest text-[11px]">Versi : 2026.1</span>
+                    <div class="inline-block bg-white/5 backdrop-blur-md border border-white/10 rounded-full px-4 py-1.5 mb-6 shadow-xl">
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-rose-400 font-black uppercase tracking-widest text-[10px]">Versi : 2026.1</span>
                     </div>
                     
                     <p class="text-xs sm:text-sm lg:text-base text-slate-400 font-medium leading-relaxed max-w-lg mx-auto lg:mx-0">
