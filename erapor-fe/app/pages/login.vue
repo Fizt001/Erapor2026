@@ -118,7 +118,7 @@
             <!-- Mobile Drag Handle -->
             <div class="w-12 h-1.5 bg-slate-200 rounded-full absolute top-4 left-1/2 -translate-x-1/2 lg:hidden"></div>
 
-            <div class="w-full max-w-sm mt-4 lg:mt-0 overflow-y-auto custom-scrollbar h-full lg:h-auto pb-20 lg:pb-0" @touchmove.stop>
+            <div class="w-full max-w-sm pt-12 lg:pt-0 overflow-y-auto custom-scrollbar h-full lg:h-auto pb-16 lg:pb-0 flex flex-col justify-center" @touchmove.stop>
                 
                 <div class="text-center mb-10">
                     <div class="inline-flex items-center justify-center text-2xl lg:text-3xl font-black tracking-widest uppercase mb-2">
