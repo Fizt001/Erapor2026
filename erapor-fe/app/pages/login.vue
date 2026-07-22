@@ -312,7 +312,13 @@ const handleLogin = async () => {
       tokenCookie.value = res.data.token
       userCookie.value = res.data.user
       useSwal().toast('Berhasil login!', 'success')
-      router.push('/admin/dashboard')
+      
+      const role = res.data.user.role
+      if (role === 'superadmin' || role === 'admin') {
+        router.push('/admin/dashboard')
+      } else {
+        router.push(`/${role}/dashboard`)
+      }
     } else {
       errorMessage.value = res.message || 'Login gagal'
       useSwal().toast(errorMessage.value, 'error')
