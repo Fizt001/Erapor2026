@@ -106,5 +106,6 @@ const layoutName = computed(() => {
 * {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+  font-family: 'Inter', sans-serif;
 }
 </style>
