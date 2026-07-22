@@ -174,27 +174,26 @@ const drawerMenuGroups = {
   persiapan: {
     title: 'Persiapan & Struktur',
     menus: [
-      { name: 'Data Sekolah', path: '/kurikulum/sekolah', icon: '🏢' },
-      { name: 'Tahun Ajaran', path: '/kurikulum/tahun-ajaran', icon: '🗓️' },
-      { name: 'Manajemen User', path: '/kurikulum/users', icon: '👥' },
+      { name: 'Periode & Titimangsa', path: '/kurikulum/titimangsa', icon: '⏳' },
+      { name: 'Mata Pelajaran', path: '/kurikulum/mapel', icon: '📚' },
+      { name: 'Struktur Umum', path: '/kurikulum/struktur-umum', icon: '📑' },
+      { name: 'Struktur Kejuruan', path: '/kurikulum/struktur-kejuruan', icon: '⚙️' },
+      { name: 'Ekstrakurikuler', path: '/kurikulum/ekskul', icon: '🏃' },
     ]
   },
   tugas: {
     title: 'Pembagian Tugas',
     menus: [
-      { name: 'Tugas DB', path: '/kurikulum/tugas-database', icon: '🗄️' },
-      { name: 'Kejuruan', path: '/kurikulum/kejuruan', icon: '🛠️' },
-      { name: 'Kurikulum', path: '/kurikulum/kurikulum', icon: '📚' },
-      { name: 'Kelas', path: '/kurikulum/kelas', icon: '🏫' },
+      { name: 'Plot Guru Mapel', path: '/kurikulum/pengampu', icon: '👨‍🏫' },
+      { name: 'Wali Kelas', path: '/kurikulum/wali-kelas', icon: '👨‍👩‍👧‍👦' },
     ]
   },
   standar: {
-    title: 'Kurikulumistrasi Standar',
+    title: 'Standar & Referensi',
     menus: [
-      { name: 'Mutasi', path: '/kurikulum/riwayat-mutasi', icon: '📝' },
-      { name: 'Kenaikan', path: '/kurikulum/kenaikan-kelas', icon: '🎓' },
-      { name: 'Buku Induk', path: '/kurikulum/buku-induk', icon: '📖' },
-      { name: 'Backup', path: '/kurikulum/backup', icon: '💾' },
+      { name: 'Standar Nilai (KKM)', path: '/kurikulum/kkm', icon: '🎯' },
+      { name: 'Master Deskripsi', path: '/kurikulum/deskripsi', icon: '📝' },
+      { name: 'Penanganan Kasus', path: '/kurikulum/penanganan', icon: '⚖️' },
     ]
   },
   all: {
