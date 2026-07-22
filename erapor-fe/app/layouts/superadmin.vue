@@ -1,10 +1,16 @@
 <template>
   <div class="min-h-screen bg-slate-50 flex text-slate-800 text-sm print:bg-white print:block print:min-h-0">
-    <!-- Universal Sidebar for Superadmin -->
-    <aside class="group bg-slate-900 text-white flex-shrink-0 min-h-screen fixed lg:static z-50 transform lg:translate-x-0 transition-all duration-300 ease-in-out overflow-x-hidden print:hidden w-64" :class="[sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0']">
-      <div class="h-14 flex items-center pl-5 pr-4 bg-slate-950 font-bold text-base tracking-wider border-b border-slate-800 whitespace-nowrap overflow-hidden">
-        <span class="text-amber-500 mr-2 text-xl shrink-0">★</span>
-        <span>Superadmin</span>
+    
+    <!-- Drawer / Sidebar -->
+    <aside class="group bg-slate-900 text-white flex-shrink-0 min-h-screen fixed lg:static z-50 transform transition-all duration-300 ease-in-out overflow-x-hidden print:hidden w-64" :class="[sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0']">
+      <div class="h-14 flex items-center pl-5 pr-4 bg-slate-950 font-bold text-base tracking-wider border-b border-slate-800 whitespace-nowrap overflow-hidden justify-between">
+        <div class="flex items-center">
+            <span class="text-amber-500 mr-2 text-xl shrink-0">★</span>
+            <span class="uppercase tracking-widest text-xs">Superadmin</span>
+        </div>
+        <button @click="sidebarOpen = false" class="lg:hidden text-slate-400 hover:text-white">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
       </div>
       
       <div class="p-3">
@@ -20,6 +26,173 @@
               <template v-for="(menu, idx) in adminMenus" :key="idx">
                 <NuxtLink v-if="!menu.divider" :to="menu.path" class="px-8 py-1.5 text-xs text-slate-400 hover:text-white" active-class="text-amber-400 font-bold">{{ menu.name }}</NuxtLink>
               </template>
+            </div>
+          </div>
+
+          <!-- KURIKULUM MODULE -->
+          <div class="border border-slate-700 rounded-md overflow-hidden">
+            <button @click="toggleMenu('kurikulum')" class="w-full flex items-center justify-between px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors">
+              <div class="flex items-center font-semibold text-[13px]"><span class="mr-2">📚</span> Kurikulum</div>
+              <span class="text-xs transition-transform duration-200" :class="{ 'rotate-180': openMenu === 'kurikulum' }">▼</span>
+            </button>
+            <div v-show="openMenu === 'kurikulum'" class="bg-slate-900 py-1 flex flex-col space-y-1">
+              <template v-for="(menu, idx) in kurikulumMenus" :key="idx">
+                <NuxtLink v-if="!menu.divider" :to="menu.path" class="px-8 py-1.5 text-xs text-slate-400 hover:text-white" active-class="text-amber-400 font-bold">{{ menu.name }}</NuxtLink>
+              </template>
+            </div>
+          </div>
+
+          <!-- GURU MODULE -->
+          <div class="border border-slate-700 rounded-md overflow-hidden">
+            <button @click="toggleMenu('guru')" class="w-full flex items-center justify-between px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors">
+              <div class="flex items-center font-semibold text-[13px]"><span class="mr-2">👨‍🏫</span> Guru Mapel</div>
+              <span class="text-xs transition-transform duration-200" :class="{ 'rotate-180': openMenu === 'guru' }">▼</span>
+            </button>
+            <div v-show="openMenu === 'guru'" class="bg-slate-900 py-1 flex flex-col space-y-1">
+              <template v-for="(menu, idx) in guruMenus" :key="idx">
+                <NuxtLink v-if="!menu.divider" :to="menu.path" class="px-8 py-1.5 text-xs text-slate-400 hover:text-white" active-class="text-amber-400 font-bold">{{ menu.name }}</NuxtLink>
+              </template>
+            </div>
+          </div>
+
+          <!-- WALAS MODULE -->
+          <div class="border border-slate-700 rounded-md overflow-hidden">
+            <button @click="toggleMenu('walas')" class="w-full flex items-center justify-between px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors">
+              <div class="flex items-center font-semibold text-[13px]"><span class="mr-2">👨‍👩‍👧</span> Wali Kelas</div>
+              <span class="text-xs transition-transform duration-200" :class="{ 'rotate-180': openMenu === 'walas' }">▼</span>
+            </button>
+            <div v-show="openMenu === 'walas'" class="bg-slate-900 py-1 flex flex-col space-y-1">
+              <template v-for="(menu, idx) in walasMenus" :key="idx">
+                <NuxtLink v-if="!menu.divider" :to="menu.path" class="px-8 py-1.5 text-xs text-slate-400 hover:text-white" active-class="text-amber-400 font-bold">{{ menu.name }}</NuxtLink>
+              </template>
+            </div>
+          </div>
+
+          <!-- BK MODULE -->
+          <div class="border border-slate-700 rounded-md overflow-hidden">
+            <button @click="toggleMenu('bk')" class="w-full flex items-center justify-between px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors">
+              <div class="flex items-center font-semibold text-[13px]"><span class="mr-2">⚖️</span> Bimbingan Konseling</div>
+              <span class="text-xs transition-transform duration-200" :class="{ 'rotate-180': openMenu === 'bk' }">▼</span>
+            </button>
+            <div v-show="openMenu === 'bk'" class="bg-slate-900 py-1 flex flex-col space-y-1">
+              <template v-for="(menu, idx) in bkMenus" :key="idx">
+                <NuxtLink v-if="!menu.divider" :to="menu.path" class="px-8 py-1.5 text-xs text-slate-400 hover:text-white" active-class="text-amber-400 font-bold">{{ menu.name }}</NuxtLink>
+              </template>
+            </div>
+          </div>
+
+          <!-- SISWA MODULE -->
+          <div class="border border-slate-700 rounded-md overflow-hidden">
+            <button @click="toggleMenu('siswa')" class="w-full flex items-center justify-between px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors">
+              <div class="flex items-center font-semibold text-[13px]"><span class="mr-2">🎓</span> Siswa</div>
+              <span class="text-xs transition-transform duration-200" :class="{ 'rotate-180': openMenu === 'siswa' }">▼</span>
+            </button>
+            <div v-show="openMenu === 'siswa'" class="bg-slate-900 py-1 flex flex-col space-y-1">
+              <template v-for="(menu, idx) in siswaMenus" :key="idx">
+                <NuxtLink v-if="!menu.divider" :to="menu.path" class="px-8 py-1.5 text-xs text-slate-400 hover:text-white" active-class="text-amber-400 font-bold">{{ menu.name }}</NuxtLink>
+              </template>
+            </div>
+          </div>
+
+        </nav>
+      </div>
+    </aside>
+
+    <!-- Overlay when sidebar is open on mobile -->
+    <div v-if="sidebarOpen" @click="sidebarOpen = false" class="fixed inset-0 bg-slate-900/50 z-40 lg:hidden backdrop-blur-sm print:hidden"></div>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden print:h-auto print:overflow-visible print:block relative">
+      
+      <!-- Topbar / Navbar -->
+      <header class="h-14 bg-white border-b border-slate-200 flex items-center justify-between px-4 sm:px-6 z-[40] shadow-sm flex-shrink-0 print:hidden relative">
+        <div class="flex items-center">
+          <button @click="sidebarOpen = true" class="lg:hidden text-slate-500 hover:text-amber-600 transition-colors focus:outline-none mr-3">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+          <div class="hidden lg:flex items-center gap-2 border-l-2 border-amber-500 pl-3">
+             <span class="text-xs font-black uppercase tracking-widest text-slate-800">Mode Superadmin</span>
+          </div>
+        </div>
+        
+        <div class="flex items-center space-x-4">
+            <button @click="logout" type="button" class="flex items-center px-4 py-1.5 text-xs font-bold text-rose-600 bg-rose-50 hover:bg-rose-100 rounded-full transition-colors border border-rose-100 shadow-sm">
+                <span class="mr-1.5">🚪</span> Keluar Sistem
+            </button>
+        </div>
+      </header>
+
+      <!-- Impersonation Bar (Sticky) -->
+      <div class="bg-amber-400 border-b border-amber-500 px-4 py-2 flex flex-col xl:flex-row items-center justify-between gap-3 shadow-md z-[35] relative">
+          <div class="flex items-center space-x-3 font-bold text-sm shrink-0 w-full xl:w-auto overflow-x-auto custom-scrollbar pb-1 xl:pb-0">
+             <div class="flex items-center whitespace-nowrap bg-amber-500 text-amber-950 px-3 py-1 rounded-full text-xs shadow-inner">
+                <span class="mr-2 animate-pulse">🔴</span>
+                OVERRIDE MODE
+             </div>
+             
+             <!-- Pilih Guru -->
+             <div class="relative shrink-0 flex items-center bg-white/50 rounded-lg pr-1 border border-amber-500/20 shadow-sm hover:bg-white transition-colors focus-within:bg-white">
+                <span class="text-[10px] uppercase font-black px-2 text-amber-900 border-r border-amber-500/20">Guru</span>
+                <select v-model="selectedGuru" @change="applyImpersonation('guru')" class="bg-transparent border-none text-xs font-bold text-slate-800 focus:ring-0 py-1 pl-2 pr-6 appearance-none cursor-pointer">
+                   <option :value="null">-- Pilih --</option>
+                   <option v-for="g in gurus" :key="g.user_id" :value="g.user_id">{{ g.nama }}</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-amber-800">
+                    <svg class="fill-current h-3 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                </div>
+             </div>
+
+             <!-- Pilih Walas -->
+             <div class="relative shrink-0 flex items-center bg-white/50 rounded-lg pr-1 border border-amber-500/20 shadow-sm hover:bg-white transition-colors focus-within:bg-white">
+                <span class="text-[10px] uppercase font-black px-2 text-amber-900 border-r border-amber-500/20">Walas</span>
+                <select v-model="selectedWalas" @change="applyImpersonation('walas')" class="bg-transparent border-none text-xs font-bold text-slate-800 focus:ring-0 py-1 pl-2 pr-6 appearance-none cursor-pointer">
+                   <option :value="null">-- Pilih --</option>
+                   <option v-for="w in walasList" :key="w.user_id" :value="w.user_id">{{ w.nama_kelas }} ({{ w.walas }})</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-amber-800">
+                    <svg class="fill-current h-3 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                </div>
+             </div>
+
+             <!-- Pilih Siswa (Dua Tahap) -->
+             <div class="relative shrink-0 flex items-center bg-white/50 rounded-lg pr-1 border border-amber-500/20 shadow-sm hover:bg-white transition-colors focus-within:bg-white">
+                <span class="text-[10px] uppercase font-black px-2 text-amber-900 border-r border-amber-500/20">Siswa</span>
+                <select v-model="selectedSiswaKelas" class="bg-transparent border-none text-xs font-bold text-slate-800 focus:ring-0 py-1 pl-2 pr-6 appearance-none cursor-pointer border-r border-amber-500/20">
+                   <option :value="null">-Kelas-</option>
+                   <option v-for="k in uniqueSiswaClasses" :key="k.kelas_id" :value="k.kelas_id">{{ k.nama_kelas }}</option>
+                </select>
+                <select v-model="selectedSiswa" @change="applyImpersonation('siswa')" :disabled="!selectedSiswaKelas" class="bg-transparent border-none text-xs font-bold text-slate-800 focus:ring-0 py-1 pl-2 pr-6 appearance-none cursor-pointer disabled:opacity-50">
+                   <option :value="null">-Nama-</option>
+                   <option v-for="s in filteredSiswaList" :key="s.user_id" :value="s.user_id">{{ s.nama }}</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-amber-800">
+                    <svg class="fill-current h-3 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                </div>
+             </div>
+             
+             <!-- Clear Button -->
+             <button v-if="impersonateUserId" @click="clearImpersonationMode" class="ml-2 shrink-0 bg-red-600 hover:bg-red-700 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-sm transition-colors">
+                 Hapus Override
+             </button>
+          </div>
+
+          <!-- Peringatan Aktif -->
+          <div v-if="impersonateUserId" class="bg-amber-950 text-amber-100 text-[10px] font-bold px-3 py-1.5 rounded-lg flex items-center shrink-0 shadow-inner w-full xl:w-auto justify-center">
+             <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+             AKTIF ({{ impersonateRole?.toUpperCase() }}) - Hapus jika error saat pindah menu.
+          </div>
+      </div>
+
+      <!-- Page Content -->
+      <main class="flex-1 overflow-y-auto bg-slate-100 relative print:p-0 print:bg-white print:overflow-visible print:block">
+        <slot />
+      </main>
+    </div>
+  </div>
+</template>
+
             </div>
           </div>
 

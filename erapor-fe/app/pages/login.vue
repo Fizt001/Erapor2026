@@ -31,18 +31,19 @@
 
         <!-- Mobile Menu Dropdown -->
         <Transition name="fade-slide">
-            <div v-if="showMobileMenu" class="absolute top-16 left-0 w-full bg-slate-900 border-t border-slate-800 shadow-xl flex flex-col py-4 px-6 gap-2 lg:hidden z-40">
-                <a href="#" class="text-xs uppercase tracking-widest font-black text-slate-300 hover:text-emerald-400 flex items-center gap-3 py-3 transition-colors border-b border-slate-800/50">
+            <div v-if="showMobileMenu" @mouseleave="showMobileMenu = false" class="absolute top-16 left-0 w-full bg-slate-900 border-t border-slate-800 shadow-xl flex flex-col py-4 px-6 gap-2 lg:hidden z-40">
+                <a href="#" @click="showMobileMenu = false" class="text-xs uppercase tracking-widest font-black text-slate-300 hover:text-emerald-400 flex items-center gap-3 py-3 transition-colors border-b border-slate-800/50">
                     <span>🔒</span> Masuk
                 </a>
-                <a href="#" class="text-xs uppercase tracking-widest font-black text-emerald-400 hover:text-emerald-300 flex items-center gap-3 py-3 transition-colors border-b border-slate-800/50">
+                <a href="#" @click="showMobileMenu = false" class="text-xs uppercase tracking-widest font-black text-emerald-400 hover:text-emerald-300 flex items-center gap-3 py-3 transition-colors border-b border-slate-800/50">
                     <span>📘</span> Panduan Aplikasi
                 </a>
-                <a href="#" class="text-xs uppercase tracking-widest font-black text-amber-400 hover:text-amber-300 flex items-center gap-3 py-3 transition-colors">
+                <a href="#" @click="showMobileMenu = false" class="text-xs uppercase tracking-widest font-black text-amber-400 hover:text-amber-300 flex items-center gap-3 py-3 transition-colors">
                     <span>🔑</span> Reset Password
                 </a>
             </div>
         </Transition>
+        <div v-if="showMobileMenu" @click="showMobileMenu = false" class="lg:hidden fixed inset-0 z-30"></div>
     </header>
 
     <!-- MAIN SPLIT AREA -->

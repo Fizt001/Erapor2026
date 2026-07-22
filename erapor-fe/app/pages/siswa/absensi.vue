@@ -46,10 +46,10 @@
             </div>
 
             <!-- Calendar Header -->
-            <div class="bg-gradient-to-r from-rose-500 to-pink-600 p-6 text-white text-center relative overflow-hidden">
+            <div class="bg-gradient-to-r from-indigo-500 to-violet-600 p-6 text-white text-center relative overflow-hidden">
                 <div class="relative z-10">
                     <h3 class="text-2xl font-black tracking-tight drop-shadow-sm capitalize">{{ namaBulan }} {{ calendarData?.tahun || '' }}</h3>
-                    <p class="text-rose-100 text-sm font-medium mt-1">Laporan Absensi Siswa</p>
+                    <p class="text-indigo-100 text-sm font-medium mt-1">Laporan Absensi Siswa</p>
                 </div>
                 <div class="absolute right-0 top-0 opacity-20 transform translate-x-4 -translate-y-4">
                     <svg class="w-32 h-32" fill="currentColor" viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20a2 2 0 002 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM9 14H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8 4H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2z"/></svg>
