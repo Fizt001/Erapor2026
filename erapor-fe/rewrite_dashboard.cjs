@@ -1,4 +1,13 @@
+const fs = require('fs');
 
+let adminDash = fs.readFileSync('app/pages/admin/dashboard.vue', 'utf8');
+let kurikulumDash = fs.readFileSync('app/pages/kurikulum/dashboard.vue', 'utf8');
+
+// I will extract the script block from Kurikulum dash to keep the logic
+const kurikulumScript = kurikulumDash.match(/<script setup>([\s\S]*?)<\/script>/)[1];
+
+// And inject it into a template based on Admin dash
+const newTemplate = `
 <template>
   <div class="h-full flex flex-col min-h-0 bg-slate-50">
 <!-- Layout 2 Panel Dock & Flow -->
@@ -79,7 +88,7 @@
                       <div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
                           <div class="h-full rounded-full transition-all duration-1000 ease-out" 
                                 :class="readinessWalas === 100 ? 'bg-emerald-500' : (readinessWalas > 50 ? 'bg-amber-400' : 'bg-rose-500')"
-                                :style="{ width: `${readinessWalas}%` }"></div>
+                                :style="{ width: \`\${readinessWalas}%\` }"></div>
                       </div>
                   </div>
                   <div>
@@ -94,7 +103,7 @@
                       <div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
                           <div class="h-full rounded-full transition-all duration-1000 ease-out" 
                                 :class="readinessMapel === 100 ? 'bg-emerald-500' : (readinessMapel > 50 ? 'bg-amber-400' : 'bg-rose-500')"
-                                :style="{ width: `${readinessMapel}%` }"></div>
+                                :style="{ width: \`\${readinessMapel}%\` }"></div>
                       </div>
                   </div>
                   <div class="pt-4 border-t border-slate-100 mt-auto">
@@ -270,7 +279,7 @@ const userProfile = computed(() => {
 })
 
 const { data: response, pending: isLoading } = await useFetch(import.meta.env.VITE_API_BASE_URL + '/api/kurikulum/dashboard', {
-  headers: { Authorization: `Bearer ${tokenCookie.value}` }
+  headers: { Authorization: \`Bearer \${tokenCookie.value}\` }
 })
 
 const defaultStats = {
@@ -363,3 +372,7 @@ const readinessMapel = computed(() => {
 .custom-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 .custom-scrollbar::-webkit-scrollbar { display: none; }
 </style>
+`;
+
+fs.writeFileSync('app/pages/kurikulum/dashboard.vue', newTemplate);
+console.log('Dashboard updated');
