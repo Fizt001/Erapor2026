@@ -107,9 +107,9 @@
         </div>
 
         <!-- Table Container -->
-        <div class="flex-1 overflow-y-auto custom-scrollbar relative bg-white">
-            <table class="w-full text-left border-collapse min-w-[600px] whitespace-nowrap">
-                <thead class="sticky top-0 z-10 bg-slate-50 border-b border-slate-200 shadow-sm">
+        <div class="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar relative bg-white">
+            <table class="w-full text-left border-collapse min-w-full">
+                <thead class="hidden sm:table-header-group sticky top-0 z-10 bg-slate-50 border-b border-slate-200 shadow-sm">
                     <tr class="text-[9px] uppercase tracking-widest font-black text-slate-500">
                         <th class="py-3 px-4 w-12 text-center">No</th>
                         <th class="py-3 px-4">Kurikulum</th>
@@ -119,45 +119,56 @@
                         <th class="py-3 px-4 text-center w-24">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="text-xs font-medium text-slate-700 divide-y divide-slate-100">
-                    <tr v-if="titimangsas.length === 0">
-                        <td colspan="6" class="p-16 text-center text-slate-400 font-bold bg-white">
-                            <span class="text-4xl block mb-2 opacity-30"><AppIcon name="calendar" class="w-6 h-6" /></span>
+                <tbody class="text-xs font-medium text-slate-700 flex flex-col sm:table-row-group">
+                    <tr v-if="titimangsas.length === 0" class="flex sm:table-row">
+                        <td colspan="6" class="p-16 w-full text-center text-slate-400 font-bold bg-white block sm:table-cell">
+                            <span class="text-4xl block mb-2 opacity-30"><AppIcon name="calendar" class="w-6 h-6 inline-block" /></span>
                             Belum ada data titimangsa.
                         </td>
                     </tr>
-                    <tr v-for="(item, index) in titimangsas" :key="item.id" class="hover:bg-slate-50/80 transition-colors bg-white group">
-                        <td class="p-4 text-center text-slate-400 font-bold">{{ index + 1 }}</td>
-                        <td class="p-4">
+                    <tr v-for="(item, index) in titimangsas" :key="item.id" class="border-b border-slate-100 hover:bg-slate-50/80 transition-colors bg-white group flex flex-col sm:table-row p-4 sm:p-0 relative">
+                        <td class="px-0 py-1 sm:p-4 text-left sm:text-center text-[10px] sm:text-xs font-bold text-slate-400 flex sm:table-cell items-center justify-between">
+                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nomor</span>
+                            <span>{{ index + 1 }}</span>
+                        </td>
+                        <td class="px-0 py-2 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50">
+                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Kurikulum</span>
                             <span class="px-2 py-1 bg-slate-100 text-slate-600 font-bold rounded text-[10px] uppercase tracking-wider border border-slate-200">{{ item.kurikulum?.nama_kurikulum }}</span>
                         </td>
-                        <td class="p-4">
-                            <div class="font-black text-slate-800">{{ item.nama_periode }}</div>
-                            <div class="text-[10px] font-bold text-amber-500 uppercase tracking-widest mt-0.5">Tingkat: {{ item.target_tingkat }}</div>
+                        <td class="px-0 py-2 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50">
+                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Periode & Kelas</span>
+                            <div class="text-right sm:text-left">
+                                <div class="font-black text-slate-800">{{ item.nama_periode }}</div>
+                                <div class="text-[10px] font-bold text-amber-500 uppercase tracking-widest mt-0.5">Tingkat: {{ item.target_tingkat }}</div>
+                            </div>
                         </td>
-                        <td class="p-4">
-                            <div class="font-bold text-slate-700">{{ item.tempat_cetak }}</div>
-                            <div class="text-[10px] font-medium text-slate-500 mt-0.5">{{ item.tanggal_cetak }}</div>
+                        <td class="px-0 py-2 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50">
+                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Cetak Rapor</span>
+                            <div class="text-right sm:text-left">
+                                <div class="font-bold text-slate-700">{{ item.tempat_cetak }}</div>
+                                <div class="text-[10px] font-medium text-slate-500 mt-0.5">{{ item.tanggal_cetak }}</div>
+                            </div>
                         </td>
-                        <td class="p-4 text-center">
+                        <td class="px-0 py-2 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 sm:text-center">
+                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Status</span>
                             <button @click="toggleStatus(item.id)" class="px-3 py-1 text-[9px] uppercase tracking-widest font-black rounded-full transition-colors border"
                                 :class="item.is_aktif ? 'bg-emerald-50 text-emerald-600 border-emerald-200 hover:bg-emerald-100' : 'bg-slate-50 text-slate-500 border-slate-200 hover:bg-slate-100'">
                                 {{ item.is_aktif ? 'Aktif' : 'Nonaktif' }}
                             </button>
                         </td>
-                        <td class="p-4 text-center">
-                            <div class="flex items-center justify-center gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
-                                <button @click="editData(item)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:border-amber-200 hover:bg-amber-50 hover:text-amber-600 flex items-center justify-center transition-colors shadow-sm" title="Edit"><AppIcon name="pencil-square" class="w-4 h-4" /></button>
-                                <button @click="confirmDelete(item)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-center transition-colors shadow-sm" title="Hapus"><AppIcon name="trash" class="w-4 h-4" /></button>
+                        <td class="px-0 pt-3 sm:p-4 text-center">
+                            <div class="flex items-center justify-center sm:justify-center gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
+                                <button @click="editData(item)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-amber-200 hover:bg-amber-50 hover:text-amber-600 flex items-center justify-center transition-colors shadow-sm" title="Edit"><AppIcon name="pencil-square" class="w-4 h-4" /></button>
+                                <button @click="confirmDelete(item)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-center transition-colors shadow-sm" title="Hapus"><AppIcon name="trash" class="w-4 h-4" /></button>
                             </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
-              </div>
-            </div>
         </div>
-      </div>
+    </div>
+</div>
+</div>
     </div>
 
     <!-- Konfirmasi Hapus -->
