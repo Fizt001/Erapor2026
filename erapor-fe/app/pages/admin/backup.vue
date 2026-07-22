@@ -328,10 +328,10 @@ const restoreTarget = ref('')
 
 // Helpers
 const getRoleIcon = (role) => {
-    if(role.toLowerCase() === 'admin') return '<AppIcon name="cog" />️'
-    if(role.toLowerCase() === 'guru') return '<AppIcon name="academic-cap" />'
-    if(role.toLowerCase() === 'walikelas') return '<AppIcon name="user" />‍<AppIcon name="user" />‍<AppIcon name="user" />‍<AppIcon name="user" />'
-    return '<AppIcon name="document-text" />'
+    if(role.toLowerCase() === 'admin') return '⚙️'
+    if(role.toLowerCase() === 'guru') return '👨‍🏫'
+    if(role.toLowerCase() === 'walikelas') return '👨‍👩‍👧‍👦'
+    return '📄'
 }
 
 const getRoleColorText = (role) => {

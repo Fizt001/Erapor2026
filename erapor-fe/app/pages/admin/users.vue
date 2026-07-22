@@ -9,7 +9,7 @@
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTab = tab.id"
           :class="activeTab === tab.id ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
           class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
-          <span class="text-lg mb-0.5 transition-transform" :class="activeTab === tab.id ? 'scale-110' : ''">{{ tab.icon }}</span>
+          <AppIcon :name="tab.iconName" class="text-lg mb-0.5 transition-transform" :class="activeTab === tab.id ? 'scale-110' : ''" />
           <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
@@ -384,9 +384,9 @@ const isDesktop = computed(() => windowWidth.value >= 1280) // xl breakpoint
 // Tabs for Mobile
 const activeTab = ref('table')
 const mobileTabs = [
-  { id: 'form', title: 'Tambah', icon: '<AppIcon name="user" />' },
-  { id: 'import', title: 'Import', icon: '<AppIcon name="rocket-launch" />' },
-  { id: 'table', title: 'Database', icon: '<AppIcon name="clipboard" />' }
+  { id: 'form', title: 'Tambah', iconName: 'user' },
+  { id: 'import', title: 'Import', iconName: 'rocket-launch' },
+  { id: 'table', title: 'Database', iconName: 'clipboard' }
 ]
 
 // State management

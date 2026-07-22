@@ -9,7 +9,7 @@
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTab = tab.id"
           :class="activeTab === tab.id ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
           class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
-          <span class="text-lg mb-0.5 transition-transform" :class="activeTab === tab.id ? 'scale-110' : ''">{{ tab.icon }}</span>
+          <AppIcon :name="tab.iconName" class="text-lg mb-0.5 transition-transform" :class="activeTab === tab.id ? 'scale-110' : ''" />
           <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
@@ -301,10 +301,10 @@ const isDesktop = computed(() => windowWidth.value >= 1280) // xl breakpoint
 // Tabs for Mobile
 const activeTab = ref('table')
 const mobileTabs = [
-  { id: 'bidang', title: 'Bidang', icon: '<AppIcon name="cog" />️' },
-  { id: 'program', title: 'Program', icon: '<AppIcon name="academic-cap" />' },
-  { id: 'konsentrasi', title: 'Fokus', icon: '<AppIcon name="shield" />' },
-  { id: 'table', title: 'Database', icon: '<AppIcon name="clipboard" />' }
+  { id: 'bidang', title: 'Bidang', iconName: 'cog' },
+  { id: 'program', title: 'Program', iconName: 'academic-cap' },
+  { id: 'konsentrasi', title: 'Fokus', iconName: 'shield' },
+  { id: 'table', title: 'Database', iconName: 'clipboard' }
 ]
 
 // Tree Data State

@@ -192,7 +192,7 @@ const adminWorkflow = computed(() => {
         {
             label: 'Buat Tahun Ajaran Baru',
             desc: 'Tambahkan data tahun ajaran dan semester baru.',
-            emoji: '<AppIcon name="calendar" />️',
+            iconName: 'calendar',
             active: true,
             done: false,
             to: '/admin/tahun-ajaran'

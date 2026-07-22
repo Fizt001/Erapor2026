@@ -9,7 +9,7 @@
         <button v-for="tab in tabs" :key="'mob-'+tab.id" type="button" @click="activeTab = tab.id"
           :class="activeTab === tab.id ? 'bg-emerald-500 text-white shadow-sm ring-1 ring-emerald-400 ring-offset-1' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'"
           class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-0.5 transition-all active:scale-95">
-          <span class="text-lg mb-0.5 transition-transform" :class="activeTab === tab.id ? 'scale-110' : ''">{{ tab.icon }}</span>
+          <AppIcon :name="tab.iconName" class="text-lg mb-0.5 transition-transform" :class="activeTab === tab.id ? 'scale-110' : ''" />
           <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">{{ tab.shortTitle }}</span>
         </button>
       </div>
@@ -40,7 +40,7 @@
             >
                 <div class="w-10 h-10 rounded-xl flex items-center justify-center text-xl transition-all duration-300 shrink-0"
                     :class="activeTab === tab.id ? 'bg-white text-emerald-600 shadow-sm' : 'bg-slate-100 text-slate-400 group-hover:bg-white'">
-                    {{ tab.icon }}
+                    <AppIcon :name="tab.iconName" />
                 </div>
                 <div class="overflow-hidden">
                     <p class="font-bold text-xs uppercase tracking-widest truncate">{{ tab.title }}</p>
@@ -68,7 +68,7 @@
             <div class="px-4 py-3 sm:px-6 sm:py-5 border-b border-slate-200 flex justify-between items-center gap-3 lg:gap-4 shrink-0 z-10 bg-white">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 lg:w-12 lg:h-12 rounded-xl lg:rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-sm flex items-center justify-center text-xl lg:text-2xl text-white shrink-0">
-                        {{ currentTab.icon }}
+                        <AppIcon v-if="currentTab" :name="currentTab.iconName" />
                     </div>
                     <div>
                         <h3 class="text-xs lg:text-sm font-black uppercase tracking-widest text-emerald-700 leading-tight">{{ currentTab.title }}</h3>
@@ -355,12 +355,12 @@ const isDesktop = computed(() => windowWidth.value >= 1280) // xl breakpoint
 // === TAB MANAGEMENT ===
 const activeTab = ref('identitas')
 const tabs = [
-  { id: 'identitas', title: 'Identitas Sekolah', shortTitle: 'Profil', subtitle: 'Informasi Dasar', icon: '<AppIcon name="building" />' },
-  { id: 'visimisi', title: 'Visi & Misi', shortTitle: 'Visi', subtitle: 'Arah Tujuan', icon: '<AppIcon name="shield" />' },
-  { id: 'pimpinan', title: 'Pimpinan Lembaga', shortTitle: 'Kepsek', subtitle: 'Kepala Sekolah', icon: '<AppIcon name="briefcase" />' },
-  { id: 'media', title: 'Media & Digital', shortTitle: 'Sosmed', subtitle: 'Kontak & Website', icon: '<AppIcon name="globe-alt" />' },
-  { id: 'lokasi', title: 'Lokasi Geografis', shortTitle: 'Lokasi', subtitle: 'Alamat & Wilayah', icon: '<AppIcon name="pin" />' },
-  { id: 'foto', title: 'Galeri Sekolah', shortTitle: 'Galeri', subtitle: 'Foto & Dokumentasi', icon: '<AppIcon name="camera" />' }
+  { id: 'identitas', title: 'Identitas Sekolah', shortTitle: 'Profil', subtitle: 'Informasi Dasar', iconName: 'building' },
+  { id: 'visimisi', title: 'Visi & Misi', shortTitle: 'Visi', subtitle: 'Arah Tujuan', iconName: 'shield' },
+  { id: 'pimpinan', title: 'Pimpinan Lembaga', shortTitle: 'Kepsek', subtitle: 'Kepala Sekolah', iconName: 'briefcase' },
+  { id: 'media', title: 'Media & Digital', shortTitle: 'Sosmed', subtitle: 'Kontak & Website', iconName: 'globe-alt' },
+  { id: 'lokasi', title: 'Lokasi Geografis', shortTitle: 'Lokasi', subtitle: 'Alamat & Wilayah', iconName: 'pin' },
+  { id: 'foto', title: 'Galeri Sekolah', shortTitle: 'Galeri', subtitle: 'Foto & Dokumentasi', iconName: 'camera' }
 ]
 
 const currentTab = computed(() => tabs.find(t => t.id === activeTab.value))

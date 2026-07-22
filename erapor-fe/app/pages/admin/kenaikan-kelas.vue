@@ -197,12 +197,12 @@
                         <select v-model="s.aksi_admin"
                           class="w-full text-[11px] font-bold border-2 rounded-xl px-2 py-2 sm:py-1.5 outline-none transition-all bg-white border-slate-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 text-slate-700">
                           <option value="">-- Pilih --</option>
-                          <option value="naik"><AppIcon name="check" /> Naik Kelas</option>
-                          <option value="tinggal"><AppIcon name="exclamation-triangle" />️ Tinggal Kelas</option>
-                          <option value="lulus"><AppIcon name="academic-cap" /> Lulus</option>
-                          <option value="pindah_sekolah"><AppIcon name="user-minus" /> Pindah Sekolah</option>
-                          <option value="keluar"><AppIcon name="user-minus" /> Keluar</option>
-                          <option value="tetap_aktif"><AppIcon name="arrow-path" /> Tetap Aktif</option>
+                          <option value="naik">✔️ Naik Kelas</option>
+                          <option value="tinggal">⚠️ Tinggal Kelas</option>
+                          <option value="lulus">🎓 Lulus</option>
+                          <option value="pindah_sekolah">⛔ Pindah Sekolah</option>
+                          <option value="keluar">⛔ Keluar</option>
+                          <option value="tetap_aktif">🔄 Tetap Aktif</option>
                         </select>
                     </td>
                     
@@ -304,8 +304,8 @@ const selectedKelasInfo = computed(() => {
 const konfirmasiCount = computed(() => siswaList.value.filter(s => s.aksi_admin).length)
 
 const rekomendasiLabel = (r) => {
-  const m = { naik: '<AppIcon name="check" /> Naik', tinggal: '<AppIcon name="exclamation-triangle" />️ Tinggal', lulus: '<AppIcon name="academic-cap" /> Lulus', belum_ditentukan: '<AppIcon name="question-mark-circle" /> Belum' }
-  return m[r] || '<AppIcon name="question-mark-circle" /> Belum'
+  const m = { naik: '✔️ Naik', tinggal: '⚠️ Tinggal', lulus: '🎓 Lulus', belum_ditentukan: '❓ Belum' }
+  return m[r] || '❓ Belum'
 }
 
 const rekomendasiClass = (r) => {
