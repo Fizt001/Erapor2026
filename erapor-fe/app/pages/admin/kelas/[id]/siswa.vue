@@ -242,10 +242,10 @@
                         
                         <label class="text-xs font-medium text-slate-600 mb-1 block">Jenis Mutasi</label>
                         <select v-model="mutasiForm.jenis_mutasi" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all text-sm font-bold text-slate-800 outline-none mb-4">
-                            <option value="pindah_sekolah"><AppIcon name="user-minus" /> Pindah Sekolah</option>
-                            <option value="pindah_kelas"><AppIcon name="arrow-path" /> Pindah Kelas (Internal)</option>
-                            <option value="keluar"><AppIcon name="user-minus" /> Keluar</option>
-                            <option value="dikeluarkan"><AppIcon name="exclamation-triangle" />️ Dikeluarkan</option>
+                            <option value="pindah_sekolah">⛔ Pindah Sekolah</option>
+                            <option value="pindah_kelas">🔄 Pindah Kelas (Internal)</option>
+                            <option value="keluar">⛔ Keluar</option>
+                            <option value="dikeluarkan">⚠️ Dikeluarkan</option>
                         </select>
 
                         <template v-if="mutasiForm.jenis_mutasi === 'pindah_kelas'">
