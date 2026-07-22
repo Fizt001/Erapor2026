@@ -55,7 +55,7 @@
           <!-- Panduan Alur Kerja Admin -->
           <WorkflowGuide
             title="Alur Kerja Admin"
-            icon="<AppIcon name="cog" />️"
+            iconName="cog"
             color="emerald"
             :note="'Lakukan langkah ini setiap awal tahun ajaran baru sebelum guru mulai input nilai.'"
             :steps="adminWorkflow"
@@ -200,7 +200,7 @@ const adminWorkflow = computed(() => {
         {
             label: 'Buat Kelas & Rombel Baru',
             desc: 'Tambahkan kelas-kelas untuk tahun ajaran yang baru.',
-            emoji: '<AppIcon name="building" />',
+            iconName: 'building',
             active: true,
             done: false,
             to: '/admin/kelas'
@@ -208,7 +208,7 @@ const adminWorkflow = computed(() => {
         {
             label: 'Proses Kenaikan Kelas',
             desc: 'Mutasikan siswa dari kelas lama ke kelas baru berdasar rekomendasi walas.',
-            emoji: '<AppIcon name="academic-cap" />',
+            iconName: 'academic-cap',
             active: true,
             done: false,
             to: '/admin/kenaikan-kelas'
@@ -216,7 +216,7 @@ const adminWorkflow = computed(() => {
         {
             label: 'Input Siswa Baru (Kelas X)',
             desc: 'Daftarkan siswa baru ke kelas-kelas awal.',
-            emoji: '<AppIcon name="inbox" />',
+            iconName: 'inbox',
             active: true,
             done: false,
             to: '/admin/buku-induk' // Atau kelola siswa, tapi buku induk biasanya pintu masuknya

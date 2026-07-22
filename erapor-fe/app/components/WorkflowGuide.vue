@@ -5,7 +5,8 @@
     <!-- Header -->
     <div class="px-5 py-4 border-b border-slate-100 flex items-center gap-3" :class="headerBg">
       <div class="w-8 h-8 rounded-xl flex items-center justify-center text-lg shrink-0" :class="iconBg">
-        {{ icon }}
+        <AppIcon v-if="iconName" :name="iconName" />
+        <span v-else>{{ icon }}</span>
       </div>
       <div>
         <h3 class="text-xs font-black uppercase tracking-widest" :class="titleColor">{{ title }}</h3>
@@ -31,7 +32,8 @@
         <!-- Konten -->
         <div class="flex-1 min-w-0">
           <div class="flex items-center gap-2">
-            <span class="text-sm">{{ step.emoji }}</span>
+            <AppIcon v-if="step.iconName" :name="step.iconName" class="text-sm" />
+            <span v-else class="text-sm">{{ step.emoji }}</span>
             <p class="text-[11px] font-black uppercase tracking-wide truncate"
               :class="step.active ? 'text-slate-800' : 'text-slate-500'">
               {{ step.label }}
@@ -65,6 +67,7 @@
 const props = defineProps({
   title: { type: String, default: 'Alur Kerja' },
   icon: { type: String, default: '📋' },
+  iconName: { type: String, default: '' },
   steps: { type: Array, default: () => [] },
   note: { type: String, default: '' },
   color: { type: String, default: 'emerald' }
