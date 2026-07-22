@@ -165,7 +165,7 @@
         <div class="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden animate-slideUpFade text-center">
             <div class="p-8">
                 <div class="w-20 h-20 bg-rose-50 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-inner border-4 border-white ring-4 ring-rose-50">
-                    ⚠️
+                    <AppIcon name="exclamation-triangle" class="w-5 h-5 inline-block mr-1" />
                 </div>
                 <h3 class="text-xl font-black text-slate-800 tracking-tight">Hapus Periode?</h3>
                 <p class="text-xs text-slate-500 mt-3 leading-relaxed">

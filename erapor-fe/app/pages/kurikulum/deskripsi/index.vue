@@ -48,7 +48,7 @@
                   <p class="text-[10px] text-slate-500 uppercase tracking-widest mt-1">Status: Aktif</p>
                 </div>
                 <div v-if="hasTemplate(kur.id)" class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-xs">
-                  ✓
+                  <AppIcon name="check" class="w-5 h-5 inline-block mr-1" />
                 </div>
               </button>
             </div>
@@ -92,7 +92,7 @@
                     </p>
                     
                     <div class="mt-8 flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest relative z-10">
-                        <span class="animate-pulse text-lg">👈</span> Arahkan perhatian ke panel kiri
+                        <span class="animate-pulse text-lg"><AppIcon name="hand-point-left" class="w-5 h-5 inline-block mr-1" /></span> Arahkan perhatian ke panel kiri
                     </div>
                 </div>
 
@@ -101,7 +101,7 @@
                     
                     <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-4">
                         <h4 class="text-xs font-bold text-blue-800 uppercase tracking-wider mb-2 flex items-center gap-2">
-                        <span>💡</span> Petunjuk Penggunaan Tag
+                        <span><AppIcon name="light-bulb" class="w-5 h-5 inline-block mr-1" /></span> Petunjuk Penggunaan Tag
                         </h4>
                         <p class="text-[13px] text-blue-700 leading-relaxed">
                         Gunakan tag <code class="bg-white px-1.5 py-0.5 rounded border border-blue-300 font-bold">[NAMA_TP]</code> di dalam teks. Sistem akan secara otomatis mengganti tag tersebut dengan nama Tujuan Pembelajaran (TP) yang sesungguhnya saat meng-*generate* nilai siswa di akhir semester.

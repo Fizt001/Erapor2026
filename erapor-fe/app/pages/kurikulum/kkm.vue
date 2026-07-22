@@ -33,7 +33,7 @@
                     <li>Input nilai batas ketuntasan (KKM) pada kotak yang tersedia di tiap tingkat kelas.</li>
                     <li>Nilai harus berkisar antara <strong>0 hingga 100</strong>.</li>
                     <li>Tekan tombol <strong>Enter</strong> pada keyboard untuk menyimpan nilai tersebut.</li>
-                    <li>Tanda centang hijau (✓) menandakan bahwa nilai telah berhasil tersimpan di sistem.</li>
+                    <li>Tanda centang hijau (<AppIcon name="check" class="w-5 h-5 inline-block mr-1" />) menandakan bahwa nilai telah berhasil tersimpan di sistem.</li>
                 </ul>
             </div>
 
@@ -75,7 +75,7 @@
 
                 <!-- Empty State (No Data) -->
                 <div v-else-if="kkmData.length === 0" class="flex flex-col items-center justify-center h-full opacity-60">
-                    <span class="text-6xl mb-4 grayscale opacity-50">📑</span>
+                    <span class="text-6xl mb-4 grayscale opacity-50"><AppIcon name="document-text" class="w-5 h-5 inline-block mr-1" /></span>
                     <h3 class="text-sm font-black text-slate-500 uppercase tracking-widest">Tidak ada data kurikulum</h3>
                 </div>
 
@@ -99,7 +99,7 @@
                                         class="w-full px-5 py-4 bg-slate-50 border-2 border-slate-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-2xl font-black text-slate-800 outline-none text-left disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-slate-100">
                                     
                                     <span v-if="isSaving[kur.kurikulum_id + '_' + item.tingkat]" class="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 border-2 border-amber-400 border-t-transparent rounded-full animate-spin"></span>
-                                    <span v-else-if="item.nilai !== null" class="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-500 font-black text-xl">✓</span>
+                                    <span v-else-if="item.nilai !== null" class="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-500 font-black text-xl"><AppIcon name="check" class="w-5 h-5 inline-block mr-1" /></span>
                                 </div>
                                 <p class="text-[9px] text-slate-400 text-left ml-1 font-bold mt-1">Tekan <kbd class="px-1 py-0.5 bg-slate-100 border border-slate-200 rounded">Enter</kbd> untuk simpan</p>
                             </div>
@@ -133,7 +133,7 @@ const windowWidth = ref(1024)
 const isDesktop = computed(() => windowWidth.value >= 1280)
 const activeTabMobile = ref('flow')
 const mobileTabs = [
-  { id: 'info', title: 'Petunjuk', icon: 'ℹ️' },
+  { id: 'info', title: 'Petunjuk', icon: 'information-circle' },
   { id: 'flow', title: 'Data KKM', icon: 'star' }
 ]
 

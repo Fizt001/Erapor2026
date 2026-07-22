@@ -34,7 +34,7 @@
 
                         <!-- Quick Actions -->
                         <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex flex-col justify-center">
-                            <h3 class="text-xs font-bold uppercase tracking-widest mb-3 text-slate-700 flex items-center">⚡ Akses Cepat</h3>
+                            <h3 class="text-xs font-bold uppercase tracking-widest mb-3 text-slate-700 flex items-center"><AppIcon name="bolt" class="w-5 h-5 inline-block mr-1" /> Akses Cepat</h3>
                             <div class="space-y-2">
                                 <NuxtLink to="/kurikulum/mapel" class="block bg-slate-50 hover:bg-amber-50 border border-slate-100 hover:border-amber-200 text-slate-700 hover:text-amber-700 transition-colors p-3 rounded-xl text-xs font-semibold flex justify-between items-center group">
                                     Master Mata Pelajaran
@@ -118,7 +118,7 @@
                         <!-- Col 3: Readiness Balance -->
                         <div class="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col">
                             <div class="p-6 border-b border-slate-100 flex items-center gap-3 bg-slate-50/50">
-                                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 shadow-sm flex items-center justify-center text-white text-xl shrink-0">⚖️</div>
+                                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 shadow-sm flex items-center justify-center text-white text-xl shrink-0"><AppIcon name="scale" class="w-5 h-5 inline-block mr-1" /></div>
                                 <div>
                                     <h3 class="text-sm font-black text-slate-800">Neraca Kesiapan</h3>
                                     <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Progress Persiapan Akademik</p>
@@ -132,7 +132,7 @@
                                         <div>
                                             <h4 class="text-xs font-bold text-slate-700 uppercase tracking-widest">Wali Kelas</h4>
                                             <p class="text-[10px] text-slate-500 mt-0.5" v-if="stats.alerts?.kelasTanpaWalas > 0"><b class="text-rose-500">{{ stats.alerts?.kelasTanpaWalas }} kelas</b> belum terisi</p>
-                                            <p class="text-[10px] text-emerald-600 font-bold mt-0.5" v-else>Terisi Penuh ✅</p>
+                                            <p class="text-[10px] text-emerald-600 font-bold mt-0.5" v-else>Terisi Penuh <AppIcon name="check-circle" class="w-5 h-5 inline-block mr-1" /></p>
                                         </div>
                                         <span class="text-xl font-black" :class="readinessWalas === 100 ? 'text-emerald-500' : 'text-slate-700'">{{ readinessWalas }}%</span>
                                     </div>
@@ -149,7 +149,7 @@
                                         <div>
                                             <h4 class="text-xs font-bold text-slate-700 uppercase tracking-widest">Guru Pengampu</h4>
                                             <p class="text-[10px] text-slate-500 mt-0.5" v-if="stats.alerts?.mapelTanpaGuru > 0"><b class="text-amber-500">{{ stats.alerts?.mapelTanpaGuru }} mapel</b> kosong</p>
-                                            <p class="text-[10px] text-emerald-600 font-bold mt-0.5" v-else>Terisi Penuh ✅</p>
+                                            <p class="text-[10px] text-emerald-600 font-bold mt-0.5" v-else>Terisi Penuh <AppIcon name="check-circle" class="w-5 h-5 inline-block mr-1" /></p>
                                         </div>
                                         <span class="text-xl font-black" :class="readinessMapel === 100 ? 'text-emerald-500' : 'text-slate-700'">{{ readinessMapel }}%</span>
                                     </div>

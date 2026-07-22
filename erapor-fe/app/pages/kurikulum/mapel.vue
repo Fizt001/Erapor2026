@@ -99,7 +99,7 @@
                         <option v-for="kur in kurikulums" :key="kur.id" :value="kur.id">{{ kur.nama_kurikulum }}</option>
                     </select>
                     <button @click="fetchData" class="w-10 h-10 rounded-xl bg-slate-100 text-slate-500 flex items-center justify-center hover:bg-slate-200 hover:text-slate-700 font-bold transition-colors" title="Refresh">
-                        🔄
+                        <AppIcon name="arrow-path" class="w-5 h-5 inline-block mr-1" />
                     </button>
                 </div>
             </div>
@@ -113,7 +113,7 @@
                     {{ kat.nama }}
                 </button>
                 <div v-if="refKategoriMapel.length === 0" class="py-3 px-6 text-sm text-rose-500 font-bold w-full text-center">
-                    ⚠️ Silakan isi Master Database untuk Kategori Mapel.
+                    <AppIcon name="exclamation-triangle" class="w-5 h-5 inline-block mr-1" /> Silakan isi Master Database untuk Kategori Mapel.
                 </div>
             </div>
 
@@ -141,7 +141,7 @@
                             </div>
                             <div class="flex items-center gap-4">
                                 <span class="text-[10px] font-black uppercase tracking-widest text-amber-600 bg-amber-50 px-2 py-1 rounded border border-amber-100">{{ groupList.length }} Mapel</span>
-                                <span class="text-slate-400 text-lg transition-transform duration-300" :class="{ 'rotate-180': isCollapsed[kelompok] }">👇</span>
+                                <span class="text-slate-400 text-lg transition-transform duration-300" :class="{ 'rotate-180': isCollapsed[kelompok] }"><AppIcon name="chevron-down" class="w-5 h-5 inline-block mr-1" /></span>
                             </div>
                         </div>
                         

@@ -43,7 +43,24 @@ const emojiMap = {
     '💯': 'star',
     '🏃': 'user-plus',
     '✔️': 'check',
-    '⛔': 'no-symbol'
+    '⛔': 'no-symbol',
+    '👋': 'hand-raised',
+    '⚡': 'bolt',
+    '📌': 'pin',
+    '⚖️': 'scale',
+    '🚫': 'no-symbol',
+    '✅': 'check-circle',
+    '💡': 'light-bulb',
+    '👈': 'hand-point-left',
+    '👇': 'chevron-down',
+    '✉️': 'envelope',
+    '🔑': 'key',
+    '👨‍🏫': 'users',
+    '📑': 'document-text',
+    'ℹ️': 'information-circle',
+    '✨': 'sparkles',
+    '✓': 'check',
+    '🟢': 'check-circle'
 };
 
 const vueFiles = getVueFiles(baseDir);
@@ -95,15 +112,15 @@ for (const filePath of vueFiles) {
             }
         }
 
-        // 6. Generic replacement for standalone emojis in HTML (e.g. >💯<)
+        // 6. Generic replacement for standalone and inline emojis in HTML
         // We only do this if the line does NOT contain 'icon:' or 'text-' properties inside JS
         if (!modifiedLine.includes('icon:') && !modifiedLine.includes("('") && !modifiedLine.includes("')")) {
             for (const [emoji, iconName] of Object.entries(emojiMap)) {
-                // Match emoji preceded by > and followed by < (with optional spaces)
-                // We use split/join or replace loop to catch all instances
-                const htmlRegex = new RegExp(`>\\s*${emoji}\\s*<`, 'g');
-                if (htmlRegex.test(modifiedLine)) {
-                    modifiedLine = modifiedLine.replace(htmlRegex, `><AppIcon name="${iconName}" class="w-6 h-6" /><`);
+                // Check if the line has the emoji, and it's NOT inside quotes
+                if (modifiedLine.includes(emoji) && !modifiedLine.includes(`'${emoji}'`) && !modifiedLine.includes(`"${emoji}"`)) {
+                    // Replace it inline with a standard size (w-5 h-5 inline-block)
+                    // If it's already inside a flex container or large text, it will inherit, but we give it a default sizing.
+                    modifiedLine = modifiedLine.replace(new RegExp(emoji, 'g'), `<AppIcon name="${iconName}" class="w-5 h-5 inline-block mr-1" />`);
                 }
             }
         }

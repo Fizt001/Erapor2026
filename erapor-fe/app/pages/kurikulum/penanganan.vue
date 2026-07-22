@@ -19,7 +19,7 @@
           </div>
           <div class="bg-rose-50 p-5 rounded-2xl border border-rose-100">
             <h3 class="text-[10px] font-black text-rose-800 uppercase tracking-widest mb-3 flex items-center gap-2">
-              <span>📌</span> Informasi Eskalasi
+              <span><AppIcon name="pin" class="w-5 h-5 inline-block mr-1" /></span> Informasi Eskalasi
             </h3>
             <p class="text-xs text-rose-700 leading-relaxed font-medium">
               Halaman ini menampilkan eskalasi sistem untuk pelanggaran berat akademik (Alpa beruntun). 
@@ -49,7 +49,7 @@
                     <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-rose-600"></div>
                 </div>
                 <div v-else-if="kasusList.length === 0" class="text-center py-12 border-2 border-dashed border-slate-200 rounded-2xl bg-slate-50">
-                    <div class="text-4xl mb-3 opacity-50">✨</div>
+                    <div class="text-4xl mb-3 opacity-50"><AppIcon name="sparkles" class="w-5 h-5 inline-block mr-1" /></div>
                     <p class="text-sm font-bold text-slate-600 uppercase tracking-widest mb-1">Bersih!</p>
                     <p class="text-xs font-medium text-slate-400">Tidak ada kasus SP2 atau SP3 saat ini.</p>
                 </div>
@@ -89,7 +89,7 @@
                                 <button v-if="kasus.kategori === 'SP3' && (!kasus.tindakan_penyelesaian || !kasus.tindakan_penyelesaian.includes('ACC Kurikulum'))" 
                                         @click="openModal(kasus)"
                                         class="px-5 py-2.5 bg-rose-600 text-white text-[11px] font-black uppercase tracking-widest rounded-xl hover:bg-rose-700 transition-colors shadow-sm flex items-center gap-2">
-                                    <span>⚖️</span> Berikan ACC Kurikulum
+                                    <span><AppIcon name="scale" class="w-5 h-5 inline-block mr-1" /></span> Berikan ACC Kurikulum
                                 </button>
                                 <div v-else-if="kasus.kategori === 'SP2' && kasus.status === 'Proses'" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest italic flex items-center gap-1.5">
                                     <span class="w-1.5 h-1.5 rounded-full bg-slate-400 animate-pulse"></span>
@@ -126,7 +126,7 @@
                 <label class="cursor-pointer">
                     <input type="radio" v-model="form.keputusan" value="Keluarkan" class="peer sr-only" required>
                     <div class="p-4 rounded-xl border-2 border-slate-100 peer-checked:border-rose-500 peer-checked:bg-rose-50 text-center transition-all">
-                        <span class="block text-xl mb-1">🚫</span>
+                        <span class="block text-xl mb-1"><AppIcon name="no-symbol" class="w-5 h-5 inline-block mr-1" /></span>
                         <span class="block text-[11px] font-black text-slate-700 peer-checked:text-rose-700 uppercase">Keluarkan</span>
                     </div>
                 </label>

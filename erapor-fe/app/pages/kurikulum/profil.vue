@@ -26,7 +26,7 @@
                 class="w-full flex items-center gap-4 p-4 rounded-2xl transition-all duration-300 text-left relative group overflow-hidden border bg-amber-50 border-amber-200 text-amber-700"
             >
                 <div class="w-10 h-10 rounded-xl flex items-center justify-center text-xl transition-all duration-300 shrink-0 bg-white text-amber-600 shadow-sm">
-                    🛡️
+                    <AppIcon name="shield-check" class="w-5 h-5 inline-block mr-1" />
                 </div>
                 <div class="overflow-hidden">
                     <p class="font-bold text-xs uppercase tracking-widest truncate">Data Akun</p>
@@ -45,7 +45,7 @@
             <div class="px-6 py-5 border-b border-slate-100 flex items-center justify-between sticky top-0 bg-white/80 backdrop-blur-xl z-20">
                 <div class="flex items-center gap-4">
                     <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 shadow-sm flex items-center justify-center text-2xl text-white">
-                        🛡️
+                        <AppIcon name="shield-check" class="w-5 h-5 inline-block mr-1" />
                     </div>
                     <div>
                         <h3 class="text-sm font-black uppercase tracking-widest text-amber-700">Data Akun Kurikulum</h3>
@@ -54,7 +54,7 @@
                 </div>
                 <button @click="saveProfile" :disabled="isSaving" class="px-6 py-2.5 bg-amber-500 hover:bg-emerald-600 text-white font-bold rounded-xl shadow-md disabled:opacity-70 flex items-center justify-center gap-2 text-xs uppercase tracking-widest transition-all">
                     <span v-if="isSaving" class="animate-spin"><AppIcon name="clock" class="w-6 h-6" /></span>
-                    <span v-else>💾 Simpan</span>
+                    <span v-else><AppIcon name="document-check" class="w-5 h-5 inline-block mr-1" /> Simpan</span>
                 </button>
             </div>
 
@@ -69,7 +69,7 @@
                             <h2 class="text-2xl font-black text-slate-800">{{ userProfile?.name || 'Kurikulum' }}</h2>
                             <p class="text-sm font-semibold text-amber-600 tracking-wider uppercase mt-1">{{ userProfile?.role || 'Admin' }} Sistem Erapor</p>
                             <span class="inline-block mt-3 px-3 py-1 bg-slate-100 text-slate-500 text-xs font-bold rounded-lg border border-slate-200">
-                                🟢 Akun Aktif
+                                <AppIcon name="check-circle" class="w-5 h-5 inline-block mr-1" /> Akun Aktif
                             </span>
                         </div>
                     </div>
@@ -92,7 +92,7 @@
                             <div>
                                 <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Alamat Email (Login)</label>
                                 <div class="relative">
-                                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">✉️</span>
+                                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400"><AppIcon name="envelope" class="w-5 h-5 inline-block mr-1" /></span>
                                     <input type="email" v-model="form.email" required class="w-full pl-11 pr-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="email@contoh.com">
                                 </div>
                             </div>
@@ -101,7 +101,7 @@
                             <div class="md:col-span-2">
                                 <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Ubah Password (Opsional)</label>
                                 <div class="relative">
-                                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">🔑</span>
+                                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400"><AppIcon name="key" class="w-5 h-5 inline-block mr-1" /></span>
                                     <input type="password" v-model="form.password" class="w-full pl-11 pr-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Biarkan kosong jika tidak ingin mengubah password">
                                 </div>
                             </div>

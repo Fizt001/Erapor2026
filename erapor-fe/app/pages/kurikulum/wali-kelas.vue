@@ -100,14 +100,14 @@
                                     </p>
                                 </div>
                                 <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-500 flex items-center justify-center text-xl shadow-inner border border-amber-100 shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
-                                    🏫
+                                    <AppIcon name="building-office" class="w-5 h-5 inline-block mr-1" />
                                 </div>
                             </div>
 
                             <div class="flex flex-col gap-3 pt-5 border-t border-slate-100/80 mt-auto">
                                 <div>
                                     <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-1.5 mb-2">
-                                        👩‍🏫 Pilih Wali Kelas
+                                        <AppIcon name="users" class="w-5 h-5 inline-block mr-1" /> Pilih Wali Kelas
                                     </label>
                                     <div class="relative group/select">
                                         <select v-model="form[k.id]" class="w-full px-4 py-3.5 text-xs font-bold text-slate-700 rounded-xl border-2 border-slate-200/70 bg-slate-50 hover:bg-white focus:bg-white focus:border-amber-500 focus:ring-4 focus:ring-amber-500/10 outline-none appearance-none cursor-pointer transition-all pr-10">

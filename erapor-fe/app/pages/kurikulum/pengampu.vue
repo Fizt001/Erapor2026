@@ -74,7 +74,7 @@
             <!-- Header Flow -->
             <div class="p-4 bg-white border-b border-slate-200 flex justify-between items-center gap-4 shrink-0 z-10 shadow-sm">
                 <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-2xl bg-amber-50 shadow-sm border border-amber-100 flex items-center justify-center text-xl hidden sm:flex text-amber-500">👨‍🏫</div>
+                    <div class="w-10 h-10 rounded-2xl bg-amber-50 shadow-sm border border-amber-100 flex items-center justify-center text-xl hidden sm:flex text-amber-500">👨‍<AppIcon name="building-office" class="w-5 h-5 inline-block mr-1" /></div>
                     <div>
                         <h3 class="text-sm font-black uppercase tracking-widest text-amber-700">Plot Guru Mapel</h3>
                         <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Tugaskan guru ke dalam struktur</p>
@@ -93,7 +93,7 @@
 
                 <!-- Empty State (No Filter) -->
                 <div v-else-if="!selectedKurikulumId" class="flex flex-col items-center justify-center h-full opacity-60">
-                    <span class="text-6xl mb-4 grayscale opacity-50">📑</span>
+                    <span class="text-6xl mb-4 grayscale opacity-50"><AppIcon name="document-text" class="w-5 h-5 inline-block mr-1" /></span>
                     <h3 class="text-sm font-black text-slate-500 uppercase tracking-widest text-center">Silakan Pilih Kurikulum Terlebih Dahulu</h3>
                 </div>
 
@@ -131,7 +131,7 @@
                                     <span class="text-[11px] font-black uppercase tracking-widest text-slate-700">{{ kelas.nama_kelas }}</span>
                                     <span class="text-[9px] font-black tracking-widest px-2 py-1 rounded-md" 
                                         :class="getSisaJp(struktur, kelas.id) <= 0 ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-rose-50 text-rose-600 border border-rose-100'">
-                                        {{ getSisaJp(struktur, kelas.id) <= 0 ? '✓ Tuntas' : 'Sisa ' + getSisaJp(struktur, kelas.id) + ' JP' }}
+                                        {{ getSisaJp(struktur, kelas.id) <= 0 ? '<AppIcon name="check" class="w-5 h-5 inline-block mr-1" /> Tuntas' : 'Sisa ' + getSisaJp(struktur, kelas.id) + ' JP' }}
                                     </span>
                                 </div>
 
@@ -201,7 +201,7 @@ const isDesktop = computed(() => windowWidth.value >= 1280)
 const activeTabMobile = ref('filter')
 const mobileTabs = [
   { id: 'filter', title: 'Filter', icon: '🎛️' },
-  { id: 'flow', title: 'Plotting', icon: '👨‍🏫' }
+  { id: 'flow', title: 'Plotting', icon: 'users' }
 ]
 
 const { fetchReferensi } = useReferensi()

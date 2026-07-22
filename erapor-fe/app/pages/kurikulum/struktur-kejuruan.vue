@@ -100,7 +100,7 @@
                 </div>
             </div>
             <button @click="fetchData" class="w-10 h-10 rounded-xl bg-slate-100 text-slate-500 flex items-center justify-center hover:bg-slate-200 hover:text-slate-700 font-bold transition-colors" title="Refresh">
-                🔄
+                <AppIcon name="arrow-path" class="w-5 h-5 inline-block mr-1" />
             </button>
         </div>
 
