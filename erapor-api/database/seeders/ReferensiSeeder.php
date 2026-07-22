@@ -48,6 +48,46 @@ class ReferensiSeeder extends Seeder
             ['jenis' => 'Kategori Pekerjaan', 'kode' => 'pensiunan', 'nama' => 'Pensiunan'],
             ['jenis' => 'Kategori Pekerjaan', 'kode' => 'irt', 'nama' => 'Ibu Rumah Tangga'],
             ['jenis' => 'Kategori Pekerjaan', 'kode' => 'lainnya', 'nama' => 'Lainnya / Tidak Bekerja'],
+
+            // Temuan Opsi Hardcode dari Frontend
+            // Role Pengguna
+            ['jenis' => 'Role', 'kode' => 'admin', 'nama' => 'Admin'],
+            ['jenis' => 'Role', 'kode' => 'kepsek', 'nama' => 'Kepala Sekolah'],
+            ['jenis' => 'Role', 'kode' => 'kurikulum', 'nama' => 'Kurikulum'],
+            ['jenis' => 'Role', 'kode' => 'guru', 'nama' => 'Guru'],
+            ['jenis' => 'Role', 'kode' => 'bk', 'nama' => 'BK'],
+            ['jenis' => 'Role', 'kode' => 'siswa', 'nama' => 'Siswa'],
+
+            // Status Kenaikan Kelas
+            ['jenis' => 'Status Kenaikan', 'kode' => 'naik', 'nama' => 'Naik Kelas'],
+            ['jenis' => 'Status Kenaikan', 'kode' => 'tinggal', 'nama' => 'Tinggal Kelas'],
+            ['jenis' => 'Status Kenaikan', 'kode' => 'lulus', 'nama' => 'Lulus'],
+            ['jenis' => 'Status Kenaikan', 'kode' => 'pindah_sekolah', 'nama' => 'Pindah Sekolah'],
+            ['jenis' => 'Status Kenaikan', 'kode' => 'keluar', 'nama' => 'Keluar'],
+            ['jenis' => 'Status Kenaikan', 'kode' => 'tetap_aktif', 'nama' => 'Tetap Aktif'],
+
+            // Status Persetujuan Mutasi
+            ['jenis' => 'Status Mutasi', 'kode' => 'approved', 'nama' => 'Disetujui / Selesai'],
+            ['jenis' => 'Status Mutasi', 'kode' => 'rejected', 'nama' => 'Ditolak / Batal'],
+
+            // Tingkat Kelas
+            ['jenis' => 'Tingkat Kelas', 'kode' => 'X', 'nama' => 'Kelas X'],
+            ['jenis' => 'Tingkat Kelas', 'kode' => 'XI', 'nama' => 'Kelas XI'],
+            ['jenis' => 'Tingkat Kelas', 'kode' => 'XII', 'nama' => 'Kelas XII'],
+            ['jenis' => 'Tingkat Kelas', 'kode' => 'XIII', 'nama' => 'Kelas XIII'],
+
+            // Status Siswa
+            ['jenis' => 'Status Siswa', 'kode' => 'aktif', 'nama' => 'Aktif'],
+            ['jenis' => 'Status Siswa', 'kode' => 'lulus', 'nama' => 'Lulus'],
+            ['jenis' => 'Status Siswa', 'kode' => 'pindah_sekolah', 'nama' => 'Pindah Sekolah'],
+            ['jenis' => 'Status Siswa', 'kode' => 'keluar', 'nama' => 'Keluar'],
+            ['jenis' => 'Status Siswa', 'kode' => 'dikeluarkan', 'nama' => 'Dikeluarkan'],
+
+            // Jenis Mutasi
+            ['jenis' => 'Jenis Mutasi', 'kode' => 'pindah_sekolah', 'nama' => 'Pindah Sekolah'],
+            ['jenis' => 'Jenis Mutasi', 'kode' => 'pindah_kelas', 'nama' => 'Pindah Kelas (Internal)'],
+            ['jenis' => 'Jenis Mutasi', 'kode' => 'keluar', 'nama' => 'Keluar'],
+            ['jenis' => 'Jenis Mutasi', 'kode' => 'dikeluarkan', 'nama' => 'Dikeluarkan'],
         ];
 
         foreach ($data as $item) {
