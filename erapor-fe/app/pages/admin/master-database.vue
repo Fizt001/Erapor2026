@@ -7,11 +7,11 @@
       <!-- MOBILE VIEW TABS -->
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-2 grid grid-cols-2 gap-2 z-20">
         <button type="button" @click="activeTab = 'form'" :class="activeTab === 'form' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="rounded-xl flex items-center justify-center py-2 px-1 transition-all active:scale-95">
-          <span class="text-lg mr-1.5 transition-transform" :class="activeTab === 'form' ? 'scale-110' : ''">📝</span>
+          <span class="text-lg mr-1.5 transition-transform" :class="activeTab === 'form' ? 'scale-110' : ''"><AppIcon name="clipboard" /></span>
           <span class="text-[10px] font-black uppercase tracking-wider">Entry Ref</span>
         </button>
         <button type="button" @click="activeTab = 'table'" :class="activeTab === 'table' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="rounded-xl flex items-center justify-center py-2 px-1 transition-all active:scale-95">
-          <span class="text-lg mr-1.5 transition-transform" :class="activeTab === 'table' ? 'scale-110' : ''">🗄️</span>
+          <span class="text-lg mr-1.5 transition-transform" :class="activeTab === 'table' ? 'scale-110' : ''"><AppIcon name="archive-box" />️</span>
           <span class="text-[10px] font-black uppercase tracking-wider">Database</span>
         </button>
       </div>
@@ -57,8 +57,8 @@
                       Batal
                   </button>
                   <button type="submit" :disabled="isSaving" class="flex-[2] py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-2xl shadow-lg shadow-emerald-500/30 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 uppercase tracking-widest text-xs">
-                      <span v-if="isSaving" class="animate-spin text-lg">⏳</span>
-                      <span v-else class="text-lg">💾</span> {{ isEditing ? 'Simpan' : 'Tambah' }}
+                      <span v-if="isSaving" class="animate-spin text-lg"><AppIcon name="clock" /></span>
+                      <span v-else class="text-lg"><AppIcon name="save" /></span> {{ isEditing ? 'Simpan' : 'Tambah' }}
                   </button>
               </div>
           </form>
@@ -72,7 +72,7 @@
             <!-- Table Header & Filters -->
             <div class="px-6 py-5 border-b border-slate-50 flex justify-between items-center bg-white shrink-0 z-10">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center text-lg border border-emerald-100">📋</div>
+                    <div class="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center text-lg border border-emerald-100"><AppIcon name="clipboard" /></div>
                     <div>
                         <h3 class="text-[13px] font-black leading-none uppercase tracking-wide text-slate-800">Database Master</h3>
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Daftar Referensi Sistem</p>
@@ -146,7 +146,7 @@
                 </div>
                 
                 <div v-if="Object.keys(groupedData).length === 0" class="bg-white p-16 rounded-2xl border border-slate-200/60 shadow-sm text-center flex flex-col items-center justify-center h-full min-h-[400px]">
-                    <span class="text-6xl mb-4 block opacity-30">🗄️</span>
+                    <span class="text-6xl mb-4 block opacity-30"><AppIcon name="archive-box" />️</span>
                     <h3 class="text-lg font-black text-slate-700 mb-2 uppercase tracking-widest">Master Database Kosong</h3>
                     <p class="text-slate-500 text-sm font-semibold max-w-sm">Belum ada referensi yang ditambahkan. Tambahkan data referensi di panel sebelah kiri.</p>
                 </div>
@@ -162,7 +162,7 @@
         <div class="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden animate-slideUpFade text-center">
             <div class="p-8">
                 <div class="w-20 h-20 bg-rose-50 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-inner border-4 border-white ring-4 ring-rose-50">
-                    ⚠️
+                    <AppIcon name="exclamation-triangle" />️
                 </div>
                 <h3 class="text-xl font-black text-slate-800 tracking-tight">Hapus Referensi?</h3>
                 <p class="text-xs text-slate-500 mt-3 leading-relaxed">
@@ -173,7 +173,7 @@
                         Batal
                     </button>
                     <button @click="executeDelete" :disabled="isDeleting" class="flex-1 py-3 bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-2xl shadow-lg shadow-rose-500/30 transition-all text-xs uppercase tracking-widest flex items-center justify-center gap-2">
-                        <span v-if="isDeleting" class="animate-spin text-base">⏳</span>
+                        <span v-if="isDeleting" class="animate-spin text-base"><AppIcon name="clock" /></span>
                         <span v-else>Hapus</span>
                     </button>
                 </div>

@@ -45,7 +45,7 @@
           </div>
 
           <div v-else-if="mutasiList.length === 0" class="flex-grow flex items-center justify-center flex-col p-10 text-center opacity-60">
-            <div class="text-5xl mb-4">📋</div>
+            <div class="text-5xl mb-4"><AppIcon name="clipboard" /></div>
             <p class="text-sm font-bold text-slate-500">Belum ada riwayat mutasi.</p>
           </div>
 
@@ -106,7 +106,7 @@
                   <td class="px-0 pt-2 sm:p-4 sm:pr-6 text-center">
                       <div class="flex items-center justify-center sm:justify-end gap-3 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
                           <button @click="cancelMutasi(m)" class="px-3 py-2 sm:py-1.5 bg-rose-50 text-rose-600 hover:bg-rose-100 font-bold rounded-xl sm:rounded-lg transition-colors text-[10px] uppercase tracking-widest flex items-center justify-center gap-1 mx-auto shadow-sm" title="Batalkan Mutasi ini">
-                            <span>🔙</span> Batal
+                            <span><AppIcon name="arrow-left" /></span> Batal
                           </button>
                       </div>
                   </td>

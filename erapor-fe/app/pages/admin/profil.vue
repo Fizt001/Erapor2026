@@ -9,7 +9,7 @@
         
         <div class="p-6 shrink-0 relative z-10">
           <div class="bg-gradient-to-r from-teal-600 to-emerald-700 rounded-2xl p-5 border border-teal-500 shadow-sm relative overflow-hidden flex items-center gap-4">
-            <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10">👤</div>
+            <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10"><AppIcon name="user" /></div>
             <div class="relative z-10">
                 <h3 class="text-sm font-black uppercase tracking-widest text-white">Profil Pengelola</h3>
                 <p class="text-[10px] text-teal-100 font-semibold uppercase mt-0.5">Identitas Administrator</p>
@@ -26,7 +26,7 @@
                 class="w-full flex items-center gap-4 p-4 rounded-2xl transition-all duration-300 text-left relative group overflow-hidden border bg-emerald-50 border-emerald-200 text-emerald-700"
             >
                 <div class="w-10 h-10 rounded-xl flex items-center justify-center text-xl transition-all duration-300 shrink-0 bg-white text-emerald-600 shadow-sm">
-                    🛡️
+                    <AppIcon name="shield" />️
                 </div>
                 <div class="overflow-hidden">
                     <p class="font-bold text-xs uppercase tracking-widest truncate">Data Akun</p>
@@ -45,7 +45,7 @@
             <div class="px-6 py-5 border-b border-slate-100 flex items-center justify-between sticky top-0 bg-white/80 backdrop-blur-xl z-20">
                 <div class="flex items-center gap-4">
                     <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-sm flex items-center justify-center text-2xl text-white">
-                        🛡️
+                        <AppIcon name="shield" />️
                     </div>
                     <div>
                         <h3 class="text-sm font-black uppercase tracking-widest text-emerald-700">Data Akun Admin</h3>
@@ -53,8 +53,8 @@
                     </div>
                 </div>
                 <button @click="saveProfile" :disabled="isSaving" class="px-6 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-xl shadow-md disabled:opacity-70 flex items-center justify-center gap-2 text-xs uppercase tracking-widest transition-all">
-                    <span v-if="isSaving" class="animate-spin">⏳</span>
-                    <span v-else>💾 Simpan</span>
+                    <span v-if="isSaving" class="animate-spin"><AppIcon name="clock" /></span>
+                    <span v-else><AppIcon name="save" /> Simpan</span>
                 </button>
             </div>
 
@@ -69,7 +69,7 @@
                             <h2 class="text-2xl font-black text-slate-800">{{ userProfile?.name || 'Administrator' }}</h2>
                             <p class="text-sm font-semibold text-emerald-600 tracking-wider uppercase mt-1">{{ userProfile?.role || 'Admin' }} Sistem Erapor</p>
                             <span class="inline-block mt-3 px-3 py-1 bg-slate-100 text-slate-500 text-xs font-bold rounded-lg border border-slate-200">
-                                🟢 Akun Aktif
+                                <AppIcon name="check-circle" /> Akun Aktif
                             </span>
                         </div>
                     </div>
@@ -83,7 +83,7 @@
                             <div>
                                 <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Nama Lengkap</label>
                                 <div class="relative">
-                                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">👤</span>
+                                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400"><AppIcon name="user" /></span>
                                     <input type="text" v-model="form.name" required class="w-full pl-11 pr-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Masukkan nama lengkap">
                                 </div>
                             </div>
@@ -92,7 +92,7 @@
                             <div>
                                 <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Alamat Email (Login)</label>
                                 <div class="relative">
-                                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">✉️</span>
+                                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400"><AppIcon name="envelope" />️</span>
                                     <input type="email" v-model="form.email" required class="w-full pl-11 pr-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="email@contoh.com">
                                 </div>
                             </div>
@@ -101,7 +101,7 @@
                             <div class="md:col-span-2">
                                 <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Ubah Password (Opsional)</label>
                                 <div class="relative">
-                                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">🔑</span>
+                                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400"><AppIcon name="key" /></span>
                                     <input type="password" v-model="form.password" class="w-full pl-11 pr-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="Biarkan kosong jika tidak ingin mengubah password">
                                 </div>
                             </div>
@@ -111,7 +111,7 @@
                     
                     <!-- Peringatan Keamanan -->
                     <div class="bg-amber-50 rounded-2xl p-5 border border-amber-200 flex gap-4 items-start">
-                        <div class="text-amber-500 text-xl shrink-0">⚠️</div>
+                        <div class="text-amber-500 text-xl shrink-0"><AppIcon name="exclamation-triangle" />️</div>
                         <div>
                             <h5 class="text-xs font-bold text-amber-800 uppercase tracking-wider mb-1">Informasi Keamanan</h5>
                             <p class="text-[11px] text-amber-700 leading-relaxed font-medium">Akun ini memiliki hak akses penuh (Super Administrator) untuk mengelola Master Data Sistem, Pengguna, dan Tahun Ajaran. Mohon jaga kerahasiaan kredensial login Anda. Untuk mengubah password, silakan hubungi tim IT atau gunakan menu Reset Password di halaman Login jika tersedia.</p>

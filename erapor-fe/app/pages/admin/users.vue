@@ -20,10 +20,10 @@
         <!-- Desktop Tabs (Toggle Form vs Import) -->
         <div class="hidden xl:flex bg-slate-50/50 border-b border-slate-200 p-2 shrink-0">
             <button @click="activeTab = 'form'" :class="activeTab === 'form' ? 'bg-white text-emerald-700 shadow-sm border border-slate-200' : 'text-slate-500 hover:bg-slate-100 border border-transparent'" class="flex-1 py-2.5 rounded-xl font-bold text-[10px] uppercase tracking-widest transition-all">
-                👤 Registrasi
+                <AppIcon name="user" /> Registrasi
             </button>
             <button @click="activeTab = 'import'" :class="activeTab === 'import' ? 'bg-white text-emerald-700 shadow-sm border border-slate-200' : 'text-slate-500 hover:bg-slate-100 border border-transparent'" class="flex-1 py-2.5 rounded-xl font-bold text-[10px] uppercase tracking-widest transition-all ml-2">
-                🚀 Import
+                <AppIcon name="rocket-launch" /> Import
             </button>
         </div>
 
@@ -32,7 +32,7 @@
             <div v-show="activeTab === 'form'" class="animate-fadeIn">
                 <div class="p-6 shrink-0">
                   <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-5 border border-emerald-500 shadow-sm relative overflow-hidden flex items-center gap-4">
-                    <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10">👤</div>
+                    <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10"><AppIcon name="user" /></div>
                     <div class="relative z-10">
                         <h3 class="text-sm font-black uppercase tracking-widest text-white">Akun Baru</h3>
                         <p class="text-[10px] text-emerald-100 font-semibold uppercase mt-0.5">Tambah Pengguna Manual</p>
@@ -84,8 +84,8 @@
 
                         <div class="pt-4 border-t border-slate-100">
                             <button type="submit" :disabled="isSaving" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-2xl shadow-lg shadow-emerald-500/30 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2">
-                                <span v-if="isSaving" class="animate-spin">⏳</span>
-                                <span v-else>➕</span> 
+                                <span v-if="isSaving" class="animate-spin"><AppIcon name="clock" /></span>
+                                <span v-else><AppIcon name="plus" /></span> 
                                 Tambah Pengguna
                             </button>
                         </div>
@@ -97,7 +97,7 @@
             <div v-show="activeTab === 'import'" class="animate-fadeIn">
                 <div class="p-6 shrink-0">
                   <div class="bg-gradient-to-r from-indigo-600 to-blue-700 rounded-2xl p-5 border border-indigo-500 shadow-sm relative overflow-hidden flex items-center gap-4">
-                    <span class="text-2xl w-10 h-10 flex items-center justify-center relative z-10">🚀</span>
+                    <span class="text-2xl w-10 h-10 flex items-center justify-center relative z-10"><AppIcon name="rocket-launch" /></span>
                     <div class="relative z-10">
                         <h3 class="text-sm font-black uppercase tracking-widest text-white">Import Massal</h3>
                         <p class="text-[10px] text-indigo-100 font-semibold uppercase mt-0.5">Via File CSV</p>
@@ -115,7 +115,7 @@
 
                     <!-- Tombol Download -->
                     <button @click="downloadTemplate" type="button" class="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl font-bold text-[10px] uppercase tracking-widest transition-colors shadow-inner border border-slate-200">
-                        📥 Download Template CSV
+                        <AppIcon name="inbox" /> Download Template CSV
                     </button>
 
                     <!-- Area Upload -->
@@ -123,7 +123,7 @@
                         <div class="border-2 border-dashed border-emerald-300 bg-emerald-50/50 rounded-2xl p-6 transition-all hover:bg-emerald-50 group relative cursor-pointer min-h-[140px] flex flex-col items-center justify-center">
                             <input type="file" ref="fileInput" @change="handleFileChange" accept=".csv" required class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
                             <div class="pointer-events-none text-center">
-                                <span class="text-4xl block mb-2 group-hover:scale-110 transition-transform text-emerald-400">📄</span>
+                                <span class="text-4xl block mb-2 group-hover:scale-110 transition-transform text-emerald-400"><AppIcon name="document-text" /></span>
                                 <p class="text-xs font-bold text-emerald-700">Pilih file CSV</p>
                                 <p class="text-[10px] font-semibold text-emerald-600/70 mt-1" v-if="!selectedFile">atau drag & drop ke area ini</p>
                                 <div v-else class="mt-2 bg-emerald-200/50 py-1.5 px-3 rounded-lg flex items-center justify-center gap-2">
@@ -134,8 +134,8 @@
                         </div>
 
                         <button type="submit" :disabled="isSaving || !selectedFile" class="w-full py-4 bg-gradient-to-r from-emerald-500 to-emerald-700 text-white font-bold rounded-2xl shadow-lg shadow-emerald-500/30 hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:transform-none flex items-center justify-center gap-3">
-                            <span v-if="isSaving" class="animate-spin text-lg">⏳</span>
-                            <span v-else class="text-lg">🚀</span> 
+                            <span v-if="isSaving" class="animate-spin text-lg"><AppIcon name="clock" /></span>
+                            <span v-else class="text-lg"><AppIcon name="rocket-launch" /></span> 
                             <span class="uppercase tracking-widest text-[11px]">Mulai Import</span>
                         </button>
                     </form>
@@ -152,7 +152,7 @@
             <!-- Table Header & Filters -->
             <div class="px-4 py-3 sm:px-6 sm:py-4 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white shrink-0 z-10">
             <div class="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
-                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-white shadow-sm border border-slate-200 flex items-center justify-center text-sm sm:text-xl hidden sm:flex">📋</div>
+                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-white shadow-sm border border-slate-200 flex items-center justify-center text-sm sm:text-xl hidden sm:flex"><AppIcon name="clipboard" /></div>
                 <div class="flex items-baseline gap-2">
                     <h3 class="text-sm font-black uppercase tracking-widest text-emerald-700">Database</h3>
                     <p class="text-[10px] font-bold text-slate-400 uppercase">Total: {{ pagination.total }} Akun</p>
@@ -171,7 +171,7 @@
                 </select>
                 <!-- Search Input -->
                 <div class="relative w-1/2 sm:w-auto">
-                    <span class="absolute inset-y-0 left-0 pl-2.5 sm:pl-3 flex items-center text-slate-400">🔍</span>
+                    <span class="absolute inset-y-0 left-0 pl-2.5 sm:pl-3 flex items-center text-slate-400"><AppIcon name="magnifying-glass" /></span>
                     <input type="text" v-model="searchQuery" @input="debouncedFetch" placeholder="Cari..." class="w-full sm:w-48 pl-8 sm:pl-9 pr-3 sm:pr-4 py-2 rounded-xl border border-slate-200 bg-white focus:ring-2 focus:ring-emerald-500 text-[10px] sm:text-xs font-bold transition-all shadow-sm">
                 </div>
             </div>
@@ -197,7 +197,7 @@
                 <tbody class="text-xs font-medium text-slate-700 divide-y divide-slate-100 flex flex-col sm:table-row-group">
                     <tr v-if="users.length === 0" class="flex sm:table-row">
                         <td colspan="4" class="p-16 w-full text-center text-slate-400 font-bold bg-white block sm:table-cell">
-                            <span class="text-4xl block mb-2 opacity-30">📋</span>
+                            <span class="text-4xl block mb-2 opacity-30"><AppIcon name="clipboard" /></span>
                             Tidak ada data pengguna ditemukan.
                         </td>
                     </tr>
@@ -221,7 +221,7 @@
                         </td>
                         <td class="px-0 pt-2 sm:p-4 sm:pr-6 text-center">
                             <div class="flex items-center justify-center sm:justify-end gap-3 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
-                                <button @click="resetPassword(u)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-amber-200 hover:bg-amber-50 hover:text-amber-600 flex items-center justify-center transition-colors shadow-sm" title="Reset Password">🔑</button>
+                                <button @click="resetPassword(u)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-amber-200 hover:bg-amber-50 hover:text-amber-600 flex items-center justify-center transition-colors shadow-sm" title="Reset Password"><AppIcon name="key" /></button>
                                 <button @click="openEditModal(u)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-600 flex items-center justify-center transition-colors shadow-sm" title="Edit">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
                                 </button>
@@ -260,7 +260,7 @@
                     <h3 class="text-sm font-black text-white uppercase tracking-widest">Update Akun</h3>
                     <p class="text-[10px] font-bold text-emerald-400 mt-0.5 uppercase tracking-wider">{{ editForm.name }}</p>
                 </div>
-                <button @click="isEditModalOpen = false" class="w-8 h-8 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors">✕</button>
+                <button @click="isEditModalOpen = false" class="w-8 h-8 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors"><AppIcon name="x-mark" /></button>
             </div>
 
             <div class="p-6">
@@ -304,8 +304,8 @@
                     </div>
 
                     <button type="submit" :disabled="isSaving" class="w-full mt-4 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-2xl shadow-lg hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 text-[11px] uppercase tracking-widest">
-                        <span v-if="isSaving" class="animate-spin text-sm">⏳</span>
-                        <span v-else class="text-sm">💾</span>
+                        <span v-if="isSaving" class="animate-spin text-sm"><AppIcon name="clock" /></span>
+                        <span v-else class="text-sm"><AppIcon name="save" /></span>
                         {{ isSaving ? 'Memproses...' : 'Simpan Perubahan' }}
                     </button>
                 </form>
@@ -320,7 +320,7 @@
         <div class="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden animate-slideUpFade text-center">
             <div class="p-8">
                 <div class="w-20 h-20 bg-rose-50 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-inner border-4 border-white ring-4 ring-rose-50">
-                    ⚠️
+                    <AppIcon name="exclamation-triangle" />️
                 </div>
                 <h3 class="text-xl font-black text-slate-800 tracking-tight">Hapus Pengguna?</h3>
                 <p class="text-xs text-slate-500 mt-3 leading-relaxed">
@@ -331,7 +331,7 @@
                         Batal
                     </button>
                     <button @click="executeDelete" :disabled="isSaving" class="flex-1 py-3 bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-2xl shadow-lg shadow-rose-500/30 transition-all text-xs uppercase tracking-widest flex items-center justify-center gap-2">
-                        <span v-if="isSaving" class="animate-spin text-base">⏳</span>
+                        <span v-if="isSaving" class="animate-spin text-base"><AppIcon name="clock" /></span>
                         <span v-else>Hapus</span>
                     </button>
                 </div>
@@ -346,7 +346,7 @@
         <div class="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden animate-slideUpFade text-center">
             <div class="p-8">
                 <div class="w-20 h-20 bg-amber-50 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-inner border-4 border-white ring-4 ring-amber-50">
-                    🔑
+                    <AppIcon name="key" />
                 </div>
                 <h3 class="text-xl font-black text-slate-800 tracking-tight">Reset Password?</h3>
                 <p class="text-xs text-slate-500 mt-3 leading-relaxed">
@@ -357,7 +357,7 @@
                         Batal
                     </button>
                     <button @click="executeReset" :disabled="isSaving" class="flex-1 py-3 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-2xl shadow-lg shadow-amber-500/30 transition-all text-xs uppercase tracking-widest flex items-center justify-center gap-2">
-                        <span v-if="isSaving" class="animate-spin text-base">⏳</span>
+                        <span v-if="isSaving" class="animate-spin text-base"><AppIcon name="clock" /></span>
                         <span v-else>Ya, Reset</span>
                     </button>
                 </div>
@@ -384,9 +384,9 @@ const isDesktop = computed(() => windowWidth.value >= 1280) // xl breakpoint
 // Tabs for Mobile
 const activeTab = ref('table')
 const mobileTabs = [
-  { id: 'form', title: 'Tambah', icon: '👤' },
-  { id: 'import', title: 'Import', icon: '🚀' },
-  { id: 'table', title: 'Database', icon: '📋' }
+  { id: 'form', title: 'Tambah', icon: '<AppIcon name="user" />' },
+  { id: 'import', title: 'Import', icon: '<AppIcon name="rocket-launch" />' },
+  { id: 'table', title: 'Database', icon: '<AppIcon name="clipboard" />' }
 ]
 
 // State management

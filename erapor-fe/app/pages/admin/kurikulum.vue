@@ -7,11 +7,11 @@
       <!-- MOBILE VIEW TABS -->
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-2 grid grid-cols-2 gap-2 z-20">
         <button type="button" @click="activeTab = 'form'" :class="activeTab === 'form' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="rounded-xl flex items-center justify-center py-2 px-1 transition-all active:scale-95">
-          <span class="text-lg mr-1.5 transition-transform" :class="activeTab === 'form' ? 'scale-110' : ''">📚</span>
+          <span class="text-lg mr-1.5 transition-transform" :class="activeTab === 'form' ? 'scale-110' : ''"><AppIcon name="book" /></span>
           <span class="text-[10px] font-black uppercase tracking-wider">Entry Kurikulum</span>
         </button>
         <button type="button" @click="activeTab = 'table'" :class="activeTab === 'table' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="rounded-xl flex items-center justify-center py-2 px-1 transition-all active:scale-95">
-          <span class="text-lg mr-1.5 transition-transform" :class="activeTab === 'table' ? 'scale-110' : ''">📋</span>
+          <span class="text-lg mr-1.5 transition-transform" :class="activeTab === 'table' ? 'scale-110' : ''"><AppIcon name="clipboard" /></span>
           <span class="text-[10px] font-black uppercase tracking-wider">Database</span>
         </button>
       </div>
@@ -23,7 +23,7 @@
             <div class="animate-fadeIn">
                 <div class="p-6 shrink-0">
                   <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-5 border border-emerald-500 shadow-sm relative overflow-hidden flex items-center gap-4">
-                    <div class="w-12 h-12 flex items-center justify-center text-3xl shrink-0 relative z-10">📚</div>
+                    <div class="w-12 h-12 flex items-center justify-center text-3xl shrink-0 relative z-10"><AppIcon name="book" /></div>
                     <div class="relative z-10">
                         <h3 class="text-sm font-black uppercase tracking-widest text-white">Data Kurikulum</h3>
                         <p class="text-[10px] text-emerald-100 font-semibold uppercase mt-0.5">{{ isEditing ? 'Mode Update' : 'Mode Tambah Baru' }}</p>
@@ -52,8 +52,8 @@
                                 Batal
                             </button>
                             <button type="submit" :disabled="isSaving" class="flex-1 py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-2xl shadow-lg shadow-emerald-500/30 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 uppercase tracking-widest text-xs">
-                                <span v-if="isSaving" class="animate-spin text-lg">⏳</span>
-                                <span v-else class="text-lg">💾</span> {{ isEditing ? 'Simpan' : 'Tambah Kurikulum' }}
+                                <span v-if="isSaving" class="animate-spin text-lg"><AppIcon name="clock" /></span>
+                                <span v-else class="text-lg"><AppIcon name="save" /></span> {{ isEditing ? 'Simpan' : 'Tambah Kurikulum' }}
                             </button>
                         </div>
 
@@ -70,7 +70,7 @@
             <!-- Table Header & Filters -->
             <div class="px-6 py-5 border-b border-slate-50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0 z-10 bg-white">
             <div class="flex items-center gap-4 w-full sm:w-auto">
-                <div class="w-12 h-12 rounded-2xl bg-slate-50 shadow-sm border border-slate-200 flex items-center justify-center text-2xl hidden sm:flex">📋</div>
+                <div class="w-12 h-12 rounded-2xl bg-slate-50 shadow-sm border border-slate-200 flex items-center justify-center text-2xl hidden sm:flex"><AppIcon name="clipboard" /></div>
                 <div>
                     <h3 class="text-sm font-black uppercase tracking-widest text-emerald-700">Database Kurikulum</h3>
                     <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Daftar Kurikulum Pembelajaran</p>
@@ -87,7 +87,7 @@
         <!-- Table Content -->
         <div v-else class="flex-1 overflow-y-auto overflow-x-auto custom-scrollbar relative bg-white">
             <div v-if="!kurikulumData || kurikulumData.length === 0" class="text-center py-16 flex flex-col items-center justify-center h-full min-h-[400px]">
-                <div class="text-6xl opacity-30 mb-4 block">🌵</div>
+                <div class="text-6xl opacity-30 mb-4 block"><AppIcon name="empty-state" /></div>
                 <h3 class="text-lg font-black text-slate-700 mb-2 uppercase tracking-widest">Data Kosong</h3>
                 <p class="text-slate-500 text-sm font-semibold max-w-sm">Data kurikulum belum tersedia.</p>
             </div>
@@ -140,7 +140,7 @@
         <div class="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden animate-slideUpFade text-center">
             <div class="p-8">
                 <div class="w-20 h-20 bg-rose-50 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-inner border-4 border-white ring-4 ring-rose-50">
-                    ⚠️
+                    <AppIcon name="exclamation-triangle" />️
                 </div>
                 <h3 class="text-xl font-black text-slate-800 tracking-tight">Hapus Kurikulum?</h3>
                 <p class="text-xs text-slate-500 mt-3 leading-relaxed">
@@ -152,7 +152,7 @@
                         Batal
                     </button>
                     <button @click="executeDelete" :disabled="isSaving" class="flex-1 py-3 bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-2xl shadow-lg shadow-rose-500/30 transition-all text-xs uppercase tracking-widest flex items-center justify-center gap-2">
-                        <span v-if="isSaving" class="animate-spin text-base">⏳</span>
+                        <span v-if="isSaving" class="animate-spin text-base"><AppIcon name="clock" /></span>
                         <span v-else>Hapus</span>
                     </button>
                 </div>

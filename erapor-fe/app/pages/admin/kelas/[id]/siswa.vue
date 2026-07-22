@@ -7,13 +7,13 @@
         <button type="button" @click="activeTab = 'table'"
           :class="activeTab === 'table' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
           class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
-          <span class="text-lg mb-0.5 transition-transform" :class="activeTab === 'table' ? 'scale-110' : ''">🧑‍🎓</span>
+          <span class="text-lg mb-0.5 transition-transform" :class="activeTab === 'table' ? 'scale-110' : ''"><AppIcon name="user" />‍<AppIcon name="academic-cap" /></span>
           <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">Anggota Kelas</span>
         </button>
         <button type="button" @click="activeTab = 'form'"
           :class="activeTab === 'form' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
           class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
-          <span class="text-lg mb-0.5 transition-transform" :class="activeTab === 'form' ? 'scale-110' : ''">📥</span>
+          <span class="text-lg mb-0.5 transition-transform" :class="activeTab === 'form' ? 'scale-110' : ''"><AppIcon name="inbox" /></span>
           <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">Tarik User</span>
         </button>
       </div>
@@ -23,7 +23,7 @@
         
         <div class="p-6 shrink-0 z-10 relative">
           <div class="bg-gradient-to-r from-teal-600 to-emerald-700 rounded-2xl p-5 border border-teal-500 shadow-sm relative overflow-hidden flex items-center gap-4">
-            <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10">📥</div>
+            <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10"><AppIcon name="inbox" /></div>
             <div class="relative z-10">
                 <h3 class="text-sm font-black uppercase tracking-widest text-white">Tarik User</h3>
                 <p class="text-[10px] text-teal-100 font-semibold uppercase mt-0.5">Tambah Siswa Ke Kelas</p>
@@ -36,14 +36,14 @@
 
         <div class="p-4 border-b border-slate-100 bg-slate-50/50 shrink-0">
             <div class="relative">
-                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 text-lg">🔍</span>
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 text-lg"><AppIcon name="magnifying-glass" /></span>
                 <input type="text" v-model="searchKandidat" placeholder="Cari nama siswa..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-slate-200/70 bg-white focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-xs font-bold text-slate-800 outline-none placeholder-slate-400">
             </div>
         </div>
 
         <div class="flex-1 overflow-y-auto custom-scrollbar bg-slate-50">
             <div v-if="filteredKandidat.length === 0" class="text-center py-8">
-                <div class="w-12 h-12 bg-slate-200 rounded-full flex items-center justify-center mx-auto mb-3 text-xl opacity-50">📭</div>
+                <div class="w-12 h-12 bg-slate-200 rounded-full flex items-center justify-center mx-auto mb-3 text-xl opacity-50"><AppIcon name="inbox" /></div>
                 <p class="text-xs font-bold text-slate-500">Tidak ada kandidat.</p>
             </div>
             <div v-else class="p-3 space-y-2">
@@ -64,8 +64,8 @@
 
         <div class="p-6 bg-slate-50 border-t border-slate-200 shrink-0">
             <button @click="assignBulkUser" :disabled="isSaving || selectedUsers.length === 0" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-2xl shadow-lg shadow-emerald-500/30 hover:shadow-xl hover:shadow-emerald-500/40 hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2 uppercase tracking-widest text-xs">
-                <span v-if="isSaving" class="animate-spin text-lg">⏳</span>
-                <span v-else class="text-lg">💾</span>
+                <span v-if="isSaving" class="animate-spin text-lg"><AppIcon name="clock" /></span>
+                <span v-else class="text-lg"><AppIcon name="save" /></span>
                 <span>Tambahkan ({{ selectedUsers.length }})</span>
             </button>
         </div>
@@ -79,7 +79,7 @@
             <!-- Table Header & Filters -->
             <div class="px-6 py-5 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0 z-10 sticky top-0 bg-white/80 backdrop-blur-xl">
                 <div class="flex items-center gap-4 w-full sm:w-auto">
-                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-sm flex items-center justify-center text-2xl text-white hidden sm:flex">🧑‍🎓</div>
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-sm flex items-center justify-center text-2xl text-white hidden sm:flex"><AppIcon name="user" />‍<AppIcon name="academic-cap" /></div>
                 <div>
                         <h3 class="text-sm font-black uppercase tracking-widest text-emerald-700">
                             {{ kelas.tingkat ? `${kelas.tingkat} ${kelas.nama_kelas}` : 'Anggota Kelas' }}
@@ -100,7 +100,7 @@
                         <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Tampilkan Non-Aktif</span>
                     </label>
                     <button @click="navigateTo('/admin/kelas')" class="w-full sm:w-auto px-6 py-2.5 bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-800 font-bold rounded-xl shadow-sm transition-all flex items-center justify-center gap-2 text-[10px] uppercase tracking-widest">
-                        <span>🔙</span>
+                        <span><AppIcon name="arrow-left" /></span>
                         <span>Kembali</span>
                     </button>
                 </div>
@@ -158,7 +158,7 @@
                                     </td>
                                     <td class="px-0 pt-2 sm:p-4 sm:pr-6 text-center">
                                         <div class="flex items-center justify-center sm:justify-end gap-3 opacity-100 xl:opacity-0 xl:group-hover:opacity-100 transition-opacity">
-                                            <button v-if="s.status_siswa === 'aktif'" @click="openMutasiModal(s)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-amber-500 hover:border-amber-200 hover:bg-amber-50 flex items-center justify-center transition-all shadow-sm" title="Proses Mutasi">🔄</button>
+                                            <button v-if="s.status_siswa === 'aktif'" @click="openMutasiModal(s)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-amber-500 hover:border-amber-200 hover:bg-amber-50 flex items-center justify-center transition-all shadow-sm" title="Proses Mutasi"><AppIcon name="arrow-path" /></button>
                                             <button @click="openEditNisModal(s)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-emerald-500 hover:border-emerald-200 hover:bg-emerald-50 flex items-center justify-center transition-all shadow-sm" title="Edit NIS">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
                                 </button>
@@ -194,7 +194,7 @@
             <div class="p-6">
                 <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
                     <h3 class="text-sm font-bold text-slate-800">Edit NIS Siswa</h3>
-                    <button @click="isEditModalOpen = false" class="text-slate-400 hover:text-rose-500 w-6 h-6 flex items-center justify-center rounded-md hover:bg-rose-50 transition-colors">✕</button>
+                    <button @click="isEditModalOpen = false" class="text-slate-400 hover:text-rose-500 w-6 h-6 flex items-center justify-center rounded-md hover:bg-rose-50 transition-colors"><AppIcon name="x-mark" /></button>
                 </div>
                 <form @submit.prevent="executeEditNis" class="space-y-4">
                     <div>
@@ -211,7 +211,7 @@
                             <option value="dikeluarkan">Dikeluarkan</option>
                         </select>
                         <p class="text-[9px] text-slate-400 mt-2 font-bold leading-relaxed">
-                            Gunakan tombol Mutasi (🔄) untuk mencatat alasan dan tanggal keluar secara detail.
+                            Gunakan tombol Mutasi (<AppIcon name="arrow-path" />) untuk mencatat alasan dan tanggal keluar secara detail.
                         </p>
                     </div>
                     <button type="submit" :disabled="isSaving" class="w-full py-2.5 bg-indigo-600 text-white text-sm font-bold rounded-xl shadow-sm hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-100 transition-all flex items-center justify-center gap-2">
@@ -229,10 +229,10 @@
             <div class="p-6">
                 <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
                     <h3 class="text-sm font-bold text-amber-700 flex items-center gap-2">
-                        <span>🔄</span>
+                        <span><AppIcon name="arrow-path" /></span>
                         Proses Mutasi Siswa
                     </h3>
-                    <button @click="isMutasiModalOpen = false" class="text-slate-400 hover:text-rose-500 w-6 h-6 flex items-center justify-center rounded-md hover:bg-rose-50 transition-colors">✕</button>
+                    <button @click="isMutasiModalOpen = false" class="text-slate-400 hover:text-rose-500 w-6 h-6 flex items-center justify-center rounded-md hover:bg-rose-50 transition-colors"><AppIcon name="x-mark" /></button>
                 </div>
                 
                 <form @submit.prevent="executeMutasi" class="space-y-4">
@@ -242,10 +242,10 @@
                         
                         <label class="text-xs font-medium text-slate-600 mb-1 block">Jenis Mutasi</label>
                         <select v-model="mutasiForm.jenis_mutasi" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all text-sm font-bold text-slate-800 outline-none mb-4">
-                            <option value="pindah_sekolah">🚶 Pindah Sekolah</option>
-                            <option value="pindah_kelas">🔄 Pindah Kelas (Internal)</option>
-                            <option value="keluar">🚶 Keluar</option>
-                            <option value="dikeluarkan">⚠️ Dikeluarkan</option>
+                            <option value="pindah_sekolah"><AppIcon name="user-minus" /> Pindah Sekolah</option>
+                            <option value="pindah_kelas"><AppIcon name="arrow-path" /> Pindah Kelas (Internal)</option>
+                            <option value="keluar"><AppIcon name="user-minus" /> Keluar</option>
+                            <option value="dikeluarkan"><AppIcon name="exclamation-triangle" />️ Dikeluarkan</option>
                         </select>
 
                         <template v-if="mutasiForm.jenis_mutasi === 'pindah_kelas'">
@@ -268,7 +268,7 @@
                     </div>
 
                     <button type="submit" :disabled="isSaving" class="w-full py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs uppercase tracking-widest font-black rounded-xl shadow-lg shadow-amber-500/30 hover:shadow-xl hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2">
-                        <span v-if="isSaving" class="animate-spin text-base">⏳</span>
+                        <span v-if="isSaving" class="animate-spin text-base"><AppIcon name="clock" /></span>
                         <span>Proses Mutasi & Arsipkan</span>
                     </button>
                 </form>
@@ -283,7 +283,7 @@
         <div class="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden animate-slideUpFade text-center">
             <div class="p-8">
                 <div class="w-20 h-20 bg-rose-50 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-inner border-4 border-white ring-4 ring-rose-50">
-                    ⚠️
+                    <AppIcon name="exclamation-triangle" />️
                 </div>
                 <h3 class="text-xl font-black text-slate-800 tracking-tight">Keluarkan Siswa?</h3>
                 <p class="text-xs text-slate-500 mt-3 leading-relaxed">
@@ -298,7 +298,7 @@
                         Batal
                     </button>
                     <button @click="executeDelete" :disabled="isDeleting" class="flex-1 py-3 bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-2xl shadow-lg shadow-rose-500/30 transition-all text-xs uppercase tracking-widest flex items-center justify-center gap-2">
-                        <span v-if="isDeleting" class="animate-spin text-base">⏳</span>
+                        <span v-if="isDeleting" class="animate-spin text-base"><AppIcon name="clock" /></span>
                         <span v-else>Keluarkan</span>
                     </button>
                 </div>

@@ -19,7 +19,7 @@
         
         <div class="p-6 shrink-0">
           <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-5 border border-emerald-500 shadow-sm relative overflow-hidden flex items-center gap-4">
-            <div class="w-12 h-12 flex items-center justify-center text-3xl shrink-0 relative z-10">⚙️</div>
+            <div class="w-12 h-12 flex items-center justify-center text-3xl shrink-0 relative z-10"><AppIcon name="cog" />️</div>
             <div class="relative z-10">
                 <h3 class="text-sm font-black uppercase tracking-widest text-white">Pengaturan Profil</h3>
                 <p class="text-[10px] text-emerald-100 font-semibold uppercase mt-0.5">Navigasi Kategori</p>
@@ -52,8 +52,8 @@
         <!-- Submit Button Dock -->
         <div class="p-6 bg-slate-50 border-t border-slate-200 shrink-0">
             <button type="submit" :disabled="isSaving" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-bold rounded-2xl shadow-lg shadow-emerald-500/30 hover:shadow-xl hover:shadow-emerald-500/40 hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2 uppercase tracking-widest text-xs">
-                <span v-if="isSaving" class="animate-spin text-lg">⏳</span>
-                <span v-else class="text-lg">💾</span>
+                <span v-if="isSaving" class="animate-spin text-lg"><AppIcon name="clock" /></span>
+                <span v-else class="text-lg"><AppIcon name="save" /></span>
                 <span>Simpan Profil</span>
             </button>
         </div>
@@ -78,8 +78,8 @@
                 
                 <div class="xl:hidden shrink-0">
                     <button type="submit" :disabled="isSaving" class="px-4 py-2 bg-emerald-500 text-white font-bold rounded-xl shadow-md disabled:opacity-70 flex items-center justify-center gap-1.5 text-[10px] uppercase tracking-widest transition-all">
-                        <span v-if="isSaving" class="animate-spin">⏳</span>
-                        <span v-else>💾</span>
+                        <span v-if="isSaving" class="animate-spin"><AppIcon name="clock" /></span>
+                        <span v-else><AppIcon name="save" /></span>
                         <span class="hidden sm:inline">Simpan</span>
                         <span class="sm:hidden">Simpan</span>
                     </button>
@@ -103,7 +103,7 @@
                                                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                                             </button>
                                         </div>
-                                        <div v-else class="mx-auto h-12 w-12 text-slate-400 mb-4 text-4xl">🏢</div>
+                                        <div v-else class="mx-auto h-12 w-12 text-slate-400 mb-4 text-4xl"><AppIcon name="building" /></div>
                                         <div class="flex text-sm text-slate-600 justify-center">
                                             <label for="logo-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-emerald-600 hover:text-emerald-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-emerald-500 px-2 py-1">
                                                 <span v-if="!logoPreview">Upload file</span>
@@ -126,7 +126,7 @@
                                                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                                             </button>
                                         </div>
-                                        <div v-else class="mx-auto h-12 w-12 text-slate-400 mb-4 text-4xl">🏛️</div>
+                                        <div v-else class="mx-auto h-12 w-12 text-slate-400 mb-4 text-4xl"><AppIcon name="building" />️</div>
                                         <div class="flex text-sm text-slate-600 justify-center">
                                             <label for="logo-kiri-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-emerald-600 hover:text-emerald-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-emerald-500 px-2 py-1">
                                                 <span v-if="!logoKiriPreview">Upload file</span>
@@ -191,7 +191,7 @@
                     <div>
                         <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Situs Web Resmi</label>
                         <div class="relative">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">🌐</span>
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400"><AppIcon name="globe-alt" /></span>
                         <input type="url" v-model="form.website" class="w-full pl-11 pr-5 py-2.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="https://www.sekolahanda.sch.id">
                         </div>
                     </div>
@@ -199,14 +199,14 @@
                         <div>
                         <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Alamat Email</label>
                         <div class="relative">
-                            <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">✉️</span>
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400"><AppIcon name="envelope" />️</span>
                             <input type="email" v-model="form.email" class="w-full pl-11 pr-5 py-2.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="info@sekolahanda.sch.id">
                         </div>
                         </div>
                         <div>
                         <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Nomor Telepon</label>
                         <div class="relative">
-                            <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">📞</span>
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400"><AppIcon name="phone" /></span>
                             <input type="text" v-model="form.telepon" class="w-full pl-11 pr-5 py-2.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="(021) 1234567">
                         </div>
                         </div>
@@ -258,7 +258,7 @@
                                             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                                         </button>
                                     </div>
-                                    <div v-else class="mx-auto h-12 w-12 text-slate-400 mb-4 text-4xl">📸</div>
+                                    <div v-else class="mx-auto h-12 w-12 text-slate-400 mb-4 text-4xl"><AppIcon name="camera" /></div>
                                     <div class="flex text-sm text-slate-600 justify-center">
                                         <label for="foto1-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-emerald-600 hover:text-emerald-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-emerald-500 px-2 py-1">
                                             <span v-if="!foto1Preview">Upload file</span>
@@ -282,7 +282,7 @@
                                             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                                         </button>
                                     </div>
-                                    <div v-else class="mx-auto h-12 w-12 text-slate-400 mb-4 text-4xl">🖼️</div>
+                                    <div v-else class="mx-auto h-12 w-12 text-slate-400 mb-4 text-4xl"><AppIcon name="photo" />️</div>
                                     <div class="flex text-sm text-slate-600 justify-center">
                                         <label for="foto2-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-emerald-600 hover:text-emerald-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-emerald-500 px-2 py-1">
                                             <span v-if="!foto2Preview">Upload file</span>
@@ -306,7 +306,7 @@
                                             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                                         </button>
                                     </div>
-                                    <div v-else class="mx-auto h-12 w-12 text-slate-400 mb-4 text-4xl">🖼️</div>
+                                    <div v-else class="mx-auto h-12 w-12 text-slate-400 mb-4 text-4xl"><AppIcon name="photo" />️</div>
                                     <div class="flex text-sm text-slate-600 justify-center">
                                         <label for="foto3-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-emerald-600 hover:text-emerald-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-emerald-500 px-2 py-1">
                                             <span v-if="!foto3Preview">Upload file</span>
@@ -355,12 +355,12 @@ const isDesktop = computed(() => windowWidth.value >= 1280) // xl breakpoint
 // === TAB MANAGEMENT ===
 const activeTab = ref('identitas')
 const tabs = [
-  { id: 'identitas', title: 'Identitas Sekolah', shortTitle: 'Profil', subtitle: 'Informasi Dasar', icon: '🏫' },
-  { id: 'visimisi', title: 'Visi & Misi', shortTitle: 'Visi', subtitle: 'Arah Tujuan', icon: '🎯' },
-  { id: 'pimpinan', title: 'Pimpinan Lembaga', shortTitle: 'Kepsek', subtitle: 'Kepala Sekolah', icon: '👨‍💼' },
-  { id: 'media', title: 'Media & Digital', shortTitle: 'Sosmed', subtitle: 'Kontak & Website', icon: '🌐' },
-  { id: 'lokasi', title: 'Lokasi Geografis', shortTitle: 'Lokasi', subtitle: 'Alamat & Wilayah', icon: '📍' },
-  { id: 'foto', title: 'Galeri Sekolah', shortTitle: 'Galeri', subtitle: 'Foto & Dokumentasi', icon: '📸' }
+  { id: 'identitas', title: 'Identitas Sekolah', shortTitle: 'Profil', subtitle: 'Informasi Dasar', icon: '<AppIcon name="building" />' },
+  { id: 'visimisi', title: 'Visi & Misi', shortTitle: 'Visi', subtitle: 'Arah Tujuan', icon: '<AppIcon name="shield" />' },
+  { id: 'pimpinan', title: 'Pimpinan Lembaga', shortTitle: 'Kepsek', subtitle: 'Kepala Sekolah', icon: '<AppIcon name="briefcase" />' },
+  { id: 'media', title: 'Media & Digital', shortTitle: 'Sosmed', subtitle: 'Kontak & Website', icon: '<AppIcon name="globe-alt" />' },
+  { id: 'lokasi', title: 'Lokasi Geografis', shortTitle: 'Lokasi', subtitle: 'Alamat & Wilayah', icon: '<AppIcon name="pin" />' },
+  { id: 'foto', title: 'Galeri Sekolah', shortTitle: 'Galeri', subtitle: 'Foto & Dokumentasi', icon: '<AppIcon name="camera" />' }
 ]
 
 const currentTab = computed(() => tabs.find(t => t.id === activeTab.value))

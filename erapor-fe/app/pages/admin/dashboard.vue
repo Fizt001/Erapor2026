@@ -10,7 +10,7 @@
           <!-- Welcome Widget -->
           <div class="bg-gradient-to-br from-emerald-600 to-emerald-800 rounded-2xl p-5 shadow-sm text-white relative overflow-hidden">
             <div class="relative z-10">
-              <h2 class="text-lg font-extrabold mb-1">Halo, {{ userProfile?.name?.split(' ')[0] || 'Admin' }} 👋</h2>
+              <h2 class="text-lg font-extrabold mb-1">Halo, {{ userProfile?.name?.split(' ')[0] || 'Admin' }} <AppIcon name="hand-raised" /></h2>
               <p class="text-emerald-100 text-xs leading-relaxed">
                 Tahun Ajaran <span class="font-bold text-white bg-emerald-900/50 px-1.5 py-0.5 rounded">{{ stats?.academic?.tahun_ajaran || '...' }}</span>
               </p>
@@ -22,7 +22,7 @@
 
           <!-- Status Akademik Widget -->
           <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100">
-            <h3 class="text-xs font-bold text-slate-700 uppercase tracking-widest mb-4 flex items-center"><span class="mr-2">📌</span> Status Institusi</h3>
+            <h3 class="text-xs font-bold text-slate-700 uppercase tracking-widest mb-4 flex items-center"><span class="mr-2"><AppIcon name="pin" /></span> Status Institusi</h3>
             <div class="space-y-3">
               <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
                 <p class="text-[9px] text-slate-400 uppercase tracking-widest font-black mb-1">Identitas Sekolah</p>
@@ -35,7 +35,7 @@
           <!-- Quick Actions -->
           <div class="bg-slate-900 p-5 rounded-2xl shadow-sm text-white relative overflow-hidden">
              <div class="relative z-10">
-                <h3 class="text-xs font-bold uppercase tracking-widest mb-3 text-slate-300 flex items-center">⚡ Akses Cepat</h3>
+                <h3 class="text-xs font-bold uppercase tracking-widest mb-3 text-slate-300 flex items-center"><AppIcon name="bolt" /> Akses Cepat</h3>
                 <div class="space-y-2">
                     <NuxtLink to="/admin/sekolah" class="block bg-slate-800 hover:bg-emerald-600 transition-colors p-3 rounded-xl text-xs font-semibold flex justify-between items-center group">
                         Profil Sekolah
@@ -55,7 +55,7 @@
           <!-- Panduan Alur Kerja Admin -->
           <WorkflowGuide
             title="Alur Kerja Admin"
-            icon="⚙️"
+            icon="<AppIcon name="cog" />️"
             color="emerald"
             :note="'Lakukan langkah ini setiap awal tahun ajaran baru sebelum guru mulai input nilai.'"
             :steps="adminWorkflow"
@@ -78,7 +78,7 @@
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
                 <!-- Card 1 -->
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center space-x-4 transition-all hover:-translate-y-1 hover:shadow-md hover:border-emerald-200">
-                    <div class="h-12 w-12 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 text-2xl border border-emerald-100">👥</div>
+                    <div class="h-12 w-12 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 text-2xl border border-emerald-100"><AppIcon name="users" /></div>
                     <div>
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Total Siswa</p>
                         <p class="text-2xl font-black text-slate-800 leading-none">{{ stats?.users?.siswa || 0 }}</p>
@@ -86,7 +86,7 @@
                 </div>
                 <!-- Card 2 -->
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center space-x-4 transition-all hover:-translate-y-1 hover:shadow-md hover:border-blue-200">
-                    <div class="h-12 w-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 text-2xl border border-blue-100">👨‍🏫</div>
+                    <div class="h-12 w-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 text-2xl border border-blue-100"><AppIcon name="academic-cap" /></div>
                     <div>
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Guru Aktif</p>
                         <p class="text-2xl font-black text-slate-800 leading-none">{{ stats?.users?.guru || 0 }}</p>
@@ -94,7 +94,7 @@
                 </div>
                 <!-- Card 3 -->
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center space-x-4 transition-all hover:-translate-y-1 hover:shadow-md hover:border-purple-200">
-                    <div class="h-12 w-12 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600 text-2xl border border-purple-100">🏫</div>
+                    <div class="h-12 w-12 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600 text-2xl border border-purple-100"><AppIcon name="building" /></div>
                     <div>
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Total Kelas</p>
                         <p class="text-2xl font-black text-slate-800 leading-none">{{ stats?.master?.kelas || 0 }}</p>
@@ -102,7 +102,7 @@
                 </div>
                 <!-- Card 4 -->
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center space-x-4 transition-all hover:-translate-y-1 hover:shadow-md hover:border-rose-200">
-                    <div class="h-12 w-12 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600 text-2xl border border-rose-100">🏷️</div>
+                    <div class="h-12 w-12 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600 text-2xl border border-rose-100"><AppIcon name="tag" />️</div>
                     <div>
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Mata Pelajaran</p>
                         <p class="text-2xl font-black text-slate-800 leading-none">{{ stats?.master?.mapel || 0 }}</p>
@@ -115,7 +115,7 @@
                 <!-- Chart User -->
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/60 flex flex-col">
                     <div class="flex items-center gap-3 mb-6">
-                        <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 text-xl border border-indigo-100">🍩</div>
+                        <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 text-xl border border-indigo-100"><AppIcon name="chart-pie" /></div>
                         <div>
                             <h3 class="text-sm font-bold text-slate-800">Komposisi Pengguna</h3>
                             <p class="text-[10px] font-medium text-slate-500 uppercase tracking-widest">Berdasarkan Role</p>
@@ -134,7 +134,7 @@
                 <!-- Chart Master -->
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/60 flex flex-col">
                     <div class="flex items-center gap-3 mb-6">
-                        <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 text-xl border border-amber-100">📊</div>
+                        <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 text-xl border border-amber-100"><AppIcon name="chart-bar" /></div>
                         <div>
                             <h3 class="text-sm font-bold text-slate-800">Data Master Terisi</h3>
                             <p class="text-[10px] font-medium text-slate-500 uppercase tracking-widest">Kuantitas Database</p>
@@ -192,7 +192,7 @@ const adminWorkflow = computed(() => {
         {
             label: 'Buat Tahun Ajaran Baru',
             desc: 'Tambahkan data tahun ajaran dan semester baru.',
-            emoji: '🗓️',
+            emoji: '<AppIcon name="calendar" />️',
             active: true,
             done: false,
             to: '/admin/tahun-ajaran'
@@ -200,7 +200,7 @@ const adminWorkflow = computed(() => {
         {
             label: 'Buat Kelas & Rombel Baru',
             desc: 'Tambahkan kelas-kelas untuk tahun ajaran yang baru.',
-            emoji: '🏫',
+            emoji: '<AppIcon name="building" />',
             active: true,
             done: false,
             to: '/admin/kelas'
@@ -208,7 +208,7 @@ const adminWorkflow = computed(() => {
         {
             label: 'Proses Kenaikan Kelas',
             desc: 'Mutasikan siswa dari kelas lama ke kelas baru berdasar rekomendasi walas.',
-            emoji: '🎓',
+            emoji: '<AppIcon name="academic-cap" />',
             active: true,
             done: false,
             to: '/admin/kenaikan-kelas'
@@ -216,7 +216,7 @@ const adminWorkflow = computed(() => {
         {
             label: 'Input Siswa Baru (Kelas X)',
             desc: 'Daftarkan siswa baru ke kelas-kelas awal.',
-            emoji: '📥',
+            emoji: '<AppIcon name="inbox" />',
             active: true,
             done: false,
             to: '/admin/buku-induk' // Atau kelola siswa, tapi buku induk biasanya pintu masuknya

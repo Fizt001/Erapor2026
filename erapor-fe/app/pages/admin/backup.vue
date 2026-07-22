@@ -7,11 +7,11 @@
       <!-- MOBILE VIEW TABS -->
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-2 grid grid-cols-2 gap-2 z-20">
         <button type="button" @click="activeTab = 'generate'" :class="activeTab === 'generate' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
-          <span class="text-lg mb-0.5 transition-transform" :class="activeTab === 'generate' ? 'scale-110' : ''">🛡️</span>
+          <span class="text-lg mb-0.5 transition-transform" :class="activeTab === 'generate' ? 'scale-110' : ''"><AppIcon name="shield" />️</span>
           <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">Generate</span>
         </button>
         <button type="button" @click="activeTab = 'riwayat'" :class="activeTab === 'riwayat' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
-          <span class="text-lg mb-0.5 transition-transform" :class="activeTab === 'riwayat' ? 'scale-110' : ''">📋</span>
+          <span class="text-lg mb-0.5 transition-transform" :class="activeTab === 'riwayat' ? 'scale-110' : ''"><AppIcon name="clipboard" /></span>
           <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">Riwayat</span>
         </button>
       </div>
@@ -21,7 +21,7 @@
         
         <div class="p-6 shrink-0">
           <div class="bg-gradient-to-r from-teal-600 to-emerald-700 rounded-2xl p-5 border border-teal-500 shadow-sm relative overflow-hidden flex items-center gap-4">
-            <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10">🛡️</div>
+            <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10"><AppIcon name="shield" />️</div>
             <div class="relative z-10">
                 <h3 class="text-sm font-black uppercase tracking-widest text-white">Generate Backup</h3>
                 <p class="text-[10px] text-teal-100 font-semibold uppercase mt-0.5">Pilih Konteks Data</p>
@@ -41,10 +41,10 @@
                     class="shrink-0 flex flex-col items-center justify-center p-3 rounded-2xl border-2 transition-all duration-300 text-center relative group overflow-hidden"
                     :class="activeRole === 'admin' ? 'bg-emerald-50 border-emerald-500' : 'border-slate-100 hover:border-slate-200 hover:bg-slate-50'"
                 >
-                    <div class="w-8 h-8 rounded-lg flex items-center justify-center text-xl mb-1.5" :class="activeRole === 'admin' ? 'bg-emerald-100 text-emerald-600' : 'bg-slate-100 grayscale opacity-70 group-hover:grayscale-0'">⚙️</div>
+                    <div class="w-8 h-8 rounded-lg flex items-center justify-center text-xl mb-1.5" :class="activeRole === 'admin' ? 'bg-emerald-100 text-emerald-600' : 'bg-slate-100 grayscale opacity-70 group-hover:grayscale-0'"><AppIcon name="cog" />️</div>
                     <p class="font-black text-[11px] text-slate-800">Admin</p>
                     <p class="text-[8px] uppercase font-bold text-slate-500 leading-tight">Master Data</p>
-                    <div v-if="activeRole === 'admin'" class="absolute top-2 right-2.5 text-emerald-500 font-bold text-xs">✓</div>
+                    <div v-if="activeRole === 'admin'" class="absolute top-2 right-2.5 text-emerald-500 font-bold text-xs"><AppIcon name="check" /></div>
                 </button>
                 
                 <!-- Kurikulum -->
@@ -53,10 +53,10 @@
                     class="shrink-0 flex flex-col items-center justify-center p-3 rounded-2xl border-2 transition-all duration-300 text-center relative group overflow-hidden"
                     :class="activeRole === 'kurikulum' ? 'bg-blue-50 border-blue-500' : 'border-slate-100 hover:border-slate-200 hover:bg-slate-50'"
                 >
-                    <div class="w-8 h-8 rounded-lg flex items-center justify-center text-xl mb-1.5" :class="activeRole === 'kurikulum' ? 'bg-blue-100 text-blue-600' : 'bg-slate-100 grayscale opacity-70 group-hover:grayscale-0'">📚</div>
+                    <div class="w-8 h-8 rounded-lg flex items-center justify-center text-xl mb-1.5" :class="activeRole === 'kurikulum' ? 'bg-blue-100 text-blue-600' : 'bg-slate-100 grayscale opacity-70 group-hover:grayscale-0'"><AppIcon name="book" /></div>
                     <p class="font-black text-[11px] text-slate-800">Kurikulum</p>
                     <p class="text-[8px] uppercase font-bold text-slate-500 leading-tight">Struktur & Pengampu</p>
-                    <div v-if="activeRole === 'kurikulum'" class="absolute top-2 right-2.5 text-blue-500 font-bold text-xs">✓</div>
+                    <div v-if="activeRole === 'kurikulum'" class="absolute top-2 right-2.5 text-blue-500 font-bold text-xs"><AppIcon name="check" /></div>
                 </button>
 
                 <!-- Guru -->
@@ -65,10 +65,10 @@
                     class="shrink-0 flex flex-col items-center justify-center p-3 rounded-2xl border-2 transition-all duration-300 text-center relative group overflow-hidden"
                     :class="activeRole === 'guru' ? 'bg-amber-50 border-amber-500' : 'border-slate-100 hover:border-slate-200 hover:bg-slate-50'"
                 >
-                    <div class="w-8 h-8 rounded-lg flex items-center justify-center text-xl mb-1.5" :class="activeRole === 'guru' ? 'bg-amber-100 text-amber-600' : 'bg-slate-100 grayscale opacity-70 group-hover:grayscale-0'">👨‍🏫</div>
+                    <div class="w-8 h-8 rounded-lg flex items-center justify-center text-xl mb-1.5" :class="activeRole === 'guru' ? 'bg-amber-100 text-amber-600' : 'bg-slate-100 grayscale opacity-70 group-hover:grayscale-0'"><AppIcon name="academic-cap" /></div>
                     <p class="font-black text-[11px] text-slate-800">Guru</p>
                     <p class="text-[8px] uppercase font-bold text-slate-500 leading-tight">Nilai & TP</p>
-                    <div v-if="activeRole === 'guru'" class="absolute top-2 right-2.5 text-amber-500 font-bold text-xs">✓</div>
+                    <div v-if="activeRole === 'guru'" class="absolute top-2 right-2.5 text-amber-500 font-bold text-xs"><AppIcon name="check" /></div>
                 </button>
 
                 <!-- Wali Kelas -->
@@ -77,10 +77,10 @@
                     class="shrink-0 flex flex-col items-center justify-center p-3 rounded-2xl border-2 transition-all duration-300 text-center relative group overflow-hidden"
                     :class="activeRole === 'walikelas' ? 'bg-purple-50 border-purple-500' : 'border-slate-100 hover:border-slate-200 hover:bg-slate-50'"
                 >
-                    <div class="w-8 h-8 rounded-lg flex items-center justify-center text-xl mb-1.5" :class="activeRole === 'walikelas' ? 'bg-purple-100 text-purple-600' : 'bg-slate-100 grayscale opacity-70 group-hover:grayscale-0'">👨‍👩‍👧‍👦</div>
+                    <div class="w-8 h-8 rounded-lg flex items-center justify-center text-xl mb-1.5" :class="activeRole === 'walikelas' ? 'bg-purple-100 text-purple-600' : 'bg-slate-100 grayscale opacity-70 group-hover:grayscale-0'"><AppIcon name="user" />‍<AppIcon name="user" />‍<AppIcon name="user" />‍<AppIcon name="user" /></div>
                     <p class="font-black text-[11px] text-slate-800">Wali Kelas</p>
                     <p class="text-[8px] uppercase font-bold text-slate-500 leading-tight">Absensi & Ekskul</p>
-                    <div v-if="activeRole === 'walikelas'" class="absolute top-2 right-2.5 text-purple-500 font-bold text-xs">✓</div>
+                    <div v-if="activeRole === 'walikelas'" class="absolute top-2 right-2.5 text-purple-500 font-bold text-xs"><AppIcon name="check" /></div>
                 </button>
 
                 <!-- BK -->
@@ -89,10 +89,10 @@
                     class="shrink-0 flex flex-col items-center justify-center p-3 rounded-2xl border-2 transition-all duration-300 text-center relative group overflow-hidden"
                     :class="activeRole === 'bk' ? 'bg-rose-50 border-rose-500' : 'border-slate-100 hover:border-slate-200 hover:bg-slate-50'"
                 >
-                    <div class="w-8 h-8 rounded-lg flex items-center justify-center text-xl mb-1.5" :class="activeRole === 'bk' ? 'bg-rose-100 text-rose-600' : 'bg-slate-100 grayscale opacity-70 group-hover:grayscale-0'">🛡️</div>
+                    <div class="w-8 h-8 rounded-lg flex items-center justify-center text-xl mb-1.5" :class="activeRole === 'bk' ? 'bg-rose-100 text-rose-600' : 'bg-slate-100 grayscale opacity-70 group-hover:grayscale-0'"><AppIcon name="shield" />️</div>
                     <p class="font-black text-[11px] text-slate-800">Konseling</p>
                     <p class="text-[8px] uppercase font-bold text-slate-500 leading-tight">Poin & Kasus</p>
-                    <div v-if="activeRole === 'bk'" class="absolute top-2 right-2.5 text-rose-500 font-bold text-xs">✓</div>
+                    <div v-if="activeRole === 'bk'" class="absolute top-2 right-2.5 text-rose-500 font-bold text-xs"><AppIcon name="check" /></div>
                 </button>
 
                 <!-- Siswa -->
@@ -101,10 +101,10 @@
                     class="shrink-0 flex flex-col items-center justify-center p-3 rounded-2xl border-2 transition-all duration-300 text-center relative group overflow-hidden"
                     :class="activeRole === 'siswa' ? 'bg-indigo-50 border-indigo-500' : 'border-slate-100 hover:border-slate-200 hover:bg-slate-50'"
                 >
-                    <div class="w-8 h-8 rounded-lg flex items-center justify-center text-xl mb-1.5" :class="activeRole === 'siswa' ? 'bg-indigo-100 text-indigo-600' : 'bg-slate-100 grayscale opacity-70 group-hover:grayscale-0'">🎓</div>
+                    <div class="w-8 h-8 rounded-lg flex items-center justify-center text-xl mb-1.5" :class="activeRole === 'siswa' ? 'bg-indigo-100 text-indigo-600' : 'bg-slate-100 grayscale opacity-70 group-hover:grayscale-0'"><AppIcon name="academic-cap" /></div>
                     <p class="font-black text-[11px] text-slate-800">Siswa</p>
                     <p class="text-[8px] uppercase font-bold text-slate-500 leading-tight">Rapor Akademik</p>
-                    <div v-if="activeRole === 'siswa'" class="absolute top-2 right-2.5 text-indigo-500 font-bold text-xs">✓</div>
+                    <div v-if="activeRole === 'siswa'" class="absolute top-2 right-2.5 text-indigo-500 font-bold text-xs"><AppIcon name="check" /></div>
                 </button>
             </div>
 
@@ -114,12 +114,12 @@
                     class="w-full shrink-0 flex items-center p-3 rounded-2xl border-2 transition-all duration-300 text-left relative group overflow-hidden mb-6"
                     :class="activeRole === 'kepsek' ? 'bg-teal-50 border-teal-500' : 'border-slate-100 hover:border-slate-200 hover:bg-slate-50'"
                 >
-                    <div class="w-8 h-8 rounded-lg flex items-center justify-center text-xl mr-3" :class="activeRole === 'kepsek' ? 'bg-teal-100 text-teal-600' : 'bg-slate-100 grayscale opacity-70 group-hover:grayscale-0'">🏢</div>
+                    <div class="w-8 h-8 rounded-lg flex items-center justify-center text-xl mr-3" :class="activeRole === 'kepsek' ? 'bg-teal-100 text-teal-600' : 'bg-slate-100 grayscale opacity-70 group-hover:grayscale-0'"><AppIcon name="building" /></div>
                     <div>
                         <p class="font-black text-xs text-slate-800">Kepala Sekolah</p>
                         <p class="text-[9px] uppercase font-bold text-slate-500 mt-0.5">Laporan & Evaluasi</p>
                     </div>
-                    <div v-if="activeRole === 'kepsek'" class="absolute right-3 text-teal-500 font-bold">✓</div>
+                    <div v-if="activeRole === 'kepsek'" class="absolute right-3 text-teal-500 font-bold"><AppIcon name="check" /></div>
                 </button>
             
             <hr class="border-slate-100 mb-6">
@@ -131,7 +131,7 @@
                     :disabled="isGenerating || isMaintenance"
                     class="w-full py-3 bg-slate-800 text-white font-bold rounded-2xl shadow-md hover:bg-slate-900 transition-all flex items-center justify-center gap-3 uppercase tracking-widest text-[10px] border border-slate-700 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                    <span class="text-lg">📥</span> Backup Semester Ganjil
+                    <span class="text-lg"><AppIcon name="inbox" /></span> Backup Semester Ganjil
                 </button>
 
                 <button 
@@ -139,8 +139,8 @@
                     :disabled="isGenerating || isMaintenance"
                     class="w-full py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-2xl shadow-lg hover:-translate-y-0.5 transition-all flex items-center justify-center gap-3 uppercase tracking-widest text-[10px] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
-                    <span v-if="isGenerating" class="animate-spin text-lg">⏳</span>
-                    <span v-else class="text-lg">📦</span> Backup Semester Genap
+                    <span v-if="isGenerating" class="animate-spin text-lg"><AppIcon name="clock" /></span>
+                    <span v-else class="text-lg"><AppIcon name="cube" /></span> Backup Semester Genap
                 </button>
             </div>
 
@@ -154,7 +154,7 @@
             
             <div class="p-6 bg-white border-b border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0 z-10">
                 <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-2xl bg-slate-50 shadow-sm border border-slate-200 flex items-center justify-center text-2xl hidden sm:flex">📋</div>
+                    <div class="w-12 h-12 rounded-2xl bg-slate-50 shadow-sm border border-slate-200 flex items-center justify-center text-2xl hidden sm:flex"><AppIcon name="clipboard" /></div>
                     <div>
                         <h3 class="text-sm font-black uppercase tracking-widest text-emerald-700">Riwayat Backup</h3>
                         <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Daftar arsip yang tersedia</p>
@@ -162,12 +162,12 @@
                 </div>
                 <div class="flex gap-2">
                     <button @click="triggerUpload" class="h-10 px-4 rounded-xl bg-indigo-50 text-indigo-600 font-bold text-[10px] uppercase tracking-widest flex items-center gap-2 hover:bg-indigo-100 transition-colors border border-indigo-200">
-                        <span>📤</span> Upload
+                        <span><AppIcon name="outbox" /></span> Upload
                     </button>
                     <input type="file" ref="fileInput" class="hidden" accept=".json" @change="handleFileUpload">
                     
                     <button @click="fetchBackups" class="w-10 h-10 rounded-xl bg-slate-100 text-slate-500 flex items-center justify-center hover:bg-slate-200 transition-colors border border-slate-200" title="Refresh">
-                        🔄
+                        <AppIcon name="arrow-path" />
                     </button>
                 </div>
             </div>
@@ -180,7 +180,7 @@
 
         <!-- Empty State -->
         <div v-else-if="!backups || backups.length === 0" class="flex-grow flex items-center justify-center flex-col p-16 text-center bg-white m-6 rounded-2xl border border-slate-200">
-            <div class="text-6xl opacity-20 mb-4">🏜️</div>
+            <div class="text-6xl opacity-20 mb-4"><AppIcon name="map" />️</div>
             <h3 class="text-lg font-black text-slate-700 mb-2 uppercase tracking-widest">Kosong</h3>
             <p class="text-sm font-bold text-slate-500">Belum ada file backup.</p>
             <p class="text-[10px] text-slate-400 uppercase tracking-widest mt-2 font-bold">Gunakan panel di sebelah kiri untuk men-generate arsip.</p>
@@ -221,9 +221,9 @@
                         </td>
                         <td class="p-4 text-center">
                             <div class="flex items-center justify-center gap-2 opacity-100 xl:opacity-0 xl:group-hover:opacity-100 transition-opacity">
-                                <button @click="confirmRestore(backup.filename)" class="w-8 h-8 rounded-lg bg-white border border-amber-200 text-amber-500 hover:text-white hover:bg-amber-500 flex items-center justify-center transition-all shadow-sm" title="Restore Data">🔄</button>
+                                <button @click="confirmRestore(backup.filename)" class="w-8 h-8 rounded-lg bg-white border border-amber-200 text-amber-500 hover:text-white hover:bg-amber-500 flex items-center justify-center transition-all shadow-sm" title="Restore Data"><AppIcon name="arrow-path" /></button>
                                 <button @click="downloadBackup(backup.filename, 'json')" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-500 hover:text-blue-500 hover:border-blue-200 hover:bg-blue-50 flex items-center justify-center transition-all shadow-sm" title="Download JSON">{ }</button>
-                                <button @click="downloadBackup(backup.filename, 'excel')" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-500 hover:text-emerald-500 hover:border-emerald-200 hover:bg-emerald-50 flex items-center justify-center transition-all shadow-sm" title="Download Excel">📊</button>
+                                <button @click="downloadBackup(backup.filename, 'excel')" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-500 hover:text-emerald-500 hover:border-emerald-200 hover:bg-emerald-50 flex items-center justify-center transition-all shadow-sm" title="Download Excel"><AppIcon name="chart-bar" /></button>
                                 <button @click="confirmDelete(backup.filename)" class="w-8 h-8 rounded-lg bg-white border border-slate-100 text-slate-400 hover:text-rose-500 hover:border-rose-200 hover:bg-rose-50 flex items-center justify-center transition-all shadow-sm" title="Hapus">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                                 </button>
@@ -245,7 +245,7 @@
         <div class="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden animate-slideUpFade text-center">
             <div class="p-8">
                 <div class="w-20 h-20 bg-rose-50 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-inner border-4 border-white ring-4 ring-rose-50">
-                    ⚠️
+                    <AppIcon name="exclamation-triangle" />️
                 </div>
                 <h3 class="text-xl font-black text-slate-800 tracking-tight">Hapus Arsip?</h3>
                 <p class="text-xs text-slate-500 mt-3 leading-relaxed">
@@ -257,7 +257,7 @@
                         Batal
                     </button>
                     <button @click="executeDelete" :disabled="isDeleting" class="flex-1 py-3 bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-2xl shadow-lg shadow-rose-500/30 transition-all text-xs uppercase tracking-widest flex items-center justify-center gap-2">
-                        <span v-if="isDeleting" class="animate-spin text-base">⏳</span>
+                        <span v-if="isDeleting" class="animate-spin text-base"><AppIcon name="clock" /></span>
                         <span v-else>Hapus</span>
                     </button>
                 </div>
@@ -272,7 +272,7 @@
         <div class="relative w-full max-w-md bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden animate-slideUpFade text-center">
             <div class="p-8">
                 <div class="w-20 h-20 bg-amber-50 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-inner border-4 border-white ring-4 ring-amber-50">
-                    ⚠️
+                    <AppIcon name="exclamation-triangle" />️
                 </div>
                 <h3 class="text-xl font-black text-slate-800 tracking-tight uppercase">Peringatan Keras!</h3>
                 <p class="text-xs text-slate-600 mt-3 leading-relaxed">
@@ -285,7 +285,7 @@
                         Batal
                     </button>
                     <button @click="executeRestore" :disabled="isRestoring" class="flex-1 py-3 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-2xl shadow-lg shadow-amber-500/30 transition-all text-xs uppercase tracking-widest flex items-center justify-center gap-2">
-                        <span v-if="isRestoring" class="animate-spin text-base">⏳</span>
+                        <span v-if="isRestoring" class="animate-spin text-base"><AppIcon name="clock" /></span>
                         <span v-else>Ya, Restore Data</span>
                     </button>
                 </div>
@@ -328,10 +328,10 @@ const restoreTarget = ref('')
 
 // Helpers
 const getRoleIcon = (role) => {
-    if(role.toLowerCase() === 'admin') return '⚙️'
-    if(role.toLowerCase() === 'guru') return '👨‍🏫'
-    if(role.toLowerCase() === 'walikelas') return '👨‍👩‍👧‍👦'
-    return '📄'
+    if(role.toLowerCase() === 'admin') return '<AppIcon name="cog" />️'
+    if(role.toLowerCase() === 'guru') return '<AppIcon name="academic-cap" />'
+    if(role.toLowerCase() === 'walikelas') return '<AppIcon name="user" />‍<AppIcon name="user" />‍<AppIcon name="user" />‍<AppIcon name="user" />'
+    return '<AppIcon name="document-text" />'
 }
 
 const getRoleColorText = (role) => {

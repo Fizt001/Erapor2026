@@ -5,11 +5,11 @@
       <!-- MOBILE VIEW TABS -->
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-2 grid grid-cols-2 gap-2 z-20">
         <button type="button" @click="activeTab = 'filter'" :class="activeTab === 'filter' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="rounded-xl flex items-center justify-center py-2 px-1 transition-all active:scale-95">
-          <span class="text-lg mr-1.5 transition-transform" :class="activeTab === 'filter' ? 'scale-110' : ''">🔍</span>
+          <span class="text-lg mr-1.5 transition-transform" :class="activeTab === 'filter' ? 'scale-110' : ''"><AppIcon name="magnifying-glass" /></span>
           <span class="text-[10px] font-black uppercase tracking-wider">Filter Data</span>
         </button>
         <button type="button" @click="activeTab = 'table'" :class="activeTab === 'table' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="rounded-xl flex items-center justify-center py-2 px-1 transition-all active:scale-95">
-          <span class="text-lg mr-1.5 transition-transform" :class="activeTab === 'table' ? 'scale-110' : ''">📋</span>
+          <span class="text-lg mr-1.5 transition-transform" :class="activeTab === 'table' ? 'scale-110' : ''"><AppIcon name="clipboard" /></span>
           <span class="text-[10px] font-black uppercase tracking-wider">Data Siswa</span>
         </button>
       </div>
@@ -80,10 +80,10 @@
           <div v-if="siswaList.length > 0" class="bg-emerald-50 rounded-xl border border-emerald-100 p-4 space-y-3">
             <p class="text-[10px] font-black uppercase tracking-widest text-emerald-700">Aksi Massal Terpilih ({{ selectedIds.length }})</p>
             <div class="grid grid-cols-2 gap-2">
-              <button @click="setAksiMassal('naik')" :disabled="selectedIds.length === 0" class="py-2 px-3 bg-emerald-100 hover:bg-emerald-200 text-emerald-700 font-bold rounded-lg text-[10px] uppercase tracking-widest transition-all disabled:opacity-40 disabled:cursor-not-allowed">✅ Naik Kelas</button>
-              <button @click="setAksiMassal('tinggal')" :disabled="selectedIds.length === 0" class="py-2 px-3 bg-amber-100 hover:bg-amber-200 text-amber-700 font-bold rounded-lg text-[10px] uppercase tracking-widest transition-all disabled:opacity-40 disabled:cursor-not-allowed">⚠️ Tinggal</button>
-              <button @click="setAksiMassal('lulus')" :disabled="selectedIds.length === 0" class="py-2 px-3 bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold rounded-lg text-[10px] uppercase tracking-widest transition-all disabled:opacity-40 disabled:cursor-not-allowed">🎓 Lulus</button>
-              <button @click="setAksiMassal('pindah_sekolah')" :disabled="selectedIds.length === 0" class="py-2 px-3 bg-rose-100 hover:bg-rose-200 text-rose-700 font-bold rounded-lg text-[10px] uppercase tracking-widest transition-all disabled:opacity-40 disabled:cursor-not-allowed">🚶 Pindah Sekolah</button>
+              <button @click="setAksiMassal('naik')" :disabled="selectedIds.length === 0" class="py-2 px-3 bg-emerald-100 hover:bg-emerald-200 text-emerald-700 font-bold rounded-lg text-[10px] uppercase tracking-widest transition-all disabled:opacity-40 disabled:cursor-not-allowed"><AppIcon name="check" /> Naik Kelas</button>
+              <button @click="setAksiMassal('tinggal')" :disabled="selectedIds.length === 0" class="py-2 px-3 bg-amber-100 hover:bg-amber-200 text-amber-700 font-bold rounded-lg text-[10px] uppercase tracking-widest transition-all disabled:opacity-40 disabled:cursor-not-allowed"><AppIcon name="exclamation-triangle" />️ Tinggal</button>
+              <button @click="setAksiMassal('lulus')" :disabled="selectedIds.length === 0" class="py-2 px-3 bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold rounded-lg text-[10px] uppercase tracking-widest transition-all disabled:opacity-40 disabled:cursor-not-allowed"><AppIcon name="academic-cap" /> Lulus</button>
+              <button @click="setAksiMassal('pindah_sekolah')" :disabled="selectedIds.length === 0" class="py-2 px-3 bg-rose-100 hover:bg-rose-200 text-rose-700 font-bold rounded-lg text-[10px] uppercase tracking-widest transition-all disabled:opacity-40 disabled:cursor-not-allowed"><AppIcon name="user-minus" /> Pindah Sekolah</button>
             </div>
           </div>
 
@@ -93,8 +93,8 @@
         <div class="p-6 border-t border-slate-200 shrink-0">
           <button @click="simpanProses" :disabled="isSaving || siswaList.length === 0"
             class="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-teal-700 text-white font-bold rounded-2xl shadow-lg shadow-emerald-500/30 hover:shadow-xl hover:shadow-emerald-500/40 hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2 uppercase tracking-widest text-xs">
-            <span v-if="isSaving" class="animate-spin text-lg">⏳</span>
-            <span v-else class="text-lg">💾</span>
+            <span v-if="isSaving" class="animate-spin text-lg"><AppIcon name="clock" /></span>
+            <span v-else class="text-lg"><AppIcon name="save" /></span>
             <span>{{ isSaving ? 'Menyimpan...' : 'Simpan Proses Mutasi' }}</span>
           </button>
         </div>
@@ -108,7 +108,7 @@
             <!-- Table Header -->
             <div class="px-6 py-5 border-b border-slate-100 flex items-center justify-between gap-4 shrink-0 sticky top-0 bg-white/80 backdrop-blur-xl z-10">
               <div class="flex items-center gap-4">
-                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-600 shadow-sm flex items-center justify-center text-2xl text-white hidden sm:flex">🎓</div>
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-600 shadow-sm flex items-center justify-center text-2xl text-white hidden sm:flex"><AppIcon name="academic-cap" /></div>
                 <div>
                   <h3 class="text-sm font-black uppercase tracking-widest text-emerald-700">
                     {{ selectedKelasInfo ? `${selectedKelasInfo.tingkat} ${selectedKelasInfo.nama_kelas}` : 'Pilih Kelas' }}
@@ -133,11 +133,11 @@
 
             <!-- Empty -->
             <div v-else-if="!selectedKelas" class="flex-grow flex items-center justify-center flex-col p-10 text-center opacity-60">
-              <div class="text-5xl mb-4">🏫</div>
+              <div class="text-5xl mb-4"><AppIcon name="building" /></div>
               <p class="text-sm font-bold text-slate-500">Pilih Tahun Ajaran dan Kelas<br>untuk melihat daftar siswa.</p>
             </div>
             <div v-else-if="siswaList.length === 0" class="flex-grow flex items-center justify-center flex-col p-10 text-center opacity-60">
-              <div class="text-5xl mb-4">📋</div>
+              <div class="text-5xl mb-4"><AppIcon name="clipboard" /></div>
               <p class="text-sm font-bold text-slate-500">Tidak ada siswa di kelas ini.</p>
             </div>
 
@@ -197,12 +197,12 @@
                         <select v-model="s.aksi_admin"
                           class="w-full text-[11px] font-bold border-2 rounded-xl px-2 py-2 sm:py-1.5 outline-none transition-all bg-white border-slate-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 text-slate-700">
                           <option value="">-- Pilih --</option>
-                          <option value="naik">✅ Naik Kelas</option>
-                          <option value="tinggal">⚠️ Tinggal Kelas</option>
-                          <option value="lulus">🎓 Lulus</option>
-                          <option value="pindah_sekolah">🚶 Pindah Sekolah</option>
-                          <option value="keluar">🚶 Keluar</option>
-                          <option value="tetap_aktif">🔄 Tetap Aktif</option>
+                          <option value="naik"><AppIcon name="check" /> Naik Kelas</option>
+                          <option value="tinggal"><AppIcon name="exclamation-triangle" />️ Tinggal Kelas</option>
+                          <option value="lulus"><AppIcon name="academic-cap" /> Lulus</option>
+                          <option value="pindah_sekolah"><AppIcon name="user-minus" /> Pindah Sekolah</option>
+                          <option value="keluar"><AppIcon name="user-minus" /> Keluar</option>
+                          <option value="tetap_aktif"><AppIcon name="arrow-path" /> Tetap Aktif</option>
                         </select>
                     </td>
                     
@@ -235,7 +235,7 @@
     <div v-if="showConfirm" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
       <div class="relative w-full max-w-md bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden text-center">
         <div class="p-8">
-          <div class="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl">⚠️</div>
+          <div class="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl"><AppIcon name="exclamation-triangle" />️</div>
           <h3 class="text-xl font-black text-slate-800 tracking-tight">Konfirmasi Proses Mutasi</h3>
           <p class="text-xs text-slate-500 mt-3 leading-relaxed">
             Anda akan memproses <strong class="text-slate-800">{{ konfirmasiCount }}</strong> siswa.<br>
@@ -245,7 +245,7 @@
           <div class="flex items-center gap-4 mt-8">
             <button @click="showConfirm = false" class="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-2xl transition-all text-xs uppercase tracking-widest">Batal</button>
             <button @click="executeProses" :disabled="isSaving" class="flex-1 py-3 bg-gradient-to-r from-emerald-600 to-teal-700 text-white font-bold rounded-2xl shadow-lg shadow-emerald-500/30 transition-all text-xs uppercase tracking-widest flex items-center justify-center gap-2">
-              <span v-if="isSaving" class="animate-spin">⏳</span>
+              <span v-if="isSaving" class="animate-spin"><AppIcon name="clock" /></span>
               <span>{{ isSaving ? 'Memproses...' : 'Ya, Proses!' }}</span>
             </button>
           </div>
@@ -304,8 +304,8 @@ const selectedKelasInfo = computed(() => {
 const konfirmasiCount = computed(() => siswaList.value.filter(s => s.aksi_admin).length)
 
 const rekomendasiLabel = (r) => {
-  const m = { naik: '✅ Naik', tinggal: '⚠️ Tinggal', lulus: '🎓 Lulus', belum_ditentukan: '❓ Belum' }
-  return m[r] || '❓ Belum'
+  const m = { naik: '<AppIcon name="check" /> Naik', tinggal: '<AppIcon name="exclamation-triangle" />️ Tinggal', lulus: '<AppIcon name="academic-cap" /> Lulus', belum_ditentukan: '<AppIcon name="question-mark-circle" /> Belum' }
+  return m[r] || '<AppIcon name="question-mark-circle" /> Belum'
 }
 
 const rekomendasiClass = (r) => {

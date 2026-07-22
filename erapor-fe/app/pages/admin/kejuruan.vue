@@ -20,13 +20,13 @@
         <!-- Desktop Tabs (Toggle Form) -->
         <div class="hidden xl:flex bg-slate-50/50 border-b border-slate-200 p-2 shrink-0">
             <button @click="activeTab = 'bidang'" :class="activeTab === 'bidang' ? 'bg-white text-emerald-700 shadow-sm border border-slate-200' : 'bg-transparent text-slate-500 hover:bg-slate-50 border border-transparent'" class="flex-1 py-2 rounded-xl font-bold text-[10px] uppercase tracking-widest transition-all">
-                🛠️ Bidang
+                <AppIcon name="cog" />️ Bidang
             </button>
             <button @click="activeTab = 'program'" :class="activeTab === 'program' ? 'bg-white text-emerald-700 shadow-sm border border-slate-200' : 'bg-transparent text-slate-500 hover:bg-slate-50 border border-transparent'" class="flex-1 py-2 rounded-xl font-bold text-[10px] uppercase tracking-widest transition-all">
-                🎓 Prog
+                <AppIcon name="academic-cap" /> Prog
             </button>
             <button @click="activeTab = 'konsentrasi'" :class="activeTab === 'konsentrasi' ? 'bg-white text-emerald-700 shadow-sm border border-slate-200' : 'bg-transparent text-slate-500 hover:bg-slate-50 border border-transparent'" class="flex-1 py-2 rounded-xl font-bold text-[10px] uppercase tracking-widest transition-all">
-                🎯 Fokus
+                <AppIcon name="shield" /> Fokus
             </button>
         </div>
 
@@ -35,7 +35,7 @@
             <div v-show="activeTab === 'bidang'" class="animate-fadeIn">
                 <div class="p-6 shrink-0">
                   <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-5 border border-emerald-500 shadow-sm relative overflow-hidden flex items-center gap-4">
-                    <div class="w-10 h-10 flex items-center justify-center text-xl shrink-0 bg-white/20 rounded-xl backdrop-blur-sm border border-white/20 relative z-10">🛠️</div>
+                    <div class="w-10 h-10 flex items-center justify-center text-xl shrink-0 bg-white/20 rounded-xl backdrop-blur-sm border border-white/20 relative z-10"><AppIcon name="cog" />️</div>
                     <div class="relative z-10">
                         <h3 class="text-sm font-black uppercase tracking-widest text-white">Bidang Keahlian</h3>
                         <p class="text-[10px] text-emerald-100 font-semibold uppercase mt-0.5">Tingkatan 1 (Tertinggi)</p>
@@ -53,8 +53,8 @@
                         </div>
                         <div class="pt-4 border-t border-slate-100">
                             <button type="submit" :disabled="isSaving" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-2xl shadow-lg hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 uppercase tracking-widest text-xs">
-                                <span v-if="isSaving" class="animate-spin text-lg">⏳</span>
-                                <span v-else class="text-lg">💾</span> Simpan Bidang
+                                <span v-if="isSaving" class="animate-spin text-lg"><AppIcon name="clock" /></span>
+                                <span v-else class="text-lg"><AppIcon name="save" /></span> Simpan Bidang
                             </button>
                         </div>
                     </form>
@@ -65,7 +65,7 @@
             <div v-show="activeTab === 'program'" class="animate-fadeIn">
                 <div class="p-6 shrink-0">
                   <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-5 border border-blue-500 shadow-sm relative overflow-hidden flex items-center gap-4">
-                    <div class="w-10 h-10 flex items-center justify-center text-xl shrink-0 bg-white/20 rounded-xl backdrop-blur-sm border border-white/20 relative z-10">🎓</div>
+                    <div class="w-10 h-10 flex items-center justify-center text-xl shrink-0 bg-white/20 rounded-xl backdrop-blur-sm border border-white/20 relative z-10"><AppIcon name="academic-cap" /></div>
                     <div class="relative z-10">
                         <h3 class="text-sm font-black uppercase tracking-widest text-white">Program Keahlian</h3>
                         <p class="text-[10px] text-blue-100 font-semibold uppercase mt-0.5">Tingkatan 2 (Menengah)</p>
@@ -90,8 +90,8 @@
                         </div>
                         <div class="pt-4 border-t border-slate-100">
                             <button type="submit" :disabled="isSaving" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-2xl shadow-lg hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 uppercase tracking-widest text-xs">
-                                <span v-if="isSaving" class="animate-spin text-lg">⏳</span>
-                                <span v-else class="text-lg">💾</span> Simpan Program
+                                <span v-if="isSaving" class="animate-spin text-lg"><AppIcon name="clock" /></span>
+                                <span v-else class="text-lg"><AppIcon name="save" /></span> Simpan Program
                             </button>
                         </div>
                     </form>
@@ -102,7 +102,7 @@
             <div v-show="activeTab === 'konsentrasi'" class="animate-fadeIn">
                 <div class="p-6 shrink-0">
                   <div class="bg-gradient-to-r from-purple-600 to-fuchsia-700 rounded-2xl p-5 border border-purple-500 shadow-sm relative overflow-hidden flex items-center gap-4">
-                    <div class="w-10 h-10 flex items-center justify-center text-xl shrink-0 bg-white/20 rounded-xl backdrop-blur-sm border border-white/20 relative z-10">🎯</div>
+                    <div class="w-10 h-10 flex items-center justify-center text-xl shrink-0 bg-white/20 rounded-xl backdrop-blur-sm border border-white/20 relative z-10"><AppIcon name="shield" /></div>
                     <div class="relative z-10">
                         <h3 class="text-sm font-black uppercase tracking-widest text-white">Konsentrasi Keahlian</h3>
                         <p class="text-[10px] text-purple-100 font-semibold uppercase mt-0.5">Tingkatan 3 (Kejuruan/Jurusan)</p>
@@ -133,8 +133,8 @@
                         </div>
                         <div class="pt-4 border-t border-slate-100">
                             <button type="submit" :disabled="isSaving" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-2xl shadow-lg hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 uppercase tracking-widest text-xs">
-                                <span v-if="isSaving" class="animate-spin text-lg">⏳</span>
-                                <span v-else class="text-lg">💾</span> Simpan Konsentrasi
+                                <span v-if="isSaving" class="animate-spin text-lg"><AppIcon name="clock" /></span>
+                                <span v-else class="text-lg"><AppIcon name="save" /></span> Simpan Konsentrasi
                             </button>
                         </div>
                     </form>
@@ -149,7 +149,7 @@
           <div class="bg-white rounded-2xl sm:rounded-[2rem] shadow-[0_2px_15px_-3px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col flex-1 relative min-h-0">
             <div class="px-6 py-5 border-b border-slate-50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white shrink-0 z-10">
                 <div class="flex items-center gap-4 w-full sm:w-auto">
-                    <div class="w-10 h-10 rounded-2xl bg-slate-50 shadow-sm border border-slate-200 flex items-center justify-center text-xl hidden sm:flex">📋</div>
+                    <div class="w-10 h-10 rounded-2xl bg-slate-50 shadow-sm border border-slate-200 flex items-center justify-center text-xl hidden sm:flex"><AppIcon name="clipboard" /></div>
                     <div>
                         <h3 class="text-sm font-black uppercase tracking-widest text-emerald-700">Database Kejuruan</h3>
                     </div>
@@ -170,7 +170,7 @@
         <div v-else class="flex-1 overflow-y-auto custom-scrollbar p-4 md:p-6 bg-slate-50">
             
             <div v-if="treeData.length === 0" class="text-center py-16 flex flex-col items-center justify-center h-full min-h-[400px]">
-                <div class="text-6xl opacity-30 mb-4 block">🌵</div>
+                <div class="text-6xl opacity-30 mb-4 block"><AppIcon name="empty-state" /></div>
                 <h3 class="text-lg font-black text-slate-700 mb-2 uppercase tracking-widest">Data Kosong</h3>
                 <p class="text-slate-500 text-sm font-semibold max-w-sm">Belum ada struktur kejuruan.<br>Mulai dengan menambahkan Bidang Keahlian di panel sebelah kiri.</p>
             </div>
@@ -180,7 +180,7 @@
                 <!-- Bidang Header -->
                 <div class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 transition-colors group/bidang" @click="toggleNode('b-'+b.id)">
                     <div class="flex items-center gap-4 flex-1">
-                        <span class="w-6 h-6 flex items-center justify-center rounded-md bg-slate-100 text-slate-500 transition-transform" :class="isNodeExpanded('b-'+b.id) ? 'rotate-90' : ''">▶</span>
+                        <span class="w-6 h-6 flex items-center justify-center rounded-md bg-slate-100 text-slate-500 transition-transform" :class="isNodeExpanded('b-'+b.id) ? 'rotate-90' : ''"><AppIcon name="arrow-right" /></span>
                         <div>
                             <span class="text-[9px] font-black uppercase tracking-widest text-slate-400 bg-slate-100 px-2 py-0.5 rounded mr-2 border border-slate-200">BIDANG</span>
                             <span class="text-sm font-bold text-slate-800">{{ b.nama_bidang }}</span>
@@ -208,7 +208,7 @@
                         <!-- Program Header -->
                         <div class="flex items-center justify-between p-3 cursor-pointer hover:bg-slate-50 transition-colors group/program" @click="toggleNode('p-'+p.id)">
                             <div class="flex items-center gap-3 flex-1">
-                                <span class="w-5 h-5 flex items-center justify-center rounded bg-slate-100 text-slate-400 transition-transform text-[10px]" :class="isNodeExpanded('p-'+p.id) ? 'rotate-90' : ''">▶</span>
+                                <span class="w-5 h-5 flex items-center justify-center rounded bg-slate-100 text-slate-400 transition-transform text-[10px]" :class="isNodeExpanded('p-'+p.id) ? 'rotate-90' : ''"><AppIcon name="arrow-right" /></span>
                                 <div>
                                     <span class="text-[9px] font-black uppercase tracking-widest text-slate-400 bg-slate-100 px-2 py-0.5 rounded mr-2 border border-slate-200">PROGRAM</span>
                                     <span class="text-xs font-bold text-slate-700">{{ p.nama_program }}</span>
@@ -233,7 +233,7 @@
                             <!-- LOOP 3: KONSENTRASI / KEJURUAN -->
                             <div v-for="k in p.kejuruans" :key="'k-'+k.id" class="flex items-center justify-between p-2.5 bg-white rounded-lg border border-slate-200 hover:shadow-sm transition-shadow group/k">
                                 <div class="flex items-center gap-3">
-                                    <span class="text-lg">🎯</span>
+                                    <span class="text-lg"><AppIcon name="shield" /></span>
                                     <div>
                                         <span class="text-[9px] font-black text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded uppercase tracking-widest mr-2 border border-emerald-200">{{ k.kode_konsentrasi }}</span>
                                         <span class="text-xs font-bold text-slate-700">{{ k.nama_konsentrasi }}</span>
@@ -264,7 +264,7 @@
     <div v-if="isDeleteModalOpen" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
         <div class="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden animate-slideUpFade text-center">
             <div class="p-8">
-                <div class="w-20 h-20 bg-rose-50 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-inner border-4 border-white ring-4 ring-rose-50">⚠️</div>
+                <div class="w-20 h-20 bg-rose-50 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-inner border-4 border-white ring-4 ring-rose-50"><AppIcon name="exclamation-triangle" />️</div>
                 <h3 class="text-xl font-black text-slate-800 tracking-tight">Hapus Data?</h3>
                 <p class="text-xs text-slate-500 mt-3 leading-relaxed">
                     Anda yakin ingin menghapus <span class="uppercase font-black text-rose-600">{{ deleteTarget.type }}</span>:<br>
@@ -276,7 +276,7 @@
                 <div class="flex items-center gap-4 mt-8">
                     <button @click="isDeleteModalOpen = false" class="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-2xl transition-all text-xs uppercase tracking-widest">Batal</button>
                     <button @click="executeDelete" :disabled="isSaving" class="flex-1 py-3 bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-2xl shadow-lg shadow-rose-500/30 transition-all text-xs uppercase tracking-widest flex items-center justify-center gap-2">
-                        <span v-if="isSaving" class="animate-spin text-base">⏳</span>
+                        <span v-if="isSaving" class="animate-spin text-base"><AppIcon name="clock" /></span>
                         <span v-else>Hapus</span>
                     </button>
                 </div>
@@ -301,10 +301,10 @@ const isDesktop = computed(() => windowWidth.value >= 1280) // xl breakpoint
 // Tabs for Mobile
 const activeTab = ref('table')
 const mobileTabs = [
-  { id: 'bidang', title: 'Bidang', icon: '🛠️' },
-  { id: 'program', title: 'Program', icon: '🎓' },
-  { id: 'konsentrasi', title: 'Fokus', icon: '🎯' },
-  { id: 'table', title: 'Database', icon: '📋' }
+  { id: 'bidang', title: 'Bidang', icon: '<AppIcon name="cog" />️' },
+  { id: 'program', title: 'Program', icon: '<AppIcon name="academic-cap" />' },
+  { id: 'konsentrasi', title: 'Fokus', icon: '<AppIcon name="shield" />' },
+  { id: 'table', title: 'Database', icon: '<AppIcon name="clipboard" />' }
 ]
 
 // Tree Data State

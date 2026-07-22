@@ -7,11 +7,11 @@
         <!-- MOBILE VIEW TABS -->
         <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-2 grid grid-cols-2 gap-2 z-20">
             <button type="button" @click="activeTab = 'filter'" :class="activeTab === 'filter' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="rounded-xl flex items-center justify-center py-2 px-1 transition-all active:scale-95">
-              <span class="text-lg mr-1.5 transition-transform" :class="activeTab === 'filter' ? 'scale-110' : ''">🔍</span>
+              <span class="text-lg mr-1.5 transition-transform" :class="activeTab === 'filter' ? 'scale-110' : ''"><AppIcon name="magnifying-glass" /></span>
               <span class="text-[10px] font-black uppercase tracking-wider">Filter Data</span>
             </button>
             <button type="button" @click="activeTab = 'preview'" :class="activeTab === 'preview' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="rounded-xl flex items-center justify-center py-2 px-1 transition-all active:scale-95">
-              <span class="text-lg mr-1.5 transition-transform" :class="activeTab === 'preview' ? 'scale-110' : ''">📄</span>
+              <span class="text-lg mr-1.5 transition-transform" :class="activeTab === 'preview' ? 'scale-110' : ''"><AppIcon name="document-text" /></span>
               <span class="text-[10px] font-black uppercase tracking-wider">Preview Buku</span>
             </button>
         </div>
@@ -20,7 +20,7 @@
         <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', activeTab === 'filter' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[60px]' : '']">
         <div class="p-6 shrink-0">
             <div class="bg-gradient-to-r from-teal-600 to-emerald-700 rounded-2xl p-5 border border-teal-500 shadow-sm relative overflow-hidden flex items-center gap-4">
-                <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10">🔍</div>
+                <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10"><AppIcon name="magnifying-glass" /></div>
                 <div class="relative z-10">
                     <h3 class="text-sm font-black uppercase tracking-widest text-white">Filter Data</h3>
                     <p class="text-[10px] text-teal-100 font-semibold uppercase mt-0.5">Pilih Tahun & Kurikulum</p>
@@ -79,7 +79,7 @@
             <div class="bg-white rounded-2xl sm:rounded-[2rem] shadow-[0_2px_15px_-3px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col flex-1 relative min-h-0">
             
               <div v-if="(!selectedTahunAjaranId || !selectedKurikulumId) || students.length === 0" class="flex-1 flex flex-col items-center justify-center p-8 text-center bg-white">
-                  <span class="text-6xl mb-6 block opacity-20">📄</span>
+                  <span class="text-6xl mb-6 block opacity-20"><AppIcon name="document-text" /></span>
                   <h3 class="text-xl font-black text-slate-700 mb-2 uppercase tracking-widest">Pilih Filter</h3>
                   <p class="text-slate-500 text-sm font-semibold max-w-sm">Silakan pilih tahun ajaran dan kurikulum terlebih dahulu di panel sebelah kiri.</p>
               </div>
@@ -89,19 +89,19 @@
                   <div class="p-4 md:px-8 md:py-5 bg-white border-b border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between items-center gap-4 shrink-0 z-10">
                     <div class="flex items-center gap-3 w-full sm:w-auto">
                         <button @click="prevStudent" :disabled="currentStudentIndex === 0" class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-500 hover:text-emerald-600 hover:border-emerald-300 hover:bg-emerald-50 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed transition-all">
-                            ⬅️
+                            <AppIcon name="arrow-left" />️
                         </button>
                         <div class="flex-1 text-center sm:text-left px-2">
                             <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 block mb-0.5">Siswa {{ currentStudentIndex + 1 }} dari {{ students.length }}</span>
                             <h3 class="text-sm font-black text-slate-800 truncate max-w-[250px]">{{ currentStudent.nama_lengkap }}</h3>
                         </div>
                         <button @click="nextStudent" :disabled="currentStudentIndex === students.length - 1" class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-500 hover:text-emerald-600 hover:border-emerald-300 hover:bg-emerald-50 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed transition-all">
-                            ➡️
+                            <AppIcon name="arrow-right" />️
                         </button>
                     </div>
                     <div class="flex items-center w-full sm:w-auto">
                         <button @click="printBukuInduk" class="w-full sm:w-auto py-2.5 px-6 bg-gradient-to-br from-slate-800 to-slate-900 text-white font-bold rounded-xl shadow-md shadow-slate-900/20 hover:-translate-y-0.5 transition-all text-xs uppercase tracking-widest flex items-center justify-center gap-2">
-                            🖨️ Cetak Buku Induk
+                            <AppIcon name="printer" />️ Cetak Buku Induk
                         </button>
                     </div>
                 </div>
