@@ -187,8 +187,12 @@
                         </div>
                     </div>
                     <div class="flex items-center gap-1 opacity-100 sm:opacity-0 sm:group-hover/bidang:opacity-100 transition-opacity">
-                        <button @click.stop="openEdit('bidang', b)" class="w-8 h-8 flex items-center justify-center rounded-xl text-emerald-600 hover:bg-emerald-50 border border-transparent hover:border-emerald-200 shadow-sm" title="Edit Bidang">\n                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>\n                                </button>
-                        <button @click.stop="confirmDelete('bidang', b.id, b.nama_bidang)" class="w-8 h-8 flex items-center justify-center rounded-xl text-rose-500 hover:bg-rose-50 border border-transparent hover:border-rose-200 shadow-sm" title="Hapus Bidang">\n                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>\n                                </button>
+                        <button @click.stop="openEdit('bidang', b)" class="w-8 h-8 flex items-center justify-center rounded-xl text-emerald-600 hover:bg-emerald-50 border border-transparent hover:border-emerald-200 shadow-sm" title="Edit Bidang">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+                                </button>
+                        <button @click.stop="confirmDelete('bidang', b.id, b.nama_bidang)" class="w-8 h-8 flex items-center justify-center rounded-xl text-rose-500 hover:bg-rose-50 border border-transparent hover:border-rose-200 shadow-sm" title="Hapus Bidang">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                                </button>
                     </div>
                 </div>
 
@@ -211,8 +215,12 @@
                                 </div>
                             </div>
                             <div class="flex items-center gap-1 opacity-100 sm:opacity-0 sm:group-hover/program:opacity-100 transition-opacity">
-                                <button @click.stop="openEdit('program', p)" class="w-7 h-7 flex items-center justify-center rounded-lg text-emerald-600 hover:bg-emerald-50 text-xs border border-transparent hover:border-emerald-200 shadow-sm" title="Edit Program">\n                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>\n                                </button>
-                                <button @click.stop="confirmDelete('program', p.id, p.nama_program)" class="w-7 h-7 flex items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 text-xs border border-transparent hover:border-rose-200 shadow-sm" title="Hapus Program">\n                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>\n                                </button>
+                                <button @click.stop="openEdit('program', p)" class="w-7 h-7 flex items-center justify-center rounded-lg text-emerald-600 hover:bg-emerald-50 text-xs border border-transparent hover:border-emerald-200 shadow-sm" title="Edit Program">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+                                </button>
+                                <button @click.stop="confirmDelete('program', p.id, p.nama_program)" class="w-7 h-7 flex items-center justify-center rounded-lg text-rose-500 hover:bg-rose-50 text-xs border border-transparent hover:border-rose-200 shadow-sm" title="Hapus Program">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                                </button>
                             </div>
                         </div>
 
@@ -232,8 +240,12 @@
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-1 opacity-100 sm:opacity-0 sm:group-hover/k:opacity-100 transition-opacity">
-                                    <button @click="openEdit('konsentrasi', k)" class="w-7 h-7 flex items-center justify-center rounded-lg bg-slate-50 text-emerald-600 hover:bg-emerald-100 text-xs border border-transparent hover:border-emerald-200 shadow-sm">\n                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>\n                                </button>
-                                    <button @click="confirmDelete('konsentrasi', k.id, k.nama_konsentrasi)" class="w-7 h-7 flex items-center justify-center rounded-lg bg-slate-50 text-rose-500 hover:bg-rose-100 text-xs border border-transparent hover:border-rose-200 shadow-sm">\n                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>\n                                </button>
+                                    <button @click="openEdit('konsentrasi', k)" class="w-7 h-7 flex items-center justify-center rounded-lg bg-slate-50 text-emerald-600 hover:bg-emerald-100 text-xs border border-transparent hover:border-emerald-200 shadow-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+                                </button>
+                                    <button @click="confirmDelete('konsentrasi', k.id, k.nama_konsentrasi)" class="w-7 h-7 flex items-center justify-center rounded-lg bg-slate-50 text-rose-500 hover:bg-rose-100 text-xs border border-transparent hover:border-rose-200 shadow-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                                </button>
                                 </div>
                             </div>
                         </div>
