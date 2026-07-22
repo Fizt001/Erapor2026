@@ -81,12 +81,12 @@
                 </div>
 
                 <!-- Text Right -->
-                <div class="w-full lg:w-[55%] text-center lg:text-left mt-4 lg:mt-0 flex flex-col items-center lg:items-start">
-                    <h2 class="text-5xl lg:text-6xl xl:text-7xl font-black text-white leading-none mb-3 tracking-tight">
+                <div class="w-full lg:w-[60%] xl:w-[55%] text-center lg:text-left mt-6 lg:mt-0 flex flex-col items-center lg:items-start px-4 lg:px-0">
+                    <h2 class="text-4xl sm:text-5xl lg:text-6xl xl:text-[4rem] font-black text-white leading-tight mb-2 tracking-tight sm:whitespace-nowrap">
                         e-Rapor <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-rose-400">SMK</span>
                     </h2>
                     
-                    <h3 class="text-2xl lg:text-3xl font-bold text-slate-200 mb-6 uppercase tracking-widest drop-shadow-md">
+                    <h3 class="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-slate-200 mb-6 uppercase tracking-widest drop-shadow-md leading-snug">
                         {{ sekolah?.nama_sekolah || 'Tinta Emas Indonesia' }}
                     </h3>
                     
@@ -94,7 +94,7 @@
                         <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-rose-400 font-black uppercase tracking-widest text-[11px]">Versi : 2026.1</span>
                     </div>
                     
-                    <p class="text-sm lg:text-base text-slate-400 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0 mt-4">
+                    <p class="text-xs sm:text-sm lg:text-base text-slate-400 font-medium leading-relaxed max-w-lg mx-auto lg:mx-0">
                         <span class="text-slate-200">Dashboard Business Intelligence</span><br>
                         Sebagai Early Warning System<br>
                         Pencapaian Akademik Siswa.
