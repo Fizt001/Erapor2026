@@ -150,7 +150,7 @@
       <!-- Panel Flow Kanan -->
       <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0', activeTab === 'riwayat' || isDesktop ? 'flex' : 'hidden', !isDesktop ? 'pt-[60px]' : '']">
         <div class="p-2 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full h-full flex flex-col relative z-0">
-          <div class="bg-white rounded-xl sm:rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
+          <div class="bg-white rounded-2xl sm:rounded-[2rem] shadow-[0_2px_15px_-3px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col flex-1 relative min-h-0">
             
             <div class="p-6 bg-white border-b border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0 z-10">
                 <div class="flex items-center gap-4">
@@ -198,7 +198,7 @@
                     </tr>
                 </thead>
                 <tbody class="text-xs">
-                    <tr v-for="(backup, index) in backups" :key="backup.filename" class="border-b border-slate-100 hover:bg-slate-50/80 transition-colors group bg-white">
+                    <tr v-for="(backup, index) in backups" :key="backup.filename" class="border-b border-slate-50 hover:bg-slate-50/50 transition-colors group bg-white">
                         <td class="p-4 text-center text-xs font-bold text-slate-300">
                             {{ index + 1 }}
                         </td>
@@ -224,7 +224,7 @@
                                 <button @click="confirmRestore(backup.filename)" class="w-8 h-8 rounded-lg bg-white border border-amber-200 text-amber-500 hover:text-white hover:bg-amber-500 flex items-center justify-center transition-all shadow-sm" title="Restore Data">🔄</button>
                                 <button @click="downloadBackup(backup.filename, 'json')" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-500 hover:text-blue-500 hover:border-blue-200 hover:bg-blue-50 flex items-center justify-center transition-all shadow-sm" title="Download JSON">{ }</button>
                                 <button @click="downloadBackup(backup.filename, 'excel')" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-500 hover:text-emerald-500 hover:border-emerald-200 hover:bg-emerald-50 flex items-center justify-center transition-all shadow-sm" title="Download Excel">📊</button>
-                                <button @click="confirmDelete(backup.filename)" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-rose-500 hover:border-rose-200 hover:bg-rose-50 flex items-center justify-center transition-all shadow-sm" title="Hapus">🗑️</button>
+                                <button @click="confirmDelete(backup.filename)" class="w-8 h-8 rounded-lg bg-white border border-slate-100 text-slate-400 hover:text-rose-500 hover:border-rose-200 hover:bg-rose-50 flex items-center justify-center transition-all shadow-sm" title="Hapus">\n                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>\n                                </button>
                             </div>
                         </td>
                     </tr>
