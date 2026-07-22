@@ -8,7 +8,7 @@
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
           :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-amber-500 to-amber-600 text-white shadow-md shadow-amber-500/20 ring-2 ring-amber-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
           class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
-          <span class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''">{{ tab.icon }}</span>
+          <AppIcon :name="tab.icon" class="w-6 h-6 mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
           <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
@@ -63,7 +63,7 @@
 
             <button @click="fetchPengampu" class="w-full py-4 bg-amber-600 hover:bg-amber-700 active:scale-[0.98] rounded-2xl text-white shadow-lg shadow-amber-200 transition-all flex items-center justify-center gap-2 group">
                 <span class="text-[11px] font-black uppercase tracking-widest group-hover:tracking-wider transition-all">Refresh Data</span>
-                <span class="group-hover:rotate-180 transition-transform duration-500">🔄</span>
+                <span class="group-hover:rotate-180 transition-transform duration-500"><AppIcon name="arrow-path" class="w-6 h-6" /></span>
             </button>
         </div>
       </div>
@@ -99,7 +99,7 @@
 
                 <!-- Empty State (No Data) -->
                 <div v-else-if="strukturs.length === 0 || kelases.length === 0" class="flex flex-col items-center justify-center h-full opacity-60">
-                    <span class="text-6xl mb-4 grayscale opacity-50">📭</span>
+                    <span class="text-6xl mb-4 grayscale opacity-50"><AppIcon name="inbox" class="w-6 h-6" /></span>
                     <h3 class="text-sm font-black text-slate-500 uppercase tracking-widest">Struktur/Kelas Belum Tersedia</h3>
                 </div>
 

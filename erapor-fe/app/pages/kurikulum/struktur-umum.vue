@@ -8,7 +8,7 @@
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
           :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-amber-500 to-amber-600 text-white shadow-md shadow-amber-500/20 ring-2 ring-amber-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
           class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
-          <span class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''">{{ tab.icon }}</span>
+          <AppIcon :name="tab.icon" class="w-6 h-6 mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
           <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
@@ -19,7 +19,7 @@
         <div class="p-6 shrink-0 z-10 relative">
           <div class="bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl p-5 border border-amber-500 shadow-sm relative overflow-hidden flex flex-col gap-4">
             <div class="flex items-center gap-4 relative z-10">
-                <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0">📚</div>
+                <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0"><AppIcon name="book-open" class="w-6 h-6" /></div>
                 <div>
                     <h3 class="text-sm font-black uppercase tracking-widest text-white">Struktur Umum</h3>
                     <p class="text-[10px] text-amber-100 font-semibold uppercase mt-0.5">Plotting Mapel Umum</p>
@@ -45,7 +45,7 @@
         
         <div class="flex-1 overflow-y-auto custom-scrollbar p-5">
             <div v-if="!selectedKurikulumId" class="text-center p-6 border-2 border-dashed border-slate-200 rounded-2xl">
-                <span class="text-3xl mb-2 block opacity-50">👆</span>
+                <span class="text-3xl mb-2 block opacity-50"><AppIcon name="hand-raised" class="w-6 h-6" /></span>
                 <p class="text-xs font-bold text-slate-500">Pilih kurikulum terlebih dahulu di atas.</p>
             </div>
             <form v-else @submit.prevent="saveData" class="space-y-4">
@@ -77,8 +77,8 @@
                         Reset
                     </button>
                     <button type="submit" :disabled="isSaving || !formData.mapel_id || availableMapels.length === 0" class="flex-[2] py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold rounded-2xl shadow-lg shadow-amber-500/30 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 text-xs uppercase tracking-widest disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0">
-                        <span v-if="isSaving" class="animate-spin">⏳</span>
-                        <span v-else>➕</span> 
+                        <span v-if="isSaving" class="animate-spin"><AppIcon name="clock" class="w-6 h-6" /></span>
+                        <span v-else><AppIcon name="plus" class="w-6 h-6" /></span> 
                         Tambahkan
                     </button>
                 </div>
@@ -93,7 +93,7 @@
         <!-- Header Flow -->
         <div class="px-6 py-5 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0 z-10 sticky top-0 bg-white/80 backdrop-blur-xl">
             <div class="flex items-center gap-4">
-                <div class="w-10 h-10 rounded-2xl bg-amber-50 shadow-sm border border-amber-100 flex items-center justify-center text-xl hidden sm:flex text-amber-500">📚</div>
+                <div class="w-10 h-10 rounded-2xl bg-amber-50 shadow-sm border border-amber-100 flex items-center justify-center text-xl hidden sm:flex text-amber-500"><AppIcon name="book-open" class="w-6 h-6" /></div>
                 <div>
                     <h3 class="text-sm font-black uppercase tracking-widest text-amber-700">Database Struktur Umum</h3>
                     <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Daftar mapel umum Kelas {{ tingkat }}</p>
@@ -113,13 +113,13 @@
             </div>
 
             <div v-else-if="!selectedKurikulumId" class="flex-grow flex items-center justify-center flex-col p-10 opacity-60 h-full text-center">
-                <div class="text-6xl mb-4">🏫</div>
+                <div class="text-6xl mb-4"><AppIcon name="building-office" class="w-6 h-6" /></div>
                 <span class="text-sm font-black text-slate-500 uppercase tracking-widest">Pilih Kurikulum Terlebih Dahulu</span>
             </div>
 
             <!-- Empty State -->
             <div v-else-if="activeKelompoks.length === 0" class="flex-grow flex items-center justify-center flex-col p-16 text-center h-full">
-                <div class="text-6xl opacity-20 mb-4">🏜️</div>
+                <div class="text-6xl opacity-20 mb-4"><AppIcon name="archive-box-x-mark" class="w-6 h-6" /></div>
                 <p class="text-sm font-bold text-slate-500">Belum ada struktur mapel.</p>
                 <p class="text-[10px] text-slate-400 uppercase tracking-widest mt-2 font-bold">Pastikan data mapel sudah terisi.</p>
             </div>
@@ -129,7 +129,7 @@
                 <div v-for="kelompok in activeKelompoks" :key="kelompok.kode" class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                     <div class="px-5 py-4 bg-slate-50 border-b border-slate-100 flex items-center justify-between gap-3">
                         <div class="flex items-center gap-3">
-                            <span class="w-8 h-8 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center font-black text-sm">📁</span>
+                            <span class="w-8 h-8 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center font-black text-sm"><AppIcon name="folder" class="w-6 h-6" /></span>
                             <div>
                                 <p class="text-[9px] font-black uppercase text-slate-400 tracking-widest">Kelompok</p>
                                 <h4 class="font-black text-slate-800 text-sm uppercase tracking-wider mt-0.5">{{ kelompok.nama }}</h4>
@@ -169,7 +169,7 @@
                                     </td>
                                     <td class="p-0 md:p-4 text-center border-t border-slate-50 pt-3 md:border-t-0 md:pt-0 flex items-center justify-end md:table-cell">
                                         <div class="flex items-center justify-center opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
-                                            <button @click="confirmDeleteStruktur(struk)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-center transition-all shadow-sm" title="Hapus">🗑️</button>
+                                            <button @click="confirmDeleteStruktur(struk)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-center transition-all shadow-sm" title="Hapus"><AppIcon name="trash" class="w-4 h-4" /></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -189,7 +189,7 @@
     <div v-if="isDeleteModalOpen" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
         <div class="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden animate-slideUpFade text-center">
             <div class="p-8">
-                <div class="w-20 h-20 bg-rose-50 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-inner border-4 border-white ring-4 ring-rose-50">⚠️</div>
+                <div class="w-20 h-20 bg-rose-50 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-inner border-4 border-white ring-4 ring-rose-50"><AppIcon name="exclamation-triangle" class="w-6 h-6" /></div>
                 <h3 class="text-xl font-black text-slate-800 tracking-tight">Hapus Data?</h3>
                 <p class="text-xs text-slate-500 mt-3 leading-relaxed">
                     Anda yakin ingin menghapus mapel umum:<br>
@@ -224,8 +224,8 @@ const isDesktop = computed(() => windowWidth.value >= 1280) // xl breakpoint
 // Tabs for Mobile
 const activeTabMobile = ref('form')
 const mobileTabs = [
-  { id: 'form', title: 'Plotting Mapel', icon: '📝' },
-  { id: 'table', title: 'Database', icon: '📋' }
+  { id: 'form', title: 'Plotting Mapel', icon: 'document-text' },
+  { id: 'table', title: 'Database', icon: 'clipboard-document-list' }
 ]
 
 const kurikulums = ref([])

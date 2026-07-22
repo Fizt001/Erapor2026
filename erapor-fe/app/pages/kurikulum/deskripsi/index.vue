@@ -8,7 +8,7 @@
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
           :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-amber-500 to-amber-600 text-white shadow-md shadow-amber-500/20 ring-2 ring-amber-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
           class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
-          <span class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''">{{ tab.icon }}</span>
+          <AppIcon :name="tab.icon" class="w-6 h-6 mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
           <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
@@ -18,7 +18,7 @@
         
         <div class="p-6 shrink-0 z-10 relative">
           <div class="bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl p-5 border border-amber-500 shadow-sm relative overflow-hidden flex items-center gap-4">
-            <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10">📚</div>
+            <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10"><AppIcon name="book-open" class="w-6 h-6" /></div>
             <div class="relative z-10">
                 <h3 class="text-sm font-black uppercase tracking-widest text-white">Kurikulum</h3>
                 <p class="text-[10px] text-amber-100 font-semibold uppercase mt-0.5">Pilih kurikulum</p>
@@ -28,7 +28,7 @@
 
         <div class="flex-1 overflow-y-auto px-6 pb-6 space-y-2 custom-scrollbar">
             <div v-if="isLoadingKurikulum" class="text-center p-8 opacity-50 flex flex-col items-center justify-center">
-              <span class="animate-spin text-2xl inline-block mb-2 text-amber-500">↻</span>
+              <span class="animate-spin text-2xl inline-block mb-2 text-amber-500"><AppIcon name="arrow-path" class="w-6 h-6" /></span>
               <p class="text-[10px] font-bold uppercase tracking-widest text-amber-500">Memuat data...</p>
             </div>
             
@@ -61,7 +61,7 @@
             <!-- Header Flow -->
             <div class="p-4 bg-white border-b border-slate-200 flex justify-between items-center gap-4 shrink-0 z-10 shadow-sm">
                 <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-2xl bg-amber-50 shadow-sm border border-amber-100 flex items-center justify-center text-xl hidden sm:flex text-amber-500">📝</div>
+                    <div class="w-10 h-10 rounded-2xl bg-amber-50 shadow-sm border border-amber-100 flex items-center justify-center text-xl hidden sm:flex text-amber-500"><AppIcon name="document-text" class="w-6 h-6" /></div>
                     <div>
                         <h3 class="text-sm font-black uppercase tracking-widest text-amber-700">Template Deskripsi</h3>
                         <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">
@@ -83,7 +83,7 @@
                 <!-- Alert Belum Lengkap -->
                 <div v-else-if="!selectedKurikulum" class="flex flex-col items-center justify-center h-full opacity-80 p-8 text-center relative overflow-hidden bg-gradient-to-b from-transparent to-slate-50/50">
                     <div class="w-24 h-24 mb-6 rounded-full bg-white flex items-center justify-center border border-slate-200 shadow-sm relative z-10">
-                        <span class="text-4xl animate-bounce" style="animation-duration: 3s;">📋</span>
+                        <span class="text-4xl animate-bounce" style="animation-duration: 3s;"><AppIcon name="clipboard-document-list" class="w-6 h-6" /></span>
                     </div>
                     
                     <h3 class="font-black text-slate-700 text-xl tracking-tight relative z-10 mb-2">Pilih Kurikulum</h3>
@@ -139,8 +139,8 @@
                         class="flex items-center space-x-2 text-[12px] font-black uppercase tracking-widest px-6 py-3 bg-amber-600 text-white rounded-xl shadow-md hover:bg-amber-700 hover:shadow-lg transition-all active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
                         :disabled="isSaving"
                         >
-                        <span v-if="isSaving" class="animate-spin text-lg">↻</span>
-                        <span v-else class="text-lg">💾</span>
+                        <span v-if="isSaving" class="animate-spin text-lg"><AppIcon name="arrow-path" class="w-6 h-6" /></span>
+                        <span v-else class="text-lg"><AppIcon name="document-check" class="w-6 h-6" /></span>
                         <span>{{ isSaving ? 'Menyimpan...' : 'Simpan Template' }}</span>
                         </button>
                     </div>
@@ -178,8 +178,8 @@ const windowWidth = ref(1024)
 const isDesktop = computed(() => windowWidth.value >= 1280)
 const activeTabMobile = ref('kurikulum')
 const mobileTabs = [
-  { id: 'kurikulum', title: 'Kurikulum', icon: '📚' },
-  { id: 'flow', title: 'Template', icon: '📝' }
+  { id: 'kurikulum', title: 'Kurikulum', icon: 'book-open' },
+  { id: 'flow', title: 'Template', icon: 'document-text' }
 ]
 
 const tokenCookie = useCookie('auth_token')

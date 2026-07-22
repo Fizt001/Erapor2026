@@ -8,7 +8,7 @@
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
           :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-amber-500 to-amber-600 text-white shadow-md shadow-amber-500/20 ring-2 ring-amber-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
           class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
-          <span class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''">{{ tab.icon }}</span>
+          <AppIcon :name="tab.icon" class="w-6 h-6 mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
           <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
@@ -18,7 +18,7 @@
         
         <div class="p-6 shrink-0 z-10 relative">
           <div class="bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl p-5 border border-amber-500 shadow-sm relative overflow-hidden flex items-center gap-4">
-            <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10">💯</div>
+            <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10"><AppIcon name="star" class="w-6 h-6" /></div>
             <div class="relative z-10">
                 <h3 class="text-sm font-black uppercase tracking-widest text-white">Standar Nilai</h3>
                 <p class="text-[10px] text-amber-100 font-semibold uppercase mt-0.5">Petunjuk Pengaturan</p>
@@ -39,7 +39,7 @@
 
             <button @click="fetchData" class="w-full py-4 bg-amber-600 hover:bg-amber-700 active:scale-[0.98] rounded-2xl text-white shadow-lg shadow-amber-200 transition-all flex items-center justify-center gap-2 group">
                 <span class="text-[11px] font-black uppercase tracking-widest group-hover:tracking-wider transition-all">Refresh Data</span>
-                <span class="group-hover:rotate-180 transition-transform duration-500">🔄</span>
+                <span class="group-hover:rotate-180 transition-transform duration-500"><AppIcon name="arrow-path" class="w-6 h-6" /></span>
             </button>
         </div>
       </div>
@@ -50,7 +50,7 @@
             <!-- Header Flow -->
             <div class="p-4 bg-white border-b border-slate-200 flex justify-between items-center gap-4 shrink-0 z-10 shadow-sm">
                 <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-2xl bg-amber-50 shadow-sm border border-amber-100 flex items-center justify-center text-xl hidden sm:flex text-amber-500">💯</div>
+                    <div class="w-10 h-10 rounded-2xl bg-amber-50 shadow-sm border border-amber-100 flex items-center justify-center text-xl hidden sm:flex text-amber-500"><AppIcon name="star" class="w-6 h-6" /></div>
                     <div>
                         <h3 class="text-sm font-black uppercase tracking-widest text-amber-700">Kriteria Ketuntasan Minimal</h3>
                         <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Kelola batas lulus per tingkat</p>
@@ -60,7 +60,7 @@
 
             <!-- Banner Read-Only -->
             <div v-if="!isLoading && !isActiveTahunAjaran && activeTahunAjaranId" class="bg-amber-50 border-b border-amber-200 px-6 py-3 flex items-center justify-center gap-2 shrink-0">
-                <span class="text-amber-500">⚠️</span>
+                <span class="text-amber-500"><AppIcon name="exclamation-triangle" class="w-6 h-6" /></span>
                 <p class="text-xs font-bold text-amber-700 uppercase tracking-widest">Mode Read-Only: Tahun ajaran ini tidak aktif. Anda tidak dapat mengubah data.</p>
             </div>
 
@@ -134,7 +134,7 @@ const isDesktop = computed(() => windowWidth.value >= 1280)
 const activeTabMobile = ref('flow')
 const mobileTabs = [
   { id: 'info', title: 'Petunjuk', icon: 'ℹ️' },
-  { id: 'flow', title: 'Data KKM', icon: '💯' }
+  { id: 'flow', title: 'Data KKM', icon: 'star' }
 ]
 
 const isActiveTahunAjaran = computed(() => {

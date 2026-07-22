@@ -89,7 +89,7 @@
                             <div v-if="stats.notifikasi?.length > 0" class="bg-white rounded-2xl shadow-sm border border-rose-200/60 overflow-hidden">
                                 <div class="p-5 border-b border-rose-100 bg-rose-50/50 flex items-center justify-between">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-rose-600 border border-rose-200 shadow-sm animate-pulse">⚠️</div>
+                                        <div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-rose-600 border border-rose-200 shadow-sm animate-pulse"><AppIcon name="exclamation-triangle" class="w-6 h-6" /></div>
                                         <div>
                                             <h3 class="text-sm font-bold text-rose-800">Trafik Peringatan Sistem</h3>
                                             <p class="text-[10px] font-medium text-rose-600 uppercase tracking-widest">Eskalasi Kasus BK (SP2 & SP3)</p>

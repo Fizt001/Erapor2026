@@ -8,7 +8,7 @@
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
           :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-amber-500 to-amber-600 text-white shadow-md shadow-amber-500/20 ring-2 ring-amber-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
           class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
-          <span class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''">{{ tab.icon }}</span>
+          <AppIcon :name="tab.icon" class="w-6 h-6 mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
           <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
@@ -18,7 +18,7 @@
         
         <div class="p-6 shrink-0 z-10 relative">
           <div class="bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl p-5 border border-amber-500 shadow-sm relative overflow-hidden flex items-center gap-4">
-            <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10">👩‍🏫</div>
+            <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10"><AppIcon name="users" class="w-6 h-6" /></div>
             <div class="relative z-10">
                 <h3 class="text-sm font-black uppercase tracking-widest text-white">Filter Plotting</h3>
                 <p class="text-[10px] text-amber-100 font-semibold uppercase mt-0.5">Pilih Kriteria Kelas</p>
@@ -47,7 +47,7 @@
 
             <button @click="fetchData" class="w-full py-4 bg-amber-600 hover:bg-amber-700 active:scale-[0.98] rounded-2xl text-white shadow-lg shadow-amber-200 transition-all flex items-center justify-center gap-2 group">
                 <span class="text-[11px] font-black uppercase tracking-widest group-hover:tracking-wider transition-all">Refresh Data</span>
-                <span class="group-hover:rotate-180 transition-transform duration-500">🔄</span>
+                <span class="group-hover:rotate-180 transition-transform duration-500"><AppIcon name="arrow-path" class="w-6 h-6" /></span>
             </button>
         </div>
       </div>
@@ -58,7 +58,7 @@
             <!-- Header Flow -->
             <div class="p-4 bg-white border-b border-slate-200 flex justify-between items-center gap-4 shrink-0 z-10 shadow-sm">
                 <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-2xl bg-amber-50 shadow-sm border border-amber-100 flex items-center justify-center text-xl hidden sm:flex text-amber-500">👩‍🏫</div>
+                    <div class="w-10 h-10 rounded-2xl bg-amber-50 shadow-sm border border-amber-100 flex items-center justify-center text-xl hidden sm:flex text-amber-500"><AppIcon name="users" class="w-6 h-6" /></div>
                     <div>
                         <h3 class="text-sm font-black uppercase tracking-widest text-amber-700">Wali Kelas</h3>
                         <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Kelola penugasan wali kelas</p>
@@ -77,7 +77,7 @@
 
                 <!-- Empty State (No Data) -->
                 <div v-else-if="filteredKelas.length === 0" class="flex flex-col items-center justify-center h-full opacity-60">
-                    <span class="text-6xl mb-4 grayscale opacity-50">📭</span>
+                    <span class="text-6xl mb-4 grayscale opacity-50"><AppIcon name="inbox" class="w-6 h-6" /></span>
                     <h3 class="text-sm font-black text-slate-500 uppercase tracking-widest">Tidak ada kelas yang ditemukan</h3>
                 </div>
 
@@ -119,8 +119,8 @@
                                 </div>
                                 
                                 <button @click="saveWaliKelas(k.id)" class="mt-1 w-full py-3.5 bg-slate-800 hover:bg-amber-600 active:bg-amber-700 text-white text-[11px] font-black uppercase tracking-widest rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-amber-500/30 flex items-center justify-center gap-2 group/btn" :disabled="isSaving[k.id]">
-                                    <span v-if="isSaving[k.id]" class="animate-spin text-sm">⏳</span>
-                                    <span v-else class="text-sm group-hover/btn:-translate-y-0.5 transition-transform">💾</span>
+                                    <span v-if="isSaving[k.id]" class="animate-spin text-sm"><AppIcon name="clock" class="w-6 h-6" /></span>
+                                    <span v-else class="text-sm group-hover/btn:-translate-y-0.5 transition-transform"><AppIcon name="document-check" class="w-6 h-6" /></span>
                                     <span>{{ isSaving[k.id] ? 'Menyimpan...' : 'Simpan' }}</span>
                                 </button>
                             </div>
@@ -159,7 +159,7 @@ const isDesktop = computed(() => windowWidth.value >= 1280)
 const activeTabMobile = ref('filter')
 const mobileTabs = [
   { id: 'filter', title: 'Filter', icon: '🎛️' },
-  { id: 'flow', title: 'Daftar Kelas', icon: '👩‍🏫' }
+  { id: 'flow', title: 'Daftar Kelas', icon: 'users' }
 ]
 
 const { fetchReferensi } = useReferensi()

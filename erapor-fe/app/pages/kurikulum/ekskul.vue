@@ -8,7 +8,7 @@
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
           :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-amber-500 to-amber-600 text-white shadow-md shadow-amber-500/20 ring-2 ring-amber-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
           class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
-          <span class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''">{{ tab.icon }}</span>
+          <AppIcon :name="tab.icon" class="w-6 h-6 mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
           <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
@@ -18,7 +18,7 @@
         
         <div class="p-6 shrink-0 z-10 relative">
           <div class="bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl p-5 border border-amber-500 shadow-sm relative overflow-hidden flex items-center gap-4">
-            <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10">🏃</div>
+            <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10"><AppIcon name="user-plus" class="w-6 h-6" /></div>
             <div class="relative z-10">
                 <h3 class="text-sm font-black uppercase tracking-widest text-white">{{ isEditing ? 'Edit Ekskul' : 'Ekskul Baru' }}</h3>
                 <p class="text-[10px] text-amber-100 font-semibold uppercase mt-0.5">{{ isEditing ? 'Perbarui Data' : 'Tambah Data Manual' }}</p>
@@ -47,7 +47,7 @@
                         Batal
                     </button>
                     <button type="submit" :disabled="isSaving" class="flex-[2] py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold rounded-2xl shadow-lg shadow-amber-500/30 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 text-xs uppercase tracking-widest">
-                        <span v-if="isSaving" class="animate-spin">⏳</span>
+                        <span v-if="isSaving" class="animate-spin"><AppIcon name="clock" class="w-6 h-6" /></span>
                         <span v-else>{{ isEditing ? '💾' : '➕' }}</span> 
                         {{ isEditing ? 'Simpan' : 'Tambah' }}
                     </button>
@@ -63,7 +63,7 @@
         <!-- Header Flow -->
         <div class="px-6 py-5 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0 z-10 sticky top-0 bg-white/80 backdrop-blur-xl">
             <div class="flex items-center gap-4">
-                <div class="w-10 h-10 rounded-2xl bg-amber-50 shadow-sm border border-amber-100 flex items-center justify-center text-xl hidden sm:flex text-amber-500">🏃</div>
+                <div class="w-10 h-10 rounded-2xl bg-amber-50 shadow-sm border border-amber-100 flex items-center justify-center text-xl hidden sm:flex text-amber-500"><AppIcon name="user-plus" class="w-6 h-6" /></div>
                 <div>
                     <h3 class="text-sm font-black uppercase tracking-widest text-amber-700">Database Ekstrakurikuler</h3>
                     <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Semua data ekstrakurikuler</p>
@@ -94,7 +94,7 @@
                 <tbody class="text-sm font-medium text-slate-700 divide-y divide-slate-100">
                     <tr v-if="!ekskuls || ekskuls.length === 0">
                         <td colspan="3" class="p-16 text-center text-slate-400 font-bold bg-white">
-                            <span class="text-4xl block mb-2 opacity-30">🏜️</span>
+                            <span class="text-4xl block mb-2 opacity-30"><AppIcon name="archive-box-x-mark" class="w-6 h-6" /></span>
                             Belum ada data ekstrakurikuler.
                         </td>
                     </tr>
@@ -108,8 +108,8 @@
                         </td>
                         <td class="p-4 text-center">
                             <div class="flex items-center justify-center gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
-                                <button @click="editData(item)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:border-amber-200 hover:bg-amber-50 hover:text-amber-600 flex items-center justify-center transition-all shadow-sm" title="Edit">✏️</button>
-                                <button @click="confirmDelete(item)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-center transition-all shadow-sm" title="Hapus">🗑️</button>
+                                <button @click="editData(item)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:border-amber-200 hover:bg-amber-50 hover:text-amber-600 flex items-center justify-center transition-all shadow-sm" title="Edit"><AppIcon name="pencil-square" class="w-4 h-4" /></button>
+                                <button @click="confirmDelete(item)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-center transition-all shadow-sm" title="Hapus"><AppIcon name="trash" class="w-4 h-4" /></button>
                             </div>
                         </td>
                     </tr>
@@ -125,7 +125,7 @@
     <div v-if="isDeleteModalOpen" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
         <div class="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden animate-slideUpFade text-center">
             <div class="p-8">
-                <div class="w-20 h-20 bg-rose-50 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-inner border-4 border-white ring-4 ring-rose-50">⚠️</div>
+                <div class="w-20 h-20 bg-rose-50 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-inner border-4 border-white ring-4 ring-rose-50"><AppIcon name="exclamation-triangle" class="w-6 h-6" /></div>
                 <h3 class="text-xl font-black text-slate-800 tracking-tight">Hapus Ekstrakurikuler?</h3>
                 <p class="text-xs text-slate-500 mt-3 leading-relaxed">
                     Anda yakin ingin menghapus ekskul:<br>
@@ -159,8 +159,8 @@ const isDesktop = computed(() => windowWidth.value >= 1280) // xl breakpoint
 // Tabs for Mobile
 const activeTabMobile = ref('table')
 const mobileTabs = [
-  { id: 'form', title: 'Form Data', icon: '📝' },
-  { id: 'table', title: 'Database', icon: '📋' }
+  { id: 'form', title: 'Form Data', icon: 'document-text' },
+  { id: 'table', title: 'Database', icon: 'clipboard-document-list' }
 ]
 
 const ekskuls = ref([])

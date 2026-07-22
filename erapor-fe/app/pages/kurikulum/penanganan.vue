@@ -37,7 +37,7 @@
           <div class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
             <div class="px-6 py-5 border-b border-slate-100 flex items-center justify-between sticky top-0 bg-white/80 backdrop-blur-xl z-20">
                 <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-2xl bg-rose-100 shadow-inner flex items-center justify-center text-xl border border-rose-200 text-rose-600">🛡️</div>
+                    <div class="w-10 h-10 rounded-2xl bg-rose-100 shadow-inner flex items-center justify-center text-xl border border-rose-200 text-rose-600"><AppIcon name="shield-check" class="w-6 h-6" /></div>
                     <div>
                         <h3 class="text-sm font-black uppercase tracking-widest text-slate-800">Daftar Eskalasi Akademik</h3>
                         <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Menampilkan kasus SP2 dan SP3</p>
@@ -133,7 +133,7 @@
                 <label class="cursor-pointer">
                     <input type="radio" v-model="form.keputusan" value="Pertahankan" class="peer sr-only" required>
                     <div class="p-4 rounded-xl border-2 border-slate-100 peer-checked:border-emerald-500 peer-checked:bg-emerald-50 text-center transition-all">
-                        <span class="block text-xl mb-1">🛡️</span>
+                        <span class="block text-xl mb-1"><AppIcon name="shield-check" class="w-6 h-6" /></span>
                         <span class="block text-[11px] font-black text-slate-700 peer-checked:text-emerald-700 uppercase">Pertahankan</span>
                     </div>
                 </label>
