@@ -126,7 +126,7 @@
                 <form @submit.prevent="handleLogin" class="space-y-6 mt-8">
                     
                     <div v-if="errorMessage" class="p-4 rounded-xl bg-rose-50 border border-rose-100 flex items-start gap-3 animate-fadeIn mb-4">
-                        <span class="text-rose-500 mt-0.5">⚠️</span>
+                        <AppIcon name="exclamation-triangle" class="text-rose-500 mt-0.5 text-base" />
                         <p class="text-xs font-bold text-rose-600 leading-relaxed">{{ errorMessage }}</p>
                     </div>
 
@@ -134,7 +134,7 @@
                     <div class="space-y-2">
                         <label class="text-[11px] font-bold text-slate-500 uppercase tracking-widest ml-1">Username</label>
                         <div class="flex w-full border-2 border-slate-100 rounded-xl overflow-hidden focus-within:border-orange-500 focus-within:ring-4 focus-within:ring-orange-500/10 transition-all bg-slate-50">
-                            <div class="pl-4 pr-3 flex items-center justify-center text-slate-400">👤</div>
+                            <div class="pl-4 pr-3 flex items-center justify-center text-slate-400 text-lg"><AppIcon name="user" /></div>
                             <input v-model="form.username" type="text" required
                                    class="w-full py-3.5 pr-4 bg-transparent text-sm font-bold text-slate-800 placeholder-slate-400 focus:outline-none" 
                                    placeholder="Ketik username Anda">
@@ -145,12 +145,12 @@
                     <div class="space-y-2">
                         <label class="text-[11px] font-bold text-slate-500 uppercase tracking-widest ml-1">Password</label>
                         <div class="flex w-full border-2 border-slate-100 rounded-xl overflow-hidden focus-within:border-orange-500 focus-within:ring-4 focus-within:ring-orange-500/10 transition-all bg-slate-50 relative">
-                            <div class="pl-4 pr-3 flex items-center justify-center text-slate-400">🔒</div>
+                            <div class="pl-4 pr-3 flex items-center justify-center text-slate-400 text-lg"><AppIcon name="lock-closed" /></div>
                             <input v-model="form.password" :type="showPassword ? 'text' : 'password'" required
                                    class="w-full py-3.5 pr-12 bg-transparent text-sm font-bold text-slate-800 placeholder-slate-400 focus:outline-none" 
                                    placeholder="Ketik password Anda">
                             <button type="button" @click="showPassword = !showPassword" class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-orange-500 transition-colors">
-                                {{ showPassword ? '👁️' : '🙈' }}
+                                <AppIcon :name="showPassword ? 'eye' : 'eye-slash'" class="text-xl" />
                             </button>
                         </div>
                     </div>
@@ -165,8 +165,8 @@
                     <div class="pt-4">
                         <button type="submit" :disabled="isLoading" 
                                 class="w-full py-4 bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white font-black rounded-xl shadow-[0_10px_20px_-10px_rgba(249,115,22,0.5)] hover:shadow-[0_15px_25px_-10px_rgba(249,115,22,0.6)] transition-all transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2 text-sm uppercase tracking-widest">
-                            <span v-if="isLoading" class="animate-spin text-lg">⏳</span>
-                            <span v-else>Masuk ke Aplikasi 🚀</span>
+                            <AppIcon v-if="isLoading" name="arrow-path" class="animate-spin text-xl" />
+                            <span v-else class="flex items-center gap-2">Masuk ke Aplikasi <AppIcon name="arrow-right" class="text-lg" /></span>
                         </button>
                     </div>
                 </form>
