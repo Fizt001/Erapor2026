@@ -302,11 +302,11 @@ const handleLogin = async () => {
       method: 'POST',
       body: form
     })
-    if (res.success && res.token) {
+    if (res.success && res.data && res.data.token) {
       const tokenCookie = useCookie('auth_token')
       const userCookie = useCookie('user_profile')
-      tokenCookie.value = res.token
-      userCookie.value = res.user
+      tokenCookie.value = res.data.token
+      userCookie.value = res.data.user
       useSwal().toast('Berhasil login!', 'success')
       router.push('/admin/dashboard')
     } else {
