@@ -210,8 +210,8 @@
                         <div class="space-y-1.5">
                             <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Jenis Kelamin</label>
                             <select v-model="editForm.jenis_kelamin" class="w-full bg-slate-50 border-2 border-slate-200/70 rounded-xl px-4 py-2.5 text-xs font-semibold focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all">
-                                <option value="L">Laki-laki</option>
-                                <option value="P">Perempuan</option>
+                                <option value="" disabled>-- Pilih --</option>
+                                <option v-for="jk in jenisKelaminOptions" :key="jk.kode" :value="jk.kode">{{ jk.nama }}</option>
                             </select>
                         </div>
                         <div class="space-y-1.5">
@@ -258,7 +258,10 @@
                             </div>
                             <div class="space-y-1.5 relative z-10">
                                 <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1">Pekerjaan Ayah</label>
-                                <input v-model="editForm.pekerjaan_ayah" type="text" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
+                                <select v-model="editForm.pekerjaan_ayah" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
+                                    <option value="" disabled>-- Pilih --</option>
+                                    <option v-for="pek in pekerjaanOptions" :key="pek.kode" :value="pek.nama">{{ pek.nama }}</option>
+                                </select>
                             </div>
                             <div class="space-y-1.5 relative z-10">
                                 <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1">No HP Ayah</label>
@@ -280,7 +283,10 @@
                             </div>
                             <div class="space-y-1.5 relative z-10">
                                 <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1">Pekerjaan Ibu</label>
-                                <input v-model="editForm.pekerjaan_ibu" type="text" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold focus:ring-2 focus:ring-pink-500 outline-none">
+                                <select v-model="editForm.pekerjaan_ibu" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold focus:ring-2 focus:ring-pink-500 outline-none">
+                                    <option value="" disabled>-- Pilih --</option>
+                                    <option v-for="pek in pekerjaanOptions" :key="pek.kode" :value="pek.nama">{{ pek.nama }}</option>
+                                </select>
                             </div>
                             <div class="space-y-1.5 relative z-10">
                                 <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1">No HP Ibu</label>
@@ -298,7 +304,10 @@
                             </div>
                             <div class="space-y-1.5 relative z-10">
                                 <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1">Pekerjaan Wali</label>
-                                <input v-model="editForm.pekerjaan_wali" type="text" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold focus:ring-2 focus:ring-amber-500 outline-none">
+                                <select v-model="editForm.pekerjaan_wali" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold focus:ring-2 focus:ring-amber-500 outline-none">
+                                    <option value="" disabled>-- Pilih --</option>
+                                    <option v-for="pek in pekerjaanOptions" :key="pek.kode" :value="pek.nama">{{ pek.nama }}</option>
+                                </select>
                             </div>
                             <div class="space-y-1.5 relative z-10">
                                 <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1">No HP Wali</label>
@@ -427,6 +436,8 @@ const pending = ref(true)
 const error = ref(null)
 const students = ref([])
 const agamaOptions = ref([])
+const pekerjaanOptions = ref([])
+const jenisKelaminOptions = ref([])
 const searchQuery = ref('')
 
 // Form Modal State
@@ -534,22 +545,25 @@ const submitEdit = async () => {
     }
 }
 
-const fetchAgamaOptions = async () => {
+const fetchReferenceOptions = async () => {
     try {
-        const res = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/admin/referensi?jenis=Kategori%20Agama', {
-            headers: { Authorization: `Bearer ${token.value}` }
-        })
-        if (res.success) {
-            agamaOptions.value = res.data
-        }
+        const [agamaRes, pekerjaanRes, jkRes] = await Promise.all([
+            $fetch(import.meta.env.VITE_API_BASE_URL + '/api/admin/referensi?jenis=Kategori%20Agama', { headers: { Authorization: `Bearer ${token.value}` } }),
+            $fetch(import.meta.env.VITE_API_BASE_URL + '/api/admin/referensi?jenis=Kategori%20Pekerjaan', { headers: { Authorization: `Bearer ${token.value}` } }),
+            $fetch(import.meta.env.VITE_API_BASE_URL + '/api/admin/referensi?jenis=Jenis%20Kelamin', { headers: { Authorization: `Bearer ${token.value}` } })
+        ])
+        
+        if (agamaRes.success) agamaOptions.value = agamaRes.data
+        if (pekerjaanRes.success) pekerjaanOptions.value = pekerjaanRes.data
+        if (jkRes.success) jenisKelaminOptions.value = jkRes.data
     } catch (err) {
-        console.error('Gagal memuat daftar agama:', err)
+        console.error('Gagal memuat daftar referensi:', err)
     }
 }
 
 onMounted(() => {
-  fetchData()
-  fetchAgamaOptions()
+    fetchData()
+    fetchReferenceOptions()
 })
 </script>
 

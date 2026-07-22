@@ -25,6 +25,29 @@ class ReferensiSeeder extends Seeder
             ['jenis' => 'nama_periode', 'kode' => 'TM-2', 'nama' => 'PSAS'],
             ['jenis' => 'nama_periode', 'kode' => 'TM-3', 'nama' => 'PSTS Genap'],
             ['jenis' => 'nama_periode', 'kode' => 'TM-4', 'nama' => 'PSAT'],
+
+            // Tambahan Agama
+            ['jenis' => 'Kategori Agama', 'kode' => 'islam', 'nama' => 'Islam'],
+            ['jenis' => 'Kategori Agama', 'kode' => 'protestan', 'nama' => 'Kristen Protestan'],
+            ['jenis' => 'Kategori Agama', 'kode' => 'katolik', 'nama' => 'Katolik'],
+            ['jenis' => 'Kategori Agama', 'kode' => 'hindu', 'nama' => 'Hindu'],
+            ['jenis' => 'Kategori Agama', 'kode' => 'buddha', 'nama' => 'Buddha'],
+            ['jenis' => 'Kategori Agama', 'kode' => 'konghucu', 'nama' => 'Konghucu'],
+
+            // Jenis Kelamin
+            ['jenis' => 'Jenis Kelamin', 'kode' => 'L', 'nama' => 'Laki-laki'],
+            ['jenis' => 'Jenis Kelamin', 'kode' => 'P', 'nama' => 'Perempuan'],
+
+            // Kategori Pekerjaan
+            ['jenis' => 'Kategori Pekerjaan', 'kode' => 'pns', 'nama' => 'PNS/TNI/Polri'],
+            ['jenis' => 'Kategori Pekerjaan', 'kode' => 'swasta', 'nama' => 'Karyawan Swasta'],
+            ['jenis' => 'Kategori Pekerjaan', 'kode' => 'wiraswasta', 'nama' => 'Wiraswasta / Wirausaha'],
+            ['jenis' => 'Kategori Pekerjaan', 'kode' => 'petani', 'nama' => 'Petani / Peternak'],
+            ['jenis' => 'Kategori Pekerjaan', 'kode' => 'nelayan', 'nama' => 'Nelayan'],
+            ['jenis' => 'Kategori Pekerjaan', 'kode' => 'buruh', 'nama' => 'Buruh'],
+            ['jenis' => 'Kategori Pekerjaan', 'kode' => 'pensiunan', 'nama' => 'Pensiunan'],
+            ['jenis' => 'Kategori Pekerjaan', 'kode' => 'irt', 'nama' => 'Ibu Rumah Tangga'],
+            ['jenis' => 'Kategori Pekerjaan', 'kode' => 'lainnya', 'nama' => 'Lainnya / Tidak Bekerja'],
         ];
 
         foreach ($data as $item) {
