@@ -16,30 +16,30 @@
       <!-- Panel Dock Kiri -->
       <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', activeTabMobile === 'info' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[60px]' : '']">
         
-        <div class="p-6 shrink-0 z-10 relative">
-          <div class="bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl p-5 border border-amber-500 shadow-sm relative overflow-hidden flex items-center gap-4">
-            <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10"><AppIcon name="star" class="w-6 h-6" /></div>
+        <div class="p-4 pb-2 shrink-0 z-10 relative">
+          <div class="bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl p-4 border border-amber-500 shadow-sm relative overflow-hidden flex items-center gap-3">
+            <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="star" class="w-5 h-5" /></div>
             <div class="relative z-10">
-                <h3 class="text-sm font-black uppercase tracking-widest text-white">Standar Nilai</h3>
-                <p class="text-[10px] text-amber-100 font-semibold uppercase mt-0.5">Petunjuk Pengaturan</p>
+                <h3 class="text-xs font-black uppercase tracking-widest text-white">Standar Nilai</h3>
+                <p class="text-[9px] text-amber-100 font-semibold uppercase mt-0.5">Petunjuk Pengaturan</p>
             </div>
           </div>
         </div>
 
-        <div class="flex-1 overflow-y-auto px-6 pb-6 space-y-6">
-            <div class="bg-amber-50 border border-amber-100 p-4 rounded-2xl">
-                <h4 class="text-xs font-black text-amber-800 uppercase tracking-widest mb-2">Cara Mengisi KKM:</h4>
-                <ul class="text-[11px] text-amber-700 space-y-2 list-disc pl-4 font-medium leading-relaxed">
+        <div class="flex-1 overflow-y-auto px-4 pb-4 space-y-4">
+            <div class="bg-amber-50 border border-amber-100 p-3 rounded-xl">
+                <h4 class="text-[11px] font-black text-amber-800 uppercase tracking-widest mb-1.5">Cara Mengisi KKM:</h4>
+                <ul class="text-[10px] text-amber-700 space-y-1.5 list-disc pl-4 font-medium leading-relaxed">
                     <li>Input nilai batas ketuntasan (KKM) pada kotak yang tersedia di tiap tingkat kelas.</li>
                     <li>Nilai harus berkisar antara <strong>0 hingga 100</strong>.</li>
                     <li>Tekan tombol <strong>Enter</strong> pada keyboard untuk menyimpan nilai tersebut.</li>
-                    <li>Tanda centang hijau (<AppIcon name="check" class="w-5 h-5 inline-block mr-1" />) menandakan bahwa nilai telah berhasil tersimpan di sistem.</li>
+                    <li>Tanda centang hijau (<AppIcon name="check" class="w-4 h-4 inline-block mr-0.5" />) menandakan bahwa nilai telah berhasil tersimpan di sistem.</li>
                 </ul>
             </div>
 
-            <button @click="fetchData" class="w-full py-4 bg-amber-600 hover:bg-amber-700 active:scale-[0.98] rounded-2xl text-white shadow-lg shadow-amber-200 transition-all flex items-center justify-center gap-2 group">
-                <span class="text-[11px] font-black uppercase tracking-widest group-hover:tracking-wider transition-all">Refresh Data</span>
-                <span class="group-hover:rotate-180 transition-transform duration-500"><AppIcon name="arrow-path" class="w-6 h-6" /></span>
+            <button @click="fetchData" class="w-full py-2.5 bg-amber-600 hover:bg-amber-700 active:scale-[0.98] rounded-xl text-white shadow-lg shadow-amber-200/50 transition-all flex items-center justify-center gap-2 group">
+                <span class="text-xs font-black uppercase tracking-widest group-hover:tracking-wider transition-all">Refresh Data</span>
+                <span class="group-hover:rotate-180 transition-transform duration-500"><AppIcon name="arrow-path" class="w-5 h-5" /></span>
             </button>
         </div>
       </div>
@@ -59,8 +59,8 @@
             </div>
 
             <!-- Banner Read-Only -->
-            <div v-if="!isLoading && !isActiveTahunAjaran && activeTahunAjaranId" class="bg-amber-50 border-b border-amber-200 px-6 py-3 flex items-center justify-center gap-2 shrink-0">
-                <span class="text-amber-500"><AppIcon name="exclamation-triangle" class="w-6 h-6" /></span>
+            <div v-if="!isLoading && !isActiveTahunAjaran && activeTahunAjaranId" class="bg-amber-50 border-b border-amber-200 px-6 py-2.5 flex items-center justify-center gap-2 shrink-0">
+                <span class="text-amber-500"><AppIcon name="exclamation-triangle" class="w-5 h-5" /></span>
                 <p class="text-xs font-bold text-amber-700 uppercase tracking-widest">Mode Read-Only: Tahun ajaran ini tidak aktif. Anda tidak dapat mengubah data.</p>
             </div>
 
@@ -69,7 +69,7 @@
                 
                 <!-- Loading State -->
                 <div v-if="isLoading" class="flex flex-col items-center justify-center h-full">
-                    <div class="w-10 h-10 border-4 border-amber-400 border-t-transparent rounded-full animate-spin mb-4"></div>
+                    <div class="w-8 h-8 border-4 border-amber-400 border-t-transparent rounded-full animate-spin mb-4"></div>
                     <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Memuat Data...</span>
                 </div>
 
@@ -80,15 +80,15 @@
                 </div>
 
                 <!-- Data Grid -->
-                <div v-else class="space-y-6 max-w-5xl mx-auto">
+                <div v-else class="space-y-4 max-w-5xl mx-auto">
                     <div v-for="kur in kkmData" :key="kur.kurikulum_id" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden hover:shadow-md transition-shadow">
-                        <div class="px-6 py-4 bg-slate-50 border-b border-slate-100 flex items-center justify-between">
-                            <h4 class="font-black text-slate-700 text-sm uppercase tracking-widest">{{ kur.nama_kurikulum }}</h4>
+                        <div class="px-4 py-3 bg-slate-50/50 border-b border-slate-100 flex items-center justify-between">
+                            <h4 class="font-black text-slate-700 text-xs uppercase tracking-widest">{{ kur.nama_kurikulum }}</h4>
                         </div>
                         
-                        <div class="p-6 flex flex-wrap justify-center gap-8">
-                            <div v-for="item in kur.tingkat" :key="item.tingkat" class="flex flex-col gap-2 w-full sm:w-72">
-                                <label class="text-[11px] font-black text-slate-600 uppercase tracking-wider pl-1">Tingkat {{ item.tingkat }}</label>
+                        <div class="p-4 flex flex-wrap justify-start gap-4">
+                            <div v-for="item in kur.tingkat" :key="item.tingkat" class="flex flex-col gap-1.5 w-full sm:w-52">
+                                <label class="text-[10px] font-black text-slate-500 uppercase tracking-wider pl-1">Tingkat {{ item.tingkat }}</label>
                                 <div class="relative">
                                     <input type="number" 
                                         v-model.number="item.nilai" 
@@ -96,12 +96,12 @@
                                         :disabled="!isActiveTahunAjaran"
                                         min="0" max="100" 
                                         placeholder="0" 
-                                        class="w-full px-5 py-4 bg-slate-50 border-2 border-slate-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-2xl font-black text-slate-800 outline-none text-left disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-slate-100">
+                                        class="w-full px-3.5 py-2.5 bg-slate-50 border-2 border-slate-200 rounded-lg focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-lg font-black text-slate-800 outline-none text-left disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-slate-100">
                                     
-                                    <span v-if="isSaving[kur.kurikulum_id + '_' + item.tingkat]" class="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 border-2 border-amber-400 border-t-transparent rounded-full animate-spin"></span>
-                                    <span v-else-if="item.nilai !== null" class="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-500 font-black text-xl"><AppIcon name="check" class="w-5 h-5 inline-block mr-1" /></span>
+                                    <span v-if="isSaving[kur.kurikulum_id + '_' + item.tingkat]" class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 border-2 border-amber-400 border-t-transparent rounded-full animate-spin"></span>
+                                    <span v-else-if="item.nilai !== null" class="absolute right-3 top-1/2 -translate-y-1/2 text-emerald-500 font-black"><AppIcon name="check" class="w-4 h-4" /></span>
                                 </div>
-                                <p class="text-[9px] text-slate-400 text-left ml-1 font-bold mt-1">Tekan <kbd class="px-1 py-0.5 bg-slate-100 border border-slate-200 rounded">Enter</kbd> untuk simpan</p>
+                                <p class="text-[8px] text-slate-400 text-left ml-1 font-bold mt-0.5">Tekan <kbd class="px-1 py-0.5 bg-slate-100 border border-slate-200 rounded">Enter</kbd> untuk simpan</p>
                             </div>
                         </div>
                     </div>
