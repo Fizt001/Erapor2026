@@ -145,24 +145,28 @@
                 </thead>
                 <tbody class="text-xs flex flex-col sm:table-row-group">
                     <tr v-for="(k, index) in kelasData.data" :key="k.id" class="border-b border-slate-50 hover:bg-slate-50/50 transition-colors group bg-white flex flex-col sm:table-row p-4 sm:p-0">
-                        <td class="px-0 py-1 sm:p-4 text-left sm:text-center text-[10px] font-bold text-slate-400 flex sm:table-cell items-center justify-between">
+                        <td class="px-0 py-1 sm:p-4 text-left sm:text-center text-[11px] font-bold text-slate-400 flex sm:table-cell items-center justify-between mb-2 sm:mb-0">
                             <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nomor</span>
                             <span>{{ (kelasData.current_page - 1) * kelasData.per_page + index + 1 }}</span>
                         </td>
-                        <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-2 sm:pb-4 mb-1 sm:mb-0">
-                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nama Kelas</span>
-                            <span class="font-black text-emerald-700 text-sm tracking-wide">{{ k.nama_kelas }}</span>
+                        <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <!-- Show tingkat badge only on mobile in this column -->
+                                <span class="sm:hidden inline-flex px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200 text-[10px] font-bold">
+                                    {{ k.tingkat }}
+                                </span>
+                                <span class="font-black text-emerald-700 text-sm tracking-wide">{{ k.nama_kelas }}</span>
+                            </div>
                         </td>
-                        <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-2 sm:pb-4 mb-1 sm:mb-0">
-                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Tingkat</span>
+                        <td class="hidden sm:table-cell px-0 py-1 sm:p-4">
                             <span class="inline-flex px-2.5 py-1 rounded-md text-[10px] font-bold bg-slate-100 text-slate-600 border border-slate-200">
                                 {{ k.tingkat }}
                             </span>
                         </td>
 
-                        <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-3 sm:pb-4 mb-2 sm:mb-0">
+                        <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between">
                             <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Wali Kelas</span>
-                            <div class="flex items-center gap-2" v-if="k.wali_kelas?.guru">
+                            <div class="flex items-center gap-2 text-right sm:text-left" v-if="k.wali_kelas?.guru">
                                 <div class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-[10px] font-bold shrink-0">
                                     {{ k.wali_kelas.guru.name.substring(0, 2).toUpperCase() }}
                                 </div>
@@ -170,13 +174,13 @@
                             </div>
                             <span v-else class="text-[10px] font-bold text-slate-400 italic">Belum Diatur</span>
                         </td>
-                        <td class="px-0 pt-2 sm:p-4 text-center">
-                            <div class="flex items-center justify-center gap-2 opacity-100 xl:opacity-0 xl:group-hover:opacity-100 transition-opacity">
-                                <NuxtLink :to="`/admin/kelas/${k.id}/siswa`" class="px-3 h-10 sm:h-8 rounded-xl sm:rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-600 hover:text-emerald-700 hover:bg-emerald-100 flex items-center justify-center transition-all shadow-sm font-bold text-[10px] uppercase tracking-wider" title="Anggota Rombel"><AppIcon name="users" /> Anggota</NuxtLink>
-                                <button @click="editKelas(k)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-100 text-slate-400 hover:text-indigo-500 hover:border-indigo-200 hover:bg-indigo-50 flex items-center justify-center transition-all shadow-sm" title="Edit">
+                        <td class="px-0 pt-2 sm:p-4 text-center border-t sm:border-0 border-slate-100 mt-2 sm:mt-0 flex sm:table-cell justify-end w-full">
+                            <div class="flex items-center justify-end sm:justify-center gap-2 opacity-100 xl:opacity-0 xl:group-hover:opacity-100 transition-opacity w-full">
+                                <NuxtLink :to="`/admin/kelas/${k.id}/siswa`" class="px-3 h-8 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-600 hover:text-emerald-700 hover:bg-emerald-100 flex items-center justify-center transition-all shadow-sm font-bold text-[9px] uppercase tracking-widest gap-1 group/btn" title="Anggota Rombel"><AppIcon name="users" class="w-4 h-4" /> Anggota</NuxtLink>
+                                <button @click="editKelas(k)" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-indigo-500 hover:border-indigo-200 hover:bg-indigo-50 flex items-center justify-center transition-all shadow-sm" title="Edit">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
                                 </button>
-                                <button @click="confirmDelete(k.id, k.nama_kelas)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-100 text-slate-400 hover:text-rose-500 hover:border-rose-200 hover:bg-rose-50 flex items-center justify-center transition-all shadow-sm" title="Hapus">
+                                <button @click="confirmDelete(k.id, k.nama_kelas)" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-rose-500 hover:border-rose-200 hover:bg-rose-50 flex items-center justify-center transition-all shadow-sm" title="Hapus">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                                 </button>
                             </div>
