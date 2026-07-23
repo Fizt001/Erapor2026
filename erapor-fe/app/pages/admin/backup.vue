@@ -152,22 +152,21 @@
         <div class="p-2 sm:pt-3 sm:pb-6 sm:px-6 lg:pt-3 lg:pb-8 lg:px-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
           <div class="bg-white rounded-2xl sm:rounded-[2rem] shadow-[0_2px_15px_-3px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col flex-1 relative min-h-0">
             
-            <div class="p-6 bg-white border-b border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0 z-10">
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-2xl bg-slate-50 shadow-sm border border-slate-200 flex items-center justify-center text-2xl hidden sm:flex"><AppIcon name="clipboard" /></div>
+            <div class="p-4 sm:px-6 sm:py-3.5 bg-white border-b border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 shrink-0 z-10">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-slate-50 shadow-sm border border-slate-200 flex items-center justify-center hidden sm:flex text-slate-500"><AppIcon name="clipboard" class="w-4 h-4" /></div>
                     <div>
-                        <h3 class="text-sm font-black uppercase tracking-widest text-emerald-700">Riwayat Backup</h3>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Daftar arsip yang tersedia</p>
+                        <h3 class="text-xs font-black uppercase tracking-widest text-emerald-700">Riwayat Backup</h3>
                     </div>
                 </div>
-                <div class="flex gap-2">
-                    <button @click="triggerUpload" class="h-10 px-4 rounded-xl bg-indigo-50 text-indigo-600 font-bold text-[10px] uppercase tracking-widest flex items-center gap-2 hover:bg-indigo-100 transition-colors border border-indigo-200">
-                        <span><AppIcon name="outbox" /></span> Upload
+                <div class="flex items-center gap-2 w-full sm:w-auto">
+                    <button @click="triggerUpload" class="flex-1 sm:flex-none h-9 px-3.5 rounded-lg bg-indigo-50 text-indigo-600 font-black text-[9px] uppercase tracking-widest flex items-center justify-center gap-1.5 hover:bg-indigo-100 transition-colors border border-indigo-200 shadow-sm">
+                        <AppIcon name="outbox" class="w-4 h-4" /> <span>Upload</span>
                     </button>
                     <input type="file" ref="fileInput" class="hidden" accept=".json" @change="handleFileUpload">
                     
-                    <button @click="fetchBackups" class="w-10 h-10 rounded-xl bg-slate-100 text-slate-500 flex items-center justify-center hover:bg-slate-200 transition-colors border border-slate-200" title="Refresh">
-                        <AppIcon name="arrow-path" />
+                    <button @click="fetchBackups" class="w-9 h-9 shrink-0 rounded-lg bg-slate-100 text-slate-500 flex items-center justify-center hover:bg-slate-200 transition-colors border border-slate-200 shadow-sm" title="Refresh">
+                        <AppIcon name="arrow-path" class="w-4 h-4" />
                     </button>
                 </div>
             </div>
