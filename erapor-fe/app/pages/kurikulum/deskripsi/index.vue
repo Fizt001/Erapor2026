@@ -16,17 +16,17 @@
       <!-- Panel Dock Kiri -->
       <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', activeTabMobile === 'kurikulum' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[60px]' : '']">
         
-        <div class="p-6 shrink-0 z-10 relative">
-          <div class="bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl p-5 border border-amber-500 shadow-sm relative overflow-hidden flex items-center gap-4">
-            <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10"><AppIcon name="book-open" class="w-6 h-6" /></div>
+        <div class="p-4 pb-2 shrink-0 z-10 relative">
+          <div class="bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl p-4 border border-amber-500 shadow-sm relative overflow-hidden flex items-center gap-3">
+            <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="book-open" class="w-5 h-5" /></div>
             <div class="relative z-10">
-                <h3 class="text-sm font-black uppercase tracking-widest text-white">Kurikulum</h3>
-                <p class="text-[10px] text-amber-100 font-semibold uppercase mt-0.5">Pilih kurikulum</p>
+                <h3 class="text-xs font-black uppercase tracking-widest text-white">Kurikulum</h3>
+                <p class="text-[9px] text-amber-100 font-semibold uppercase mt-0.5">Pilih kurikulum</p>
             </div>
           </div>
         </div>
 
-        <div class="flex-1 overflow-y-auto px-6 pb-6 space-y-2 custom-scrollbar">
+        <div class="flex-1 overflow-y-auto px-4 pb-4 space-y-2 custom-scrollbar">
             <div v-if="isLoadingKurikulum" class="text-center p-8 opacity-50 flex flex-col items-center justify-center">
               <span class="animate-spin text-2xl inline-block mb-2 text-amber-500"><AppIcon name="arrow-path" class="w-6 h-6" /></span>
               <p class="text-[10px] font-bold uppercase tracking-widest text-amber-500">Memuat data...</p>

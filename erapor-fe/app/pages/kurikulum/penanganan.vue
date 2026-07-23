@@ -13,25 +13,24 @@
 
       <!-- Panel Dock Kiri -->
       <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full xl:z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] overflow-y-auto custom-scrollbar transition-all', activeTabMobile === 'info' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[60px]' : '']">
-        <div class="p-6 space-y-6">
-          <div class="p-6 shrink-0 z-10 relative -mx-6 -mt-6 mb-6">
-            <div class="bg-gradient-to-br from-rose-500 to-rose-700 rounded-2xl p-5 border border-rose-400 shadow-sm relative overflow-hidden flex flex-col gap-2">
+        <div class="p-4 space-y-4">
+          <div class="shrink-0 z-10 relative">
+            <div class="bg-gradient-to-r from-rose-500 to-rose-700 rounded-2xl p-4 border border-rose-400 shadow-sm relative overflow-hidden flex items-center gap-3">
+              <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="shield-check" class="w-5 h-5" /></div>
               <div class="relative z-10">
-                <h2 class="text-lg font-extrabold mb-1 text-white uppercase tracking-wider">Penanganan Kasus</h2>
-                <p class="text-rose-100 text-xs leading-relaxed">
-                  Evaluasi akhir tingkat Kurikulum
-                </p>
+                  <h3 class="text-xs font-black uppercase tracking-widest text-white">Penanganan Kasus</h3>
+                  <p class="text-[9px] text-rose-100 font-semibold uppercase mt-0.5">Evaluasi Akhir Tingkat Kurikulum</p>
               </div>
-              <div class="absolute right-0 bottom-0 opacity-20 text-white">
-                <svg class="w-24 h-24 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+              <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
+                <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
               </div>
             </div>
           </div>
-          <div class="bg-rose-50 p-5 rounded-2xl border border-rose-100">
-            <h3 class="text-[10px] font-black text-rose-800 uppercase tracking-widest mb-3 flex items-center gap-2">
-              <span><AppIcon name="pin" class="w-5 h-5 inline-block mr-1" /></span> Informasi Eskalasi
+          <div class="bg-rose-50 p-3 rounded-xl border border-rose-100">
+            <h3 class="text-[10px] font-black text-rose-800 uppercase tracking-widest mb-1.5 flex items-center gap-2">
+              <span><AppIcon name="pin" class="w-4 h-4" /></span> Informasi Eskalasi
             </h3>
-            <p class="text-xs text-rose-700 leading-relaxed font-medium">
+            <p class="text-[10px] text-rose-700 leading-relaxed font-medium">
               Halaman ini menampilkan eskalasi sistem untuk pelanggaran berat akademik (Alpa beruntun). 
               <br><br>
               <strong>SP2 (10x Alpa):</strong> Sekadar mengetahui (ditangani BK).<br>
