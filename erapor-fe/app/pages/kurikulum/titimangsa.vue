@@ -101,7 +101,7 @@
                 <div class="w-10 h-10 rounded-2xl bg-amber-50 shadow-sm border border-amber-100 flex items-center justify-center text-xl hidden sm:flex text-amber-500"><AppIcon name="calendar" class="w-6 h-6" /></div>
                 <div>
                     <h3 class="text-sm font-black uppercase tracking-widest text-amber-700">Database Titimangsa</h3>
-                    <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Tahun Ajaran: {{ tahunAktif ? `${tahunAktif.tahun} - ${tahunAktif.semester}` : 'Memuat...' }}</p>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Tahun Ajaran Aktif: {{ tahunAktif ? tahunAktif.tahun : 'Memuat...' }}</p>
                 </div>
             </div>
         </div>
