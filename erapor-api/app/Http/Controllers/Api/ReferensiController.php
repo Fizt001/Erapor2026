@@ -15,7 +15,21 @@ class ReferensiController extends Controller
         $query = \App\Models\Referensi::query();
         
         if ($request->has('jenis')) {
-            $query->where('jenis', strtoupper($request->jenis));
+            $jenisVal = $request->jenis;
+            $jenisWithSpace = str_replace('_', ' ', $jenisVal);
+            $jenisWithUnderscore = str_replace(' ', '_', $jenisVal);
+            
+            $query->where(function ($q) use ($jenisVal, $jenisWithSpace, $jenisWithUnderscore) {
+                $q->where('jenis', $jenisVal)
+                  ->orWhere('jenis', $jenisWithSpace)
+                  ->orWhere('jenis', $jenisWithUnderscore)
+                  ->orWhere('jenis', strtoupper($jenisVal))
+                  ->orWhere('jenis', strtoupper($jenisWithSpace))
+                  ->orWhere('jenis', strtoupper($jenisWithUnderscore))
+                  ->orWhere('jenis', strtolower($jenisVal))
+                  ->orWhere('jenis', strtolower($jenisWithSpace))
+                  ->orWhere('jenis', strtolower($jenisWithUnderscore));
+            });
         }
         
         return response()->json([
