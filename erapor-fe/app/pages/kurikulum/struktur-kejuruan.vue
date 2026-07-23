@@ -16,28 +16,28 @@
       <!-- Panel Dock Kiri (Form & Filter) -->
       <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', activeTabMobile === 'form' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[60px]' : '']">
         
-        <div class="p-6 shrink-0 z-10 relative">
-          <div class="bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl p-5 border border-amber-500 shadow-sm relative overflow-hidden flex flex-col gap-4">
-            <div class="flex items-center gap-4 relative z-10">
-                <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0"><AppIcon name="briefcase" class="w-6 h-6" /></div>
+        <div class="p-4 pb-2 shrink-0 z-10 relative">
+          <div class="bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl p-4 border border-amber-500 shadow-sm relative overflow-hidden flex flex-col gap-3">
+            <div class="flex items-center gap-3 relative z-10">
+                <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg"><AppIcon name="briefcase" class="w-5 h-5 text-white" /></div>
                 <div>
-                    <h3 class="text-sm font-black uppercase tracking-widest text-white">Struktur Kejuruan</h3>
-                    <p class="text-[10px] text-amber-200 font-semibold uppercase mt-0.5">Plotting Mapel Kejuruan</p>
+                    <h3 class="text-xs font-black uppercase tracking-widest text-white">Struktur Kejuruan</h3>
+                    <p class="text-[9px] text-amber-200/90 font-semibold uppercase mt-0.5">Plotting Mapel Kejuruan</p>
                 </div>
             </div>
             
-            <div class="absolute right-0 bottom-0 opacity-20 text-white pointer-events-none">
-              <svg class="w-24 h-24 transform translate-x-6 translate-y-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path></svg>
+            <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
+              <svg class="w-20 h-20 transform translate-x-6 translate-y-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path></svg>
             </div>
 
             <!-- Kurikulum & Tingkat Selector -->
-            <div class="space-y-2 relative z-10">
-                <select v-model="selectedKurikulumId" @change="fetchData" class="w-full px-3 py-2 rounded-xl bg-amber-900/40 border border-amber-500/50 text-sm font-bold text-white focus:ring-2 focus:ring-white/50 outline-none">
+            <div class="space-y-1.5 relative z-10">
+                <select v-model="selectedKurikulumId" @change="fetchData" class="w-full px-2.5 py-1.5 rounded-xl bg-amber-900/40 border border-amber-500/50 text-xs font-bold text-white focus:ring-2 focus:ring-white/50 outline-none">
                     <option value="" disabled>-- Pilih Kurikulum --</option>
                     <option v-for="kur in kurikulums" :key="kur.id" :value="kur.id" class="text-slate-800">{{ kur.nama_kurikulum }}</option>
                 </select>
                 <div class="grid gap-1" :style="`grid-template-columns: repeat(${refTingkatKelas.length || 3}, minmax(0, 1fr))`">
-                    <button v-for="tk in refTingkatKelas" :key="tk.kode" @click="tingkat = tk.kode" :class="tingkat === tk.kode ? 'bg-white text-amber-700 shadow-sm' : 'bg-amber-900/40 text-amber-200 hover:bg-amber-900/60'" class="py-1.5 rounded-lg font-black text-[10px] uppercase tracking-widest transition-all">{{ tk.nama }}</button>
+                    <button v-for="tk in refTingkatKelas" :key="tk.kode" @click="tingkat = tk.kode" :class="tingkat === tk.kode ? 'bg-white text-amber-700 shadow-sm' : 'bg-amber-900/40 text-amber-200 hover:bg-amber-900/60'" class="py-1 rounded-lg font-black text-[9px] uppercase tracking-widest transition-all">{{ tk.nama }}</button>
                 </div>
             </div>
           </div>
