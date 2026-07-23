@@ -153,22 +153,25 @@
                                 </tr>
                                 <tr v-for="(struk, index) in unit.struktur_kejuruans" :key="struk.id" class="hover:bg-slate-50/50 transition-colors bg-white group flex flex-col md:table-row border-b md:border-b-0 border-slate-100 p-4 md:p-0">
                                     <td class="p-0 md:p-4 md:pl-6 text-left md:text-center text-[11px] font-bold text-slate-400 flex items-center justify-between md:table-cell mb-2 md:mb-0">
-                                        <span class="md:hidden font-black uppercase tracking-widest">No</span>
+                                        <span class="md:hidden font-black uppercase tracking-widest text-[9px]">No</span>
                                         <span>{{ index + 1 }}</span>
                                     </td>
-                                    <td class="p-0 md:p-4 flex flex-col md:table-cell mb-2 md:mb-0">
-                                        <span class="md:hidden text-[9px] font-black uppercase text-slate-400 tracking-widest mb-1">Mata Pelajaran Produktif</span>
-                                        <div class="font-black text-slate-800">{{ struk.mapel?.nama_mapel }}</div>
-                                        <div class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">{{ struk.mapel?.kode_mapel }}</div>
-                                    </td>
-                                    <td class="p-0 md:p-4 text-left md:text-center flex items-center justify-between md:table-cell mb-3 md:mb-0">
-                                        <span class="md:hidden text-[9px] font-black uppercase text-slate-400 tracking-widest">JP</span>
-                                        <span class="inline-flex items-center px-2 py-1 rounded-md text-[11px] font-black tracking-widest bg-amber-50 text-amber-600 border border-amber-200">
+                                    <td class="p-0 md:p-4 flex flex-row md:table-cell items-center justify-between mb-2 md:mb-0 w-full">
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{{ struk.mapel?.kode_mapel }}</span>
+                                            <span class="font-black text-slate-800 text-xs">{{ struk.mapel?.nama_mapel }}</span>
+                                        </div>
+                                        <span class="md:hidden inline-flex items-center px-2.5 py-1 rounded-md text-[10px] font-black tracking-widest bg-amber-50 text-amber-600 border border-amber-200 shadow-sm leading-none">
                                             {{ struk.jp }} JP
                                         </span>
                                     </td>
-                                    <td class="p-0 md:p-4 text-center border-t border-slate-50 pt-3 md:border-t-0 md:pt-0 flex items-center justify-end md:table-cell">
-                                        <div class="flex items-center justify-center opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
+                                    <td class="hidden md:table-cell p-0 md:p-4 text-left md:text-center flex items-center justify-between md:table-cell mb-3 md:mb-0">
+                                        <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-black tracking-widest bg-amber-50 text-amber-600 border border-amber-200 shadow-sm leading-none">
+                                            {{ struk.jp }} JP
+                                        </span>
+                                    </td>
+                                    <td class="p-0 md:p-4 text-center border-t border-slate-50 pt-2 md:border-t-0 md:pt-0 flex items-center justify-end md:table-cell">
+                                        <div class="flex items-center justify-end opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity w-full">
                                             <button @click="confirmDeleteStruktur(struk)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-center transition-all shadow-sm" title="Hapus"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg></button>
                                         </div>
                                     </td>
