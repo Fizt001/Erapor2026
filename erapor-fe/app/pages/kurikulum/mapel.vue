@@ -108,7 +108,7 @@
             <div class="bg-white px-4 pt-2 border-b border-slate-200 shrink-0 shadow-sm overflow-x-auto flex gap-2">
                 <button v-for="kat in refKategoriMapel" :key="kat.kode"
                     @click="kategoriTab = kat.kode; fetchData()" 
-                    class="px-6 py-2 rounded-t-xl text-xs font-black uppercase tracking-widest transition-all whitespace-nowrap"
+                    class="flex-1 sm:flex-none text-center px-6 py-2 rounded-t-xl text-xs font-black uppercase tracking-widest transition-all whitespace-nowrap"
                     :class="kategoriTab === kat.kode ? 'bg-amber-50 text-amber-600 border-b-2 border-amber-600 shadow-sm' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-50'">
                     {{ kat.nama }}
                 </button>
