@@ -19,14 +19,6 @@
         </div>
 
         <div class="px-4 pb-4 bg-white shrink-0 space-y-4">
-            <!-- Tahun Ajaran -->
-            <div>
-              <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Tahun Ajaran</label>
-              <div v-if="references.tahunAjarans.length" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 font-bold text-xs text-slate-700 flex items-center justify-between">
-                  <span>{{ references.tahunAjarans.find(t => t.is_aktif)?.tahun || '-' }}</span>
-                  <span class="px-2 py-1 bg-sky-100 text-sky-700 rounded text-[9px] font-black uppercase tracking-widest">Aktif</span>
-              </div>
-            </div>
             
             <!-- Kurikulum -->
             <div>
