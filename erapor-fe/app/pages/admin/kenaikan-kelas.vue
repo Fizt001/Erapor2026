@@ -16,16 +16,16 @@
 
       <!-- ============ PANEL DOCK KIRI (Filter) ============ -->
       <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full xl:z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', activeTab === 'filter' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[60px]' : '']">
-        <div class="p-6 space-y-5 overflow-y-auto custom-scrollbar flex-1">
+        <div class="p-4 pb-2 space-y-4 overflow-y-auto custom-scrollbar flex-1">
 
           <!-- Header Dock -->
-          <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-5 border border-emerald-500 shadow-sm relative overflow-hidden">
+          <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-4 border border-emerald-500 shadow-sm relative overflow-hidden">
             <div class="relative z-10">
-              <h3 class="text-sm font-black uppercase tracking-widest text-white">Kenaikan Kelas</h3>
-              <p class="text-[10px] text-emerald-200 font-semibold mt-0.5">Mutasi & Promosi Siswa Antar Tahun Ajaran</p>
+              <h3 class="text-xs font-black uppercase tracking-widest text-white">Kenaikan Kelas</h3>
+              <p class="text-[9px] text-emerald-200 font-semibold mt-0.5">Mutasi & Promosi Siswa Antar Tahun Ajaran</p>
             </div>
-            <div class="absolute right-0 bottom-0 opacity-10">
-              <svg class="w-24 h-24 transform translate-x-6 translate-y-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <div class="absolute right-0 bottom-0 opacity-10 pointer-events-none">
+              <svg class="w-16 h-16 transform translate-x-6 translate-y-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
             </div>
           </div>
 

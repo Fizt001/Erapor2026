@@ -19,14 +19,14 @@
       <!-- Panel Dock Kiri -->
       <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all overflow-y-auto custom-scrollbar', activeTab === 'form' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[60px]' : '']">
         
-        <div class="p-6 space-y-6 animate-fadeIn">
-          <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-5 border border-emerald-500 shadow-sm relative overflow-hidden shrink-0">
+        <div class="p-4 pb-2 space-y-4 animate-fadeIn">
+          <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-4 border border-emerald-500 shadow-sm relative overflow-hidden shrink-0">
             <div class="relative z-10">
-                <h3 class="text-sm font-black uppercase tracking-widest text-white">Data Referensi</h3>
-                <p class="text-[10px] text-emerald-100 font-semibold uppercase mt-0.5">{{ isEditing ? 'Mode Update' : 'Mode Tambah Baru' }}</p>
+                <h3 class="text-xs font-black uppercase tracking-widest text-white">Data Referensi</h3>
+                <p class="text-[9px] text-emerald-100 font-semibold uppercase mt-0.5">{{ isEditing ? 'Mode Update' : 'Mode Tambah Baru' }}</p>
             </div>
-            <div class="absolute right-0 bottom-0 opacity-20 text-white">
-              <svg class="w-20 h-20 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M4 5a2 2 0 012-2h12a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm2 0v14h12V5H6zm2 3a1 1 0 011-1h6a1 1 0 110 2H9a1 1 0 01-1-1zm0 4a1 1 0 011-1h6a1 1 0 110 2H9a1 1 0 01-1-1zm0 4a1 1 0 011-1h6a1 1 0 110 2H9a1 1 0 01-1-1z"></path></svg>
+            <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
+              <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M4 5a2 2 0 012-2h12a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm2 0v14h12V5H6zm2 3a1 1 0 011-1h6a1 1 0 110 2H9a1 1 0 01-1-1zm0 4a1 1 0 011-1h6a1 1 0 110 2H9a1 1 0 01-1-1zm0 4a1 1 0 011-1h6a1 1 0 110 2H9a1 1 0 01-1-1z"></path></svg>
             </div>
           </div>
 

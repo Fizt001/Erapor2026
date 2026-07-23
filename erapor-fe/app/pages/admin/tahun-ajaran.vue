@@ -21,15 +21,15 @@
         
         <div class="flex-1 overflow-y-auto custom-scrollbar">
             <div class="animate-fadeIn">
-                <div class="p-6 shrink-0">
-                  <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-5 border border-emerald-500 shadow-sm relative overflow-hidden flex items-center gap-4">
-                    <div class="w-12 h-12 flex items-center justify-center text-3xl shrink-0 relative z-10"><AppIcon name="calendar" />️</div>
+                <div class="p-4 pb-2 shrink-0">
+                  <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-4 border border-emerald-500 shadow-sm relative overflow-hidden flex items-center gap-3">
+                    <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="calendar" class="w-5 h-5" />️</div>
                     <div class="relative z-10">
-                        <h3 class="text-sm font-black uppercase tracking-widest text-white">Data Tahun</h3>
-                        <p class="text-[10px] text-emerald-100 font-semibold uppercase mt-0.5">{{ isEditing ? 'Mode Update' : 'Mode Tambah Baru' }}</p>
+                        <h3 class="text-xs font-black uppercase tracking-widest text-white">Data Tahun</h3>
+                        <p class="text-[9px] text-emerald-100 font-semibold uppercase mt-0.5">{{ isEditing ? 'Mode Update' : 'Mode Tambah Baru' }}</p>
                     </div>
-                    <div class="absolute right-0 bottom-0 opacity-20 text-white">
-                      <svg class="w-20 h-20 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"></path></svg>
+                    <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
+                      <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"></path></svg>
                     </div>
                   </div>
                 </div>

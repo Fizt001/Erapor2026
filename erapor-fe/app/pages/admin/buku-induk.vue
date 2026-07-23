@@ -18,15 +18,15 @@
 
         <!-- Panel Dock Kiri -->
         <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', activeTab === 'filter' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[60px]' : '']">
-        <div class="p-6 shrink-0">
-            <div class="bg-gradient-to-r from-teal-600 to-emerald-700 rounded-2xl p-5 border border-teal-500 shadow-sm relative overflow-hidden flex items-center gap-4">
-                <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10"><AppIcon name="magnifying-glass" /></div>
+        <div class="p-4 pb-2 shrink-0">
+            <div class="bg-gradient-to-r from-teal-600 to-emerald-700 rounded-2xl p-4 border border-teal-500 shadow-sm relative overflow-hidden flex items-center gap-3">
+                <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="magnifying-glass" class="w-5 h-5" /></div>
                 <div class="relative z-10">
-                    <h3 class="text-sm font-black uppercase tracking-widest text-white">Filter Data</h3>
-                    <p class="text-[10px] text-teal-100 font-semibold uppercase mt-0.5">Pilih Tahun & Kurikulum</p>
+                    <h3 class="text-xs font-black uppercase tracking-widest text-white">Filter Data</h3>
+                    <p class="text-[9px] text-teal-100 font-semibold uppercase mt-0.5">Pilih Tahun & Kurikulum</p>
                 </div>
-                <div class="absolute right-0 bottom-0 opacity-20 text-white">
-                  <svg class="w-20 h-20 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
+                <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
+                  <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
                 </div>
             </div>
         </div>

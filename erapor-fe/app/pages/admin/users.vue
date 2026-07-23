@@ -30,15 +30,15 @@
         <div class="flex-1 overflow-y-auto custom-scrollbar">
             <!-- Panel Form Tambah -->
             <div v-show="activeTab === 'form'" class="animate-fadeIn">
-                <div class="p-6 shrink-0">
-                  <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-5 border border-emerald-500 shadow-sm relative overflow-hidden flex items-center gap-4">
-                    <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10"><AppIcon name="user" /></div>
+                <div class="p-4 pb-2 shrink-0">
+                  <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-4 border border-emerald-500 shadow-sm relative overflow-hidden flex items-center gap-3">
+                    <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="user" class="w-5 h-5" /></div>
                     <div class="relative z-10">
-                        <h3 class="text-sm font-black uppercase tracking-widest text-white">Akun Baru</h3>
-                        <p class="text-[10px] text-emerald-100 font-semibold uppercase mt-0.5">Tambah Pengguna Manual</p>
+                        <h3 class="text-xs font-black uppercase tracking-widest text-white">Akun Baru</h3>
+                        <p class="text-[9px] text-emerald-100 font-semibold uppercase mt-0.5">Tambah Pengguna Manual</p>
                     </div>
-                    <div class="absolute right-0 bottom-0 opacity-20 text-white">
-                      <svg class="w-20 h-20 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>
+                    <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
+                      <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>
                     </div>
                   </div>
                 </div>
@@ -95,15 +95,15 @@
 
             <!-- Panel Import -->
             <div v-show="activeTab === 'import'" class="animate-fadeIn">
-                <div class="p-6 shrink-0">
-                  <div class="bg-gradient-to-r from-indigo-600 to-blue-700 rounded-2xl p-5 border border-indigo-500 shadow-sm relative overflow-hidden flex items-center gap-4">
-                    <span class="text-2xl w-10 h-10 flex items-center justify-center relative z-10"><AppIcon name="rocket-launch" /></span>
+                <div class="p-4 pb-2 shrink-0">
+                  <div class="bg-gradient-to-r from-indigo-600 to-blue-700 rounded-2xl p-4 border border-indigo-500 shadow-sm relative overflow-hidden flex items-center gap-3">
+                    <span class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="rocket-launch" class="w-5 h-5" /></span>
                     <div class="relative z-10">
-                        <h3 class="text-sm font-black uppercase tracking-widest text-white">Import Massal</h3>
-                        <p class="text-[10px] text-indigo-100 font-semibold uppercase mt-0.5">Via File CSV</p>
+                        <h3 class="text-xs font-black uppercase tracking-widest text-white">Import Massal</h3>
+                        <p class="text-[9px] text-indigo-100 font-semibold uppercase mt-0.5">Via File CSV</p>
                     </div>
-                    <div class="absolute right-0 bottom-0 opacity-20 text-white">
-                      <svg class="w-20 h-20 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"></path></svg>
+                    <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
+                      <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"></path></svg>
                     </div>
                   </div>
                 </div>

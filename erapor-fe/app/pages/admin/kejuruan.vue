@@ -33,15 +33,15 @@
         <div class="flex-1 overflow-y-auto custom-scrollbar">
             <!-- Panel Form Bidang -->
             <div v-show="activeTab === 'bidang'" class="animate-fadeIn">
-                <div class="p-6 shrink-0">
-                  <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-5 border border-emerald-500 shadow-sm relative overflow-hidden flex items-center gap-4">
-                    <div class="w-10 h-10 flex items-center justify-center text-xl shrink-0 bg-white/20 rounded-xl backdrop-blur-sm border border-white/20 relative z-10"><AppIcon name="cog" />️</div>
+                <div class="p-4 pb-2 shrink-0">
+                  <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-4 border border-emerald-500 shadow-sm relative overflow-hidden flex items-center gap-3">
+                    <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="cog" class="w-5 h-5" />️</div>
                     <div class="relative z-10">
-                        <h3 class="text-sm font-black uppercase tracking-widest text-white">Bidang Keahlian</h3>
-                        <p class="text-[10px] text-emerald-100 font-semibold uppercase mt-0.5">Tingkatan 1 (Tertinggi)</p>
+                        <h3 class="text-xs font-black uppercase tracking-widest text-white">Bidang Keahlian</h3>
+                        <p class="text-[9px] text-emerald-100 font-semibold uppercase mt-0.5">Tingkatan 1 (Tertinggi)</p>
                     </div>
-                    <div class="absolute right-0 bottom-0 opacity-20 text-white">
-                      <svg class="w-20 h-20 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.5 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"></path></svg>
+                    <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
+                      <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.5 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"></path></svg>
                     </div>
                   </div>
                 </div>
@@ -63,15 +63,15 @@
 
             <!-- Panel Form Program -->
             <div v-show="activeTab === 'program'" class="animate-fadeIn">
-                <div class="p-6 shrink-0">
-                  <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-5 border border-blue-500 shadow-sm relative overflow-hidden flex items-center gap-4">
-                    <div class="w-10 h-10 flex items-center justify-center text-xl shrink-0 bg-white/20 rounded-xl backdrop-blur-sm border border-white/20 relative z-10"><AppIcon name="academic-cap" /></div>
+                <div class="p-4 pb-2 shrink-0">
+                  <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-4 border border-blue-500 shadow-sm relative overflow-hidden flex items-center gap-3">
+                    <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="academic-cap" class="w-5 h-5" /></div>
                     <div class="relative z-10">
-                        <h3 class="text-sm font-black uppercase tracking-widest text-white">Program Keahlian</h3>
-                        <p class="text-[10px] text-blue-100 font-semibold uppercase mt-0.5">Tingkatan 2 (Menengah)</p>
+                        <h3 class="text-xs font-black uppercase tracking-widest text-white">Program Keahlian</h3>
+                        <p class="text-[9px] text-blue-100 font-semibold uppercase mt-0.5">Tingkatan 2 (Menengah)</p>
                     </div>
-                    <div class="absolute right-0 bottom-0 opacity-20 text-white">
-                      <svg class="w-20 h-20 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"></path></svg>
+                    <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
+                      <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"></path></svg>
                     </div>
                   </div>
                 </div>
@@ -100,15 +100,15 @@
 
             <!-- Panel Form Konsentrasi -->
             <div v-show="activeTab === 'konsentrasi'" class="animate-fadeIn">
-                <div class="p-6 shrink-0">
-                  <div class="bg-gradient-to-r from-purple-600 to-fuchsia-700 rounded-2xl p-5 border border-purple-500 shadow-sm relative overflow-hidden flex items-center gap-4">
-                    <div class="w-10 h-10 flex items-center justify-center text-xl shrink-0 bg-white/20 rounded-xl backdrop-blur-sm border border-white/20 relative z-10"><AppIcon name="shield" /></div>
+                <div class="p-4 pb-2 shrink-0">
+                  <div class="bg-gradient-to-r from-purple-600 to-fuchsia-700 rounded-2xl p-4 border border-purple-500 shadow-sm relative overflow-hidden flex items-center gap-3">
+                    <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="shield" class="w-5 h-5" /></div>
                     <div class="relative z-10">
-                        <h3 class="text-sm font-black uppercase tracking-widest text-white">Konsentrasi Keahlian</h3>
-                        <p class="text-[10px] text-purple-100 font-semibold uppercase mt-0.5">Tingkatan 3 (Kejuruan/Jurusan)</p>
+                        <h3 class="text-xs font-black uppercase tracking-widest text-white">Konsentrasi Keahlian</h3>
+                        <p class="text-[9px] text-purple-100 font-semibold uppercase mt-0.5">Tingkatan 3 (Kejuruan/Jurusan)</p>
                     </div>
-                    <div class="absolute right-0 bottom-0 opacity-20 text-white">
-                      <svg class="w-20 h-20 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"></path></svg>
+                    <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
+                      <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"></path></svg>
                     </div>
                   </div>
                 </div>

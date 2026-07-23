@@ -15,10 +15,10 @@
 
       <div class="md:flex-1 md:overflow-y-auto custom-scrollbar p-6 space-y-6">
         <div class="space-y-4">
-          <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-5 border border-emerald-500 shadow-sm relative overflow-hidden">
+          <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-4 border border-emerald-500 shadow-sm relative overflow-hidden">
             <div class="relative z-10">
-              <h3 class="text-sm font-black uppercase tracking-widest text-white">Filter Riwayat</h3>
-              <p class="text-[10px] text-emerald-200 font-semibold mt-0.5">Filter berdasarkan jenis mutasi</p>
+              <h3 class="text-xs font-black uppercase tracking-widest text-white">Filter Riwayat</h3>
+              <p class="text-[9px] text-emerald-200 font-semibold mt-0.5">Filter berdasarkan jenis mutasi</p>
             </div>
           </div>
 
