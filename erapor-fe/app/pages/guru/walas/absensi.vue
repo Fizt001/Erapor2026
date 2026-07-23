@@ -5,17 +5,20 @@
       
       <!-- Panel Dock Kiri -->
       <div class="w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all">
-        <div class="p-6 shrink-0">
-          <div class="bg-gradient-to-r from-amber-600 to-amber-700 rounded-2xl p-5 border border-amber-500 shadow-sm relative overflow-hidden flex items-center gap-4">
-            <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10">📅</div>
+        <div class="p-4 pb-2 space-y-4 shrink-0">
+          <div class="bg-gradient-to-r from-amber-600 to-amber-700 rounded-2xl p-4 border border-amber-500 shadow-sm relative overflow-hidden flex items-center gap-3">
+            <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="calendar" class="w-5 h-5" /></div>
             <div class="relative z-10">
-                <h3 class="text-sm font-black uppercase tracking-widest text-white">Kalender Absensi</h3>
-                <p class="text-[10px] text-amber-100 font-semibold uppercase mt-0.5">Rekap Bulanan Wali Kelas</p>
+                <h3 class="text-xs font-black uppercase tracking-widest text-white">Kalender Absensi</h3>
+                <p class="text-[9px] text-amber-100 font-semibold uppercase mt-0.5">Rekap Bulanan Walas</p>
+            </div>
+            <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
+              <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/></svg>
             </div>
           </div>
         </div>
 
-        <div class="px-6 pb-6 bg-white shrink-0 space-y-4">
+        <div class="px-4 pb-4 bg-white shrink-0 space-y-4">
             <!-- Tahun Ajaran -->
             <div>
               <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Tahun Ajaran</label>

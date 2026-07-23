@@ -5,14 +5,15 @@
       
       <!-- Panel Dock Kiri -->
       <div class="xl:w-[360px] w-full bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full xl:z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] overflow-y-auto custom-scrollbar">
-        <div class="p-6 space-y-6">
-          <div class="bg-gradient-to-r from-sky-600 to-blue-700 rounded-2xl p-5 border border-sky-500 shadow-sm relative overflow-hidden">
+        <div class="p-4 pb-2 space-y-4">
+          <div class="bg-gradient-to-r from-amber-600 to-amber-700 rounded-2xl p-4 border border-amber-500 shadow-sm relative overflow-hidden flex items-center gap-3">
+            <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="academic-cap" class="w-5 h-5" /></div>
             <div class="relative z-10">
-              <h3 class="text-sm font-black uppercase tracking-widest text-white">Kenaikan Kelas</h3>
-              <p class="text-[10px] text-slate-400 font-semibold mt-0.5">Kelola status kenaikan/kelulusan siswa</p>
+              <h3 class="text-xs font-black uppercase tracking-widest text-white">Kenaikan Kelas</h3>
+              <p class="text-[9px] text-amber-100 font-semibold uppercase mt-0.5">Kelola Status Naik/Lulus</p>
             </div>
-            <div class="absolute right-0 bottom-0 opacity-10">
-              <svg class="w-24 h-24 transform translate-x-6 translate-y-6" fill="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
+              <svg class="w-16 h-16 transform translate-x-6 translate-y-6" fill="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
             </div>
           </div>
           
@@ -27,9 +28,9 @@
             <div>
               <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Pencarian Siswa</label>
               <div class="relative">
-                  <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 pointer-events-none">🔍</span>
+                  <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400 pointer-events-none"><AppIcon name="search" class="w-4 h-4" /></span>
                   <input type="text" v-model="searchQuery" placeholder="Cari nama siswa..." 
-                    class="w-full pl-10 pr-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all font-semibold text-xs text-slate-700 outline-none">
+                    class="w-full pl-10 pr-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all font-semibold text-xs text-slate-700 outline-none">
               </div>
             </div>
 

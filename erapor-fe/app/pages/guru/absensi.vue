@@ -13,15 +13,15 @@
           </div>
         </div>
 
-        <div class="p-6 space-y-6" :class="{'hidden xl:block': activeMobileTab !== 'filter'}">
-          <div class="bg-gradient-to-r from-sky-500 to-sky-600 rounded-2xl p-5 border border-sky-400 shadow-sm relative overflow-hidden flex items-center gap-4">
-            <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10">📝</div>
+        <div class="p-4 pb-2 space-y-4" :class="{'hidden xl:block': activeMobileTab !== 'filter'}">
+          <div class="bg-gradient-to-r from-sky-600 to-blue-700 rounded-2xl p-4 border border-sky-500 shadow-sm relative overflow-hidden flex items-center gap-3">
+            <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="document-text" class="w-5 h-5" /></div>
             <div class="relative z-10">
-                <h3 class="text-sm font-black uppercase tracking-widest text-white">Absensi Kelas</h3>
-                <p class="text-[10px] text-sky-100 font-semibold uppercase mt-0.5">Input Kehadiran Per Mapel</p>
+                <h3 class="text-xs font-black uppercase tracking-widest text-white">Absensi Kelas</h3>
+                <p class="text-[9px] text-sky-100 font-semibold uppercase mt-0.5">Input Kehadiran Per Mapel</p>
             </div>
-            <div class="absolute right-0 bottom-0 opacity-20 text-white">
-              <svg class="w-24 h-24 transform translate-x-6 translate-y-6" fill="currentColor" viewBox="0 0 24 24"><path d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
+            <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
+              <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
             </div>
           </div>
           
@@ -77,13 +77,13 @@
             </div>
             
             <!-- Tombol Tambah Pertemuan -->
-            <button v-if="isFilterComplete" @click="openAddModal" class="w-full py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-black uppercase tracking-widest transition-all">
+            <button v-if="isFilterComplete" @click="openAddModal" class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-black uppercase tracking-widest transition-all">
                 + Tambah Pertemuan
             </button>
           </div>
         </div>
 
-        <div class="flex-1 p-6 bg-slate-50 border-t border-slate-200" :class="{'hidden xl:block': activeMobileTab !== 'pertemuan'}">
+        <div class="flex-1 p-4 bg-slate-50 border-t border-slate-200" :class="{'hidden xl:block': activeMobileTab !== 'pertemuan'}">
              <div v-if="isFilterComplete" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3">Daftar Pertemuan</div>
              <div v-if="isLoadingPertemuan" class="text-xs text-slate-400 text-center">Memuat pertemuan...</div>
              <div v-else-if="pertemuans.length === 0 && isFilterComplete" class="text-xs text-slate-400 text-center p-4 bg-white rounded-xl border border-slate-200 border-dashed">Belum ada pertemuan.</div>
@@ -93,9 +93,9 @@
                         <div class="text-xs font-black text-slate-700">Prt. {{ pertemuans.length - index }}</div>
                         <div class="text-[10px] text-slate-500 font-bold mt-0.5">{{ formatDate(pert.tanggal) }} (Jam {{ pert.jam_mulai }}-{{ pert.jam_selesai }})</div>
                     </div>
-                    <div class="flex items-center gap-1">
-                        <button @click="editPertemuan(pert)" class="text-sky-500 hover:text-sky-600 p-1 bg-sky-50 rounded-lg">✏️</button>
-                        <button @click="deletePertemuan(pert.id)" class="text-rose-500 hover:text-rose-600 p-1 bg-rose-50 rounded-lg">🗑️</button>
+                    <div class="flex items-center gap-1.5">
+                        <button @click="editPertemuan(pert)" class="w-7 h-7 flex items-center justify-center text-sky-500 hover:text-sky-600 bg-sky-50 hover:bg-sky-100 rounded-lg transition-colors"><AppIcon name="pencil" class="w-3.5 h-3.5" /></button>
+                        <button @click="deletePertemuan(pert.id)" class="w-7 h-7 flex items-center justify-center text-rose-500 hover:text-rose-600 bg-rose-50 hover:bg-rose-100 rounded-lg transition-colors"><AppIcon name="trash" class="w-3.5 h-3.5" /></button>
                     </div>
                 </div>
              </div>

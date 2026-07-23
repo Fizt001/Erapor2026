@@ -5,14 +5,15 @@
       
       <!-- Panel Dock Kiri -->
       <div class="xl:w-[360px] w-full bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full xl:z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] overflow-y-auto custom-scrollbar">
-        <div class="p-6 space-y-6">
-          <div class="bg-gradient-to-r from-sky-600 to-blue-700 rounded-2xl p-5 border border-sky-500 shadow-sm relative overflow-hidden">
+        <div class="p-4 pb-2 space-y-4">
+          <div class="bg-gradient-to-r from-amber-600 to-amber-700 rounded-2xl p-4 border border-amber-500 shadow-sm relative overflow-hidden flex items-center gap-3">
+            <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="users" class="w-5 h-5" /></div>
             <div class="relative z-10">
-              <h3 class="text-sm font-black uppercase tracking-widest text-white">Ekstrakurikuler</h3>
-              <p class="text-[10px] text-slate-400 font-semibold mt-0.5">Input nilai kegiatan ekstrakurikuler</p>
+              <h3 class="text-xs font-black uppercase tracking-widest text-white">Ekstrakurikuler</h3>
+              <p class="text-[9px] text-amber-100 font-semibold uppercase mt-0.5">Input Nilai Ekskul Siswa</p>
             </div>
-            <div class="absolute right-0 bottom-0 opacity-10">
-              <svg class="w-24 h-24 transform translate-x-6 translate-y-6" fill="currentColor" viewBox="0 0 24 24"><path d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
+              <svg class="w-16 h-16 transform translate-x-6 translate-y-6" fill="currentColor" viewBox="0 0 24 24"><path d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             </div>
           </div>
           

@@ -5,28 +5,29 @@
       
       <!-- Panel Dock Kiri -->
       <div class="xl:w-[360px] w-full bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full xl:z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] overflow-y-auto custom-scrollbar">
-        <div class="p-6 space-y-6">
-          <div class="bg-gradient-to-r from-sky-600 to-blue-700 rounded-2xl p-5 border border-sky-500 shadow-sm relative overflow-hidden">
+        <div class="p-4 pb-2 space-y-4">
+          <div class="bg-gradient-to-r from-amber-600 to-amber-700 rounded-2xl p-4 border border-amber-500 shadow-sm relative overflow-hidden flex items-center gap-3">
+            <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="star" class="w-5 h-5" /></div>
             <div class="relative z-10">
-              <h3 class="text-sm font-black uppercase tracking-widest text-white">Prestasi Siswa</h3>
-              <p class="text-[10px] text-slate-400 font-semibold mt-0.5">Input data kejuaraan siswa kelas Anda</p>
+              <h3 class="text-xs font-black uppercase tracking-widest text-white">Prestasi Siswa</h3>
+              <p class="text-[9px] text-amber-100 font-semibold uppercase mt-0.5">Input Kejuaraan Siswa Rombel</p>
             </div>
-            <div class="absolute right-0 bottom-0 opacity-10">
-              <svg class="w-24 h-24 transform translate-x-6 translate-y-6" fill="currentColor" viewBox="0 0 24 24"><path d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+            <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
+              <svg class="w-16 h-16 transform translate-x-6 translate-y-6" fill="currentColor" viewBox="0 0 24 24"><path d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
             </div>
           </div>
           
           <div class="space-y-4">
             <!-- Aksi Tambah -->
-            <button @click="openModal()" class="w-full px-5 py-3.5 bg-sky-600 hover:bg-sky-700 text-white text-[11px] font-black uppercase tracking-widest rounded-2xl shadow-sm transition-all active:scale-95 flex items-center justify-center gap-2">
-              <span class="text-lg leading-none">+</span> Tambah Prestasi
+            <button @click="openModal()" class="w-full px-5 py-2.5 bg-amber-600 hover:bg-amber-700 text-white text-[11px] font-black uppercase tracking-widest rounded-xl shadow-sm transition-all active:scale-95 flex items-center justify-center gap-2">
+              + Tambah Prestasi
             </button>
 
             <!-- Search / Filter -->
             <div>
               <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Pencarian Prestasi</label>
               <div class="relative">
-                  <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 pointer-events-none">🔍</span>
+                  <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400 pointer-events-none"><AppIcon name="search" class="w-4 h-4" /></span>
                   <input type="text" v-model="searchQuery" placeholder="Cari nama siswa atau prestasi..." 
                     class="w-full pl-10 pr-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-sky-500/10 focus:border-sky-500 transition-all font-semibold text-xs text-slate-700 outline-none">
               </div>
@@ -111,13 +112,13 @@
                       <div class="text-[11px] font-bold text-slate-600">{{ item.tahun }}</div>
                       <div class="text-[9px] font-bold text-slate-400 uppercase mt-0.5">{{ item.titimangsa ? (item.titimangsa.nama_periode_panjang || item.titimangsa.nama_periode) : '-' }}</div>
                     </td>
-                    <td class="py-3 px-4 text-center bg-slate-50/30">
-                      <div class="flex items-center justify-center gap-2">
-                        <button @click="openModal(item)" class="w-8 h-8 rounded-lg bg-white border border-sky-200 text-sky-600 hover:bg-sky-50 flex items-center justify-center transition-colors shadow-sm" title="Edit">
-                          ✏️
+                    <td class="py-3 px-4 text-center bg-slate-50/30 w-24">
+                      <div class="flex items-center justify-center gap-1.5">
+                        <button @click="openModal(item)" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-amber-500 hover:border-amber-200 hover:bg-amber-50 flex items-center justify-center transition-colors shadow-sm" title="Edit">
+                          <AppIcon name="pencil" class="w-4 h-4" />
                         </button>
-                        <button @click="confirmDelete(item)" class="w-8 h-8 rounded-lg bg-white border border-rose-200 text-rose-500 hover:bg-rose-50 flex items-center justify-center transition-colors shadow-sm" title="Hapus">
-                          🗑️
+                        <button @click="confirmDelete(item)" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-rose-500 hover:border-rose-200 hover:bg-rose-50 flex items-center justify-center transition-colors shadow-sm" title="Hapus">
+                          <AppIcon name="trash" class="w-4 h-4" />
                         </button>
                       </div>
                     </td>
