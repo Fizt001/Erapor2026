@@ -90,17 +90,16 @@
       <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative', activeTabMobile === 'table' || isDesktop ? 'flex' : 'hidden', !isDesktop ? 'pt-[60px]' : '']">
         <div class="p-2 sm:pt-3 sm:pb-6 sm:px-6 lg:pt-3 lg:pb-8 lg:px-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
           <div class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
-        <!-- Header Flow -->
-        <div class="px-6 py-5 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0 z-10 bg-white">
+        <div class="px-6 py-5 border-b border-slate-100 flex flex-row justify-between items-center gap-2 shrink-0 z-10 bg-white">
             <div class="flex items-center gap-4">
                 <div class="w-10 h-10 rounded-2xl bg-amber-50 shadow-sm border border-amber-100 flex items-center justify-center text-xl hidden sm:flex text-amber-500"><AppIcon name="book-open" class="w-6 h-6" /></div>
                 <div>
-                    <h3 class="text-sm font-black uppercase tracking-widest text-amber-700">Database Struktur Umum</h3>
-                    <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Daftar mapel umum Kelas {{ tingkat }}</p>
+                    <h3 class="text-[11px] sm:text-sm font-black uppercase tracking-widest text-amber-700">Database Struktur Umum</h3>
+                    <p class="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase mt-0.5">Daftar mapel umum Kelas {{ tingkat }}</p>
                 </div>
             </div>
-            <button @click="fetchData" class="w-10 h-10 rounded-xl bg-slate-100 text-slate-500 flex items-center justify-center hover:bg-slate-200 hover:text-slate-700 font-bold transition-colors" title="Refresh">
-                <AppIcon name="arrow-path" class="w-5 h-5 inline-block mr-1" />
+            <button @click="fetchData" class="w-10 h-10 rounded-xl bg-slate-100 text-slate-500 flex items-center justify-center hover:bg-slate-200 hover:text-slate-700 font-bold transition-colors shrink-0" title="Refresh">
+                <AppIcon name="arrow-path" class="w-5 h-5" />
             </button>
         </div>
 
