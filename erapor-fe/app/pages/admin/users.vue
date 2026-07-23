@@ -191,7 +191,7 @@
                         <th class="py-3 px-4 w-12 text-center">No</th>
                         <th class="py-3 px-4">Pengguna</th>
                         <th class="py-3 px-4 w-32">Hak Akses</th>
-                        <th class="py-3 px-4 w-24 text-center">Aksi</th>
+                        <th class="py-3 px-4 w-32 text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="text-xs font-medium text-slate-700 divide-y divide-slate-100 flex flex-col sm:table-row-group">
@@ -221,7 +221,7 @@
                                 {{ u.role }}
                             </span>
                         </td>
-                        <td class="px-0 pt-2 sm:py-3 sm:px-4 sm:pr-6 text-center border-t sm:border-0 border-slate-100 mt-2 sm:mt-0 flex sm:table-cell justify-end w-full">
+                        <td class="px-0 pt-2 sm:py-3 sm:px-4 sm:pr-6 text-center border-t sm:border-0 border-slate-100 mt-2 sm:mt-0 flex sm:table-cell justify-end w-full sm:w-32">
                             <div class="flex items-center justify-end sm:justify-center gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity w-full">
                                 <button @click="resetPassword(u)" class="w-8 h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-amber-200 hover:bg-amber-50 hover:text-amber-600 flex items-center justify-center transition-colors shadow-sm" title="Reset Password"><AppIcon name="key" class="w-4 h-4" /></button>
                                 <button @click="openEditModal(u)" class="w-8 h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-600 flex items-center justify-center transition-colors shadow-sm" title="Edit">

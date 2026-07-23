@@ -174,7 +174,7 @@
                             </div>
                             <span v-else class="text-[10px] font-bold text-slate-400 italic">Belum Diatur</span>
                         </td>
-                        <td class="px-0 pt-2 sm:p-4 text-center border-t sm:border-0 border-slate-100 mt-2 sm:mt-0 flex sm:table-cell justify-end w-full">
+                        <td class="px-0 pt-2 sm:p-4 text-center border-t sm:border-0 border-slate-100 mt-2 sm:mt-0 flex sm:table-cell justify-end w-full sm:w-48">
                             <div class="flex items-center justify-end sm:justify-center gap-2 opacity-100 xl:opacity-0 xl:group-hover:opacity-100 transition-opacity w-full">
                                 <NuxtLink :to="`/admin/kelas/${k.id}/siswa`" class="px-3 h-8 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-600 hover:text-emerald-700 hover:bg-emerald-100 flex items-center justify-center transition-all shadow-sm font-bold text-[9px] uppercase tracking-widest gap-1 group/btn" title="Anggota Rombel"><AppIcon name="users" class="w-4 h-4" /> Anggota</NuxtLink>
                                 <button @click="editKelas(k)" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-indigo-500 hover:border-indigo-200 hover:bg-indigo-50 flex items-center justify-center transition-all shadow-sm" title="Edit">

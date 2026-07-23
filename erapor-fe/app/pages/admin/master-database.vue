@@ -106,7 +106,7 @@
                                     <th class="p-4 pl-6 w-16 text-center">#</th>
                                     <th class="p-4">Kode / Value</th>
                                     <th class="p-4">Nama (Display) & Keterangan</th>
-                                    <th class="p-4 text-center">Aksi</th>
+                                    <th class="p-4 text-center w-32">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody class="text-xs flex flex-col sm:table-row-group">
@@ -126,7 +126,7 @@
                                             <p v-if="item.keterangan" class="text-[10px] text-slate-500 mt-0.5">{{ item.keterangan }}</p>
                                         </div>
                                     </td>
-                                    <td class="px-0 pt-2 sm:p-4 sm:pr-6 text-center border-t sm:border-0 border-slate-100 mt-2 sm:mt-0 flex sm:table-cell justify-end w-full">
+                                    <td class="px-0 pt-2 sm:p-4 sm:pr-6 text-center border-t sm:border-0 border-slate-100 mt-2 sm:mt-0 flex sm:table-cell justify-end w-full sm:w-32">
                                         <div class="flex items-center justify-end sm:justify-center gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity w-full">
                                             <button @click="editData(item)" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-emerald-500 hover:bg-emerald-50 hover:border-emerald-200 flex items-center justify-center transition-all shadow-sm" title="Edit">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>

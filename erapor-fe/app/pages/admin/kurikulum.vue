@@ -98,7 +98,7 @@
                     <tr class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-500">
                         <th class="p-4 w-16 text-center">#</th>
                         <th class="p-4">Nama Kurikulum</th>
-                        <th class="p-4 text-center">Aksi</th>
+                        <th class="p-4 text-center w-32">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="text-xs flex flex-col sm:table-row-group">
@@ -114,7 +114,7 @@
                                 <p class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mt-0.5">{{ k.singkatan }}</p>
                             </div>
                         </td>
-                        <td class="px-0 pt-2 sm:p-4 text-center border-t sm:border-0 border-slate-100 mt-2 sm:mt-0 flex sm:table-cell justify-end w-full">
+                        <td class="px-0 pt-2 sm:p-4 text-center border-t sm:border-0 border-slate-100 mt-2 sm:mt-0 flex sm:table-cell justify-end w-full sm:w-32">
                             <div class="flex items-center justify-end sm:justify-center gap-2 opacity-100 xl:opacity-0 xl:group-hover:opacity-100 transition-opacity w-full">
                                 <button @click="editKurikulum(k)" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-indigo-500 hover:border-indigo-200 hover:bg-indigo-50 flex items-center justify-center transition-all shadow-sm" title="Edit">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>

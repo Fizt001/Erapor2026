@@ -100,7 +100,7 @@
                         <th class="p-4 w-16 text-center">#</th>
                         <th class="p-4">Tahun Ajaran</th>
                         <th class="p-4">Status</th>
-                        <th class="p-4 text-center">Aksi</th>
+                        <th class="p-4 text-center w-32">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="text-xs flex flex-col sm:table-row-group">
@@ -124,7 +124,7 @@
                                 </span>
                             </div>
                         </td>
-                        <td class="px-0 pt-3 sm:p-4 text-center border-t sm:border-0 border-slate-100 mt-2 sm:mt-0 flex sm:table-cell justify-end w-full">
+                        <td class="px-0 pt-3 sm:p-4 text-center border-t sm:border-0 border-slate-100 mt-2 sm:mt-0 flex sm:table-cell justify-end w-full sm:w-32">
                             <div class="flex items-center justify-end sm:justify-center gap-2 opacity-100 xl:opacity-0 xl:group-hover:opacity-100 transition-opacity w-full">
                                 <button v-if="!ta.is_aktif" @click="setAktif(ta)" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-emerald-500 hover:border-emerald-200 hover:bg-emerald-50 flex items-center justify-center transition-all shadow-sm" title="Jadikan Aktif"><AppIcon name="check" /></button>
                                 <button @click="editTahunAjaran(ta)" class="w-8 h-8 rounded-lg bg-white border border-slate-100 text-slate-400 hover:text-indigo-500 hover:border-indigo-200 hover:bg-indigo-50 flex items-center justify-center transition-all shadow-sm" title="Edit">
