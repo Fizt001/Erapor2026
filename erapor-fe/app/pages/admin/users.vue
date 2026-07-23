@@ -206,26 +206,28 @@
                             <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nomor</span>
                             <span>{{ (pagination.currentPage - 1) * 15 + index + 1 }}</span>
                         </td>
-                        <td class="px-0 py-1 sm:py-3 sm:px-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-2 sm:pb-4 mb-1 sm:mb-0">
-                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Pengguna</span>
-                            <div class="text-right sm:text-left">
+                        <td class="px-0 py-1 sm:py-3 sm:px-4 flex sm:table-cell items-center justify-between">
+                            <div class="text-left">
                                 <div class="font-black text-slate-800 text-[13px]">{{ u.name }}</div>
                                 <div class="text-[10px] font-bold text-slate-400 mt-0.5">{{ u.email }}</div>
                             </div>
+                            <!-- Show role badge only on mobile inside this column -->
+                            <span class="sm:hidden px-2.5 py-1 rounded bg-slate-100 text-slate-500 border border-slate-200 text-[9px] font-black uppercase tracking-widest shadow-sm leading-none" :class="getRoleBadgeClass(u.role)">
+                                {{ u.role }}
+                            </span>
                         </td>
-                        <td class="px-0 py-1 sm:py-3 sm:px-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-2 sm:pb-4 mb-1 sm:mb-0">
-                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Hak Akses</span>
+                        <td class="hidden sm:table-cell px-0 py-1 sm:py-3 sm:px-4">
                             <span class="px-3 py-1.5 rounded-md text-[9px] font-black uppercase tracking-widest border" :class="getRoleBadgeClass(u.role)">
                                 {{ u.role }}
                             </span>
                         </td>
-                        <td class="px-0 pt-2 sm:py-3 sm:px-4 sm:pr-6 text-center">
-                            <div class="flex items-center justify-center sm:justify-end gap-3 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
-                                <button @click="resetPassword(u)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-amber-200 hover:bg-amber-50 hover:text-amber-600 flex items-center justify-center transition-colors shadow-sm" title="Reset Password"><AppIcon name="key" /></button>
-                                <button @click="openEditModal(u)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-600 flex items-center justify-center transition-colors shadow-sm" title="Edit">
+                        <td class="px-0 pt-2 sm:py-3 sm:px-4 sm:pr-6 text-center border-t sm:border-0 border-slate-100 mt-2 sm:mt-0 flex sm:table-cell justify-end w-full">
+                            <div class="flex items-center justify-end sm:justify-center gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity w-full">
+                                <button @click="resetPassword(u)" class="w-8 h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-amber-200 hover:bg-amber-50 hover:text-amber-600 flex items-center justify-center transition-colors shadow-sm" title="Reset Password"><AppIcon name="key" class="w-4 h-4" /></button>
+                                <button @click="openEditModal(u)" class="w-8 h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-600 flex items-center justify-center transition-colors shadow-sm" title="Edit">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
                                 </button>
-                                <button @click="confirmDelete(u)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-center transition-colors shadow-sm" title="Hapus">
+                                <button @click="confirmDelete(u)" class="w-8 h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-center transition-colors shadow-sm" title="Hapus">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                                 </button>
                             </div>
