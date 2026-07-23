@@ -72,7 +72,7 @@
           <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-emerald-600"></div>
         </div>
 
-        <div v-else class="p-6 lg:p-8 space-y-6 max-w-7xl mx-auto w-full">
+        <div v-else class="p-6 lg:p-8 space-y-6 max-w-5xl mx-auto w-full">
             
             <!-- STATISTIK UTAMA (4 COLUMNS) -->
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">

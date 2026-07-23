@@ -75,7 +75,7 @@
 
         <!-- Panel Flow Kanan -->
         <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0', activeTab === 'preview' || isDesktop ? 'flex' : 'hidden', !isDesktop ? 'pt-[60px]' : '']">
-          <div class="p-2 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full h-full flex flex-col relative z-0">
+          <div class="p-2 sm:p-6 lg:p-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
             <div class="bg-white rounded-2xl sm:rounded-[2rem] shadow-[0_2px_15px_-3px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col flex-1 relative min-h-0">
             
               <div v-if="(!selectedTahunAjaranId || !selectedKurikulumId) || students.length === 0" class="flex-1 flex flex-col items-center justify-center p-8 text-center bg-white">
