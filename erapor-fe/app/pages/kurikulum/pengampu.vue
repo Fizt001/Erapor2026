@@ -16,29 +16,29 @@
       <!-- Panel Dock Kiri -->
       <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', activeTabMobile === 'filter' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[60px]' : '']">
         
-        <div class="p-6 shrink-0 z-10 relative">
-          <div class="bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl p-5 border border-amber-500 shadow-sm relative overflow-hidden flex items-center gap-4">
-            <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10">🎛️</div>
+        <div class="p-4 pb-2 shrink-0 z-10 relative">
+          <div class="bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl p-4 border border-amber-500 shadow-sm relative overflow-hidden flex items-center gap-3">
+            <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="cog-6-tooth" class="w-5 h-5" /></div>
             <div class="relative z-10">
-                <h3 class="text-sm font-black uppercase tracking-widest text-white">Filter Plotting</h3>
-                <p class="text-[10px] text-amber-100 font-semibold uppercase mt-0.5">Pilih Kriteria Mapel</p>
+                <h3 class="text-xs font-black uppercase tracking-widest text-white">Filter Plotting</h3>
+                <p class="text-[9px] text-amber-100 font-semibold uppercase mt-0.5">Pilih Kriteria Mapel</p>
             </div>
-            <div class="absolute right-0 bottom-0 opacity-20 text-white">
-              <svg class="w-24 h-24 transform translate-x-6 translate-y-6" fill="currentColor" viewBox="0 0 24 24"><path d="M3 4c0-1.1.9-2 2-2h14c1.1 0 2 .9 2 2v16c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V4zm2 0v16h14V4H5zm2 4h10v2H7V8zm0 4h10v2H7v-2zm0 4h7v2H7v-2z"/></svg>
+            <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
+              <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M3 4c0-1.1.9-2 2-2h14c1.1 0 2 .9 2 2v16c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V4zm2 0v16h14V4H5zm2 4h10v2H7V8zm0 4h10v2H7v-2zm0 4h7v2H7v-2z"/></svg>
             </div>
           </div>
         </div>
 
-        <div class="flex-1 overflow-y-auto px-6 pb-6 space-y-6">
+        <div class="flex-1 overflow-y-auto px-4 pb-4 space-y-4">
             
-            <div class="flex bg-slate-100/80 p-1.5 rounded-2xl border border-slate-200 shadow-inner w-full">
+            <div class="flex bg-slate-100/80 p-1.5 rounded-xl border border-slate-200 shadow-inner w-full">
                 <button @click="activeKategori = 'umum'; fetchPengampu()" 
-                    class="flex-1 text-center py-2.5 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all duration-300"
+                    class="flex-1 text-center py-2 text-[9px] font-black uppercase tracking-widest rounded-lg transition-all duration-300"
                     :class="activeKategori === 'umum' ? 'bg-white text-amber-600 shadow-sm ring-1 ring-slate-200/50' : 'text-slate-400 hover:text-slate-600'">
                     Unit Umum
                 </button>
                 <button @click="activeKategori = 'kejuruan'; fetchPengampu()" 
-                    class="flex-1 text-center py-2.5 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all duration-300"
+                    class="flex-1 text-center py-2 text-[9px] font-black uppercase tracking-widest rounded-lg transition-all duration-300"
                     :class="activeKategori === 'kejuruan' ? 'bg-white text-amber-600 shadow-sm ring-1 ring-slate-200/50' : 'text-slate-400 hover:text-slate-600'">
                     Kejuruan
                 </button>
@@ -61,9 +61,9 @@
                 </div>
             </div>
 
-            <button @click="fetchPengampu" class="w-full py-4 bg-amber-600 hover:bg-amber-700 active:scale-[0.98] rounded-2xl text-white shadow-lg shadow-amber-200 transition-all flex items-center justify-center gap-2 group">
-                <span class="text-[11px] font-black uppercase tracking-widest group-hover:tracking-wider transition-all">Refresh Data</span>
-                <span class="group-hover:rotate-180 transition-transform duration-500"><AppIcon name="arrow-path" class="w-6 h-6" /></span>
+            <button @click="fetchPengampu" class="w-full py-2.5 bg-amber-600 hover:bg-amber-700 active:scale-[0.98] rounded-xl text-white shadow-lg shadow-amber-200/50 transition-all flex items-center justify-center gap-2 group">
+                <span class="text-xs font-black uppercase tracking-widest group-hover:tracking-wider transition-all">Refresh Data</span>
+                <span class="group-hover:rotate-180 transition-transform duration-500"><AppIcon name="arrow-path" class="w-5 h-5" /></span>
             </button>
         </div>
       </div>

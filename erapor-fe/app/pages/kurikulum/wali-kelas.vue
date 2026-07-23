@@ -16,17 +16,17 @@
       <!-- Panel Dock Kiri (Filter) -->
       <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', activeTabMobile === 'filter' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[60px]' : '']">
         
-        <div class="p-6 shrink-0 z-10 relative">
-          <div class="bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl p-5 border border-amber-500 shadow-sm relative overflow-hidden flex items-center gap-4">
-            <div class="w-10 h-10 flex items-center justify-center text-2xl shrink-0 relative z-10"><AppIcon name="users" class="w-6 h-6" /></div>
+        <div class="p-4 pb-2 shrink-0 z-10 relative">
+          <div class="bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl p-4 border border-amber-500 shadow-sm relative overflow-hidden flex items-center gap-3">
+            <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="users" class="w-5 h-5" /></div>
             <div class="relative z-10">
-                <h3 class="text-sm font-black uppercase tracking-widest text-white">Filter Plotting</h3>
-                <p class="text-[10px] text-amber-100 font-semibold uppercase mt-0.5">Pilih Kriteria Kelas</p>
+                <h3 class="text-xs font-black uppercase tracking-widest text-white">Filter Plotting</h3>
+                <p class="text-[9px] text-amber-100 font-semibold uppercase mt-0.5">Pilih Kriteria Kelas</p>
             </div>
           </div>
         </div>
 
-        <div class="flex-1 overflow-y-auto px-6 pb-6 space-y-6">
+        <div class="flex-1 overflow-y-auto px-4 pb-4 space-y-4">
             <div class="space-y-4">
                 <div>
                     <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Pilih Kurikulum</label>
@@ -45,9 +45,9 @@
                 </div>
             </div>
 
-            <button @click="fetchData" class="w-full py-4 bg-amber-600 hover:bg-amber-700 active:scale-[0.98] rounded-2xl text-white shadow-lg shadow-amber-200 transition-all flex items-center justify-center gap-2 group">
-                <span class="text-[11px] font-black uppercase tracking-widest group-hover:tracking-wider transition-all">Refresh Data</span>
-                <span class="group-hover:rotate-180 transition-transform duration-500"><AppIcon name="arrow-path" class="w-6 h-6" /></span>
+            <button @click="fetchData" class="w-full py-2.5 bg-amber-600 hover:bg-amber-700 active:scale-[0.98] rounded-xl text-white shadow-lg shadow-amber-200/50 transition-all flex items-center justify-center gap-2 group">
+                <span class="text-xs font-black uppercase tracking-widest group-hover:tracking-wider transition-all">Refresh Data</span>
+                <span class="group-hover:rotate-180 transition-transform duration-500"><AppIcon name="arrow-path" class="w-5 h-5" /></span>
             </button>
         </div>
       </div>
