@@ -206,7 +206,7 @@ const windowWidth = ref(1024)
 const isDesktop = computed(() => windowWidth.value >= 1280)
 const activeTabMobile = ref('filter')
 const mobileTabs = [
-  { id: 'filter', title: 'Filter', icon: '🎛️' },
+  { id: 'filter', title: 'Filter', icon: 'funnel' },
   { id: 'flow', title: 'Plotting', icon: 'users' }
 ]
 
