@@ -74,7 +74,7 @@
             <!-- Header Flow -->
             <div class="p-4 bg-white border-b border-slate-200 flex justify-between items-center gap-4 shrink-0 z-10 shadow-sm">
                 <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-2xl bg-amber-50 shadow-sm border border-amber-100 flex items-center justify-center text-xl hidden sm:flex text-amber-500">👨‍<AppIcon name="building-office" class="w-5 h-5 inline-block mr-1" /></div>
+                    <div class="w-10 h-10 rounded-2xl bg-amber-50 shadow-sm border border-amber-100 flex items-center justify-center text-xl hidden sm:flex text-amber-500"><AppIcon name="users" class="w-6 h-6" /></div>
                     <div>
                         <h3 class="text-sm font-black uppercase tracking-widest text-amber-700">Plot Guru Mapel</h3>
                         <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Tugaskan guru ke dalam struktur</p>
@@ -129,9 +129,15 @@
                             <div v-for="kelas in kelases" :key="kelas.id" class="border border-slate-100 rounded-xl p-3 bg-white hover:border-amber-100 transition-colors shadow-sm">
                                 <div class="flex justify-between items-center mb-3">
                                     <span class="text-[11px] font-black uppercase tracking-widest text-slate-700">{{ kelas.nama_kelas }}</span>
-                                    <span class="text-[9px] font-black tracking-widest px-2 py-1 rounded-md" 
+                                    <span class="text-[9px] font-black tracking-widest px-2 py-1 rounded-md flex items-center gap-1" 
                                         :class="getSisaJp(struktur, kelas.id) <= 0 ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-rose-50 text-rose-600 border border-rose-100'">
-                                        {{ getSisaJp(struktur, kelas.id) <= 0 ? '<AppIcon name="check" class="w-5 h-5 inline-block mr-1" /> Tuntas' : 'Sisa ' + getSisaJp(struktur, kelas.id) + ' JP' }}
+                                        <template v-if="getSisaJp(struktur, kelas.id) <= 0">
+                                            <AppIcon name="check" class="w-3 h-3" />
+                                            <span>Tuntas</span>
+                                        </template>
+                                        <template v-else>
+                                            <span>Sisa {{ getSisaJp(struktur, kelas.id) }} JP</span>
+                                        </template>
                                     </span>
                                 </div>
 
