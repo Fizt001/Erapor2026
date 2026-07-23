@@ -37,12 +37,12 @@
         </div>
         <div class="flex-1 lg:flex-none flex justify-end items-center space-x-4">
           <!-- Active Year Siren Indicator -->
-          <div v-if="tahunAjaranAktif" class="flex items-center gap-2 px-3 py-1.5 bg-slate-50 border border-slate-200/80 rounded-full shadow-inner no-print hover:scale-105 transition-all select-none">
+          <div v-if="ta_aktif" class="flex items-center gap-2 px-3 py-1.5 bg-slate-50 border border-slate-200/80 rounded-full shadow-inner no-print hover:scale-105 transition-all select-none">
             <span class="relative flex h-2.5 w-2.5">
               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)]"></span>
             </span>
-            <span class="text-[10px] font-black text-slate-600 uppercase tracking-widest leading-none">TA. {{ tahunAjaranAktif.tahun }}</span>
+            <span class="text-[10px] font-black text-slate-600 uppercase tracking-widest leading-none">TA. {{ ta_aktif.tahun }}</span>
           </div>
 
           <div class="relative">
@@ -227,23 +227,10 @@ const closeDrawer = () => {
 watch(() => route.path, () => { closeDrawer() })
 useHead({ style: [{ children: 'html { font-size: 80% !important; }' }] })
 
-const { sekolah, fetchSekolah } = useSekolah()
-const tahunAjaranAktif = ref(null)
-
-const fetchTahunAjaranAktif = async () => {
-  try {
-    const res = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/public/stats')
-    if (res.success && res.data?.tahun_aktif) {
-      tahunAjaranAktif.value = res.data.tahun_aktif
-    }
-  } catch (e) {
-    console.error('Failed to fetch active school year:', e)
-  }
-}
+const { sekolah, ta_aktif, fetchSekolah } = useSekolah()
 
 onMounted(() => { 
   fetchSekolah()
-  fetchTahunAjaranAktif()
 })
 
 const userCookie = useCookie('user_profile')
