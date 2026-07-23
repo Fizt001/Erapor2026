@@ -41,7 +41,7 @@ class AdminController extends Controller
                     'ekskul' => $totalEkskul,
                 ],
                 'academic' => [
-                    'tahun_ajaran' => $taAktif ? $taAktif->tahun . ' - ' . ucfirst($taAktif->semester) : 'Belum Diatur',
+                    'tahun_ajaran' => $taAktif ? ($taAktif->semester ? $taAktif->tahun . ' - ' . ucfirst($taAktif->semester) : $taAktif->tahun) : 'Belum Diatur',
                 ],
                 'sekolah' => [
                     'nama' => $sekolah ? $sekolah->nama_sekolah : 'SMK Yatindo',

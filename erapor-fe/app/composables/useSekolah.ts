@@ -31,7 +31,10 @@ export const useSekolah = () => {
       })
       if (response && response.data) {
         sekolah.value = {
+          ...response.data,
+          nama: response.data.nama_sekolah || 'SMK Yatindo',
           nama_sekolah: response.data.nama_sekolah || 'SMK Yatindo',
+          npsn: response.data.npsn || '-',
           logo: getImageUrl(response.data.logo),
           foto_1: getImageUrl(response.data.foto_1),
           foto_2: getImageUrl(response.data.foto_2),
