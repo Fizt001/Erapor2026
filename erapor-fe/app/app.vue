@@ -6,7 +6,7 @@
 
 <script setup>
 import { computed, onMounted, onUnmounted } from 'vue'
-import { useCookie, useRoute, useRouter } from '#imports'
+import { useCookie, useRoute, useRouter, useHead } from '#imports'
 import { useAutoSave } from '~/composables/useAutoSave'
 import { useSwal } from '~/composables/useSwal'
 
@@ -15,6 +15,10 @@ const router = useRouter()
 const userCookie = useCookie('user_profile')
 const tokenCookie = useCookie('auth_token')
 const { triggerAutoSave } = useAutoSave()
+
+useHead({
+  title: computed(() => route.meta.title ? `${route.meta.title} - e-Rapor` : 'e-Rapor')
+})
 
 let idleTimer = null
 let swalWarningActive = false
