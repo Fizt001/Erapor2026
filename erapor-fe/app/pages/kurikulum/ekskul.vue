@@ -150,7 +150,8 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { useAutoSave } from '~/composables/useAutoSave'
 
 definePageMeta({
   layout: 'kurikulum',
@@ -275,6 +276,12 @@ const executeDelete = async () => {
     }
 }
 
+const { registerAutoSave, unregisterAutoSave } = useAutoSave()
+
+onUnmounted(() => {
+    unregisterAutoSave()
+})
+
 onMounted(() => {
     windowWidth.value = window.innerWidth
     window.addEventListener('resize', () => { windowWidth.value = window.innerWidth })
@@ -284,6 +291,12 @@ onMounted(() => {
     } else {
         activeTabMobile.value = 'table'
     }
+
+    registerAutoSave(async () => {
+        if (formData.value.nama_ekskul) {
+            await saveData()
+        }
+    })
 
     fetchData()
 })

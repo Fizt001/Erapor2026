@@ -1,7 +1,7 @@
 export default defineNuxtRouteMiddleware((to, from) => {
   if (import.meta.server) return;
-  // Set explicit idle timeout 2 hours (7200s)
-  const token = useCookie('auth_token', { maxAge: 7200 })
+  // Set explicit idle timeout 1 hours (3600s)
+  const token = useCookie('auth_token', { maxAge: 3600 })
 
   // Jika tidak ada token dan bukan sedang ke halaman login
   if (!token.value && to.path !== '/login' && to.path !== '/') {
@@ -9,7 +9,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
   }
 
   if (token.value) {
-    const userCookie = useCookie('user_profile', { maxAge: 7200 })
+    const userCookie = useCookie('user_profile', { maxAge: 3600 })
     
     // Refresh cookie expiration on route navigation (Idle Timeout logic)
     token.value = token.value

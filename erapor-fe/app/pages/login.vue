@@ -307,8 +307,8 @@ const handleLogin = async () => {
       body: form
     })
     if (res.success && res.data && res.data.token) {
-      const tokenCookie = useCookie('auth_token', { maxAge: 7200 })
-      const userCookie = useCookie('user_profile', { maxAge: 7200 })
+      const tokenCookie = useCookie('auth_token', { maxAge: 3600 })
+      const userCookie = useCookie('user_profile', { maxAge: 3600 })
       tokenCookie.value = res.data.token
       userCookie.value = res.data.user
       useSwal().toast('Berhasil login!', 'success')

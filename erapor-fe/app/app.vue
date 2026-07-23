@@ -5,11 +5,84 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { useCookie, useRoute } from '#imports'
+import { computed, onMounted, onUnmounted } from 'vue'
+import { useCookie, useRoute, useRouter } from '#imports'
+import { useAutoSave } from '~/composables/useAutoSave'
+import { useSwal } from '~/composables/useSwal'
 
 const route = useRoute()
+const router = useRouter()
 const userCookie = useCookie('user_profile')
+const tokenCookie = useCookie('auth_token')
+const { triggerAutoSave } = useAutoSave()
+
+let idleTimer = null
+let swalWarningActive = false
+
+const resetIdleTime = () => {
+  if (tokenCookie.value) {
+    localStorage.setItem('lastActiveTime', Date.now().toString())
+  }
+}
+
+const checkIdleTime = async () => {
+  if (!tokenCookie.value) return
+
+  const lastActiveStr = localStorage.getItem('lastActiveTime')
+  if (!lastActiveStr) return
+  
+  const lastActive = parseInt(lastActiveStr)
+  const diffMinutes = (Date.now() - lastActive) / 1000 / 60
+
+  if (diffMinutes >= 60) {
+    // Timeout!
+    if (idleTimer) clearInterval(idleTimer)
+    useSwal().close()
+    await triggerAutoSave()
+    tokenCookie.value = null
+    userCookie.value = null
+    router.push('/login')
+    useSwal().toast('Sesi telah berakhir karena tidak ada aktivitas.', 'warning')
+  } else if (diffMinutes >= 55 && !swalWarningActive) {
+    swalWarningActive = true
+    useSwal().fire({
+      title: 'Sesi Akan Berakhir',
+      text: 'Anda tidak melakukan aktivitas selama 55 menit. Sesi akan berakhir otomatis dalam 5 menit, dan pekerjaan akan disimpan.',
+      icon: 'warning',
+      timer: 5 * 60 * 1000,
+      timerProgressBar: true,
+      showConfirmButton: true,
+      confirmButtonText: 'Tetap Login',
+    }).then((result) => {
+      swalWarningActive = false
+      if (result.isConfirmed) {
+         resetIdleTime()
+      }
+    })
+  }
+}
+
+onMounted(() => {
+  if (typeof window !== 'undefined') {
+    window.addEventListener('mousemove', resetIdleTime)
+    window.addEventListener('keydown', resetIdleTime)
+    window.addEventListener('scroll', resetIdleTime)
+    window.addEventListener('click', resetIdleTime)
+    
+    resetIdleTime()
+    idleTimer = setInterval(checkIdleTime, 30 * 1000) // check every 30 seconds
+  }
+})
+
+onUnmounted(() => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('mousemove', resetIdleTime)
+    window.removeEventListener('keydown', resetIdleTime)
+    window.removeEventListener('scroll', resetIdleTime)
+    window.removeEventListener('click', resetIdleTime)
+    if (idleTimer) clearInterval(idleTimer)
+  }
+})
 
 const layoutName = computed(() => {
   if (userCookie.value) {

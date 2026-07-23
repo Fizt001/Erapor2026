@@ -253,7 +253,8 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { useAutoSave } from '~/composables/useAutoSave'
 
 definePageMeta({
   layout: 'kurikulum',
@@ -320,6 +321,12 @@ const groupedMapels = computed(() => {
     }
     return result;
 });
+
+const { registerAutoSave, unregisterAutoSave } = useAutoSave()
+
+onUnmounted(() => {
+    unregisterAutoSave()
+})
 
 const isCollapsed = ref({})
 const toggleCollapse = (k) => {
@@ -491,9 +498,13 @@ onMounted(async () => {
         activeTabMobile.value = 'table'
     }
 
-    // We can run these in parallel, but fetchData depends on kategoriTab which is populated in fetchReferensi.
-    // Since we removed the cache-buster, fetchReferensi will return instantly from the browser cache,
-    // so sequential await is not a problem anymore.
+    // Auto-save logic
+    registerAutoSave(async () => {
+        if (formData.value.nama_mapel) {
+            await saveData()
+        }
+    })
+
     await fetchReferensi()
     await fetchData()
 })
