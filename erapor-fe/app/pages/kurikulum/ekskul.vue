@@ -60,17 +60,16 @@
       <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative', activeTabMobile === 'table' || isDesktop ? 'flex' : 'hidden', !isDesktop ? 'pt-[60px]' : '']">
         <div class="p-2 sm:pt-3 sm:pb-6 sm:px-6 lg:pt-3 lg:pb-8 lg:px-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
           <div class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
-        <!-- Header Flow -->
-        <div class="px-6 py-5 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0 z-10 bg-white">
+        <div class="px-6 py-5 border-b border-slate-100 flex flex-row justify-between items-center gap-2 shrink-0 z-10 bg-white">
             <div class="flex items-center gap-4">
                 <div class="w-10 h-10 rounded-2xl bg-amber-50 shadow-sm border border-amber-100 flex items-center justify-center text-xl hidden sm:flex text-amber-500"><AppIcon name="user-plus" class="w-6 h-6" /></div>
                 <div>
-                    <h3 class="text-sm font-black uppercase tracking-widest text-amber-700">Database Ekstrakurikuler</h3>
-                    <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Semua data ekstrakurikuler</p>
+                    <h3 class="text-[11px] sm:text-sm font-black uppercase tracking-widest text-amber-700">Database Ekstrakurikuler</h3>
+                    <p class="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase mt-0.5">Semua data ekstrakurikuler</p>
                 </div>
             </div>
-            <button @click="fetchData" class="w-10 h-10 rounded-xl bg-slate-100 text-slate-500 flex items-center justify-center hover:bg-slate-200 hover:text-slate-700 font-bold transition-colors" title="Refresh">
-                <AppIcon name="arrow-path" class="w-5 h-5 inline-block mr-1" />
+            <button @click="fetchData" class="w-10 h-10 rounded-xl bg-slate-100 text-slate-500 flex items-center justify-center hover:bg-slate-200 hover:text-slate-700 font-bold transition-colors shrink-0" title="Refresh">
+                <AppIcon name="arrow-path" class="w-5 h-5" />
             </button>
         </div>
 
@@ -98,24 +97,23 @@
                             Belum ada data ekstrakurikuler.
                         </td>
                     </tr>
-                    <tr v-for="(item, index) in ekskuls" :key="item.id" class="border-b border-slate-100 hover:bg-slate-50/80 transition-colors bg-white group flex flex-col sm:table-row p-4 sm:p-0 relative">
-                        <td class="px-0 py-1 sm:p-4 text-left sm:text-center text-[10px] font-bold text-slate-400 flex sm:table-cell items-center justify-between">
+                     <tr v-for="(item, index) in ekskuls" :key="item.id" class="border-b border-slate-100 hover:bg-slate-50/80 transition-colors bg-white group flex flex-col sm:table-row p-4 sm:p-0 relative">
+                        <td class="px-0 py-1 sm:p-4 text-left sm:text-center text-[11px] font-bold text-slate-400 flex sm:table-cell items-center justify-between mb-2 sm:mb-0">
                             <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nomor</span>
-                            {{ index + 1 }}
+                            <span>{{ index + 1 }}</span>
                         </td>
-                        <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between">
-                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Ekskul</span>
-                            <div class="text-right sm:text-left">
-                                <div class="font-black text-slate-800 text-sm">{{ item.nama_ekskul }}</div>
-                                <div class="mt-1">
-                                    <span class="text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded bg-slate-100 text-slate-500 border border-slate-200">Pembina: {{ item.nama_pembina || '-' }}</span>
-                                </div>
+                        <td class="px-0 py-1 sm:p-4 flex flex-row sm:table-cell items-center justify-between mb-2 sm:mb-0 w-full">
+                            <div class="flex items-center gap-2">
+                                <span class="font-black text-slate-800 text-xs sm:text-sm">{{ item.nama_ekskul }}</span>
                             </div>
+                            <span class="text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded bg-slate-100 text-slate-500 border border-slate-200 shadow-sm leading-none">
+                                Pembina: {{ item.nama_pembina || '-' }}
+                            </span>
                         </td>
-                        <td class="px-0 pt-3 sm:p-4 text-center border-t sm:border-0 border-slate-100 mt-2 sm:mt-0 flex sm:table-cell justify-center">
-                            <div class="flex items-center justify-center gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
-                                <button @click="editData(item)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-amber-200 hover:bg-amber-50 hover:text-amber-600 flex items-center justify-center transition-all shadow-sm" title="Edit"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg></button>
-                                <button @click="confirmDelete(item)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-center transition-all shadow-sm" title="Hapus"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg></button>
+                        <td class="px-0 pt-2 sm:p-4 text-center border-t sm:border-0 border-slate-50 mt-2 sm:mt-0 flex sm:table-cell justify-end sm:justify-center w-full">
+                            <div class="flex items-center justify-end sm:justify-center gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity w-full">
+                                <button @click="editData(item)" class="w-8 h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-amber-200 hover:bg-amber-50 hover:text-amber-600 flex items-center justify-center transition-all shadow-sm" title="Edit"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg></button>
+                                <button @click="confirmDelete(item)" class="w-8 h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-center transition-all shadow-sm" title="Hapus"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg></button>
                             </div>
                         </td>
                     </tr>
