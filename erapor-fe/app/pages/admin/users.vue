@@ -150,7 +150,7 @@
         <div class="p-2 sm:p-6 lg:p-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
           <div class="bg-white rounded-2xl sm:rounded-[2rem] shadow-[0_2px_15px_-3px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col flex-1 relative min-h-0">
             <!-- Table Header & Filters -->
-            <div class="px-4 py-3 sm:px-6 sm:py-4 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white shrink-0 z-10">
+            <div class="px-4 py-3 sm:px-6 sm:py-3 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white shrink-0 z-10">
             <div class="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
                 <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-white shadow-sm border border-slate-200 flex items-center justify-center text-sm sm:text-xl hidden sm:flex"><AppIcon name="clipboard" /></div>
                 <div class="flex items-baseline gap-2">
@@ -202,24 +202,24 @@
                         </td>
                     </tr>
                     <tr v-for="(u, index) in users" :key="u.id" class="hover:bg-slate-50/80 transition-colors bg-white group flex flex-col sm:table-row p-4 sm:p-0 relative">
-                        <td class="px-0 py-1 sm:p-4 text-left sm:text-center text-slate-400 font-bold flex sm:table-cell items-center justify-between">
+                        <td class="px-0 py-1 sm:py-3 sm:px-4 text-left sm:text-center text-slate-400 font-bold flex sm:table-cell items-center justify-between">
                             <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nomor</span>
                             <span>{{ (pagination.currentPage - 1) * 15 + index + 1 }}</span>
                         </td>
-                        <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-2 sm:pb-4 mb-1 sm:mb-0">
+                        <td class="px-0 py-1 sm:py-3 sm:px-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-2 sm:pb-4 mb-1 sm:mb-0">
                             <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Pengguna</span>
                             <div class="text-right sm:text-left">
                                 <div class="font-black text-slate-800 text-[13px]">{{ u.name }}</div>
                                 <div class="text-[10px] font-bold text-slate-400 mt-0.5">{{ u.email }}</div>
                             </div>
                         </td>
-                        <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-2 sm:pb-4 mb-1 sm:mb-0">
+                        <td class="px-0 py-1 sm:py-3 sm:px-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-2 sm:pb-4 mb-1 sm:mb-0">
                             <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Hak Akses</span>
                             <span class="px-3 py-1.5 rounded-md text-[9px] font-black uppercase tracking-widest border" :class="getRoleBadgeClass(u.role)">
                                 {{ u.role }}
                             </span>
                         </td>
-                        <td class="px-0 pt-2 sm:p-4 sm:pr-6 text-center">
+                        <td class="px-0 pt-2 sm:py-3 sm:px-4 sm:pr-6 text-center">
                             <div class="flex items-center justify-center sm:justify-end gap-3 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
                                 <button @click="resetPassword(u)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-amber-200 hover:bg-amber-50 hover:text-amber-600 flex items-center justify-center transition-colors shadow-sm" title="Reset Password"><AppIcon name="key" /></button>
                                 <button @click="openEditModal(u)" class="w-10 h-10 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-600 flex items-center justify-center transition-colors shadow-sm" title="Edit">
@@ -236,12 +236,12 @@
         </div>
 
         <!-- Pagination -->
-        <div class="p-4 sm:p-6 bg-slate-50 border-t border-slate-200 flex items-center justify-between shrink-0" v-if="pagination.lastPage > 1">
+        <div class="p-3 sm:py-3 sm:px-6 bg-slate-50 border-t border-slate-200 flex items-center justify-between shrink-0" v-if="pagination.lastPage > 1">
             <span class="hidden sm:inline-block text-[10px] font-black uppercase text-slate-400 tracking-widest">Halaman {{ pagination.currentPage }} dari {{ pagination.lastPage }}</span>
             <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
-                <button @click="fetchUsers(pagination.currentPage - 1)" :disabled="pagination.currentPage === 1" class="px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-600 hover:bg-slate-50 disabled:opacity-50 shadow-sm transition-all">Prev</button>
+                <button @click="fetchUsers(pagination.currentPage - 1)" :disabled="pagination.currentPage === 1" class="px-3.5 py-1.5 bg-white border border-slate-200 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-600 hover:bg-slate-50 disabled:opacity-50 shadow-sm transition-all">Prev</button>
                 <span class="sm:hidden text-[10px] font-black uppercase text-slate-400 tracking-widest">{{ pagination.currentPage }} / {{ pagination.lastPage }}</span>
-                <button @click="fetchUsers(pagination.currentPage + 1)" :disabled="pagination.currentPage === pagination.lastPage" class="px-4 py-2.5 bg-emerald-50 border border-emerald-100 rounded-xl text-[10px] font-black uppercase tracking-widest text-emerald-700 hover:bg-emerald-100 disabled:opacity-50 shadow-sm transition-all">Next</button>
+                <button @click="fetchUsers(pagination.currentPage + 1)" :disabled="pagination.currentPage === pagination.lastPage" class="px-3.5 py-1.5 bg-emerald-50 border border-emerald-100 rounded-xl text-[10px] font-black uppercase tracking-widest text-emerald-700 hover:bg-emerald-100 disabled:opacity-50 shadow-sm transition-all">Next</button>
             </div>
         </div>
           </div>

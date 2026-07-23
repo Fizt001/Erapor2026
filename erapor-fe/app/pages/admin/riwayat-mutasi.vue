@@ -116,12 +116,12 @@
           </div>
 
           <!-- Pagination -->
-          <div class="p-4 sm:p-6 bg-slate-50 border-t border-slate-200 flex items-center justify-between shrink-0" v-if="pagination.lastPage > 1">
+          <div class="p-3 sm:py-3 sm:px-6 bg-slate-50 border-t border-slate-200 flex items-center justify-between shrink-0" v-if="pagination.lastPage > 1">
               <span class="hidden sm:inline-block text-[10px] font-black uppercase text-slate-400 tracking-widest">Halaman {{ pagination.currentPage }} dari {{ pagination.lastPage }}</span>
               <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
-                  <button @click="fetchMutasi(pagination.currentPage - 1)" :disabled="pagination.currentPage === 1" class="px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-600 hover:bg-slate-50 disabled:opacity-50 shadow-sm transition-all">Prev</button>
+                  <button @click="fetchMutasi(pagination.currentPage - 1)" :disabled="pagination.currentPage === 1" class="px-3.5 py-1.5 bg-white border border-slate-200 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-600 hover:bg-slate-50 disabled:opacity-50 shadow-sm transition-all">Prev</button>
                   <span class="sm:hidden text-[10px] font-black uppercase text-slate-400 tracking-widest">{{ pagination.currentPage }} / {{ pagination.lastPage }}</span>
-                  <button @click="fetchMutasi(pagination.currentPage + 1)" :disabled="pagination.currentPage === pagination.lastPage" class="px-4 py-2.5 bg-emerald-50 border border-emerald-100 rounded-xl text-[10px] font-black uppercase tracking-widest text-emerald-700 hover:bg-emerald-100 disabled:opacity-50 shadow-sm transition-all">Next</button>
+                  <button @click="fetchMutasi(pagination.currentPage + 1)" :disabled="pagination.currentPage === pagination.lastPage" class="px-3.5 py-1.5 bg-emerald-50 border border-emerald-100 rounded-xl text-[10px] font-black uppercase tracking-widest text-emerald-700 hover:bg-emerald-100 disabled:opacity-50 shadow-sm transition-all">Next</button>
               </div>
           </div>
         </div>
