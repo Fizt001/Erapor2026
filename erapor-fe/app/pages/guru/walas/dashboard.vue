@@ -199,33 +199,26 @@
                 </div>
             </div>
 
-            <!-- Grafik Prestasi Akademik -->
-            <div v-if="!statsLoading && wStats && wStats.grafik_siswa?.length > 0" class="mb-6">
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden">
-                    <div class="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-50/50">
+            <!-- Grafik Prestasi Akademik (2 Cards: Per-Siswa & Per-Kelas) -->
+            <div v-if="!statsLoading && wStats" class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                
+                <!-- Card 1: Tren Nilai Per Siswa -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col">
+                    <div class="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50/50">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-sky-50 flex items-center justify-center text-sky-600 text-xl border border-sky-100">📈</div>
+                            <div class="w-10 h-10 rounded-xl bg-sky-50 flex items-center justify-center text-sky-600 text-xl border border-sky-100">👤</div>
                             <div>
-                                <h3 class="text-sm font-bold text-slate-800">Perkembangan Nilai (4 Periode)</h3>
+                                <h3 class="text-sm font-bold text-slate-800">Perkembangan Nilai Siswa</h3>
                                 <p class="text-[10px] font-medium text-slate-500 uppercase tracking-widest">Pilih siswa untuk melihat tren</p>
                             </div>
                         </div>
-                        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full sm:w-auto shrink-0 mt-3 sm:mt-0">
-                            <!-- Indikator Warna -->
-                            <div class="flex items-center gap-3 text-[9px] font-black tracking-widest uppercase bg-white px-3 py-2 rounded-xl border border-slate-200 shadow-sm">
-                                <span class="flex items-center gap-1.5 text-emerald-600" title="Aman (Nilai >= 80)"><div class="w-2 h-2 rounded-full bg-emerald-500"></div> &ge; 80</span>
-                                <span class="flex items-center gap-1.5 text-amber-600" title="Waspada (Nilai 70 - 79)"><div class="w-2 h-2 rounded-full bg-amber-500"></div> 70-79</span>
-                                <span class="flex items-center gap-1.5 text-rose-600" title="Bahaya (Nilai < 70)"><div class="w-2 h-2 rounded-full bg-rose-500"></div> &lt; 70</span>
-                            </div>
-
-                            <div class="w-full sm:w-64 shrink-0">
-                                <select v-model="selectedChartSiswa" class="w-full px-4 py-2.5 rounded-xl border-2 border-slate-200/70 bg-white focus:bg-white focus:ring-4 focus:ring-sky-500/10 focus:border-sky-500 transition-all font-semibold text-xs text-slate-700 outline-none">
-                                    <option v-for="s in wStats.grafik_siswa" :key="s.id" :value="s.id">{{ s.nama }}</option>
-                                </select>
-                            </div>
+                        <div class="w-full sm:w-48 shrink-0">
+                            <select v-model="selectedChartSiswa" class="w-full px-3 py-2 rounded-xl border-2 border-slate-200/70 bg-white focus:bg-white focus:ring-4 focus:ring-sky-500/10 focus:border-sky-500 transition-all font-semibold text-xs text-slate-700 outline-none">
+                                <option v-for="s in wStats.grafik_siswa" :key="s.id" :value="s.id">{{ s.nama }}</option>
+                            </select>
                         </div>
                     </div>
-                    <div class="p-6 h-72">
+                    <div class="p-6 h-72 flex-1">
                         <ClientOnly>
                             <Line :data="chartProgressData" :options="chartProgressOptions" />
                             <template #fallback>
@@ -234,6 +227,34 @@
                         </ClientOnly>
                     </div>
                 </div>
+
+                <!-- Card 2: Tren Rata-rata 1 Kelas Per Periode -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col">
+                    <div class="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50/50">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 text-xl border border-indigo-100">📊</div>
+                            <div>
+                                <h3 class="text-sm font-bold text-slate-800">Rata-Rata Nilai Kelas</h3>
+                                <p class="text-[10px] font-medium text-slate-500 uppercase tracking-widest">Tren performa kelas per periode</p>
+                            </div>
+                        </div>
+                        <!-- Indikator Warna -->
+                        <div class="flex items-center gap-2 text-[9px] font-black tracking-widest uppercase bg-white px-2.5 py-1.5 rounded-xl border border-slate-200 shadow-sm">
+                            <span class="flex items-center gap-1 text-emerald-600" title="Aman (>= 80)"><div class="w-2 h-2 rounded-full bg-emerald-500"></div> &ge;80</span>
+                            <span class="flex items-center gap-1 text-amber-600" title="Waspada (70-79)"><div class="w-2 h-2 rounded-full bg-amber-500"></div> 70-79</span>
+                            <span class="flex items-center gap-1 text-rose-600" title="Bahaya (< 70)"><div class="w-2 h-2 rounded-full bg-rose-500"></div> &lt;70</span>
+                        </div>
+                    </div>
+                    <div class="p-6 h-72 flex-1">
+                        <ClientOnly>
+                            <Line :data="chartClassProgressData" :options="chartProgressOptions" />
+                            <template #fallback>
+                                <div class="flex items-center justify-center h-full text-slate-400 text-xs font-bold">Memuat Grafik...</div>
+                            </template>
+                        </ClientOnly>
+                    </div>
+                </div>
+
             </div>
 
             <!-- Analisis Khusus & Prestasi Mapel -->
@@ -450,6 +471,46 @@ const chartProgressData = computed(() => {
                 pointBackgroundColor: (ctx) => {
                     const val = ctx.raw;
                     if (val === undefined || val === null) return '#cbd5e1';
+                    if (val >= 80) return '#10b981';
+                    if (val >= 70) return '#eab308';
+                    return '#ef4444';
+                }
+            }
+        ]
+    }
+})
+
+const chartClassProgressData = computed(() => {
+    const labels = wStats.value?.periode_labels || [];
+    const dataObj = wStats.value?.grafik_kelas || {};
+    
+    const dataPoints = labels.map(label => dataObj[label] || 0);
+
+    return {
+        labels: labels,
+        datasets: [
+            {
+                label: 'Rata-rata Kelas',
+                backgroundColor: '#3b82f6',
+                borderColor: '#3b82f6',
+                borderWidth: 3,
+                pointBorderColor: '#ffffff',
+                pointBorderWidth: 2,
+                pointRadius: 5,
+                tension: 0.3,
+                data: dataPoints,
+                segment: {
+                    borderColor: (ctx) => {
+                        if (!ctx.p1) return '#3b82f6';
+                        const val = ctx.p1.parsed.y;
+                        if (val >= 80) return '#10b981';
+                        if (val >= 70) return '#eab308';
+                        return '#ef4444';
+                    }
+                },
+                pointBackgroundColor: (ctx) => {
+                    const val = ctx.raw;
+                    if (val === undefined || val === null) return '#3b82f6';
                     if (val >= 80) return '#10b981';
                     if (val >= 70) return '#eab308';
                     return '#ef4444';

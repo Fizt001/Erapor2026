@@ -194,6 +194,19 @@ class WalasDashboardStatsController extends Controller
         
         $grafikSiswa = array_values($grafikSiswa); // Convert to array
 
+        // Hitung rata-rata 1 kelas per periode
+        $grafikKelas = [];
+        foreach ($titimangsas as $t) {
+            $grafikKelas[$t->nama_periode] = 0;
+        }
+        $groupedByTitimangsa = $allSumatif->groupBy('titimangsa_id');
+        foreach ($groupedByTitimangsa as $tId => $nilais) {
+            $t = $titimangsas->firstWhere('id', $tId);
+            if ($t) {
+                $grafikKelas[$t->nama_periode] = round($nilais->avg('na_value'), 1);
+            }
+        }
+
         return response()->json([
             'success' => true,
             'data' => [
@@ -208,6 +221,7 @@ class WalasDashboardStatsController extends Controller
                 'prestasi_mapel' => $prestasiMapel,
                 'notifikasi' => $notifikasi,
                 'grafik_siswa' => $grafikSiswa,
+                'grafik_kelas' => $grafikKelas,
                 'periode_labels' => $titimangsas->pluck('nama_periode')
             ]
         ]);
