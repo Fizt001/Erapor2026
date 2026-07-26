@@ -58,39 +58,23 @@ class AdminBackupController extends Controller
 
         try {
             if ($role === 'admin') {
-                $mainDataTables = [
-                    'users' => \App\Models\User::class,
-                    'sekolah' => \App\Models\Sekolah::class,
-                    'kelas' => \App\Models\Kelas::class,
-                    'bidang' => \App\Models\Bidang::class,
-                    'program' => \App\Models\Program::class,
-                    'kejuruan' => \App\Models\Kejuruan::class,
-                    'kurikulum' => \App\Models\Kurikulum::class,
-                    'tahun_ajaran' => \App\Models\TahunAjaran::class,
-                    'referensi' => \App\Models\Referensi::class,
-                    'mapel' => \App\Models\Mapel::class,
-                    'ekskul' => \App\Models\Ekskul::class
-                ];
-
-                if (class_exists(\App\Models\Siswa::class)) {
-                    $query = \App\Models\Siswa::query();
-                    if ($mode === 'psas') {
-                        $query->whereMonth('created_at', '>=', 7)->whereMonth('created_at', '<=', 12);
-                    } else if ($mode === 'psat') {
-                        $query->whereMonth('created_at', '>=', 1)->whereMonth('created_at', '<=', 6);
+                $mainDataTables = [];
+                // FULL DATABASE BACKUP: Retrieve all tables dynamically
+                $tables = array_map('reset', \Illuminate\Support\Facades\DB::select('SHOW TABLES'));
+                
+                // Exclude system tables that shouldn't be moved to another PC
+                $excludedTables = ['migrations', 'failed_jobs', 'jobs', 'job_batches', 'personal_access_tokens', 'sessions', 'cache', 'cache_locks', 'password_reset_tokens'];
+                
+                foreach ($tables as $table) {
+                    if (!in_array($table, $excludedTables)) {
+                        // value is null to indicate no specific model (use DB facade)
+                        $mainDataTables[$table] = null;
                     }
-                    $growDataQueries['siswa'] = $query;
                 }
+                
+                // For admin, we don't need growDataQueries because we backup EVERYTHING in mainDataTables
+                $growDataQueries = [];
 
-                if (class_exists(\App\Models\MutasiSiswa::class)) {
-                    $queryMutasi = \App\Models\MutasiSiswa::query();
-                    if ($mode === 'psas') {
-                        $queryMutasi->whereMonth('created_at', '>=', 7)->whereMonth('created_at', '<=', 12);
-                    } else if ($mode === 'psat') {
-                        $queryMutasi->whereMonth('created_at', '>=', 1)->whereMonth('created_at', '<=', 6);
-                    }
-                    $growDataQueries['mutasi_siswas'] = $queryMutasi;
-                }
 
             } elseif ($role === 'kurikulum') {
                 $mainDataTables = [
@@ -239,8 +223,9 @@ class AdminBackupController extends Controller
         foreach($mainDataTables as $table => $modelClass) {
             if (!$firstMain) fwrite($handle, ',');
             fwrite($handle, '"'.$table.'":[');
-            if (class_exists($modelClass)) {
-                $firstRecord = true;
+            
+            $firstRecord = true;
+            if ($modelClass && class_exists($modelClass)) {
                 $modelClass::query()->orderBy('id')->chunk(500, function($records) use ($handle, &$firstRecord) {
                     foreach($records as $record) {
                         if (!$firstRecord) fwrite($handle, ',');
@@ -248,6 +233,26 @@ class AdminBackupController extends Controller
                         $firstRecord = false;
                     }
                 });
+            } else {
+                // Fetch directly from DB table using DB facade
+                $query = \Illuminate\Support\Facades\DB::table($table);
+                $hasId = \Illuminate\Support\Facades\Schema::hasColumn($table, 'id');
+                if ($hasId) {
+                    $query->orderBy('id')->chunk(500, function($records) use ($handle, &$firstRecord) {
+                        foreach($records as $record) {
+                            if (!$firstRecord) fwrite($handle, ',');
+                            fwrite($handle, json_encode((array)$record));
+                            $firstRecord = false;
+                        }
+                    });
+                } else {
+                    $records = $query->get();
+                    foreach($records as $record) {
+                        if (!$firstRecord) fwrite($handle, ',');
+                        fwrite($handle, json_encode((array)$record));
+                        $firstRecord = false;
+                    }
+                }
             }
             fwrite($handle, ']');
             $firstMain = false;
@@ -406,22 +411,29 @@ class AdminBackupController extends Controller
             // Restore Main Data
             if(isset($data['main_data'])) {
                 foreach($data['main_data'] as $table => $rows) {
-                    $modelClass = '\\App\\Models\\' . \Illuminate\Support\Str::studly(\Illuminate\Support\Str::singular($table));
-                    if (class_exists($modelClass)) {
-                        $modelClass::query()->delete();
+                    // Always try to use DB::table to ensure pivot tables are handled
+                    if (\Illuminate\Support\Facades\Schema::hasTable($table)) {
+                        \Illuminate\Support\Facades\DB::table($table)->delete();
                         
                         $adminPassword = \Illuminate\Support\Facades\Hash::make('admin123');
                         $defaultPassword = \Illuminate\Support\Facades\Hash::make('12345678');
                         
-                        foreach ($rows as $row) {
-                            if ($table === 'users' && !isset($row['password'])) {
-                                if (isset($row['email']) && $row['email'] === 'admin@erapor.com') {
-                                    $row['password'] = $adminPassword;
-                                } else {
-                                    $row['password'] = $defaultPassword;
+                        $chunks = array_chunk($rows, 200);
+                        foreach($chunks as $chunk) {
+                            $insertData = [];
+                            foreach ($chunk as $row) {
+                                if ($table === 'users' && !isset($row['password'])) {
+                                    if (isset($row['email']) && $row['email'] === 'admin@erapor.com') {
+                                        $row['password'] = $adminPassword;
+                                    } else {
+                                        $row['password'] = $defaultPassword;
+                                    }
                                 }
+                                $insertData[] = $row;
                             }
-                            $modelClass::insert($row);
+                            if (!empty($insertData)) {
+                                \Illuminate\Support\Facades\DB::table($table)->insert($insertData);
+                            }
                         }
                     }
                 }
@@ -430,17 +442,14 @@ class AdminBackupController extends Controller
             // Restore Grow Data
             if(isset($data['grow_data'])) {
                 foreach($data['grow_data'] as $table => $rows) {
-                    $modelClass = '\\App\\Models\\' . \Illuminate\Support\Str::studly(\Illuminate\Support\Str::singular($table));
-                    if (class_exists($modelClass)) {
-                        // Karena grow data di backup itu partial (berdasarkan bulan),
-                        // kita mungkin tidak bisa truncate semua.
-                        // Tapi asumsi "restore" menimpa data, kita harus berhati-hati.
-                        // Agar aman, kita abaikan duplikasi atau replace?
-                        // Mengingat instruksi "kosongkan atau backup dulu", 
-                        // kita akan truncate seluruh tabel grow yang direstore.
-                        $modelClass::query()->delete();
-                        foreach ($rows as $row) {
-                            $modelClass::insert($row);
+                    if (\Illuminate\Support\Facades\Schema::hasTable($table)) {
+                        \Illuminate\Support\Facades\DB::table($table)->delete();
+                        
+                        $chunks = array_chunk($rows, 200);
+                        foreach($chunks as $chunk) {
+                            if (!empty($chunk)) {
+                                \Illuminate\Support\Facades\DB::table($table)->insert($chunk);
+                            }
                         }
                     }
                 }
@@ -500,5 +509,20 @@ class AdminBackupController extends Controller
     private function extractModeFromFilename($filename) {
         $parts = explode('_', $filename);
         return isset($parts[2]) ? ucfirst($parts[2]) : '-';
+    }
+
+    public function openStorageFolder()
+    {
+        try {
+            $path = storage_path('app/public');
+            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                pclose(popen('start "" "' . $path . '"', "r"));
+                return response()->json(['success' => true, 'message' => 'Folder berhasil dibuka']);
+            } else {
+                return response()->json(['success' => false, 'message' => 'Sistem operasi tidak mendukung fitur ini']);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
     }
 }

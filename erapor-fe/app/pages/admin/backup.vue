@@ -24,7 +24,7 @@
             <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="shield" class="w-5 h-5" />️</div>
             <div class="relative z-10">
                 <h3 class="text-xs font-black uppercase tracking-widest text-white">Generate Backup</h3>
-                <p class="text-[9px] text-teal-100 font-semibold uppercase mt-0.5">Pilih Konteks Data</p>
+                <p class="text-[9px] text-teal-100 font-semibold uppercase mt-0.5" :class="activeRole === 'admin' ? 'text-yellow-200' : 'text-teal-100'">{{ activeRole === 'admin' ? '⚡ Full Database' : 'Pilih Konteks Data' }}</p>
             </div>
             <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
               <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 11v2h-2v2h2v2h-2v2h-2v-2h-2v2h-2v-2H9v2H7v-2H5v-2h2v-2H5v-2h2V9H5V7h2V5h2v2h2V5h2v2h2V5h2v2h2v2h-2v2h2zm-2-2h-2v2h2V9zm-4 4h-2v2h2v-2zm-4-4H7v2h2V9z"></path></svg>
@@ -123,6 +123,18 @@
                 </button>
             
             <hr class="border-slate-100 mb-6">
+
+            <!-- Info Full DB Backup untuk Admin -->
+            <div v-if="activeRole === 'admin'" class="mb-4 p-3 rounded-xl bg-amber-50 border border-amber-200 flex items-start gap-2">
+                <span class="text-amber-500 text-lg shrink-0">⚡</span>
+                <div>
+                    <p class="text-[10px] font-black text-amber-800 uppercase tracking-wide">Full Database Backup</p>
+                    <p class="text-[9px] text-amber-600 mt-0.5">Melakukan backup seluruh tabel database. Foto/file di-backup manual.</p>
+                    <button @click="openStorageFolder" class="mt-2 text-[9px] font-black text-amber-700 underline flex items-center gap-1 hover:text-amber-900 transition-colors">
+                        <AppIcon name="folder-open" class="w-3 h-3" /> Buka Folder Upload (Foto/File)
+                    </button>
+                </div>
+            </div>
             
             <!-- Action Buttons -->
             <div class="space-y-3 pb-8">
@@ -131,7 +143,8 @@
                     :disabled="isGenerating || isMaintenance"
                     class="w-full py-3 bg-slate-800 text-white font-bold rounded-2xl shadow-md hover:bg-slate-900 transition-all flex items-center justify-center gap-3 uppercase tracking-widest text-[10px] border border-slate-700 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                    <span class="text-lg"><AppIcon name="inbox" /></span> Backup Semester Ganjil
+                    <span class="text-lg"><AppIcon name="inbox" /></span>
+                    <span>{{ activeRole === 'admin' ? 'Full Backup (Ganjil/PSAS)' : 'Backup Semester Ganjil' }}</span>
                 </button>
 
                 <button 
@@ -140,7 +153,8 @@
                     class="w-full py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-2xl shadow-lg hover:-translate-y-0.5 transition-all flex items-center justify-center gap-3 uppercase tracking-widest text-[10px] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
                     <span v-if="isGenerating" class="animate-spin text-lg"><AppIcon name="clock" /></span>
-                    <span v-else class="text-lg"><AppIcon name="cube" /></span> Backup Semester Genap
+                    <span v-else class="text-lg"><AppIcon name="cube" /></span>
+                    <span>{{ activeRole === 'admin' ? 'Full Backup (Genap/PSAT)' : 'Backup Semester Genap' }}</span>
                 </button>
             </div>
 
@@ -521,6 +535,22 @@ const executeDelete = async () => {
         useSwal().toast('Gagal menghapus arsip backup.', 'error')
     } finally {
         isDeleting.value = false
+    }
+}
+
+const openStorageFolder = async () => {
+    const token = useCookie('auth_token').value
+    try {
+        const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/backup/open-storage`, {
+            headers: { Authorization: `Bearer ${token}` }
+        })
+        if (response.success) {
+            useSwal().toast('Folder berhasil dibuka di Windows Explorer!')
+        } else {
+            useSwal().toast(response.message || 'Gagal membuka folder.', 'warning')
+        }
+    } catch (error) {
+        useSwal().toast('Gagal membuka folder. Pastikan server berjalan di Windows.', 'error')
     }
 }
 

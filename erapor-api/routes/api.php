@@ -36,6 +36,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/restore/{filename}', [App\Http\Controllers\Api\AdminBackupController::class, 'restoreBackup']);
         Route::get('/download/{filename}', [App\Http\Controllers\Api\AdminBackupController::class, 'downloadBackup']);
         Route::delete('/{filename}', [App\Http\Controllers\Api\AdminBackupController::class, 'destroyBackup']);
+        Route::get('/open-storage', [App\Http\Controllers\Api\AdminBackupController::class, 'openStorageFolder']);
     });
 
     // ==========================================
