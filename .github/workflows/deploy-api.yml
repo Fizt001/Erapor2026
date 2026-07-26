@@ -36,3 +36,4 @@ jobs:
             **/storage/framework/views/**
             **/storage/logs/**
             **/tests/**
+            **/public/uploads/**
