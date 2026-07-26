@@ -28,7 +28,7 @@ jobs:
       - name: Generate Static Site
         working-directory: ./erapor-fe
         env:
-          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
+          VITE_API_BASE_URL: https://api.erapor.yatindosystem.net
         run: npx nuxi generate
 
       - name: Install lftp
