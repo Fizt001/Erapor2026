@@ -26,8 +26,8 @@ class SumatifNilaiController extends Controller
         $tahunAjarans = TahunAjaran::orderBy('id', 'desc')->get();
         $kurikulums = Kurikulum::all();
 
-        $selectedTahunId = $request->tahun_ajaran_id ?? (TahunAjaran::where('is_aktif', true)->first()->id ?? null);
-        $selectedKurikulumId = $request->kurikulum_id ?? ($kurikulums->first()->id ?? null);
+        $selectedTahunId = $request->tahun_ajaran_id ?? optional(TahunAjaran::where('is_aktif', true)->first())->id;
+        $selectedKurikulumId = $request->kurikulum_id ?? optional($kurikulums->first())->id;
 
         $periodes = Titimangsa::where('tahun_ajaran_id', $selectedTahunId)
                               ->where('kurikulum_id', $selectedKurikulumId)
@@ -229,17 +229,6 @@ class SumatifNilaiController extends Controller
                   ($nUjian * (($request->b_ujian ?? 40) / 100)) + 
                   (($safeNum($row['psts_lalu']) ?? 0) * (($request->b_psts_lalu ?? 0) / 100)) +
                   ($safeNum($row['literasi']) ?? 0);
-
-            \Illuminate\Support\Facades\Log::info('DEBUG STORE', [
-                'siswa_id' => $row['siswa_id'],
-                'uh1' => $row['uh1'],
-                'maxUh' => $maxUh,
-                'avgUh' => $avgUh,
-                'nUjian' => $nUjian,
-                'b_uh' => $request->b_uh,
-                'b_ujian' => $request->b_ujian,
-                'na' => $na
-            ]);
 
             SumatifNilai::updateOrCreate(
                 [

@@ -64,11 +64,34 @@ class WalasRekapController extends Controller
             ->where('kelas_id', $kelas->id)
             ->get()
             ->sortBy(function($siswa) {
-                return $siswa->name;
+                return optional($siswa->user)->name ?? '';
             })
             ->values();
 
         $masterKurikulum = Kurikulum::all();
+
+        $siswaIds = $siswas->pluck('id')->toArray();
+        $titimangsaIds = $titimangsas->pluck('id')->toArray();
+
+        // Pre-load semua catatan & poin sekali di luar loop (fix N+1: 432 query → 3 query)
+        $allCatatan = \App\Models\CatatanWaliKelas::whereIn('siswa_id', $siswaIds)
+            ->whereIn('titimangsa_id', $titimangsaIds)
+            ->get()
+            ->groupBy(fn($c) => $c->siswa_id . '_' . $c->titimangsa_id);
+
+        $allBkPoin = \App\Models\PoinSiswa::whereIn('siswa_id', $siswaIds)
+            ->whereIn('titimangsa_id', $titimangsaIds)
+            ->where(function($q) {
+                $q->where('is_tambahan_walas', false)->orWhereNull('is_tambahan_walas');
+            })
+            ->get()
+            ->groupBy('siswa_id');
+
+        $allWalasPoin = \App\Models\PoinSiswa::whereIn('siswa_id', $siswaIds)
+            ->whereIn('titimangsa_id', $titimangsaIds)
+            ->where('is_tambahan_walas', true)
+            ->get()
+            ->groupBy(fn($p) => $p->siswa_id . '_' . $p->titimangsa_id);
 
         // Format data: Titimangsa -> list Siswa beserta nilai Absensi dan Catatannya
         $rekapData = [];
@@ -98,21 +121,19 @@ class WalasRekapController extends Controller
             } else {
                 $bulanCetak = date('n', strtotime($titimangsa->tanggal_cetak));
                 if ($bulanCetak >= 7 && $bulanCetak <= 9) {
-                    $months = [7, 8, 9]; // ASTS Ganjil
+                    $months = [7, 8, 9];
                 } elseif ($bulanCetak >= 10 && $bulanCetak <= 12) {
-                    $months = [10, 11, 12]; // ASAS
+                    $months = [10, 11, 12];
                 } elseif ($bulanCetak >= 1 && $bulanCetak <= 3) {
-                    $months = [1, 2, 3]; // ASTS Genap
+                    $months = [1, 2, 3];
                 } else {
-                    $months = [4, 5, 6]; // ASAT
+                    $months = [4, 5, 6];
                 }
             }
 
-            // Determine start and end date for the months in this titimangsa
-            $tahun = $tahunAjaranAktif->tahun; // e.g. "2026/2027" -> 2026
+            $tahun = $tahunAjaranAktif->tahun;
             $startYear = intval(explode('/', $tahun)[0]);
-            
-            // Get all dates where there was a meeting for this class ONCE per titimangsa
+
             $pertemuans = \App\Models\PertemuanGuru::where('kelas_id', $kelas->id)
                 ->where(function($q) use ($months) {
                     foreach ($months as $m) {
@@ -124,13 +145,11 @@ class WalasRekapController extends Controller
                 ->orderBy('jam_selesai', 'desc')
                 ->get();
 
-            // Get all absensi for these meetings ONCE per titimangsa
             $allAbsensi = \App\Models\AbsensiPertemuan::whereIn('pertemuan_id', $pertemuans->pluck('id'))
                 ->get()
                 ->groupBy('siswa_id');
 
             foreach ($siswas as $siswa) {
-                
                 $dailyStatus = [];
                 $siswaAbsensi = isset($allAbsensi[$siswa->id]) ? $allAbsensi[$siswa->id]->keyBy('pertemuan_id') : collect();
 
@@ -138,52 +157,33 @@ class WalasRekapController extends Controller
                     if (!isset($dailyStatus[$pert->tanggal])) {
                         if (isset($siswaAbsensi[$pert->id])) {
                             $status = $siswaAbsensi[$pert->id]->status;
-                            if (in_array($status, ['S', 'I', 'A'])) {
-                                $dailyStatus[$pert->tanggal] = $status;
-                            } else {
-                                $dailyStatus[$pert->tanggal] = 'H';
-                            }
+                            $dailyStatus[$pert->tanggal] = in_array($status, ['S', 'I', 'A']) ? $status : 'H';
                         } else {
-                            // If no record, it's considered Hadir (H). We record it so earlier meetings don't override.
                             $dailyStatus[$pert->tanggal] = 'H';
                         }
                     }
                 }
-                
-                $totalS = 0;
-                $totalI = 0;
-                $totalA = 0;
 
-                foreach ($dailyStatus as $date => $status) {
+                $totalS = 0; $totalI = 0; $totalA = 0;
+                foreach ($dailyStatus as $status) {
                     if ($status === 'S') $totalS++;
                     if ($status === 'I') $totalI++;
                     if ($status === 'A') $totalA++;
                 }
 
-                // Cari Catatan Wali Kelas untuk siswa ini pada periode ini
-                $catatan = CatatanWaliKelas::where('siswa_id', $siswa->id)
-                    ->where('titimangsa_id', $titimangsa->id)
-                    ->first();
+                // Pakai data pre-loaded (fix N+1)
+                $catatanKey = $siswa->id . '_' . $titimangsa->id;
+                $catatanObj = optional($allCatatan->get($catatanKey))->first();
 
-                // BK Points (Base 100)
-                $bkRecords = \App\Models\PoinSiswa::where('siswa_id', $siswa->id)
-                    ->where('titimangsa_id', $titimangsa->id)
-                    ->where(function ($q) {
-                        $q->where('is_tambahan_walas', false)->orWhereNull('is_tambahan_walas');
-                    })->get();
-                
+                $bkPoinList = $allBkPoin->get($siswa->id) ?? collect();
+                $bkPoinListPeriode = $bkPoinList->where('titimangsa_id', $titimangsa->id);
                 $poinBk = 100;
-                foreach ($bkRecords as $pr) {
+                foreach ($bkPoinListPeriode as $pr) {
                     $poinBk -= $pr->skor_pengurang ?? 0;
                     $poinBk += $pr->skor_penambah ?? 0;
                 }
 
-                // Walas Tambahan Poin
-                $walasRecord = \App\Models\PoinSiswa::where('siswa_id', $siswa->id)
-                    ->where('titimangsa_id', $titimangsa->id)
-                    ->where('is_tambahan_walas', true)
-                    ->first();
-                
+                $walasRecord = optional($allWalasPoin->get($catatanKey))->first();
                 $tambahanPoin = 0;
                 $keterangan = '';
                 if ($walasRecord) {
@@ -194,32 +194,28 @@ class WalasRekapController extends Controller
                 $poinFinal = $poinBk + $tambahanPoin;
 
                 $siswaList[] = [
-                    'id' => $siswa->id,
-                    'nama_siswa' => $siswa->user ? $siswa->user->name : '',
-                    'nisn' => $siswa->nis,
-                    'tanggal_keluar' => $siswa->tanggal_keluar,
-                    'absensi' => [
-                        's' => $totalS,
-                        'i' => $totalI,
-                        'a' => $totalA,
-                    ],
-                    'catatan' => $catatan ? $catatan->catatan : '',
-                    'rekomendasi_kenaikan' => $catatan ? $catatan->rekomendasi_kenaikan : 'belum_ditentukan',
-                    'poin' => [
-                        'bk' => $poinBk,
-                        'tambahan' => $tambahanPoin,
+                    'id'                  => $siswa->id,
+                    'nama_siswa'          => optional($siswa->user)->name ?? '',
+                    'nisn'                => $siswa->nis,
+                    'tanggal_keluar'      => $siswa->tanggal_keluar,
+                    'absensi'             => ['s' => $totalS, 'i' => $totalI, 'a' => $totalA],
+                    'catatan'             => $catatanObj ? $catatanObj->catatan : '',
+                    'rekomendasi_kenaikan' => $catatanObj ? $catatanObj->rekomendasi_kenaikan : 'belum_ditentukan',
+                    'poin'                => [
+                        'bk'         => $poinBk,
+                        'tambahan'   => $tambahanPoin,
                         'keterangan' => $keterangan,
-                        'final' => $poinFinal
+                        'final'      => $poinFinal
                     ]
                 ];
             }
 
             $rekapData[] = [
-                'id' => $titimangsa->id,
+                'id'           => $titimangsa->id,
                 'nama_periode' => $titimangsa->nama_periode,
-                'is_aktif' => $titimangsa->is_aktif,
+                'is_aktif'     => $titimangsa->is_aktif,
                 'is_akhir_tahun' => (date('n', strtotime($titimangsa->tanggal_cetak)) >= 4 && date('n', strtotime($titimangsa->tanggal_cetak)) <= 6),
-                'siswa' => $siswaList
+                'siswa'        => $siswaList
             ];
         }
 

@@ -39,13 +39,15 @@ class WalasDashboardStatsController extends Controller
 
         $kelasId = $walas->kelas_id;
 
-        // 1. Populasi Siswa (L/P)
-        $siswaRaw = Siswa::where('kelas_id', $kelasId)->where('status_siswa', 'aktif')->get();
+        // 1. Populasi Siswa (L/P) — eager load user untuk fix $s->name bug
+        $siswaRaw = Siswa::with('user')->where('kelas_id', $kelasId)->where('status_siswa', 'aktif')->get();
         $totalSiswa = $siswaRaw->count();
-        $laki = $siswaRaw->where('jenis_kelamin', 'L')->count();
+        $laki      = $siswaRaw->where('jenis_kelamin', 'L')->count();
         $perempuan = $siswaRaw->where('jenis_kelamin', 'P')->count();
 
         $siswaIds = $siswaRaw->pluck('id')->toArray();
+        // Build lookup id => user->name untuk dipakai di map() di bawah
+        $namaSiswaMap = $siswaRaw->mapWithKeys(fn($s) => [$s->id => optional($s->user)->name ?? '-']);
 
         // 2. Agregat Rata-rata Nilai (Sumatif) per Siswa untuk periode berjalan
         $rataRataQuery = SumatifNilai::select('siswa_id', DB::raw('AVG(na_value) as rata_rata'))
@@ -58,12 +60,11 @@ class WalasDashboardStatsController extends Controller
         $rataRataMap = $rataRataQuery->keyBy('siswa_id');
 
         // Top 10 Siswa
-        $top10 = $rataRataQuery->sortByDesc('rata_rata')->take(10)->map(function($item) use ($siswaRaw) {
-            $s = $siswaRaw->where('id', $item->siswa_id)->first();
+        $top10 = $rataRataQuery->sortByDesc('rata_rata')->take(10)->map(function($item) use ($namaSiswaMap) {
             return [
-                'id' => $item->siswa_id,
-                'nama' => $s ? $s->name : 'Unknown',
-                'nis' => $s ? $s->nis : '-',
+                'id'        => $item->siswa_id,
+                'nama'      => $namaSiswaMap[$item->siswa_id] ?? 'Unknown',
+                'nis'       => '-',
                 'rata_rata' => round($item->rata_rata, 1)
             ];
         })->values();
@@ -89,54 +90,50 @@ class WalasDashboardStatsController extends Controller
 
         $penanganan = [];
         foreach ($siswaRaw as $s) {
-            $poin = isset($poinRaw[$s->id]) ? $poinRaw[$s->id]->total_pengurang : 0;
+            $poin  = isset($poinRaw[$s->id]) ? $poinRaw[$s->id]->total_pengurang : 0;
             $alpha = isset($absenRaw[$s->id]) ? $absenRaw[$s->id]->total_alpha : 0;
-            $score = $poin + ($alpha * 10); // Alpha diberi bobot lebih
+            $score = $poin + ($alpha * 10);
 
             if ($score > 0) {
                 $penanganan[] = [
-                    'id' => $s->id,
-                    'nama' => $s->name,
-                    'poin_pelanggaran' => (int) $poin,
-                    'alpha' => (int) $alpha,
-                    'skor_risiko' => $score
+                    'id'                => $s->id,
+                    'nama'              => $namaSiswaMap[$s->id] ?? '-',
+                    'poin_pelanggaran'  => (int) $poin,
+                    'alpha'             => (int) $alpha,
+                    'skor_risiko'       => $score
                 ];
             }
         }
         usort($penanganan, function($a, $b) { return $b['skor_risiko'] <=> $a['skor_risiko']; });
         $butuhPenanganan = array_slice($penanganan, 0, 8); // Top 8 terbanyak
 
-        // 4. Siswa Berprestasi Tiap Mapel (Tertinggi)
+        // 4. Siswa Berprestasi Tiap Mapel — satu query GROUP BY (fix N+1)
         $prestasiMapel = [];
-        // Ambil mapel_id distinct dari SumatifNilai di kelas ini
-        $mapelList = SumatifNilai::select('mapel_id')
-            ->whereIn('siswa_id', $siswaIds)
+        $topPerMapel = SumatifNilai::whereIn('siswa_id', $siswaIds)
             ->whereNotNull('na_value')
             ->where('na_value', '>', 0)
-            ->distinct()
+            ->selectRaw('mapel_id, MAX(na_value) as nilai_max')
+            ->groupBy('mapel_id')
             ->with('mapel')
             ->get();
 
-        foreach ($mapelList as $m) {
-            // Cari siswa tertinggi di mapel ini
-            $tertinggi = SumatifNilai::whereIn('siswa_id', $siswaIds)
-                ->where('mapel_id', $m->mapel_id)
-                ->whereNotNull('na_value')
-                ->orderBy('na_value', 'desc')
+        foreach ($topPerMapel as $row) {
+            // Ambil siswa_id dengan nilai tertinggi di mapel ini
+            $topRecord = SumatifNilai::whereIn('siswa_id', $siswaIds)
+                ->where('mapel_id', $row->mapel_id)
+                ->where('na_value', $row->nilai_max)
                 ->first();
 
-            if ($tertinggi) {
-                $s = $siswaRaw->where('id', $tertinggi->siswa_id)->first();
+            if ($topRecord) {
                 $prestasiMapel[] = [
-                    'mapel' => $m->mapel ? $m->mapel->nama_mapel : 'Mapel '.$m->mapel_id,
-                    'siswa' => $s ? $s->name : 'Unknown',
-                    'nilai' => $tertinggi->na_value
+                    'mapel'  => optional($row->mapel)->nama_mapel ?? 'Mapel ' . $row->mapel_id,
+                    'siswa'  => $namaSiswaMap[$topRecord->siswa_id] ?? 'Unknown',
+                    'nilai'  => $topRecord->na_value
                 ];
             }
         }
-        
-        // Sort by mapel name
-        usort($prestasiMapel, function($a, $b) { return strcmp($a['mapel'], $b['mapel']); });
+
+        usort($prestasiMapel, fn($a, $b) => strcmp($a['mapel'], $b['mapel']));
 
         // 5. Notifikasi / Peringatan Sistem (PenangananPelanggaran)
         $notifikasiRaw = \App\Models\PenangananPelanggaran::with(['siswa.user', 'guru'])

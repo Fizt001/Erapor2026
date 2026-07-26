@@ -25,13 +25,13 @@
           
           <!-- PINTU DORAEMON WALAS (Desktop) -->
           <div class="pt-6 pb-2 px-3">
-             <NuxtLink v-if="isWalas" to="/guru/walas/dashboard" class="flex flex-col items-center justify-center p-3 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-white shadow-lg shadow-amber-500/20 transition-all hover:-translate-y-1 group/door">
+             <NuxtLink v-if="isWalas" to="/guru/walas/dashboard" class="flex flex-col items-center justify-center p-3 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-white shadow-lg shadow-amber-500/20 transition-all hover:-translate-y-1 group/door overflow-hidden w-full">
                  <span class="text-2xl mb-1 group-hover/door:scale-110 transition-transform">🚪</span>
-                 <span class="text-[10px] font-black uppercase tracking-widest text-center opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">Masuk Role Walas</span>
+                 <span class="text-[10px] font-black uppercase tracking-widest text-center opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity whitespace-nowrap">Masuk Role Walas</span>
              </NuxtLink>
-             <div v-else class="flex flex-col items-center justify-center p-3 rounded-xl bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700/50">
+             <div v-else class="flex flex-col items-center justify-center p-3 rounded-xl bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700/50 overflow-hidden w-full">
                  <span class="text-2xl mb-1 grayscale opacity-50">🔒</span>
-                 <span class="text-[10px] font-black uppercase tracking-widest text-center opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">Bukan Walas</span>
+                 <span class="text-[10px] font-black uppercase tracking-widest text-center opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity whitespace-nowrap">Bukan Walas</span>
              </div>
           </div>
         </nav>

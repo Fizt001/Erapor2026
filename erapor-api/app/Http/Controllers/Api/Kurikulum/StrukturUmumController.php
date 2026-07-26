@@ -26,11 +26,13 @@ class StrukturUmumController extends Controller
                 ->get();
 
             $mapels = Mapel::where('kurikulum_id', $selectedKurikulumId)
-                ->where('kategori', 'umum') 
+                ->whereIn('kelompok', ['A', 'B', 'C', 'D'])
                 ->orderBy('nama_mapel')
                 ->get();
                 
-            $referensi_kelompok = Referensi::where('jenis', 'kelompok_mapel')->orderBy('kode')->get();
+            $referensi_kelompok = Referensi::where('jenis', 'kelompok_mapel')
+                ->whereIn('kode', ['A', 'B', 'C', 'D'])
+                ->orderBy('kode')->get();
         }
 
         return response()->json([

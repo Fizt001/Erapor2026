@@ -356,8 +356,8 @@ class WalasCetakController extends Controller
             'pilihan' => $ekskulPilihan
         ];
 
-        // 6. Kokurikuler
-        $p5 = Kokurikuler::where('siswa_id', $siswa->id)
+        // 6. Kokurikuler / P5
+        $kokurikuler = Kokurikuler::where('siswa_id', $siswa->id)
             ->where('titimangsa_id', $titimangsa->id)
             ->first();
 
@@ -454,10 +454,7 @@ class WalasCetakController extends Controller
             }
         }
 
-        // Fetch Kokurikuler
-        $kokurikuler = \App\Models\Kokurikuler::where('siswa_id', $siswa->id)
-            ->where('titimangsa_id', $titimangsa->id)
-            ->first();
+        // (Kokurikuler sudah diambil di atas, tidak perlu query ulang)
 
         $refPeriode = \App\Models\Referensi::where('jenis', 'nama_periode')->where('nama', $titimangsa->nama_periode)->first();
         $namaPeriodePanjang = $refPeriode && !empty($refPeriode->keterangan) ? $refPeriode->keterangan : $titimangsa->nama_periode;
@@ -501,7 +498,7 @@ class WalasCetakController extends Controller
                 ],
                 'ekskuls' => $ekskuls,
                 'kokurikuler' => $kokurikuler ? $kokurikuler->keterangan : '',
-                'p5' => $p5 ? $p5->keterangan : '',
+                'p5'          => $kokurikuler ? $kokurikuler->keterangan : '',
                 'catatan' => $catatan ? $catatan->catatan : '',
                 'absensi' => $absensi,
                 'poin' => $totalPoin,

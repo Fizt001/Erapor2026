@@ -15,6 +15,18 @@
                 Tahun Ajaran <span class="font-bold text-white bg-indigo-900/50 px-1.5 py-0.5 rounded">{{ dashboardData?.akademik?.tahun_ajaran || '...' }}</span>
                 <br>Periode: <span class="font-bold text-white">{{ dashboardData?.akademik?.periode || '...' }}</span>
               </p>
+              <div class="mt-4 flex items-center justify-between bg-white/10 p-2.5 rounded-xl border border-white/20 backdrop-blur-sm">
+                  <div class="flex items-center gap-2">
+                      <span class="text-lg">⏱️</span>
+                      <div>
+                          <p class="text-[9px] text-sky-200 uppercase tracking-widest font-bold">Total Beban Mengajar</p>
+                          <p class="text-sm font-black text-white leading-none">{{ dashboardData?.stats?.total_jp || 0 }} JP</p>
+                      </div>
+                  </div>
+                  <button @click="showDetailJpModal = true" class="w-8 h-8 rounded-lg bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors" title="Lihat Detail Mengajar">
+                      <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                  </button>
+              </div>
             </div>
             <div class="absolute right-0 bottom-0 opacity-10">
               <svg class="w-24 h-24 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 14l9-5-9-5-9 5 9 5z"></path><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path></svg>
@@ -210,6 +222,58 @@
             </div>
           </Transition>
 
+          <!-- DETAIL JP MODAL -->
+          <Transition name="bounce">
+            <div v-if="showDetailJpModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+              <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" @click="showDetailJpModal = false"></div>
+              
+              <div class="bg-white rounded-[1.5rem] shadow-2xl w-full max-w-lg relative z-10 overflow-hidden transform transition-all flex flex-col max-h-[80vh]">
+                <div class="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50 shrink-0">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-xl font-bold shadow-inner">⏱️</div>
+                    <div>
+                      <h3 class="text-sm font-black text-slate-800 uppercase tracking-wide">Detail Beban Mengajar</h3>
+                      <p class="text-[10px] font-bold text-slate-500 mt-0.5">Total: <span class="text-indigo-600 px-1 bg-indigo-50 rounded">{{ dashboardData?.stats?.total_jp || 0 }} Jam Pelajaran</span></p>
+                    </div>
+                  </div>
+                  <button @click="showDetailJpModal = false" class="w-8 h-8 rounded-full bg-white border border-slate-200 text-slate-400 hover:text-rose-500 hover:bg-rose-50 flex items-center justify-center transition-colors shadow-sm">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                  </button>
+                </div>
+                
+                <div class="p-5 overflow-y-auto custom-scrollbar flex-1">
+                    <div v-if="!dashboardData?.detail_mengajar || dashboardData.detail_mengajar.length === 0" class="text-center py-10 opacity-50">
+                        <div class="text-4xl mb-3 grayscale">📁</div>
+                        <p class="text-xs font-bold text-slate-600">Belum ada kelas yang diampu</p>
+                    </div>
+                    <div v-else class="space-y-4">
+                        <div v-for="(group, idx) in groupedDetailMengajar" :key="idx" class="flex flex-col p-4 rounded-xl border border-slate-200 bg-white shadow-sm hover:border-indigo-300 transition-all group/card">
+                            <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center justify-center text-xs font-black text-indigo-600 shrink-0">{{ idx + 1 }}</div>
+                                    <p class="text-sm font-black text-slate-800 uppercase tracking-wider">{{ group.kelas }}</p>
+                                </div>
+                                <div class="flex items-center gap-2 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
+                                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Total</span>
+                                    <span class="text-xs font-black text-indigo-600">{{ group.totalJpKelas }} JP</span>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div v-for="(mapel, mIdx) in group.mapels" :key="mIdx" class="flex items-center justify-between pl-11 pr-2">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-1.5 h-1.5 rounded-full bg-slate-300 group-hover/card:bg-indigo-300 transition-colors"></div>
+                                        <p class="text-xs font-bold text-slate-600">{{ mapel.nama }}</p>
+                                    </div>
+                                    <span class="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded border border-slate-200/60">{{ mapel.jp }} JP</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </Transition>
+
         </div>
       </div>
     </div>
@@ -227,6 +291,7 @@ ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 const tokenCookie = useCookie('auth_token')
 const showAdsModal = ref(false)
+const showDetailJpModal = ref(false)
 
 onMounted(() => {
   const hasSeenAds = sessionStorage.getItem('hasSeenGuruAdsModal')
@@ -268,6 +333,23 @@ const isSuperadminWithoutImpersonation = computed(() => {
 })
 
 const dashboardData = computed(() => response.value?.data || null)
+
+const groupedDetailMengajar = computed(() => {
+  if (!dashboardData.value?.detail_mengajar) return [];
+  const grouped = {};
+  dashboardData.value.detail_mengajar.forEach(item => {
+    if (!grouped[item.kelas]) {
+      grouped[item.kelas] = {
+        kelas: item.kelas,
+        mapels: [],
+        totalJpKelas: 0
+      };
+    }
+    grouped[item.kelas].mapels.push({ nama: item.mapel, jp: item.jp });
+    grouped[item.kelas].totalJpKelas += item.jp;
+  });
+  return Object.values(grouped);
+})
 
 const chartData = computed(() => {
   const dataList = dashboardData.value?.grafik_nilai || [];

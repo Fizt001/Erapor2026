@@ -26,8 +26,8 @@ class AbsensiController extends Controller
         $tahunAjarans = TahunAjaran::orderBy('id', 'desc')->get();
         $kurikulums = Kurikulum::all();
 
-        $selectedTahunId = $request->tahun_ajaran_id ?? (TahunAjaran::where('is_aktif', true)->first()->id ?? null);
-        $selectedKurikulumId = $request->kurikulum_id ?? ($kurikulums->first()->id ?? null);
+        $selectedTahunId = $request->tahun_ajaran_id ?? optional(TahunAjaran::where('is_aktif', true)->first())->id;
+        $selectedKurikulumId = $request->kurikulum_id ?? optional($kurikulums->first())->id;
 
         $periodes = Titimangsa::where('tahun_ajaran_id', $selectedTahunId)
                               ->where('kurikulum_id', $selectedKurikulumId)
@@ -250,10 +250,40 @@ class AbsensiController extends Controller
         $request->validate([
             'absensi' => 'required|array',
             'absensi.*.siswa_id' => 'required|exists:siswa,id',
-            'absensi.*.status' => 'nullable|in:H,S,I,A,PKL' // Null means empty/not inputted
+            'absensi.*.status' => 'nullable|in:H,S,I,A,PKL'
         ]);
 
         $pertemuan = PertemuanGuru::findOrFail($pertemuan_id);
+
+        // Pre-load di luar loop untuk menghindari N+1
+        $tahunAktif = TahunAjaran::where('is_aktif', true)->first();
+        $mapel = $tahunAktif ? Mapel::find($pertemuan->mapel_id) : null;
+        $nama_mapel = $mapel ? $mapel->nama_mapel : 'Unknown Mapel';
+
+        // Ambil semua siswa_id dari request
+        $allSiswaIds = collect($request->absensi)->pluck('siswa_id')->toArray();
+
+        // Pre-load count S/I/A per siswa untuk mapel ini dalam 1 query per status
+        $kelasIdForYear = $tahunAktif
+            ? DB::table('kelas')->where('tahun_ajaran_id', $tahunAktif->id)->pluck('id')->toArray()
+            : [];
+
+        $pertemuanIdsForMapel = PertemuanGuru::where('mapel_id', $pertemuan->mapel_id)
+            ->whereIn('kelas_id', $kelasIdForYear)
+            ->pluck('id');
+
+        $countsRaw = AbsensiPertemuan::whereIn('siswa_id', $allSiswaIds)
+            ->whereIn('pertemuan_id', $pertemuanIdsForMapel)
+            ->whereIn('status', ['S', 'I', 'A'])
+            ->selectRaw('siswa_id, status, COUNT(*) as total')
+            ->groupBy('siswa_id', 'status')
+            ->get();
+
+        // Build lookup: $counts[$siswa_id][$status] = count
+        $counts = [];
+        foreach ($countsRaw as $row) {
+            $counts[$row->siswa_id][$row->status] = $row->total;
+        }
 
         DB::beginTransaction();
         try {
@@ -265,52 +295,22 @@ class AbsensiController extends Controller
                     continue;
                 }
 
-                $absensiRecord = AbsensiPertemuan::updateOrCreate(
+                AbsensiPertemuan::updateOrCreate(
                     [
                         'pertemuan_id' => $pertemuan_id,
-                        'siswa_id' => $absen['siswa_id'],
+                        'siswa_id'     => $absen['siswa_id'],
                     ],
-                    [
-                        'status' => $absen['status'],
-                    ]
+                    ['status' => $absen['status']]
                 );
-                
-                // ESCALATION LOGIC
+
+                // ESCALATION LOGIC — pakai data yang sudah di-bulk load
                 $status = $absen['status'];
-                if (in_array($status, ['S', 'I', 'A'])) {
-                    // Count total for this mapel in current semester
-                    $tahunAktif = TahunAjaran::where('is_aktif', true)->first();
-                    $countS = AbsensiPertemuan::where('siswa_id', $absen['siswa_id'])
-                        ->where('status', 'S')
-                        ->whereHas('pertemuan', function($q) use ($pertemuan, $tahunAktif) {
-                            $q->where('mapel_id', $pertemuan->mapel_id)
-                              ->whereHas('kelas', function($q2) use ($tahunAktif) {
-                                  $q2->where('tahun_ajaran_id', $tahunAktif->id);
-                              });
-                        })->count();
+                if ($tahunAktif && in_array($status, ['S', 'I', 'A'])) {
+                    // Tambah 1 untuk status yang baru saja disimpan
+                    $countS = ($counts[$absen['siswa_id']]['S'] ?? 0) + ($status === 'S' ? 1 : 0);
+                    $countI = ($counts[$absen['siswa_id']]['I'] ?? 0) + ($status === 'I' ? 1 : 0);
+                    $countA = ($counts[$absen['siswa_id']]['A'] ?? 0) + ($status === 'A' ? 1 : 0);
 
-                    $countI = AbsensiPertemuan::where('siswa_id', $absen['siswa_id'])
-                        ->where('status', 'I')
-                        ->whereHas('pertemuan', function($q) use ($pertemuan, $tahunAktif) {
-                            $q->where('mapel_id', $pertemuan->mapel_id)
-                              ->whereHas('kelas', function($q2) use ($tahunAktif) {
-                                  $q2->where('tahun_ajaran_id', $tahunAktif->id);
-                              });
-                        })->count();
-                        
-                    $countA = AbsensiPertemuan::where('siswa_id', $absen['siswa_id'])
-                        ->where('status', 'A')
-                        ->whereHas('pertemuan', function($q) use ($pertemuan, $tahunAktif) {
-                            $q->where('mapel_id', $pertemuan->mapel_id)
-                              ->whereHas('kelas', function($q2) use ($tahunAktif) {
-                                  $q2->where('tahun_ajaran_id', $tahunAktif->id);
-                              });
-                        })->count();
-
-                    $mapel = Mapel::find($pertemuan->mapel_id);
-                    $nama_mapel = $mapel ? $mapel->nama_mapel : 'Unknown Mapel';
-
-                    // Determine if we need to create a Kasus
                     $kategori = null;
                     $deskripsi = null;
 
@@ -339,15 +339,15 @@ class AbsensiController extends Controller
                     if ($kategori) {
                         \App\Models\PenangananPelanggaran::firstOrCreate(
                             [
-                                'siswa_id' => $absen['siswa_id'],
-                                'tahun_ajaran_id' => $tahunAktif->id,
-                                'kategori' => $kategori,
+                                'siswa_id'          => $absen['siswa_id'],
+                                'tahun_ajaran_id'   => $tahunAktif->id,
+                                'kategori'          => $kategori,
                                 'deskripsi_masalah' => $deskripsi,
                             ],
                             [
-                                'guru_id' => Auth::id(), // The reporting teacher
+                                'guru_id'              => Auth::id(),
                                 'tindakan_penyelesaian' => '',
-                                'status' => 'Proses'
+                                'status'               => 'Proses'
                             ]
                         );
                     }

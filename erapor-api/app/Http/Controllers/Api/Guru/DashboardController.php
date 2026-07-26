@@ -73,6 +73,40 @@ class DashboardController extends Controller
 
         $totalMapelDiajar = $mapelUmum + $mapelKejuruan;
 
+        // Hitung Total JP & Detail Mengajar
+        $pengampus = \App\Models\Pengampu::with(['kelas', 'strukturKurikulum.mapel', 'strukturKejuruan.mapel'])
+            ->where('guru_id', $user->id)
+            ->get();
+
+        $detailMengajar = [];
+        $totalJp = 0;
+
+        foreach ($pengampus as $p) {
+            if ($p->kelas) {
+                $mapel = null;
+                $jp = 0;
+                
+                if ($p->struktur_kurikulum_id && $p->strukturKurikulum) {
+                    $mapel = $p->strukturKurikulum->mapel;
+                    $jp = $p->strukturKurikulum->jp;
+                } else if ($p->struktur_kejuruan_id && $p->strukturKejuruan) {
+                    $mapel = $p->strukturKejuruan->mapel;
+                    $jp = $p->strukturKejuruan->jp;
+                }
+
+                if ($mapel) {
+                    $namaKelas = ($p->kelas->tingkat ? $p->kelas->tingkat . ' ' : '') . $p->kelas->nama_kelas;
+                    
+                    $detailMengajar[] = [
+                        'kelas' => $namaKelas,
+                        'mapel' => $mapel->nama_mapel,
+                        'jp' => $jp
+                    ];
+                    $totalJp += $jp;
+                }
+            }
+        }
+
         $semuaPeriode = collect();
         $totalPertemuan = 0;
         if ($tahunAktif) {
@@ -94,10 +128,6 @@ class DashboardController extends Controller
         $periodeLabels = $semuaPeriode->pluck('nama_periode')->toArray();
 
         if ($tahunAktif && $semuaPeriode->count() > 0) {
-            $pengampus = \App\Models\Pengampu::with(['kelas', 'strukturKurikulum.mapel', 'strukturKejuruan.mapel'])
-                ->where('guru_id', $user->id)
-                ->get();
-            
             foreach($pengampus as $p) {
                 if ($p->kelas) {
                     $mapel = null;
@@ -155,8 +185,10 @@ class DashboardController extends Controller
                     'total_kelas' => $totalKelasDiajar,
                     'total_mapel' => $totalMapelDiajar,
                     'total_siswa' => $totalSiswa,
-                    'total_pertemuan' => $totalPertemuan
+                    'total_pertemuan' => $totalPertemuan,
+                    'total_jp' => $totalJp
                 ],
+                'detail_mengajar' => $detailMengajar,
                 'grafik_nilai' => $grafikNilai,
                 'periode_labels' => $periodeLabels
             ]

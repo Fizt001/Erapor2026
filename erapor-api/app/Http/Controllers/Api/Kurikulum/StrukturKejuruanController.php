@@ -27,7 +27,7 @@ class StrukturKejuruanController extends Controller
 
         if ($selectedKurikulumId) {
             $mapels = Mapel::where('kurikulum_id', $selectedKurikulumId)
-                ->where('kategori', 'kejuruan')
+                ->whereNotIn('kelompok', ['A', 'B', 'C', 'D'])
                 ->orderBy('nama_mapel')
                 ->get();
             

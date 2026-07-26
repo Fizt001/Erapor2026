@@ -227,55 +227,71 @@ class WalasController extends Controller
 
         $kelasId = $context['kelas_id'];
         $tahunId = $context['tahun_ajaran']->id;
+
+        if (!$context['titimangsa']) {
+            return response()->json(['success' => false, 'message' => 'Tidak ada periode aktif.'], 404);
+        }
         $titimangsaId = $context['titimangsa']->id;
 
         // Get total students in class
         $totalSiswa = Siswa::where('kelas_id', $kelasId)->count();
 
-        // Get subjects taught in this class
+        // Get subjects taught in this class (dengan eager load)
         $pengampus = \App\Models\Pengampu::with(['strukturKurikulum.mapel', 'strukturKejuruan.mapel', 'guru'])
             ->where('kelas_id', $kelasId)
             ->get();
 
-        $data = $pengampus->map(function ($pengampu) use ($kelasId, $tahunId, $titimangsaId, $totalSiswa) {
-            $mapelId = null;
+        // Kumpulkan semua mapel_id yang valid dulu
+        $mapelIds = $pengampus->map(function ($p) {
+            if ($p->struktur_kurikulum_id && $p->strukturKurikulum) return $p->strukturKurikulum->mapel_id;
+            if ($p->struktur_kejuruan_id  && $p->strukturKejuruan)  return $p->strukturKejuruan->mapel_id;
+            return null;
+        })->filter()->unique()->values()->toArray();
+
+        // Bulk-load formatif count per mapel (fix N+1)
+        $formatifCounts = \App\Models\FormatifNilai::where('tahun_ajaran_id', $tahunId)
+            ->where('titimangsa_id', $titimangsaId)
+            ->where('kelas_id', $kelasId)
+            ->whereIn('mapel_id', $mapelIds)
+            ->selectRaw('mapel_id, COUNT(DISTINCT siswa_id) as total')
+            ->groupBy('mapel_id')
+            ->pluck('total', 'mapel_id');
+
+        // Bulk-load sumatif count per mapel (fix N+1)
+        $sumatifCounts = \App\Models\SumatifNilai::where('tahun_ajaran_id', $tahunId)
+            ->where('titimangsa_id', $titimangsaId)
+            ->where('kelas_id', $kelasId)
+            ->whereIn('mapel_id', $mapelIds)
+            ->selectRaw('mapel_id, COUNT(DISTINCT siswa_id) as total')
+            ->groupBy('mapel_id')
+            ->pluck('total', 'mapel_id');
+
+        $data = $pengampus->map(function ($pengampu) use ($formatifCounts, $sumatifCounts, $totalSiswa) {
+            $mapelId   = null;
             $namaMapel = '-';
-            
+
             if ($pengampu->struktur_kurikulum_id && $pengampu->strukturKurikulum) {
-                $mapelId = $pengampu->strukturKurikulum->mapel_id;
-                $namaMapel = $pengampu->strukturKurikulum->mapel->nama_mapel ?? '-';
+                $mapelId   = $pengampu->strukturKurikulum->mapel_id;
+                $namaMapel = optional($pengampu->strukturKurikulum->mapel)->nama_mapel ?? '-';
             } elseif ($pengampu->struktur_kejuruan_id && $pengampu->strukturKejuruan) {
-                $mapelId = $pengampu->strukturKejuruan->mapel_id;
-                $namaMapel = $pengampu->strukturKejuruan->mapel->nama_mapel ?? '-';
+                $mapelId   = $pengampu->strukturKejuruan->mapel_id;
+                $namaMapel = optional($pengampu->strukturKejuruan->mapel)->nama_mapel ?? '-';
             }
 
             if (!$mapelId) return null;
 
-            // Count unique students who have formatif scores for this subject
-            $formatifCount = \App\Models\FormatifNilai::where('mapel_id', $mapelId)
-                ->where('tahun_ajaran_id', $tahunId)
-                ->where('titimangsa_id', $titimangsaId)
-                ->where('kelas_id', $kelasId)
-                ->distinct('siswa_id')
-                ->count('siswa_id');
-
-            // Count unique students who have sumatif scores for this subject
-            $sumatifCount = \App\Models\SumatifNilai::where('mapel_id', $mapelId)
-                ->where('tahun_ajaran_id', $tahunId)
-                ->where('titimangsa_id', $titimangsaId)
-                ->where('kelas_id', $kelasId)
-                ->distinct('siswa_id')
-                ->count('siswa_id');
+            $formatifCount = $formatifCounts[$mapelId] ?? 0;
+            $sumatifCount  = $sumatifCounts[$mapelId] ?? 0;
 
             return [
-                'mapel_id' => $mapelId,
-                'nama_mapel' => $namaMapel,
-                'guru_pengampu' => $pengampu->guru->name ?? '-',
-                'total_siswa' => $totalSiswa,
+                'mapel_id'       => $mapelId,
+                'nama_mapel'     => $namaMapel,
+                'guru_pengampu'  => optional($pengampu->guru)->name ?? '-',
+                'total_siswa'    => $totalSiswa,
                 'formatif_terisi' => $formatifCount,
-                'sumatif_terisi' => $sumatifCount,
+                'sumatif_terisi'  => $sumatifCount,
                 'status_formatif' => $formatifCount >= $totalSiswa && $totalSiswa > 0,
-                'status_sumatif' => $sumatifCount >= $totalSiswa && $totalSiswa > 0,
+                'status_sumatif'  => $sumatifCount  >= $totalSiswa && $totalSiswa > 0,
             ];
         })->filter()->values();
 
