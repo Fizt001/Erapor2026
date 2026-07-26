@@ -100,7 +100,7 @@
         <NuxtPage />
         
         <!-- Footer Info -->
-        <div class="mt-10 pt-4 border-t border-slate-200 text-center pb-4">
+        <div class="mt-10 pt-4 border-t border-slate-200 text-center pb-4 print:hidden">
             <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Created by <span class="text-sky-600">SMK-Yatindo</span></p>
         </div>
       </main>

@@ -200,6 +200,17 @@
                     </tr>
                   </tbody>
                 </table>
+
+                <!-- Tanda Tangan Khusus Print -->
+                <div class="mt-12 hidden print:flex justify-end text-center text-black mb-8 px-6 pb-6">
+                    <div class="w-64">
+                        <p class="text-[14px] font-semibold tracking-wide capitalize">{{ printData.tempat_cetak }}, {{ printData.tanggal_cetak }}</p>
+                        <p class="mt-1 text-[13px] font-bold">Guru Mata Pelajaran</p>
+                        <div class="mt-24 flex flex-col items-center">
+                            <p class="w-full border-b-2 border-black font-black pb-1 truncate text-[15px] uppercase">{{ printData.guru }}</p>
+                        </div>
+                    </div>
+                </div>
               </div>
             </div>
 
@@ -253,12 +264,18 @@ const printData = computed(() => {
   
   const periodeObj = references.periodes.find(p => p.id === filter.titimangsa_id)
   const periode = periodeObj ? (periodeObj.nama_periode_panjang || periodeObj.nama_periode) : '-'
+  const tempatCetak = periodeObj?.tempat_cetak || 'Bekasi'
+
+  const dateNow = new Date()
+  const tanggalCetak = dateNow.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })
   
   return {
     guru: guruName,
     mapel,
     kelas,
-    periode
+    periode,
+    tempat_cetak: tempatCetak,
+    tanggal_cetak: tanggalCetak
   }
 })
 
