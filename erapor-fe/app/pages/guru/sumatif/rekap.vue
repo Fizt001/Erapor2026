@@ -378,48 +378,16 @@ onMounted(async () => {
   /* Sembunyikan elemen layout global dan komponen yang tidak di-print */
   aside,
   header,
-  .\print\:hidden,
-  .xl\:w-\[360px\] { /* dock kiri */
+  .print\:hidden {
     display: none !important;
   }
   
-  /* Reset layout agar konten utama bisa mengembang dan mencetak dengan benar */
-  body, 
-  html, 
-  #__nuxt, 
-  #__layout,
-  main,
-  .h-full,
-  .min-h-0,
-  .flex-1,
-  .flex-col,
-  .xl\:flex-row,
-  .bg-slate-50,
-  .p-6,
-  .lg\:p-8,
-  .max-w-6xl,
-  .mx-auto,
-  .print-container,
-  .print-full,
-  .print-scrollable,
-  .overflow-hidden,
-  .overflow-auto,
-  .relative,
-  .z-0 {
+  /* Reset komponen root agar bisa print berhalaman-halaman */
+  body, html, #__nuxt, #__layout {
     display: block !important;
-    position: static !important;
     height: auto !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    width: 100% !important;
-    max-width: none !important;
     overflow: visible !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    box-shadow: none !important;
-    border: none !important;
-    background: transparent !important;
-    transform: none !important;
+    background: white !important;
   }
 
   /* Memastikan print header tampil */
