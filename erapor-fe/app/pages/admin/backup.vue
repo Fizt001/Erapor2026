@@ -545,12 +545,35 @@ const openStorageFolder = async () => {
             headers: { Authorization: `Bearer ${token}` }
         })
         if (response.success) {
-            useSwal().toast('Folder berhasil dibuka di Windows Explorer!')
-        } else {
-            useSwal().toast(response.message || 'Gagal membuka folder.', 'warning')
+            useSwal().fire({
+                title: '📁 Folder Upload File',
+                html: `
+                    <p style="font-size:12px;color:#64748b;margin-bottom:12px;">Copy path di bawah ini, lalu paste di <b>Windows Explorer</b>:</p>
+                    <div style="background:#f1f5f9;border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:8px;">
+                        <code style="font-size:11px;color:#0f172a;word-break:break-all;flex:1;text-align:left;">${response.path}</code>
+                        <button id="copyPathBtn" style="background:#10b981;color:white;border:none;border-radius:6px;padding:4px 10px;font-size:10px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;">Copy</button>
+                    </div>
+                    <p style="font-size:10px;color:#94a3b8;margin-top:10px;">Salin file foto/gambar Anda ke dalam folder ini.</p>
+                `,
+                confirmButtonText: 'Tutup',
+                confirmButtonColor: '#10b981',
+                didOpen: () => {
+                    document.getElementById('copyPathBtn').addEventListener('click', () => {
+                        navigator.clipboard.writeText(response.path).then(() => {
+                            const btn = document.getElementById('copyPathBtn')
+                            btn.textContent = 'Tersalin! ✓'
+                            btn.style.background = '#6366f1'
+                            setTimeout(() => {
+                                btn.textContent = 'Copy'
+                                btn.style.background = '#10b981'
+                            }, 2000)
+                        })
+                    })
+                }
+            })
         }
     } catch (error) {
-        useSwal().toast('Gagal membuka folder. Pastikan server berjalan di Windows.', 'error')
+        useSwal().toast('Gagal mengambil path folder.', 'error')
     }
 }
 

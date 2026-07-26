@@ -513,16 +513,13 @@ class AdminBackupController extends Controller
 
     public function openStorageFolder()
     {
-        try {
-            $path = storage_path('app/public');
-            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-                pclose(popen('start "" "' . $path . '"', "r"));
-                return response()->json(['success' => true, 'message' => 'Folder berhasil dibuka']);
-            } else {
-                return response()->json(['success' => false, 'message' => 'Sistem operasi tidak mendukung fitur ini']);
-            }
-        } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        $path = storage_path('app/public');
+        if (!File::exists($path)) {
+            File::makeDirectory($path, 0755, true);
         }
+        return response()->json([
+            'success' => true,
+            'path' => $path
+        ]);
     }
 }
