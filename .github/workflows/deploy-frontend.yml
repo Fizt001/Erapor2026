@@ -29,13 +29,16 @@ jobs:
         working-directory: ./erapor-fe
         run: npx nuxi generate --dotenv .env.production
 
+      - name: Install lftp
+        run: sudo apt-get install -y lftp
+
       - name: Deploy to cPanel via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./erapor-fe/.output/public/
-          server-dir: ${{ secrets.FTP_SERVER_DIR || '/public_html/' }}
-          protocol: ftp
-          security: loose
+        run: |
+          lftp -u "${{ secrets.FTP_USERNAME }}","${{ secrets.FTP_PASSWORD }}" ftp://${{ secrets.FTP_SERVER }} <<EOF
+          set ftp:ssl-allow no
+          set net:timeout 60
+          set net:max-retries 3
+          mirror --reverse --delete --verbose \
+            ./erapor-fe/.output/public/ ${{ secrets.FTP_SERVER_DIR }}
+          bye
+          EOF

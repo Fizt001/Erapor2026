@@ -16,26 +16,24 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Install lftp
+        run: sudo apt-get install -y lftp
+
       - name: Deploy API to cPanel via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./erapor-api/
-          server-dir: /public_html/erapor/erapor-api/
-          protocol: ftp
-          security: loose
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            **/vendor/**
-            **/.env
-            **/.env.*
-            **/storage/framework/cache/**
-            **/storage/framework/sessions/**
-            **/storage/framework/views/**
-            **/storage/logs/**
-            **/tests/**
-            **/public/uploads/**
+        run: |
+          lftp -u "${{ secrets.FTP_USERNAME }}","${{ secrets.FTP_PASSWORD }}" ftp://${{ secrets.FTP_SERVER }} <<EOF
+          set ftp:ssl-allow no
+          set net:timeout 60
+          set net:max-retries 3
+          mirror --reverse --delete --verbose \
+            --exclude-glob .git* \
+            --exclude-glob node_modules/ \
+            --exclude-glob vendor/ \
+            --exclude-glob .env \
+            --exclude-glob .env.* \
+            --exclude-glob storage/framework/cache/ \
+            --exclude-glob storage/logs/ \
+            --exclude-glob public/uploads/ \
+            ./erapor-api/ /public_html/erapor/erapor-api/
+          bye
+          EOF
