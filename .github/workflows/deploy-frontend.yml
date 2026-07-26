@@ -37,3 +37,4 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./erapor-fe/.output/public/
           server-dir: ${{ secrets.FTP_SERVER_DIR || '/public_html/' }}
+          passive-mode: true

@@ -24,6 +24,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./erapor-api/
           server-dir: /public_html/erapor/erapor-api/
+          passive-mode: true
           exclude: |
             **/.git*
             **/.git*/**
