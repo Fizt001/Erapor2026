@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 class Mapel extends Model
 {
    protected $fillable = [
-        'kurikulum_id', 'kode_mapel', 'nama_mapel', 'kategori', 'kelompok'
+        'kurikulum_id', 'kode_mapel', 'nama_mapel', 'kelompok'
     ];
     public function kurikulum()
     {

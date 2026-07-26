@@ -13,7 +13,10 @@
                     <span v-else class="text-xl">🎓</span>
                 </div>
             </div>
-            <h1 class="text-xl font-black text-white tracking-tight">e-Rapor <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-rose-400">SMK</span></h1>
+            <div class="flex flex-col">
+                <h1 class="text-xl font-black text-white tracking-tight leading-none">e-Rapor <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-rose-400">SMK</span></h1>
+                <span class="text-[10px] font-bold text-slate-200 uppercase tracking-widest mt-1">{{ sekolah?.nama_sekolah || 'SMK Tinta Emas Indonesia' }}</span>
+            </div>
         </div>
         <!-- Desktop Menu -->
         <div class="hidden lg:flex items-center gap-6">
@@ -54,51 +57,95 @@
                 <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')]"></div>
             </div>
 
-            <div class="relative z-10 flex flex-col lg:flex-row items-center gap-8 lg:gap-12 w-full max-w-5xl mx-auto mt-4 lg:mt-0">
-                <!-- Slideshow Left -->
-                <div class="w-full sm:max-w-md lg:max-w-none lg:w-[45%] flex-shrink-0 relative group">
-                    <div class="relative rounded-2xl p-1 bg-gradient-to-br from-orange-500 via-rose-500 to-violet-600 shadow-[0_0_40px_-10px_rgba(249,115,22,0.4)]">
-                        <div class="relative rounded-xl overflow-hidden aspect-[4/3] bg-[#090C15]">
-                            <template v-if="slidePhotos.length > 0">
-                                <div v-for="(photo, idx) in slidePhotos" :key="idx"
-                                    class="absolute inset-0 w-full h-full transition-opacity duration-1000"
-                                    :class="currentSlide === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'">
-                                    <img :src="photo" alt="Foto Sekolah" class="w-full h-full object-cover opacity-90 mix-blend-luminosity hover:mix-blend-normal transition-all duration-500">
+            <div class="relative z-10 flex flex-col w-full max-w-5xl mx-auto mt-4 lg:mt-0 gap-10">
+                <!-- TOP SECTION: Photo & Text -->
+                <div class="flex flex-col lg:flex-row items-center lg:items-start gap-8 lg:gap-12 w-full">
+                    
+                    <!-- Foto Sekolah Top (Slideshow) -->
+                    <div class="w-full sm:max-w-md lg:max-w-none lg:w-[45%] flex-shrink-0 relative group">
+                        <div class="relative rounded-2xl p-1 bg-gradient-to-br from-orange-500 via-rose-500 to-violet-600 shadow-[0_0_40px_-10px_rgba(249,115,22,0.4)]">
+                            <div class="relative rounded-xl overflow-hidden aspect-[4/3] bg-[#090C15]">
+                                <!-- Slideshow jika ada foto -->
+                                <template v-if="slidePhotos.length > 0">
+                                    <div v-for="(photo, idx) in slidePhotos" :key="idx"
+                                        class="absolute inset-0 w-full h-full transition-opacity duration-1000"
+                                        :class="currentSlide === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'">
+                                        <img :src="photo" alt="Foto Sekolah" class="w-full h-full object-cover opacity-90 mix-blend-luminosity hover:mix-blend-normal transition-all duration-500">
+                                    </div>
+                                    <div v-if="slidePhotos.length > 1" class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-full">
+                                        <button v-for="(_, idx) in slidePhotos" :key="idx" @click="currentSlide = idx"
+                                            class="w-1.5 h-1.5 rounded-full transition-all"
+                                            :class="currentSlide === idx ? 'bg-orange-500 scale-125 w-3' : 'bg-white/50'"
+                                        ></button>
+                                    </div>
+                                </template>
+                                <!-- Placeholder jika belum ada foto -->
+                                <div v-else class="flex flex-col items-center justify-center h-full w-full text-center p-4">
+                                    <span class="text-5xl lg:text-6xl mb-2 opacity-50">🏫</span>
+                                    <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Foto Sekolah</span>
                                 </div>
-                                <div v-if="slidePhotos.length > 1" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full">
-                                    <button v-for="(_, idx) in slidePhotos" :key="idx" @click="currentSlide = idx"
-                                        class="w-2 h-2 rounded-full transition-all"
-                                        :class="currentSlide === idx ? 'bg-orange-500 scale-125 w-4' : 'bg-white/50'"
-                                    ></button>
-                                </div>
-                            </template>
-                            <div v-else class="text-center text-slate-500 flex flex-col items-center justify-center h-full w-full">
-                                <span class="text-5xl lg:text-6xl mb-2 block opacity-50">🏫</span>
-                                <span class="text-[10px] font-bold uppercase tracking-widest px-4 text-center">Foto Sekolah</span>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Text Right -->
+                    <div class="w-full lg:w-[55%] text-center lg:text-left mt-6 lg:mt-0 flex flex-col items-center lg:items-start px-4 lg:px-0">
+                        <h2 class="text-3xl sm:text-4xl lg:text-5xl xl:text-7xl font-black text-white leading-tight mb-2 tracking-tight sm:whitespace-nowrap">
+                            e-Rapor
+                        </h2>
+                        
+                        <h3 class="text-lg sm:text-xl lg:text-2xl xl:text-4xl font-bold text-slate-200 mb-8 drop-shadow-md leading-snug">
+                            Kurikulum Nasional
+                        </h3>
+                        
+                        <p class="text-sm sm:text-base lg:text-lg text-slate-400 font-medium italic leading-relaxed max-w-lg mx-auto lg:mx-0">
+                            <span class="text-slate-200 font-semibold">Dashboard Business Intelligence</span><br>
+                            Sebagai Early Warning System<br>
+                            Pencapaian Akademik Siswa.
+                        </p>
+                    </div>
                 </div>
 
-                <!-- Text Right -->
-                <div class="w-full lg:w-[60%] xl:w-[55%] text-center lg:text-left mt-6 lg:mt-0 flex flex-col items-center lg:items-start px-4 lg:px-0">
-                    <h2 class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black text-white leading-tight mb-2 tracking-tight sm:whitespace-nowrap">
-                        e-Rapor
-                    </h2>
-                    
-                    <h3 class="text-sm sm:text-base lg:text-lg xl:text-xl font-bold text-slate-200 mb-6 uppercase tracking-widest drop-shadow-md leading-snug">
-                        {{ sekolah?.nama_sekolah || 'SMK Tinta Emas Indonesia' }}
-                    </h3>
-                    
-                    <div class="inline-block bg-white/5 backdrop-blur-md border border-white/10 rounded-full px-4 py-1.5 mb-6 shadow-xl">
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-rose-400 font-black uppercase tracking-widest text-[10px]">Versi : 2026.1</span>
+                <!-- BOTTOM SECTION: 3 CARDS -->
+                <div class="w-full">
+                    <div class="bg-[#1A1333] border-b border-white/5 py-2 px-4 mb-4 text-center shadow-lg">
+                        <h4 class="text-white font-bold tracking-widest text-sm lg:text-base uppercase">GRAFIK PERTUMBUHAN PENCAPAIAN AKADEMIK</h4>
                     </div>
                     
-                    <p class="text-sm sm:text-base lg:text-lg text-slate-400 font-medium italic leading-relaxed max-w-lg mx-auto lg:mx-0">
-                        <span class="text-slate-200 font-semibold">Dashboard Business Intelligence</span><br>
-                        Sebagai Early Warning System<br>
-                        Pencapaian Akademik Siswa.
-                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Card Kelas X -->
+                        <div class="flex flex-col gap-2">
+                            <h5 class="text-white font-bold text-lg px-1">Kelas X</h5>
+                            <div class="relative rounded-2xl p-0.5 bg-gradient-to-r from-orange-500 to-violet-600 h-36 lg:h-44 shadow-[0_0_20px_-5px_rgba(249,115,22,0.3)]">
+                                <div class="w-full h-full bg-[#090C15] rounded-xl flex flex-col items-center justify-center text-center p-4">
+                                    <span class="text-4xl lg:text-5xl mb-2 opacity-50">🏫</span>
+                                    <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Foto Sekolah</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card Kelas XI -->
+                        <div class="flex flex-col gap-2">
+                            <h5 class="text-white font-bold text-lg px-1">Kelas XI</h5>
+                            <div class="relative rounded-2xl p-0.5 bg-gradient-to-r from-orange-500 to-violet-600 h-36 lg:h-44 shadow-[0_0_20px_-5px_rgba(249,115,22,0.3)]">
+                                <div class="w-full h-full bg-[#090C15] rounded-xl flex flex-col items-center justify-center text-center p-4">
+                                    <span class="text-4xl lg:text-5xl mb-2 opacity-50">🏫</span>
+                                    <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Foto Sekolah</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card Kelas XII -->
+                        <div class="flex flex-col gap-2">
+                            <h5 class="text-white font-bold text-lg px-1">Kelas XII</h5>
+                            <div class="relative rounded-2xl p-0.5 bg-gradient-to-r from-orange-500 to-violet-600 h-36 lg:h-44 shadow-[0_0_20px_-5px_rgba(249,115,22,0.3)]">
+                                <div class="w-full h-full bg-[#090C15] rounded-xl flex flex-col items-center justify-center text-center p-4">
+                                    <span class="text-4xl lg:text-5xl mb-2 opacity-50">🏫</span>
+                                    <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Foto Sekolah</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

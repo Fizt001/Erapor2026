@@ -13,7 +13,9 @@
         </button>
       </div>
 
-      <!-- Panel Dock Kiri (Form) -->
+      <!-- =============================================== -->
+      <!-- PANEL DOCK KIRI (Form Input)                    -->
+      <!-- =============================================== -->
       <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', activeTabMobile === 'form' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[60px]' : '']">
         
         <div class="p-4 pb-2 shrink-0 z-10 relative">
@@ -32,6 +34,7 @@
         <div class="flex-1 overflow-y-auto custom-scrollbar p-4 pb-6">
             <form @submit.prevent="saveData" class="space-y-4">
                 
+                <!-- Pilih Kurikulum -->
                 <div>
                     <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Pilih Kurikulum</label>
                     <select v-model="formData.kurikulum_id" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-700 outline-none cursor-pointer">
@@ -40,29 +43,50 @@
                     </select>
                 </div>
 
+                <!-- Pilih Kelompok (WAJIB, langsung setelah kurikulum) -->
                 <div>
-                    <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Kategori</label>
-                    <select v-model="formData.kategori" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-700 outline-none cursor-pointer" @change="fetchData">
-                        <option v-for="kat in refKategoriMapel" :key="kat.kode" :value="kat.kode">{{ kat.nama }}</option>
+                    <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">
+                        Kelompok Mapel <span class="text-rose-500">*</span>
+                    </label>
+                    <select v-model="formData.kelompok" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-700 outline-none cursor-pointer">
+                        <option value="" disabled>-- Pilih Kelompok --</option>
+                        <!-- Kelompok baku A, B, C, D -->
+                        <optgroup label="Kelompok Baku">
+                            <option v-for="kel in refKelompokMapel" :key="kel.kode" :value="kel.kode">
+                                {{ kel.kode }} &ndash; {{ kel.nama }}
+                            </option>
+                        </optgroup>
+                        <!-- Input kode produktif khusus jika tidak ada di daftar -->
                     </select>
+                    <!-- Tip untuk kode produktif khusus -->
+                    <p class="text-[9px] text-amber-600 font-bold mt-1.5 ml-1">
+                        💡 Mapel Kejuruan-Produktif? Gunakan kode kustom di bawah ini.
+                    </p>
                 </div>
 
-                <div v-if="refKelompokMapel.length > 0">
-                    <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Kelompok (Opsional)</label>
-                    <select v-model="formData.kelompok" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-700 outline-none cursor-pointer">
-                        <option value="">-- Tanpa Kelompok --</option>
-                        <option v-for="kel in refKelompokMapel" :key="kel.kode" :value="kel.kode">{{ kel.nama }}</option>
-                    </select>
+                <!-- Kode Kelompok Custom (untuk Kejuruan-Produktif) -->
+                <div>
+                    <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">
+                        Kode Kelompok Kustom
+                        <span class="normal-case text-[9px] text-slate-400 font-semibold">(utk. Produktif, contoh: 251.XI)</span>
+                    </label>
+                    <input type="text" v-model="formData.kelompok" placeholder="Contoh: 251.XI, 482.X, dsb."
+                        class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-800 placeholder:text-slate-400 outline-none">
+                    <p class="text-[9px] text-slate-400 font-semibold mt-1 ml-1">Mengisi field ini akan override pilihan dropdown di atas.</p>
                 </div>
 
+                <!-- Kode Mapel -->
                 <div>
                     <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Kode Mapel</label>
-                    <input type="text" v-model="formData.kode_mapel" required placeholder="Contoh: B.IND, MTK" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-800 placeholder:text-slate-400 outline-none">
+                    <input type="text" v-model="formData.kode_mapel" required placeholder="Contoh: A1, B3, 251.X.A"
+                        class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-800 placeholder:text-slate-400 outline-none">
                 </div>
 
+                <!-- Nama Mapel -->
                 <div>
                     <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Nama Mapel</label>
-                    <input type="text" v-model="formData.nama_mapel" required placeholder="Nama lengkap mata pelajaran" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-800 placeholder:text-slate-400 outline-none">
+                    <input type="text" v-model="formData.nama_mapel" required placeholder="Nama lengkap mata pelajaran"
+                        class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-800 placeholder:text-slate-400 outline-none">
                 </div>
                 
                 <div class="pt-4 border-t border-slate-100 flex gap-3">
@@ -79,41 +103,43 @@
         </div>
       </div>
 
-      <!-- Panel Flow Kanan (Tabel) -->
+      <!-- =============================================== -->
+      <!-- PANEL FLOW KANAN (Tabel Data Global)            -->
+      <!-- =============================================== -->
       <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative', activeTabMobile === 'table' || isDesktop ? 'flex' : 'hidden', !isDesktop ? 'pt-[60px]' : '']">
         <div class="p-2 sm:pt-3 sm:pb-6 sm:px-6 lg:pt-3 lg:pb-8 lg:px-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
           <div class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
             
-            <!-- Header Flow -->
-            <div class="px-6 py-5 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0 z-10 bg-white">
-                <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-2xl bg-amber-50 shadow-sm border border-amber-100 flex items-center justify-center text-xl hidden sm:flex text-amber-500"><AppIcon name="book-open" class="w-6 h-6" /></div>
-                    <div>
-                        <h3 class="text-sm font-black uppercase tracking-widest text-amber-700">Daftar Mata Pelajaran</h3>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5 hidden sm:block">Filter Kategori & Kurikulum</p>
+            <!-- Header Tabel -->
+            <div class="px-6 py-4 border-b border-slate-100 shrink-0 z-10 bg-white">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                    <!-- Judul -->
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-2xl bg-amber-50 shadow-sm border border-amber-100 flex items-center justify-center text-xl hidden sm:flex text-amber-500"><AppIcon name="book-open" class="w-6 h-6" /></div>
+                        <div>
+                            <h3 class="text-sm font-black uppercase tracking-widest text-amber-700">Daftar Mata Pelajaran</h3>
+                            <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5 hidden sm:block">
+                                {{ filteredCount }} mapel | Diurutkan berdasarkan kode kelompok
+                            </p>
+                        </div>
                     </div>
-                </div>
-                <div class="flex items-center gap-2 w-full sm:w-auto">
-                    <select v-model="filterKurikulum" @change="fetchData" class="flex-1 sm:flex-none px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 text-xs font-bold text-slate-700 outline-none cursor-pointer">
-                        <option value="">Semua Kurikulum</option>
-                        <option v-for="kur in kurikulums" :key="kur.id" :value="kur.id">{{ kur.nama_kurikulum }}</option>
-                    </select>
-                    <button @click="fetchData" class="w-10 h-10 rounded-xl bg-slate-100 text-slate-500 flex items-center justify-center hover:bg-slate-200 hover:text-slate-700 font-bold transition-colors shrink-0" title="Refresh">
-                        <AppIcon name="arrow-path" class="w-5 h-5" />
-                    </button>
-                </div>
-            </div>
-
-            <!-- Tabs Kategori in Flow Header -->
-            <div class="bg-white px-4 pt-2 border-b border-slate-200 shrink-0 shadow-sm overflow-x-auto flex gap-2">
-                <button v-for="kat in refKategoriMapel" :key="kat.kode"
-                    @click="kategoriTab = kat.kode; fetchData()" 
-                    class="flex-1 sm:flex-none text-center px-6 py-2 rounded-t-xl text-xs font-black uppercase tracking-widest transition-all whitespace-nowrap"
-                    :class="kategoriTab === kat.kode ? 'bg-amber-50 text-amber-600 border-b-2 border-amber-600 shadow-sm' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-50'">
-                    {{ kat.nama }}
-                </button>
-                <div v-if="refKategoriMapel.length === 0" class="py-2 px-6 text-sm text-rose-500 font-bold w-full text-center">
-                    <AppIcon name="exclamation-triangle" class="w-5 h-5 inline-block mr-1" /> Silakan isi Master Database untuk Kategori Mapel.
+                    <!-- Filter Controls -->
+                    <div class="flex items-center gap-2 w-full sm:w-auto flex-wrap sm:flex-nowrap">
+                        <!-- Filter Kurikulum -->
+                        <select v-model="filterKurikulum" @change="fetchData" class="flex-1 sm:flex-none px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 text-xs font-bold text-slate-700 outline-none cursor-pointer">
+                            <option value="">Semua Kurikulum</option>
+                            <option v-for="kur in kurikulums" :key="kur.id" :value="kur.id">{{ kur.nama_kurikulum }}</option>
+                        </select>
+                        <!-- Filter Kelompok -->
+                        <select v-model="filterKelompok" @change="fetchData" class="flex-1 sm:flex-none px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 text-xs font-bold text-slate-700 outline-none cursor-pointer">
+                            <option value="">Semua Kelompok</option>
+                            <option v-for="kel in refKelompokMapel" :key="kel.kode" :value="kel.kode">{{ kel.kode }} – {{ kel.nama }}</option>
+                        </select>
+                        <!-- Refresh -->
+                        <button @click="fetchData" class="w-9 h-9 rounded-xl bg-slate-100 text-slate-500 flex items-center justify-center hover:bg-slate-200 hover:text-slate-700 transition-colors shrink-0" title="Refresh">
+                            <AppIcon name="arrow-path" class="w-4 h-4" />
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -127,57 +153,72 @@
 
                 <!-- Empty State -->
                 <div v-else-if="!mapels || mapels.length === 0" class="flex-grow flex items-center justify-center flex-col p-16 text-center h-full">
-                    <div class="text-6xl opacity-20 mb-4"><AppIcon name="book-open" class="w-6 h-6" /></div>
+                    <div class="text-5xl mb-4">📚</div>
                     <p class="text-sm font-black uppercase tracking-widest text-slate-500">Belum ada data mapel.</p>
+                    <p class="text-xs text-slate-400 mt-1">Tambahkan mapel melalui form di sebelah kiri.</p>
                 </div>
 
-                <!-- Table Content for Grouped View -->
-                <div v-else-if="mapels.length > 0 && refKelompokMapel.length > 0" class="p-4 sm:p-6 space-y-4">
-                    <div v-for="(groupList, kelompok) in groupedMapels" :key="kelompok" class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-                        <div @click="toggleCollapse(kelompok)" class="px-6 py-3 bg-slate-50 border-b border-slate-100 flex items-center justify-between cursor-pointer hover:bg-slate-100 transition-colors">
+                <!-- Grouped Table Content -->
+                <div v-else class="p-4 sm:p-6 space-y-4">
+                    <div v-for="(groupList, kelompokKey) in groupedMapels" :key="kelompokKey"
+                         class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                        
+                        <!-- Group Header -->
+                        <div @click="toggleCollapse(kelompokKey)"
+                             class="px-5 py-3 bg-gradient-to-r from-slate-50 to-amber-50/30 border-b border-slate-100 flex items-center justify-between cursor-pointer hover:bg-amber-50/50 transition-colors">
                             <div class="flex items-center gap-3">
-                                <span class="w-6 h-6 rounded-md bg-white border border-slate-200 flex items-center justify-center text-[10px] text-slate-400 font-black shadow-sm">{{ kelompok.charAt(0) }}</span>
-                                <h4 class="font-black text-slate-700 text-xs uppercase tracking-widest">
-                                    Kelompok {{ kelompok }}
-                                    <span class="text-[9px] text-slate-400 font-bold ml-1.5 normal-case" v-if="groupList.length > 0 && groupList[0].kurikulum">
-                                        ({{ groupList[0].kurikulum.nama_kurikulum }})
-                                    </span>
-                                </h4>
+                                <span class="w-7 h-7 rounded-lg bg-amber-100 border border-amber-200 flex items-center justify-center text-[10px] text-amber-700 font-black shadow-sm">
+                                    {{ kelompokKey.charAt(0) }}
+                                </span>
+                                <div>
+                                    <h4 class="font-black text-slate-700 text-xs uppercase tracking-widest">
+                                        Kelompok {{ kelompokKey }}
+                                    </h4>
+                                    <p class="text-[9px] text-slate-400 font-semibold mt-0.5" v-if="getKelompokNama(kelompokKey)">
+                                        {{ getKelompokNama(kelompokKey) }}
+                                    </p>
+                                </div>
                             </div>
-                            <div class="flex items-center gap-4">
-                                <span class="text-[8px] font-black uppercase tracking-widest text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-100">{{ groupList.length }} Mapel</span>
-                                <span class="text-slate-400 text-lg transition-transform duration-300" :class="{ 'rotate-180': isCollapsed[kelompok] }"><AppIcon name="chevron-down" class="w-5 h-5 inline-block mr-1" /></span>
+                            <div class="flex items-center gap-3">
+                                <span class="text-[8px] font-black uppercase tracking-widest text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-100">
+                                    {{ groupList.length }} Mapel
+                                </span>
+                                <AppIcon name="chevron-down" class="w-4 h-4 text-slate-400 transition-transform duration-300" :class="{ 'rotate-180': isCollapsed[kelompokKey] }" />
                             </div>
                         </div>
                         
-                        <div v-show="!isCollapsed[kelompok]" class="overflow-x-auto">
-                            <div v-if="groupList.length === 0" class="p-6 text-center text-slate-400 font-bold text-[10px] uppercase tracking-widest bg-white">
-                                Belum ada mapel di kelompok ini.
-                            </div>
-                             <table v-else class="w-full text-left border-collapse">
+                        <!-- Group Rows -->
+                        <div v-show="!isCollapsed[kelompokKey]" class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
                                 <thead>
                                     <tr class="bg-white text-[8px] font-black uppercase tracking-widest text-slate-400 border-b border-slate-100">
-                                        <th class="py-2.5 px-3 pl-6 w-12 text-center">No</th>
-                                        <th class="py-2.5 px-3 w-16 text-center">Kode</th>
+                                        <th class="py-2.5 px-3 pl-6 w-10 text-center">No</th>
+                                        <th class="py-2.5 px-3 w-20">Kode</th>
                                         <th class="py-2.5 px-3">Mata Pelajaran</th>
-                                        <th class="py-2.5 px-3 text-center w-12">Aksi</th>
+                                        <th class="py-2.5 px-3 text-center w-10">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody class="text-sm">
-                                    <tr v-for="(item, index) in groupList" :key="item.id" class="border-b border-slate-100 hover:bg-slate-50/80 transition-colors bg-white group">
-                                        <td class="py-2 px-3 pl-6 text-center w-12 text-[10px] font-bold text-slate-400">
-                                            {{ index + 1 }}
+                                    <tr v-for="(item, index) in groupList" :key="item.id"
+                                        class="border-b border-slate-100 hover:bg-amber-50/30 transition-colors bg-white group">
+                                        <td class="py-2.5 px-3 pl-6 text-center w-10 text-[10px] font-bold text-slate-400">{{ index + 1 }}</td>
+                                        <td class="py-2.5 px-3 w-20">
+                                            <span class="text-[9px] font-black uppercase tracking-widest px-2 py-1 rounded-lg bg-amber-50 text-amber-700 border border-amber-100">
+                                                {{ item.kode_mapel }}
+                                            </span>
                                         </td>
-                                        <td class="py-2 px-3 text-center w-16">
-                                            <span class="text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded bg-slate-100 text-slate-500 border border-slate-200">{{ item.kode_mapel }}</span>
+                                        <td class="py-2.5 px-3">
+                                            <p class="font-bold text-slate-700 text-[11px] leading-snug">{{ item.nama_mapel }}</p>
+                                            <p class="text-[9px] text-slate-400 mt-0.5" v-if="item.kurikulum">{{ item.kurikulum.nama_kurikulum }}</p>
                                         </td>
-                                        <td class="py-2 px-3">
-                                            <p class="font-black text-slate-700 text-[11px] leading-snug">{{ item.nama_mapel }}</p>
-                                        </td>
-                                        <td class="py-2 px-3 text-center w-12">
+                                        <td class="py-2.5 px-3 text-center w-10">
                                             <div class="flex flex-col items-center justify-center gap-1 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
-                                                <button @click.stop="editData(item)" class="w-7 h-7 rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-amber-200 hover:bg-amber-50 hover:text-amber-600 flex items-center justify-center transition-all shadow-sm" title="Edit"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg></button>
-                                                <button @click.stop="confirmDelete(item)" class="w-7 h-7 rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-center transition-all shadow-sm" title="Hapus"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg></button>
+                                                <button @click.stop="editData(item)" class="w-7 h-7 rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-amber-200 hover:bg-amber-50 hover:text-amber-600 flex items-center justify-center transition-all shadow-sm" title="Edit">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+                                                </button>
+                                                <button @click.stop="confirmDelete(item)" class="w-7 h-7 rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-center transition-all shadow-sm" title="Hapus">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                                                </button>
                                             </div>
                                         </td>
                                     </tr>
@@ -185,42 +226,6 @@
                             </table>
                         </div>
                     </div>
-                </div>
-                
-                <!-- Table Content for Flat View -->
-                <div v-else class="p-4 sm:p-6">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="bg-slate-50 text-[8px] font-black uppercase tracking-widest text-slate-500 border-b border-slate-200">
-                                <th class="py-2.5 px-3 pl-6 w-12 text-center">No</th>
-                                <th class="py-2.5 px-3 w-16 text-center">Kode</th>
-                                <th class="py-2.5 px-3">Mata Pelajaran</th>
-                                <th class="py-2.5 px-3 text-center w-12">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-sm">
-                            <tr v-for="(item, index) in mapels" :key="item.id" class="border-b border-slate-100 hover:bg-slate-50/80 transition-colors bg-white group">
-                                <td class="py-2 px-3 pl-6 text-center w-12 text-[10px] font-bold text-slate-400">
-                                    {{ index + 1 }}
-                                </td>
-                                <td class="py-2 px-3 text-center w-16">
-                                    <span class="text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded bg-slate-100 text-slate-500 border border-slate-200">{{ item.kode_mapel }}</span>
-                                </td>
-                                <td class="py-2 px-3">
-                                    <div class="text-left flex flex-wrap items-center gap-1.5">
-                                        <p class="font-black text-slate-700 text-[11px] leading-snug">{{ item.nama_mapel }}</p>
-                                        <span class="text-[8px] font-black uppercase tracking-widest px-1 py-0.2 rounded border border-amber-100 bg-amber-50/60 text-amber-600" v-if="item.kurikulum">{{ item.kurikulum.nama_kurikulum }}</span>
-                                    </div>
-                                </td>
-                                <td class="py-2 px-3 text-center w-12">
-                                    <div class="flex flex-col items-center justify-center gap-1 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
-                                        <button @click.stop="editData(item)" class="w-7 h-7 rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-amber-200 hover:bg-amber-50 hover:text-amber-600 flex items-center justify-center transition-all shadow-sm" title="Edit"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg></button>
-                                        <button @click.stop="confirmDelete(item)" class="w-7 h-7 rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-center transition-all shadow-sm" title="Hapus"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg></button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
           </div>
@@ -260,137 +265,108 @@ definePageMeta({
   title: 'Master Mata Pelajaran'
 })
 
-// Responsiveness detector
+// Responsiveness
 const windowWidth = ref(1024) 
-const isDesktop = computed(() => windowWidth.value >= 1280) // xl breakpoint
+const isDesktop = computed(() => windowWidth.value >= 1280)
 
-// Tabs for Mobile
+// Mobile tabs
 const activeTabMobile = ref('table')
 const mobileTabs = [
   { id: 'form', title: 'Form Data', icon: 'document-text' },
   { id: 'table', title: 'Database', icon: 'clipboard' }
 ]
 
-const kategoriTab = ref('')
+// Data
 const mapels = ref([])
 const kurikulums = ref([])
-const tahunAjaranAktif = ref(null)
+const refKelompokMapel = ref([])
 const isLoading = ref(true)
 const isSaving = ref(false)
-
 const isEditing = ref(false)
+
+// Filters
+const filterKurikulum = ref('')
+const filterKelompok = ref('')
+
+// Form
 const formData = ref({
     id: null,
     kurikulum_id: '',
     kode_mapel: '',
     nama_mapel: '',
-    kategori: 'umum',
     kelompok: ''
 })
 
-const groupedMapels = computed(() => {
-    const groups = { 
-        'Belum Terkelompokkan': [] 
-    };
-    
-    // Initialize groups from referensi
-    refKelompokMapel.value.forEach(kel => {
-        groups[kel.nama] = [];
-    });
-    
-    mapels.value.forEach(m => {
-        const found = refKelompokMapel.value.find(kel => kel.kode === m.kelompok);
-        const k = found ? found.nama : 'Belum Terkelompokkan';
-        
-        if (!groups[k]) groups[k] = [];
-        groups[k].push(m);
-    });
-    
-    // Ordering logic
-    const result = {};
-    refKelompokMapel.value.forEach(kel => {
-        if (kategoriTab.value === 'umum' || groups[kel.nama].length > 0) {
-            result[kel.nama] = groups[kel.nama];
-        }
-    });
-    
-    if (groups['Belum Terkelompokkan'].length > 0) {
-        result['Belum Terkelompokkan'] = groups['Belum Terkelompokkan'];
-    }
-    return result;
-});
-
-const { registerAutoSave, unregisterAutoSave } = useAutoSave()
-
-onUnmounted(() => {
-    unregisterAutoSave()
-})
-
+// Collapse state per kelompok
 const isCollapsed = ref({})
 const toggleCollapse = (k) => {
     isCollapsed.value[k] = !isCollapsed.value[k]
 }
 
+// Delete modal
 const isDeleteModalOpen = ref(false)
 const deleteTarget = ref(null)
 
-const refKategoriMapel = ref([])
-const refKelompokMapel = ref([])
+// Count total
+const filteredCount = computed(() => mapels.value.length)
 
-const fetchReferensi = async () => {
-    const token = useCookie('auth_token').value
-    try {
-        const timestamp = Date.now()
-        const [resKat, resKel] = await Promise.all([
-            $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/referensi?jenis=kategori_mapel`, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            }),
-            $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/referensi?jenis=kelompok_mapel`, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            })
-        ])
-        const rawKategori = resKat.data || []
-        
-        const sortOrder = ['umum', 'produktif', 'industri']
-        refKategoriMapel.value = rawKategori.sort((a, b) => {
-            const indexA = sortOrder.indexOf(a.kode.toLowerCase())
-            const indexB = sortOrder.indexOf(b.kode.toLowerCase())
-            if (indexA !== -1 && indexB !== -1) return indexA - indexB
-            if (indexA !== -1) return -1
-            if (indexB !== -1) return 1
-            return a.nama.localeCompare(b.nama)
-        })
-        
-        refKelompokMapel.value = resKel.data || []
-        
-        if (refKategoriMapel.value.length > 0) {
-            kategoriTab.value = refKategoriMapel.value[0].kode
-        }
-        
-    } catch (error) {
-        console.error('Error fetching referensi', error)
-    }
+// Get nama kelompok from ref (A=Mata Pelajaran Umum, dll.)
+const getKelompokNama = (kode) => {
+    const found = refKelompokMapel.value.find(k => k.kode === kode)
+    return found ? found.nama : (kode.includes('.') ? 'Mata Pelajaran Kejuruan-Produktif' : null)
 }
 
-const filterKurikulum = ref('')
+// Group mapels by kelompok, sorted alphabetically by key
+const groupedMapels = computed(() => {
+    const groups = {}
+    mapels.value.forEach(m => {
+        const k = m.kelompok || 'Lainnya'
+        if (!groups[k]) groups[k] = []
+        groups[k].push(m)
+    })
+    // Sort keys: A, B, then custom codes (e.g. 251.X, 251.XI), then C, D
+    const sortedKeys = Object.keys(groups).sort((a, b) => {
+        // A and B first
+        if (a === 'A') return -1
+        if (b === 'A') return 1
+        if (a === 'B') return -1
+        if (b === 'B') return 1
+        // C and D last among standard
+        if (a === 'C' && !b.includes('.')) return 1
+        if (b === 'C' && !a.includes('.')) return -1
+        if (a === 'D' && !b.includes('.')) return 1
+        if (b === 'D' && !a.includes('.')) return -1
+        return a.localeCompare(b, undefined, { numeric: true })
+    })
+    const result = {}
+    sortedKeys.forEach(k => { result[k] = groups[k] })
+    return result
+})
 
+const { registerAutoSave, unregisterAutoSave } = useAutoSave()
+onUnmounted(() => { unregisterAutoSave() })
+
+// ===== API CALLS =====
 const fetchData = async () => {
-    if (!kategoriTab.value) return
     isLoading.value = true
     const token = useCookie('auth_token').value
     try {
-        let url = `${import.meta.env.VITE_API_BASE_URL}/api/kurikulum/mapel?kategori=${kategoriTab.value}`
-        if (filterKurikulum.value) {
-            url += `&kurikulum_id=${filterKurikulum.value}`
-        }
+        let url = `${import.meta.env.VITE_API_BASE_URL}/api/kurikulum/mapel`
+        const params = []
+        if (filterKurikulum.value) params.push(`kurikulum_id=${filterKurikulum.value}`)
+        if (filterKelompok.value) params.push(`kelompok=${filterKelompok.value}`)
+        if (params.length) url += '?' + params.join('&')
+
         const response = await $fetch(url, {
             headers: { Authorization: `Bearer ${token}` }
         })
         if (response.success) {
             mapels.value = response.data
             kurikulums.value = response.kurikulums || []
-            tahunAjaranAktif.value = response.tahun_ajaran_aktif || null
-            formData.value.kategori = kategoriTab.value 
+            // Merge kelompok from API (includes standard A,B,C,D)
+            if (response.kelompok_mapel?.length) {
+                refKelompokMapel.value = response.kelompok_mapel
+            }
         }
     } catch (error) {
         console.error('Failed to fetch mapel:', error)
@@ -400,6 +376,10 @@ const fetchData = async () => {
 }
 
 const saveData = async () => {
+    if (!formData.value.kelompok) {
+        useSwal().toast('Kelompok Mapel wajib diisi!', 'error')
+        return
+    }
     isSaving.value = true
     const token = useCookie('auth_token').value
     const url = isEditing.value 
@@ -411,24 +391,27 @@ const saveData = async () => {
         const response = await $fetch(url, {
             method: method,
             headers: { Authorization: `Bearer ${token}` },
-            body: formData.value
+            body: {
+                kurikulum_id: formData.value.kurikulum_id,
+                kode_mapel: formData.value.kode_mapel,
+                nama_mapel: formData.value.nama_mapel,
+                kelompok: formData.value.kelompok,
+            }
         })
         
         if (response.success) {
             useSwal().toast(response.message, 'success')
-            kategoriTab.value = formData.value.kategori
             resetForm()
             fetchData()
             if (!isDesktop.value) activeTabMobile.value = 'table'
         }
     } catch (error) {
         console.error('Save error:', error)
-        let errMsg = 'Gagal menyimpan data mapel.';
-        if (error.response && error.response.status === 422) {
-            errMsg = 'Mohon periksa kembali isian form Anda.';
-            if (error.response._data?.message) errMsg = error.response._data.message;
+        let errMsg = 'Gagal menyimpan data mapel.'
+        if (error.response?.status === 422) {
+            errMsg = error.response._data?.message || 'Mohon periksa kembali isian form.'
         } else if (error.response) {
-            errMsg = `Gagal menyimpan: Terjadi kesalahan pada server (${error.response.status}).`;
+            errMsg = `Gagal menyimpan: Kesalahan server (${error.response.status}).`
         }
         useSwal().toast(errMsg, 'error')
     } finally {
@@ -443,7 +426,6 @@ const editData = (item) => {
         kurikulum_id: item.kurikulum_id,
         kode_mapel: item.kode_mapel,
         nama_mapel: item.nama_mapel,
-        kategori: item.kategori,
         kelompok: item.kelompok || ''
     }
     if (!isDesktop.value) activeTabMobile.value = 'form'
@@ -456,7 +438,6 @@ const resetForm = () => {
         kurikulum_id: '',
         kode_mapel: '',
         nama_mapel: '',
-        kategori: kategoriTab.value,
         kelompok: ''
     }
 }
@@ -468,7 +449,6 @@ const confirmDelete = (item) => {
 
 const executeDelete = async () => {
     if(!deleteTarget.value) return
-    
     const token = useCookie('auth_token').value
     try {
         const response = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/kurikulum/mapel/${deleteTarget.value.id}`, {
@@ -496,14 +476,12 @@ onMounted(async () => {
         activeTabMobile.value = 'table'
     }
 
-    // Auto-save logic
     registerAutoSave(async () => {
         if (formData.value.nama_mapel) {
             await saveData()
         }
     })
 
-    await fetchReferensi()
     await fetchData()
 })
 </script>

@@ -3,8 +3,19 @@
     <!-- Layout 2 Panel Dock & Flow -->
     <div class="flex-1 flex flex-col xl:flex-row overflow-hidden relative">
       
+      <!-- MOBILE VIEW TABS -->
+      <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-2 grid grid-cols-2 gap-2 z-20 shadow-sm">
+        <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
+          :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-sky-500 to-sky-600 text-white shadow-md shadow-sky-500/20 ring-2 ring-sky-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
+          class="rounded-xl flex items-center justify-center py-2 px-1 transition-all active:scale-95">
+          <AppIcon :name="tab.icon" class="text-lg mr-1.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
+        </button>
+      </div>
+
+      
       <!-- Panel Dock Kiri -->
-      <div class="xl:w-[360px] w-full bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full xl:z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] overflow-y-auto custom-scrollbar">
+      <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full xl:z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] overflow-y-auto custom-scrollbar transition-all', activeTabMobile === 'filter' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[60px]' : '']">
         <div class="p-4 pb-2 space-y-4">
           <div class="bg-gradient-to-r from-amber-600 to-amber-700 rounded-2xl p-4 border border-amber-500 shadow-sm relative overflow-hidden flex items-center gap-3">
             <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="star" class="w-5 h-5" /></div>
@@ -37,7 +48,7 @@
       </div>
 
       <!-- Panel Flow Kanan -->
-      <div class="flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative">
+      <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative transition-all', activeTabMobile === 'flow' || isDesktop ? 'flex' : 'hidden', !isDesktop ? 'pt-[60px]' : '']">
         <div class="p-6 lg:p-8 max-w-7xl mx-auto w-full h-full flex flex-col relative z-0">
           
           <!-- Loading State -->
@@ -239,6 +250,13 @@ definePageMeta({
   middleware: 'guru'
 })
 
+const windowWidth = ref(1024)
+const isDesktop = computed(() => windowWidth.value >= 1280)
+const activeTabMobile = ref('filter')
+const mobileTabs = [
+  { id: 'filter', title: 'Filter / Form', icon: 'funnel' },
+  { id: 'flow', title: 'Data Workspace', icon: 'table-cells' }
+]
 const isLoading = ref(true)
 const isSubmitting = ref(false)
 const errorMessage = ref('')
@@ -465,6 +483,13 @@ const confirmDelete = async (item) => {
 }
 
 onMounted(() => {
+    if (typeof window !== 'undefined') {
+        windowWidth.value = window.innerWidth
+        window.addEventListener('resize', () => {
+            windowWidth.value = window.innerWidth
+            if (isDesktop.value) activeTabMobile.value = 'filter'
+        })
+    }
     fetchData()
 })
 </script>

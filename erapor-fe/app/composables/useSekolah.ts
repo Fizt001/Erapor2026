@@ -2,7 +2,7 @@ import { useState } from '#app'
 
 export const useSekolah = () => {
   const sekolah = useState('sekolah', () => ({
-    nama_sekolah: 'SMK Yatindo',
+    nama_sekolah: 'SMK Tinta Emas Indonesia',
     logo: null,
     foto_1: null,
     foto_2: null,
@@ -32,8 +32,8 @@ export const useSekolah = () => {
       if (response && response.data) {
         sekolah.value = {
           ...response.data,
-          nama: response.data.nama_sekolah || 'SMK Yatindo',
-          nama_sekolah: response.data.nama_sekolah || 'SMK Yatindo',
+          nama: response.data.nama_sekolah || 'SMK Tinta Emas Indonesia',
+          nama_sekolah: response.data.nama_sekolah || 'SMK Tinta Emas Indonesia',
           npsn: response.data.npsn || '-',
           logo: getImageUrl(response.data.logo),
           foto_1: getImageUrl(response.data.foto_1),

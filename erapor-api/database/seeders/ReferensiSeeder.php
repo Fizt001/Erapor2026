@@ -13,13 +13,15 @@ class ReferensiSeeder extends Seeder
     public function run(): void
     {
         $data = [
-            ['jenis' => 'kategori_mapel', 'kode' => 'umum', 'nama' => 'Mapel Umum'],
-            ['jenis' => 'kategori_mapel', 'kode' => 'kejuruan', 'nama' => 'Mapel Kejuruan'],
-            
+            // Kelompok Mata Pelajaran (sesuai struktur kurikulum nasional SMK)
             ['jenis' => 'kelompok_mapel', 'kode' => 'A', 'nama' => 'Mata Pelajaran Umum'],
             ['jenis' => 'kelompok_mapel', 'kode' => 'B', 'nama' => 'Mata Pelajaran Kejuruan'],
+            // Catatan: Mata Pelajaran Kejuruan-Produktif menggunakan kode khusus per jurusan (input manual)
             ['jenis' => 'kelompok_mapel', 'kode' => 'C', 'nama' => 'Mata Pelajaran Pilihan'],
             ['jenis' => 'kelompok_mapel', 'kode' => 'D', 'nama' => 'Muatan Lokal'],
+            ['jenis' => 'kelompok_mapel', 'kode' => '251.X',  'nama' => 'Mata Pelajaran Kejuruan-TE'],
+            ['jenis' => 'kelompok_mapel', 'kode' => '251.XI', 'nama' => 'Mata Pelajaran Kejuruan-TAV'],
+            ['jenis' => 'kelompok_mapel', 'kode' => '251.XII','nama' => 'Mata Pelajaran Kejuruan-TAV'],
 
             ['jenis' => 'nama_periode', 'kode' => 'TM-1', 'nama' => 'PSTS Ganjil'],
             ['jenis' => 'nama_periode', 'kode' => 'TM-2', 'nama' => 'PSAS'],

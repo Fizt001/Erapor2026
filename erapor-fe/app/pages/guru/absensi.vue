@@ -227,7 +227,8 @@ import { ref, onMounted, computed } from 'vue'
 
 definePageMeta({
     layout: 'guru',
-    middleware: 'guru'
+    middleware: 'guru',
+    title: 'Absensi Kelas'
 })
 
 const isLoading = ref(true)

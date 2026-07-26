@@ -151,8 +151,9 @@
 import { ref, computed, onMounted } from 'vue'
 
 definePageMeta({
-    layout: "walas",
-    middleware: 'guru'
+    layout: 'walas',
+    middleware: 'guru',
+    title: 'Kalender Absensi'
 })
 
 const token = useCookie('auth_token')
