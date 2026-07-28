@@ -304,24 +304,36 @@ const handleLogin = async () => {
 
 /* Modal fade transition (mobile login dialog) */
 .modal-fade-enter-active {
-  transition: opacity 0.3s ease;
+  transition: opacity 0.4s ease;
 }
 .modal-fade-leave-active {
-  transition: opacity 0.25s ease;
+  transition: opacity 0.35s ease;
 }
 .modal-fade-enter-from,
 .modal-fade-leave-to {
   opacity: 0;
 }
-.modal-fade-enter-active .relative,
+
+/* Modal Content Animation */
+.modal-fade-enter-active .relative {
+  transform-origin: center center;
+  animation: tv-on 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
 .modal-fade-leave-active .relative {
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: center center;
+  animation: tv-off 0.35s ease-in forwards;
 }
-.modal-fade-enter-from .relative {
-  transform: translateY(100%);
+
+@keyframes tv-on {
+  0% { transform: scale(0, 0); border-radius: 100px; opacity: 0; }
+  60% { transform: scale(1.02, 1.02); border-radius: 40px; opacity: 1; }
+  100% { transform: scale(1, 1); border-radius: 24px; opacity: 1; }
 }
-.modal-fade-leave-to .relative {
-  transform: translateY(100%);
+
+@keyframes tv-off {
+  0% { transform: scale(1, 1); opacity: 1; }
+  50% { transform: scale(1, 0.02); opacity: 1; }
+  100% { transform: scale(0, 0); opacity: 0; }
 }
 
 </style>
