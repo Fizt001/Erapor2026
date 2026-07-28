@@ -59,10 +59,12 @@
                 <div class="relative flex flex-col w-full px-6 lg:px-12 xl:px-16 pt-8 lg:pt-12 pb-8 lg:pb-12 min-h-full lg:h-full">
                 
                 <!-- Watermark Tagline (menggantikan hero) -->
-                <div class="mb-6 lg:mb-8 flex-shrink-0">
-                    <p class="text-2xl lg:text-4xl xl:text-5xl font-black italic text-white/20 leading-snug select-none tracking-tight">
-                        Early Warning System<br>
-                        <span class="text-white/30">Pencapaian Akademik Siswa</span>
+                <div class="mb-6 lg:mb-8 flex-shrink-0 flex flex-col gap-1">
+                    <h2 class="text-3xl lg:text-5xl xl:text-6xl font-black italic text-white/20 leading-tight tracking-tight">
+                        Early Warning System
+                    </h2>
+                    <p class="text-xl lg:text-3xl xl:text-4xl font-bold italic text-white/30 leading-snug tracking-tight">
+                        Pencapaian Akademik Siswa
                     </p>
                 </div>
 
