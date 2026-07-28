@@ -1,11 +1,8 @@
 <template>
-  <div class="h-screen w-full flex flex-col font-sans bg-[#090C15] relative overflow-hidden" 
-       @touchstart="handleTouchStart" 
-       @touchmove.prevent="handleTouchMove"
-       @wheel="handleWheel">
+  <div class="h-screen w-full flex flex-col font-sans bg-[#090C15] relative overflow-hidden">
     
     <!-- HEADER -->
-    <header class="w-full bg-[#090C15]/80 backdrop-blur-md h-16 flex items-center justify-between px-6 lg:px-12 relative z-50 flex-shrink-0 border-b border-white/5" :class="{'opacity-0 pointer-events-none lg:opacity-100 lg:pointer-events-auto transition-opacity duration-500': isMobileFormActive}">
+    <header class="w-full bg-[#090C15]/80 backdrop-blur-md h-16 flex items-center justify-between px-6 lg:px-12 relative z-50 flex-shrink-0 border-b border-white/5">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 bg-gradient-to-br from-orange-500 to-rose-500 rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/30 p-1">
                 <div class="w-full h-full bg-[#090C15] rounded-lg flex items-center justify-center">
@@ -45,9 +42,8 @@
     <!-- MAIN SPLIT AREA -->
     <main class="flex-1 flex flex-col lg:flex-row w-full relative z-10 overflow-hidden">
         
-        <!-- LEFT: VIBRANT BANNER -->
-        <div class="w-full lg:w-[65%] h-full absolute inset-0 lg:static z-10 flex flex-col justify-center py-12 px-6 lg:p-16 bg-[#090C15] overflow-hidden transition-all duration-[800ms] ease-[cubic-bezier(0.23,1,0.32,1)] origin-top"
-             :class="isMobileFormActive ? 'scale-90 opacity-0 -translate-y-20 lg:scale-100 lg:opacity-100 lg:translate-y-0' : 'scale-100 opacity-100 translate-y-0'">
+        <!-- LEFT: BANNER PANEL (Mobile: full scrollable, Desktop: static kiri) -->
+        <div class="w-full lg:w-[65%] flex-1 min-h-0 flex flex-col bg-[#090C15] overflow-y-auto lg:overflow-hidden relative">
             
             <!-- Vibrant Mozilla-style Orbs -->
             <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
@@ -57,7 +53,7 @@
                 <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')]"></div>
             </div>
 
-            <div class="relative z-10 flex flex-col w-full h-full max-w-5xl mx-auto justify-center gap-6">
+            <div class="relative z-10 flex flex-col w-full max-w-5xl mx-auto gap-6 p-6 lg:p-16 pb-36 lg:pb-16 lg:justify-center lg:h-full">
                 
                 <!-- Watermark Tagline (menggantikan hero) -->
                 <div class="mb-2">
@@ -108,25 +104,28 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Swipe Up Indicator (Mobile Only) -->
-            <div class="absolute bottom-8 inset-x-0 w-full flex flex-col items-center justify-center lg:hidden animate-bounce text-slate-400">
-                <span class="text-[10px] font-bold uppercase tracking-widest mb-2">Usap ke atas</span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" /></svg>
+                <!-- MOBILE ONLY: Footer inside scrollable area -->
+                <div class="lg:hidden w-full text-slate-600 py-6 text-center text-[10px] font-bold uppercase tracking-widest border-t border-white/5 mt-8">
+                    <span>Aplikasi e-Rapor SMK | Versi 2026.1</span>
+                </div>
             </div>
         </div>
 
-        <!-- RIGHT: CLEAN FORM AREA (BottomSheet on Mobile) -->
-        <div class="w-full lg:w-[35%] h-[90vh] lg:h-full absolute bottom-0 left-0 lg:static z-20 bg-white flex flex-col justify-center items-center py-10 px-6 lg:p-10 shadow-[0_-30px_60px_-15px_rgba(0,0,0,0.5)] lg:shadow-[-30px_0_60px_-15px_rgba(0,0,0,0.5)] rounded-t-[2.5rem] lg:rounded-none transition-transform duration-[800ms] ease-[cubic-bezier(0.23,1,0.32,1)] login-container"
-             :class="isMobileFormActive ? 'translate-y-0' : 'translate-y-full lg:translate-y-0'">
-             
-            <!-- Mobile Drag Handle -->
-            <div class="w-12 h-1.5 bg-slate-200 rounded-full absolute top-4 left-1/2 -translate-x-1/2 lg:hidden"></div>
+        <!-- MOBILE ONLY: Tombol Login fixed di bawah panel kiri -->
+        <div class="lg:hidden fixed bottom-0 left-0 right-0 z-50 p-4 pb-6 bg-gradient-to-t from-[#090C15] via-[#090C15]/95 to-transparent pt-10">
+            <button @click="showLoginModal = true"
+                    class="w-full py-4 bg-gradient-to-r from-orange-500 to-rose-500 text-white font-black rounded-xl shadow-[0_10px_30px_-5px_rgba(249,115,22,0.6)] text-sm uppercase tracking-widest flex items-center justify-center gap-2 active:scale-95 transition-transform">
+                <span>Masuk ke Aplikasi</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+            </button>
+        </div>
 
-            <div class="w-full max-w-sm pt-12 lg:pt-0 overflow-y-auto custom-scrollbar h-full lg:max-h-full lg:h-auto pb-16 lg:pb-0 flex flex-col justify-center" @touchmove.stop>
+        <!-- RIGHT: DESKTOP FORM PANEL (lg+ only) -->
+        <div class="hidden lg:flex w-full lg:w-[35%] h-full flex-col justify-center items-center py-10 px-6 lg:p-10 bg-white shadow-[-30px_0_60px_-15px_rgba(0,0,0,0.5)]">
+            <div class="w-full max-w-sm flex flex-col justify-center">
                 
-                <div class="text-center mb-10 title-section">
+                <div class="text-center mb-10">
                     <div class="inline-flex items-center justify-center text-2xl lg:text-3xl font-black tracking-widest uppercase mb-2">
                         <span class="bg-gradient-to-r from-orange-500 via-rose-500 to-violet-600 text-transparent bg-clip-text animate-gradient-x">
                             SELAMAT DATANG
@@ -135,31 +134,29 @@
                     <p class="text-xs text-slate-500 font-medium">Silakan masuk ke akun Anda</p>
                 </div>
 
-                <form @submit.prevent="handleLogin" class="space-y-6 mt-8 form-section">
+                <form @submit.prevent="handleLogin" class="space-y-6 mt-8">
                     
                     <div v-if="errorMessage" class="p-4 rounded-xl bg-rose-50 border border-rose-100 flex items-start gap-3 animate-fadeIn mb-4">
                         <AppIcon name="exclamation-triangle" class="text-rose-500 mt-0.5 text-base" />
                         <p class="text-xs font-bold text-rose-600 leading-relaxed">{{ errorMessage }}</p>
                     </div>
 
-                    <!-- Input Group: Username -->
                     <div class="space-y-2">
                         <label class="text-[11px] font-bold text-slate-500 uppercase tracking-widest ml-1">Username</label>
                         <div class="flex w-full border-2 border-slate-100 rounded-xl overflow-hidden focus-within:border-orange-500 focus-within:ring-4 focus-within:ring-orange-500/10 transition-all bg-slate-50">
                             <div class="pl-4 pr-3 flex items-center justify-center text-slate-400 text-lg"><AppIcon name="user" /></div>
                             <input v-model="form.username" type="text" required
-                                   class="w-full py-3.5 pr-4 bg-transparent text-sm font-bold text-slate-800 placeholder-slate-400 focus:outline-none input-custom" 
+                                   class="w-full py-3.5 pr-4 bg-transparent text-sm font-bold text-slate-800 placeholder-slate-400 focus:outline-none" 
                                    placeholder="Ketik username Anda">
                         </div>
                     </div>
 
-                    <!-- Input Group: Password -->
                     <div class="space-y-2">
                         <label class="text-[11px] font-bold text-slate-500 uppercase tracking-widest ml-1">Password</label>
                         <div class="flex w-full border-2 border-slate-100 rounded-xl overflow-hidden focus-within:border-orange-500 focus-within:ring-4 focus-within:ring-orange-500/10 transition-all bg-slate-50 relative">
                             <div class="pl-4 pr-3 flex items-center justify-center text-slate-400 text-lg"><AppIcon name="lock-closed" /></div>
                             <input v-model="form.password" :type="showPassword ? 'text' : 'password'" required
-                                   class="w-full py-3.5 pr-12 bg-transparent text-sm font-bold text-slate-800 placeholder-slate-400 focus:outline-none input-custom" 
+                                   class="w-full py-3.5 pr-12 bg-transparent text-sm font-bold text-slate-800 placeholder-slate-400 focus:outline-none" 
                                    placeholder="Ketik password Anda">
                             <button type="button" @click="showPassword = !showPassword" class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-orange-500 transition-colors">
                                 <AppIcon :name="showPassword ? 'eye' : 'eye-slash'" class="text-xl" />
@@ -167,28 +164,81 @@
                         </div>
                     </div>
 
-                    <div class="flex justify-between items-center px-1 remember-section">
+                    <div class="flex justify-between items-center px-1">
                         <label class="flex items-center gap-2 cursor-pointer group">
                             <input type="checkbox" class="w-4 h-4 rounded border-slate-300 text-orange-500 focus:ring-orange-500 transition-all">
                             <span class="text-[11px] font-bold text-slate-500 group-hover:text-slate-800 transition-colors">Ingat Saya</span>
                         </label>
                     </div>
 
-                    <div class="pt-4 pt-4-custom">
+                    <div class="pt-4">
                         <button type="submit" :disabled="isLoading" 
-                                class="w-full py-4 bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white font-black rounded-xl shadow-[0_10px_20px_-10px_rgba(249,115,22,0.5)] hover:shadow-[0_15px_25px_-10px_rgba(249,115,22,0.6)] transition-all transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2 text-sm uppercase tracking-widest button-custom">
+                                class="w-full py-4 bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white font-black rounded-xl shadow-[0_10px_20px_-10px_rgba(249,115,22,0.5)] hover:shadow-[0_15px_25px_-10px_rgba(249,115,22,0.6)] transition-all transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2 text-sm uppercase tracking-widest">
                             <AppIcon v-if="isLoading" name="arrow-path" class="animate-spin text-xl" />
                             <span v-else class="flex items-center gap-2">Masuk ke Aplikasi <AppIcon name="arrow-right" class="text-lg" /></span>
                         </button>
                     </div>
                 </form>
-
             </div>
         </div>
     </main>
 
+    <!-- MOBILE ONLY: Modal Dialog Login -->
+    <Transition name="modal-fade">
+        <div v-if="showLoginModal" class="lg:hidden fixed inset-0 z-[100] flex items-end justify-center" @click.self="showLoginModal = false">
+            <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" @click="showLoginModal = false"></div>
+            <div class="relative w-full bg-white rounded-t-3xl shadow-2xl px-6 pt-8 pb-10 max-h-[92vh] overflow-y-auto">
+                <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-6"></div>
+                <button @click="showLoginModal = false" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 transition-colors p-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+                <div class="text-center mb-8">
+                    <div class="inline-flex items-center justify-center text-2xl font-black tracking-widest uppercase mb-1">
+                        <span class="bg-gradient-to-r from-orange-500 via-rose-500 to-violet-600 text-transparent bg-clip-text animate-gradient-x">SELAMAT DATANG</span>
+                    </div>
+                    <p class="text-xs text-slate-500 font-medium">Silakan masuk ke akun Anda</p>
+                </div>
+                <form @submit.prevent="handleLogin" class="space-y-5">
+                    <div v-if="errorMessage" class="p-4 rounded-xl bg-rose-50 border border-rose-100 flex items-start gap-3 animate-fadeIn">
+                        <AppIcon name="exclamation-triangle" class="text-rose-500 mt-0.5 text-base" />
+                        <p class="text-xs font-bold text-rose-600 leading-relaxed">{{ errorMessage }}</p>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[11px] font-bold text-slate-500 uppercase tracking-widest ml-1">Username</label>
+                        <div class="flex w-full border-2 border-slate-100 rounded-xl overflow-hidden focus-within:border-orange-500 focus-within:ring-4 focus-within:ring-orange-500/10 transition-all bg-slate-50">
+                            <div class="pl-4 pr-3 flex items-center justify-center text-slate-400 text-lg"><AppIcon name="user" /></div>
+                            <input v-model="form.username" type="text" required class="w-full py-3.5 pr-4 bg-transparent text-sm font-bold text-slate-800 placeholder-slate-400 focus:outline-none" placeholder="Ketik username Anda">
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[11px] font-bold text-slate-500 uppercase tracking-widest ml-1">Password</label>
+                        <div class="flex w-full border-2 border-slate-100 rounded-xl overflow-hidden focus-within:border-orange-500 focus-within:ring-4 focus-within:ring-orange-500/10 transition-all bg-slate-50 relative">
+                            <div class="pl-4 pr-3 flex items-center justify-center text-slate-400 text-lg"><AppIcon name="lock-closed" /></div>
+                            <input v-model="form.password" :type="showPassword ? 'text' : 'password'" required class="w-full py-3.5 pr-12 bg-transparent text-sm font-bold text-slate-800 placeholder-slate-400 focus:outline-none" placeholder="Ketik password Anda">
+                            <button type="button" @click="showPassword = !showPassword" class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-orange-500 transition-colors">
+                                <AppIcon :name="showPassword ? 'eye' : 'eye-slash'" class="text-xl" />
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex items-center px-1">
+                        <label class="flex items-center gap-2 cursor-pointer group">
+                            <input type="checkbox" class="w-4 h-4 rounded border-slate-300 text-orange-500 focus:ring-orange-500 transition-all">
+                            <span class="text-[11px] font-bold text-slate-500 group-hover:text-slate-800 transition-colors">Ingat Saya</span>
+                        </label>
+                    </div>
+                    <div class="pt-2">
+                        <button type="submit" :disabled="isLoading" class="w-full py-4 bg-gradient-to-r from-orange-500 to-rose-500 text-white font-black rounded-xl shadow-[0_10px_20px_-10px_rgba(249,115,22,0.5)] transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-2 text-sm uppercase tracking-widest">
+                            <AppIcon v-if="isLoading" name="arrow-path" class="animate-spin text-xl" />
+                            <span v-else class="flex items-center gap-2">Masuk ke Aplikasi <AppIcon name="arrow-right" class="text-lg" /></span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </Transition>
+
     <!-- FOOTER -->
-    <footer class="w-full bg-[#05070A] text-slate-500 py-4 px-6 text-center text-[10px] font-bold uppercase tracking-widest z-50 flex-shrink-0 flex items-center justify-center border-t border-white/5">
+    <footer class="hidden lg:flex w-full bg-[#05070A] text-slate-500 py-4 px-6 text-center text-[10px] font-bold uppercase tracking-widest z-50 flex-shrink-0 flex items-center justify-center border-t border-white/5">
         <span>Aplikasi e-Rapor SMK | Versi 2026.1</span>
     </footer>
     
@@ -200,56 +250,8 @@ import { reactive, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCookie } from '#app'
 
-// Mobile Interaction Logic
-const isMobileFormActive = ref(false)
-let touchStartY = 0
-let isScrollingWithinForm = false
-
-const handleTouchStart = (e) => {
-    touchStartY = e.touches[0].clientY
-    // Check if touch is inside a scrollable area in the form
-    const target = e.target.closest('.overflow-y-auto')
-    if (target && target.scrollTop > 0) {
-        isScrollingWithinForm = true
-    } else {
-        isScrollingWithinForm = false
-    }
-}
-
-const handleTouchMove = (e) => {
-    if (window.innerWidth >= 1024) return;
-    const touchEndY = e.touches[0].clientY
-    const diff = touchStartY - touchEndY
-    
-    // Allow default scroll if inside form inputs/scrollable areas
-    if (e.target.tagName.toLowerCase() === 'input' || isScrollingWithinForm) {
-        return;
-    }
-
-    if (diff > 50 && !isMobileFormActive.value) {
-        isMobileFormActive.value = true
-        touchStartY = touchEndY // reset
-    }
-    
-    if (diff < -50 && isMobileFormActive.value) {
-        isMobileFormActive.value = false
-        touchStartY = touchEndY // reset
-    }
-}
-
-const handleWheel = (e) => {
-    if (window.innerWidth >= 1024) return;
-    
-    // Allow default scroll if inside form inputs/scrollable areas
-    if (e.target.tagName.toLowerCase() === 'input') return;
-
-    if (e.deltaY > 20 && !isMobileFormActive.value) {
-        isMobileFormActive.value = true
-    }
-    if (e.deltaY < -20 && isMobileFormActive.value) {
-        isMobileFormActive.value = false
-    }
-}
+// State modal login (mobile only)
+const showLoginModal = ref(false)
 
 
 const showMobileMenu = ref(false)
@@ -361,31 +363,27 @@ const handleLogin = async () => {
   border-radius: 4px;
 }
 
-@media (max-height: 800px) {
-  .login-container {
-    padding-top: 1.5rem !important;
-    padding-bottom: 1.5rem !important;
-  }
-  .title-section {
-    margin-bottom: 1.25rem !important;
-  }
-  .form-section {
-    margin-top: 1rem !important;
-    gap: 1rem !important;
-  }
-  .form-section > * + * {
-    margin-top: 1rem !important;
-  }
-  .pt-4-custom {
-    padding-top: 0.5rem !important;
-  }
-  .input-custom {
-    padding-top: 0.6rem !important;
-    padding-bottom: 0.6rem !important;
-  }
-  .button-custom {
-    padding-top: 0.75rem !important;
-    padding-bottom: 0.75rem !important;
-  }
+
+/* Modal fade transition (mobile login dialog) */
+.modal-fade-enter-active {
+  transition: opacity 0.3s ease;
 }
+.modal-fade-leave-active {
+  transition: opacity 0.25s ease;
+}
+.modal-fade-enter-from,
+.modal-fade-leave-to {
+  opacity: 0;
+}
+.modal-fade-enter-active .relative,
+.modal-fade-leave-active .relative {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.modal-fade-enter-from .relative {
+  transform: translateY(100%);
+}
+.modal-fade-leave-to .relative {
+  transform: translateY(100%);
+}
+
 </style>
