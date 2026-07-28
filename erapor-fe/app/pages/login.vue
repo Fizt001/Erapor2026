@@ -68,9 +68,9 @@
                 <div class="w-full lg:flex-1 flex flex-col min-h-0">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 lg:flex-1">
                         <!-- Card Kelas X -->
-                        <div class="flex flex-col gap-3 h-full">
+                        <div class="flex flex-col gap-3 w-full lg:h-full">
                             <h5 class="text-white font-bold text-xl px-1">Kelas X</h5>
-                            <div class="relative rounded-3xl p-[3px] bg-gradient-to-r from-orange-500 to-violet-600 lg:flex-1 min-h-[220px] shadow-[0_0_30px_-5px_rgba(249,115,22,0.4)] flex flex-col">
+                            <div class="relative rounded-3xl p-[2px] bg-gradient-to-r from-orange-500 to-rose-500 lg:flex-1 min-h-[220px] shadow-[0_0_20px_-5px_rgba(249,115,22,0.3)] flex flex-col">
                                 <div class="w-full flex-1 bg-[#090C15] rounded-[22px] flex flex-col items-center justify-center text-center p-6 min-h-[200px]">
                                     <AppIcon name="chart-bar" class="text-5xl lg:text-7xl mb-4 opacity-50 text-white" />
                                     <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Pencapaian Akademik</span>
@@ -79,9 +79,9 @@
                         </div>
 
                         <!-- Card Kelas XI -->
-                        <div class="flex flex-col gap-3 h-full">
+                        <div class="flex flex-col gap-3 w-full lg:h-full">
                             <h5 class="text-white font-bold text-xl px-1">Kelas XI</h5>
-                            <div class="relative rounded-3xl p-[3px] bg-gradient-to-r from-orange-500 to-violet-600 lg:flex-1 min-h-[220px] shadow-[0_0_30px_-5px_rgba(249,115,22,0.4)] flex flex-col">
+                            <div class="relative rounded-3xl p-[2px] bg-gradient-to-r from-orange-500 to-rose-500 lg:flex-1 min-h-[220px] shadow-[0_0_20px_-5px_rgba(249,115,22,0.3)] flex flex-col">
                                 <div class="w-full flex-1 bg-[#090C15] rounded-[22px] flex flex-col items-center justify-center text-center p-6 min-h-[200px]">
                                     <AppIcon name="chart-bar" class="text-5xl lg:text-7xl mb-4 opacity-50 text-white" />
                                     <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Pencapaian Akademik</span>
@@ -90,9 +90,9 @@
                         </div>
 
                         <!-- Card Kelas XII -->
-                        <div class="flex flex-col gap-3 h-full">
+                        <div class="flex flex-col gap-3 w-full lg:h-full">
                             <h5 class="text-white font-bold text-xl px-1">Kelas XII</h5>
-                            <div class="relative rounded-3xl p-[3px] bg-gradient-to-r from-orange-500 to-violet-600 lg:flex-1 min-h-[220px] shadow-[0_0_30px_-5px_rgba(249,115,22,0.4)] flex flex-col">
+                            <div class="relative rounded-3xl p-[2px] bg-gradient-to-r from-orange-500 to-rose-500 lg:flex-1 min-h-[220px] shadow-[0_0_20px_-5px_rgba(249,115,22,0.3)] flex flex-col">
                                 <div class="w-full flex-1 bg-[#090C15] rounded-[22px] flex flex-col items-center justify-center text-center p-6 min-h-[200px]">
                                     <AppIcon name="chart-bar" class="text-5xl lg:text-7xl mb-4 opacity-50 text-white" />
                                     <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Pencapaian Akademik</span>
@@ -102,8 +102,8 @@
                     </div>
                 </div>
 
-                <!-- Mobile Scroll Clearance Spacer (guarantees Card XII stops well above fixed bottom dock) -->
-                <div class="h-44 shrink-0 lg:hidden" aria-hidden="true"></div>
+                <!-- Mobile Scroll Clearance Spacer (288px spacer guarantees Card XII stops far above fixed bottom dock) -->
+                <div class="h-72 shrink-0 lg:hidden pointer-events-none" aria-hidden="true"></div>
             </div>
         </div>
 
