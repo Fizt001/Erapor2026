@@ -38,7 +38,7 @@ jobs:
           set ftp:ssl-allow no
           set net:timeout 60
           set net:max-retries 3
-          mirror --reverse --delete --verbose \
+          mirror --reverse --delete --verbose --parallel=10 \
             ./erapor-fe/.output/public/ ${{ secrets.FTP_SERVER_DIR }}
           bye
           EOF
