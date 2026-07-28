@@ -273,6 +273,8 @@ const userInitials = computed(() => {
 
 
 
+useSessionKeepAlive()
+
 const handleLogout = async () => {
   try {
     const tokenCookie = useCookie('auth_token')

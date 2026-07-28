@@ -232,6 +232,7 @@ const userInitials = computed(() => {
   if (!userProfile.value?.name) return 'A'
   return userProfile.value.name.charAt(0).toUpperCase()
 })
+useSessionKeepAlive()
 const handleLogout = async () => {
   try {
     const tokenCookie = useCookie('auth_token')
