@@ -44,7 +44,7 @@
     <main class="flex-1 flex flex-col lg:flex-row w-full relative z-10 overflow-hidden">
         
         <!-- LEFT: BANNER PANEL (Full width) -->
-        <div class="w-full flex-1 min-h-0 flex flex-col bg-[#090C15] overflow-y-auto relative" style="scroll-padding-bottom: 160px;">
+        <div class="w-full flex-1 min-h-0 relative bg-[#090C15]">
             
             <!-- Vibrant Mozilla-style Orbs -->
             <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
@@ -54,7 +54,9 @@
                 <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')]"></div>
             </div>
 
-            <div class="relative z-10 flex flex-col w-full px-6 lg:px-12 xl:px-16 pt-8 lg:pt-12 pb-8 lg:pb-12 min-h-full lg:h-full">
+            <!-- Scrollable content layer -->
+            <div class="absolute inset-0 z-10 flex flex-col overflow-y-auto" style="scroll-padding-bottom: 160px;">
+                <div class="relative flex flex-col w-full px-6 lg:px-12 xl:px-16 pt-8 lg:pt-12 pb-8 lg:pb-12 min-h-full lg:h-full">
                 
                 <!-- Watermark Tagline (menggantikan hero) -->
                 <div class="mb-6 lg:mb-8 flex-shrink-0">
@@ -100,6 +102,7 @@
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         </div>
