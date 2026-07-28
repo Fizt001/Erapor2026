@@ -10,17 +10,17 @@
     </div>
 
     <!-- SEMESTER TABS -->
-    <div class="bg-white p-1 rounded-xl shadow-sm border border-slate-200/60 inline-flex mb-2">
+    <div class="bg-white p-1 rounded-xl shadow-sm border border-slate-200/60 flex w-full md:inline-flex mb-2">
       <button 
         @click="activeSemester = 'ganjil'" 
-        class="px-6 py-2 rounded-lg text-sm font-bold transition-all duration-200"
+        class="flex-1 md:flex-none px-6 py-2 rounded-lg text-sm font-bold transition-all duration-200"
         :class="activeSemester === 'ganjil' ? 'bg-sky-500 text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'"
       >
         Semester Ganjil
       </button>
       <button 
         @click="activeSemester = 'genap'" 
-        class="px-6 py-2 rounded-lg text-sm font-bold transition-all duration-200"
+        class="flex-1 md:flex-none px-6 py-2 rounded-lg text-sm font-bold transition-all duration-200"
         :class="activeSemester === 'genap' ? 'bg-sky-500 text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'"
       >
         Semester Genap
@@ -79,25 +79,29 @@
       </div>
 
       <!-- TOTAL SEMESTER CARD -->
-      <div class="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden relative">
-        <div class="absolute top-0 right-0 p-6 opacity-[0.03]">
-          <svg class="w-32 h-32 text-slate-900" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <div class="bg-sky-50 rounded-2xl shadow-sm border border-sky-100 overflow-hidden relative mt-2">
+        <div class="absolute top-0 right-0 p-4 opacity-[0.05]">
+          <svg class="w-24 h-24 text-sky-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
           </svg>
         </div>
-        <div class="p-6 relative z-10">
-          <h2 class="text-xl font-black text-slate-800 mb-2 flex items-center">
-            <span class="mr-2 text-sky-500">🎯</span> Total Semester {{ activeSemester === 'ganjil' ? 'Ganjil' : 'Genap' }}
-          </h2>
-          <p class="text-slate-500 text-sm mb-6">Akumulasi seluruh pertemuan selama 1 semester.</p>
+        <div class="p-4 relative z-10">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <h2 class="text-sm font-black text-sky-800 flex items-center uppercase tracking-widest">
+                <span class="mr-2 text-sky-500 text-lg">🎯</span> Total Semester {{ activeSemester === 'ganjil' ? 'Ganjil' : 'Genap' }}
+              </h2>
+              <p class="text-sky-600/70 text-[10px] font-bold mt-0.5">Akumulasi seluruh pertemuan selama 1 semester.</p>
+            </div>
+          </div>
           
-          <div v-if="Object.keys(activeData.total || {}).length === 0" class="text-slate-400 text-sm font-medium italic">
+          <div v-if="Object.keys(activeData.total || {}).length === 0" class="text-sky-500 text-xs font-bold italic">
             Belum ada rekapitulasi semester ini.
           </div>
-          <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-            <div v-for="(pertemuans, mapelKelas) in activeData.total" :key="mapelKelas" class="bg-slate-50 border border-slate-200/60 rounded-xl p-3 flex items-center justify-between group hover:border-sky-300 transition-colors cursor-pointer" @click="showDetail('Semester ' + (activeSemester === 'ganjil' ? 'Ganjil' : 'Genap'), mapelKelas, pertemuans)">
-              <p class="text-[11px] font-bold text-slate-700 truncate pr-2" :title="mapelKelas">{{ mapelKelas }}</p>
-              <span class="bg-sky-100 text-sky-700 text-xs font-black px-2 py-0.5 rounded min-w-[2rem] text-center shadow-sm">
+          <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+            <div v-for="(pertemuans, mapelKelas) in activeData.total" :key="mapelKelas" class="bg-white border border-sky-100 rounded-xl px-3 py-2 flex items-center justify-between group hover:border-sky-300 hover:shadow-sm transition-all cursor-pointer" @click="showDetail('Semester ' + (activeSemester === 'ganjil' ? 'Ganjil' : 'Genap'), mapelKelas, pertemuans)">
+              <p class="text-[10px] font-bold text-slate-600 truncate pr-2 group-hover:text-sky-700 transition-colors" :title="mapelKelas">{{ mapelKelas }}</p>
+              <span class="bg-sky-100 text-sky-700 text-[10px] font-black px-2 py-1 rounded-lg min-w-[2rem] text-center shadow-sm shrink-0">
                 {{ pertemuans.length }}x
               </span>
             </div>
