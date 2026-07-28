@@ -13,7 +13,6 @@
               <h2 class="text-lg font-extrabold mb-1">Halo, {{ dashboardData?.user?.name?.split(' ')[0] || 'Bapak/Ibu' }} 👋</h2>
               <p class="text-sky-100 text-xs leading-relaxed">
                 Tahun Ajaran <span class="font-bold text-white bg-indigo-900/50 px-1.5 py-0.5 rounded">{{ dashboardData?.akademik?.tahun_ajaran || '...' }}</span>
-                <br>Periode: <span class="font-bold text-white">{{ dashboardData?.akademik?.periode || '...' }}</span>
               </p>
               <div class="mt-4 flex items-center justify-between bg-white/10 p-2.5 rounded-xl border border-white/20 backdrop-blur-sm">
                   <div class="flex items-center gap-2">
