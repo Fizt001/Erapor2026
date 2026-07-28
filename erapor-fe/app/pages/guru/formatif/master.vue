@@ -176,7 +176,6 @@
                 <span class="mr-2 text-lg leading-none">+</span> Tambah Elemen Pembelajaran Baru
               </button>
             </div>
-            </div>
           </div>
       </div>
     </div>
