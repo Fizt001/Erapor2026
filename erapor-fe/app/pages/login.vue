@@ -54,13 +54,13 @@
                 <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')]"></div>
             </div>
 
-            <div class="relative z-10 flex flex-col w-full px-6 lg:px-12 xl:px-16 pt-8 lg:pt-12 pb-48 lg:pb-12 h-full">
+            <div class="relative z-10 flex flex-col w-full px-6 lg:px-12 xl:px-16 pt-8 lg:pt-12 pb-48 lg:pb-12 min-h-full lg:h-full">
                 
                 <!-- Watermark Tagline (menggantikan hero) -->
                 <div class="mb-6 lg:mb-8 flex-shrink-0">
                     <p class="text-2xl lg:text-4xl xl:text-5xl font-black italic text-white/20 leading-snug select-none tracking-tight">
                         Early Warning System<br>
-                        <span class="text-white/30">Pencapaian Akademik Siswa.</span>
+                        <span class="text-white/30">Pencapaian Akademik Siswa</span>
                     </p>
                 </div>
 
