@@ -106,19 +106,19 @@
     <nav class="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 shadow-[0_-4px_20px_-4px_rgba(0,0,0,0.1)] print:hidden">
       <div class="flex items-stretch h-16">
         <NuxtLink to="/guru/walas/dashboard" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="route.path === '/guru/walas/dashboard' ? 'text-amber-600' : 'text-slate-400'">
-          <span class="text-xl leading-none">📊</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" /></svg>
           <span class="text-[9px] font-black uppercase tracking-wider">Dashboard</span>
         </NuxtLink>
         <button @click="openDrawer('siswa')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="activeDrawer === 'siswa' && drawerOpen ? 'text-amber-600' : 'text-slate-400'">
-          <span class="text-xl leading-none">👨‍👩‍👧</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
           <span class="text-[9px] font-black uppercase tracking-wider">Siswa</span>
         </button>
         <button @click="openDrawer('kegiatan')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="activeDrawer === 'kegiatan' && drawerOpen ? 'text-amber-600' : 'text-slate-400'">
-          <span class="text-xl leading-none">🎭</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
           <span class="text-[9px] font-black uppercase tracking-wider">Kegiatan</span>
         </button>
         <button @click="openDrawer('rapor')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="activeDrawer === 'rapor' && drawerOpen ? 'text-amber-600' : 'text-slate-400'">
-          <span class="text-xl leading-none">📋</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
           <span class="text-[9px] font-black uppercase tracking-wider">Rapor</span>
         </button>
         
@@ -127,7 +127,7 @@
             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
             <span class="relative inline-flex rounded-full h-3 w-3 bg-sky-500 border border-white"></span>
           </span>
-          <span class="text-xl leading-none">🔙</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" /></svg>
           <span class="text-[9px] font-black uppercase tracking-wider">Guru</span>
         </NuxtLink>
       </div>
@@ -205,40 +205,41 @@ const drawerTitle = computed(() => {
   return 'Menu'
 })
 
-// walasMenus indexing:
+// walasMenus indexing (sinkron dengan menus.ts):
 // 0: Dashboard
-// 1: divider (Siswa)
-// 2: Biodata
-// 3: Absensi
-// 4: Jurnal
-// 5: Catatan
-// 6: divider (Kegiatan)
-// 7: Ekskul
-// 8: P5
-// 9: Kokurikuler
-// 10: Prestasi
-// 11: divider (Proses Akhir)
-// 12: Monitoring
-// 13: Cetak Rapor
-// 14: Leger
-// 15: Kenaikan
+// 1: divider (Data & Monitoring)
+// 2: Biodata - index 2
+// 3: Absensi - index 3
+// 4: Monitoring - index 4
+// 5: divider (Input Data Rapor)
+// 6: Ekskul - index 6
+// 7: Kokurikuler - index 7
+// 8: Catatan - index 8
+// 9: Bimbingan - index 9
+// 10: divider (Rekapitulasi)
+// 11: Rekap Poin - index 11
+// 12: Cetak - index 12
+// 13: Catatan Kenaikan - index 13
 
 const currentDrawerMenus = computed(() => {
   let startIndex = 0
   let endIndex = walasMenus.length
 
   if (activeDrawer.value === 'siswa') {
+    // Biodata (2), Absensi (3), Monitoring (4)
     startIndex = 2
-    endIndex = 6
+    endIndex = 5
   } else if (activeDrawer.value === 'kegiatan') {
-    startIndex = 7
-    endIndex = 11
+    // Ekskul (6), Kokurikuler (7), Catatan (8), Bimbingan (9)
+    startIndex = 6
+    endIndex = 10
   } else if (activeDrawer.value === 'rapor') {
-    startIndex = 12
-    endIndex = 16
+    // Rekap Poin (11), Cetak (12), Kenaikan (13)
+    startIndex = 11
+    endIndex = 14
   }
 
-  return walasMenus.slice(startIndex, endIndex)
+  return walasMenus.slice(startIndex, endIndex).filter(m => !m.divider)
 })
 
 const openDrawer = (drawerName) => {
@@ -255,9 +256,17 @@ onMounted(() => {
 })
 
 const tokenCookie = useCookie('auth_token')
-const { data: dashboardStatus } = await useFetch(import.meta.env.VITE_API_BASE_URL + '/api/guru/dashboard', {
-  headers: { Authorization: `Bearer ${tokenCookie.value}` }
-})
+const { data: dashboardStatus } = await useAsyncData(
+  'walas-dashboard-status',
+  () => {
+    if (!tokenCookie.value || import.meta.server) return Promise.resolve(null)
+    const apiBase = import.meta.env.VITE_API_BASE_URL || ''
+    return $fetch(apiBase + '/api/guru/dashboard', {
+      headers: { Authorization: `Bearer ${tokenCookie.value}` }
+    }).catch(() => null)
+  },
+  { server: false }
+)
 const isWalas = computed(() => dashboardStatus.value?.data?.is_walas || false)
 
 const userCookie = useCookie('user_profile')

@@ -255,9 +255,17 @@ onMounted(() => {
 })
 
 const tokenCookie = useCookie('auth_token')
-const { data: dashboardStatus } = await useFetch(import.meta.env.VITE_API_BASE_URL + '/api/guru/dashboard', {
-  headers: { Authorization: `Bearer ${tokenCookie.value}` }
-})
+const { data: dashboardStatus } = await useAsyncData(
+  'guru-dashboard-status',
+  () => {
+    if (!tokenCookie.value || import.meta.server) return Promise.resolve(null)
+    const apiBase = import.meta.env.VITE_API_BASE_URL || ''
+    return $fetch(apiBase + '/api/guru/dashboard', {
+      headers: { Authorization: `Bearer ${tokenCookie.value}` }
+    }).catch(() => null)
+  },
+  { server: false }
+)
 const isWalas = computed(() => dashboardStatus.value?.data?.is_walas || false)
 
 const userCookie = useCookie('user_profile')

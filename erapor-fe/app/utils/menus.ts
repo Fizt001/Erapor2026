@@ -67,7 +67,7 @@ export const walasMenus: MenuConfig[] = [
   { name: 'Catatan Walas', path: '/guru/walas/catatan', icon: '📝' },
   { name: 'Bimbingan Walas', path: '/guru/walas/bimbingan', icon: '🤝' },
   { divider: true, dividerLabel: 'Rekapitulasi & Cetak' },
-  { name: 'Rekap Semester', path: '/guru/walas/rekap', icon: '📒' },
+  { name: 'Rekap Poin', path: '/guru/walas/rekap', icon: '📒' },
   { name: 'Cetak Leger & Rapor', path: '/guru/walas/rapor', icon: '🖨️' },
   { name: 'Catatan Kenaikan', path: '/guru/walas/kenaikan', icon: '📈' },
 ]

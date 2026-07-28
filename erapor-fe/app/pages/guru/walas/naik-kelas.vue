@@ -6,7 +6,7 @@
       <!-- MOBILE VIEW TABS -->
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-2 grid grid-cols-2 gap-2 z-20 shadow-sm">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
-          :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-sky-500 to-sky-600 text-white shadow-md shadow-sky-500/20 ring-2 ring-sky-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
+          :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-md shadow-amber-500/20 ring-2 ring-amber-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
           class="rounded-xl flex items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon :name="tab.icon" class="text-lg mr-1.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
           <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
@@ -188,6 +188,15 @@ definePageMeta({
   title: 'Kenaikan Kelas'
 })
 
+
+
+const windowWidth = ref(1024)
+const isDesktop = computed(() => windowWidth.value >= 1280)
+const activeTabMobile = ref('filter')
+const mobileTabs = [
+  { id: 'filter', title: 'Filter / Form', icon: 'funnel' },
+  { id: 'flow', title: 'Data Workspace', icon: 'table-cells' }
+]
 const walasData = ref(null)
 const students = ref([])
 const availableClasses = ref([])

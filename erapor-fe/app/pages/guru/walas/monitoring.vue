@@ -6,7 +6,7 @@
       <!-- MOBILE VIEW TABS -->
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-2 grid grid-cols-2 gap-2 z-20 shadow-sm">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
-          :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-sky-500 to-sky-600 text-white shadow-md shadow-sky-500/20 ring-2 ring-sky-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
+          :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-md shadow-amber-500/20 ring-2 ring-amber-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
           class="rounded-xl flex items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon :name="tab.icon" class="text-lg mr-1.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
           <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
@@ -36,7 +36,7 @@
                 <span class="text-2xl font-black text-emerald-700">{{ formatifCompletedCount }}<span class="text-sm text-emerald-500 font-bold ml-1">/ {{ totalMapel }}</span></span>
               </div>
               <div class="bg-sky-50 border border-sky-100 p-4 rounded-2xl flex flex-col shadow-sm items-center justify-center text-center">
-                <span class="text-[9px] uppercase font-black text-sky-600 tracking-widest mb-1">Sumatif Selesai</span>
+                <span class="text-[9px] uppercase font-black text-amber-600 tracking-widest mb-1">Sumatif Selesai</span>
                 <span class="text-2xl font-black text-sky-700">{{ sumatifCompletedCount }}<span class="text-sm text-sky-500 font-bold ml-1">/ {{ totalMapel }}</span></span>
               </div>
             </div>
@@ -144,7 +144,7 @@
                       <!-- Progress Sumatif -->
                       <td class="py-3 px-4">
                         <div class="flex justify-between items-center mb-1.5">
-                          <span class="text-[10px] font-black tracking-widest uppercase" :class="item.status_sumatif ? 'text-sky-600' : 'text-amber-500'">
+                          <span class="text-[10px] font-black tracking-widest uppercase" :class="item.status_sumatif ? 'text-amber-600' : 'text-amber-500'">
                             {{ item.status_sumatif ? 'Selesai' : 'Proses' }}
                           </span>
                           <span class="text-[10px] font-black tracking-widest text-slate-600">{{ item.sumatif_terisi }} / {{ item.total_siswa }}</span>
@@ -156,7 +156,7 @@
                                     :style="{ width: getPercentage(item.sumatif_terisi, item.total_siswa) + '%' }">
                                 </div>
                             </div>
-                            <span class="text-[11px] font-black w-10 text-right tracking-widest" :class="item.status_sumatif ? 'text-sky-600' : (item.sumatif_terisi > 0 ? 'text-amber-600' : 'text-slate-400')">
+                            <span class="text-[11px] font-black w-10 text-right tracking-widest" :class="item.status_sumatif ? 'text-amber-600' : (item.sumatif_terisi > 0 ? 'text-amber-600' : 'text-slate-400')">
                                 {{ getPercentage(item.sumatif_terisi, item.total_siswa) }}%
                             </span>
                         </div>
@@ -187,6 +187,15 @@ definePageMeta({
   title: 'Monitoring Nilai'
 })
 
+
+
+const windowWidth = ref(1024)
+const isDesktop = computed(() => windowWidth.value >= 1280)
+const activeTabMobile = ref('filter')
+const mobileTabs = [
+  { id: 'filter', title: 'Filter / Form', icon: 'funnel' },
+  { id: 'flow', title: 'Data Workspace', icon: 'table-cells' }
+]
 const token = useCookie('auth_token')
 const pending = ref(true)
 const error = ref(null)

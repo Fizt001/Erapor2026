@@ -6,7 +6,7 @@
       <!-- MOBILE VIEW TABS -->
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-2 grid grid-cols-2 gap-2 z-20 shadow-sm">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
-          :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-sky-500 to-sky-600 text-white shadow-md shadow-sky-500/20 ring-2 ring-sky-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
+          :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-md shadow-amber-500/20 ring-2 ring-amber-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
           class="rounded-xl flex items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon :name="tab.icon" class="text-lg mr-1.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
           <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
@@ -17,10 +17,10 @@
       <!-- Panel Dock Kiri -->
       <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full xl:z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] overflow-y-auto custom-scrollbar transition-all', activeTabMobile === 'filter' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[60px]' : '']">
         <div class="p-6 space-y-6">
-          <div class="bg-gradient-to-r from-sky-600 to-blue-700 rounded-2xl p-5 border border-sky-500 shadow-sm relative overflow-hidden">
+          <div class="bg-gradient-to-r from-amber-600 to-orange-700 rounded-2xl p-5 border border-amber-500 shadow-sm relative overflow-hidden">
             <div class="relative z-10">
               <h3 class="text-sm font-black uppercase tracking-widest text-white">Biodata Siswa</h3>
-              <p class="text-[10px] text-slate-400 font-semibold mt-0.5">Kelengkapan Profil Rapor Siswa</p>
+              <p class="text-[10px] text-amber-100 font-semibold mt-0.5">Kelengkapan Profil Rapor Siswa</p>
             </div>
             <div class="absolute right-0 bottom-0 opacity-10">
               <svg class="w-24 h-24 transform translate-x-6 translate-y-6" fill="currentColor" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
@@ -34,7 +34,7 @@
               <div class="relative">
                   <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 pointer-events-none">🔍</span>
                   <input type="text" v-model="searchQuery" placeholder="Cari nama atau NISN..." 
-                    class="w-full pl-10 pr-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-sky-500/10 focus:border-sky-500 transition-all font-semibold text-xs text-slate-700 outline-none">
+                    class="w-full pl-10 pr-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all font-semibold text-xs text-slate-700 outline-none">
               </div>
             </div>
 
@@ -362,31 +362,31 @@
                             <div class="grid grid-cols-2 gap-4">
                                 <div class="space-y-1.5">
                                     <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Tanggal Masuk</label>
-                                    <input v-model="editForm.tanggal_masuk" type="date" class="w-full bg-slate-50 border-2 border-slate-200/70 rounded-xl px-4 py-2.5 text-xs font-semibold focus:bg-white focus:ring-4 focus:ring-sky-500/10 focus:border-sky-500 outline-none transition-all">
+                                    <input v-model="editForm.tanggal_masuk" type="date" class="w-full bg-slate-50 border-2 border-slate-200/70 rounded-xl px-4 py-2.5 text-xs font-semibold focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all">
                                 </div>
                                 <div class="space-y-1.5">
                                     <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Kelas Masuk</label>
-                                    <input v-model="editForm.kelas_masuk" type="text" class="w-full bg-slate-50 border-2 border-slate-200/70 rounded-xl px-4 py-2.5 text-xs font-semibold focus:bg-white focus:ring-4 focus:ring-sky-500/10 focus:border-sky-500 outline-none transition-all">
+                                    <input v-model="editForm.kelas_masuk" type="text" class="w-full bg-slate-50 border-2 border-slate-200/70 rounded-xl px-4 py-2.5 text-xs font-semibold focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all">
                                 </div>
                             </div>
                             <div class="grid grid-cols-2 gap-4">
                                 <div class="space-y-1.5">
                                     <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Tanggal Keluar</label>
-                                    <input v-model="editForm.tanggal_keluar" type="date" class="w-full bg-slate-50 border-2 border-slate-200/70 rounded-xl px-4 py-2.5 text-xs font-semibold focus:bg-white focus:ring-4 focus:ring-sky-500/10 focus:border-sky-500 outline-none transition-all">
+                                    <input v-model="editForm.tanggal_keluar" type="date" class="w-full bg-slate-50 border-2 border-slate-200/70 rounded-xl px-4 py-2.5 text-xs font-semibold focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all">
                                 </div>
                                 <div class="space-y-1.5">
                                     <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Alasan Keluar</label>
-                                    <input v-model="editForm.alasan_keluar" type="text" class="w-full bg-slate-50 border-2 border-slate-200/70 rounded-xl px-4 py-2.5 text-xs font-semibold focus:bg-white focus:ring-4 focus:ring-sky-500/10 focus:border-sky-500 outline-none transition-all">
+                                    <input v-model="editForm.alasan_keluar" type="text" class="w-full bg-slate-50 border-2 border-slate-200/70 rounded-xl px-4 py-2.5 text-xs font-semibold focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all">
                                 </div>
                             </div>
                             <div class="grid grid-cols-2 gap-4">
                                 <div class="space-y-1.5">
                                     <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">No STTB SMK</label>
-                                    <input v-model="editForm.no_sttb_smk" type="text" class="w-full bg-slate-50 border-2 border-slate-200/70 rounded-xl px-4 py-2.5 text-xs font-semibold focus:bg-white focus:ring-4 focus:ring-sky-500/10 focus:border-sky-500 outline-none transition-all">
+                                    <input v-model="editForm.no_sttb_smk" type="text" class="w-full bg-slate-50 border-2 border-slate-200/70 rounded-xl px-4 py-2.5 text-xs font-semibold focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all">
                                 </div>
                                 <div class="space-y-1.5">
                                     <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Tgl STTB SMK</label>
-                                    <input v-model="editForm.tgl_sttb_smk" type="date" class="w-full bg-slate-50 border-2 border-slate-200/70 rounded-xl px-4 py-2.5 text-xs font-semibold focus:bg-white focus:ring-4 focus:ring-sky-500/10 focus:border-sky-500 outline-none transition-all">
+                                    <input v-model="editForm.tgl_sttb_smk" type="date" class="w-full bg-slate-50 border-2 border-slate-200/70 rounded-xl px-4 py-2.5 text-xs font-semibold focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all">
                                 </div>
                             </div>
                         </div>
@@ -422,7 +422,7 @@
                 <button 
                     @click="submitEdit" 
                     :disabled="isSaving"
-                    class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-[11px] font-black uppercase tracking-widest shadow-md hover:shadow-lg transition-all active:scale-95 flex items-center disabled:opacity-50"
+                    class="px-6 py-2.5 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-[11px] font-black uppercase tracking-widest shadow-md hover:shadow-lg transition-all active:scale-95 flex items-center disabled:opacity-50"
                 >
                     <span v-if="isSaving" class="mr-2 animate-spin">⏳</span>
                     Simpan Perubahan
@@ -442,6 +442,15 @@ definePageMeta({
   title: 'Biodata Siswa'
 })
 
+
+
+const windowWidth = ref(1024)
+const isDesktop = computed(() => windowWidth.value >= 1280)
+const activeTabMobile = ref('filter')
+const mobileTabs = [
+  { id: 'filter', title: 'Filter / Form', icon: 'funnel' },
+  { id: 'flow', title: 'Data Workspace', icon: 'table-cells' }
+]
 const token = useCookie('auth_token')
 const pending = ref(true)
 const error = ref(null)
