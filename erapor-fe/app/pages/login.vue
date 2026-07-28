@@ -54,7 +54,7 @@
                 <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')]"></div>
             </div>
 
-            <div class="relative z-10 flex flex-col w-full px-6 lg:px-12 xl:px-16 pt-8 lg:pt-12 pb-40 lg:pb-12 min-h-full lg:h-full">
+            <div class="relative z-10 flex flex-col w-full px-6 lg:px-12 xl:px-16 pt-8 lg:pt-12 pb-8 lg:pb-12 min-h-full lg:h-full">
                 
                 <!-- Watermark Tagline (menggantikan hero) -->
                 <div class="mb-6 lg:mb-8 flex-shrink-0">
@@ -101,6 +101,9 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Mobile Scroll Clearance Spacer (guarantees Card XII stops well above fixed bottom dock) -->
+                <div class="h-44 shrink-0 lg:hidden" aria-hidden="true"></div>
             </div>
         </div>
 
