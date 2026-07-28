@@ -57,58 +57,19 @@
                 <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')]"></div>
             </div>
 
-            <div class="relative z-10 flex flex-col w-full max-w-5xl mx-auto mt-4 lg:mt-0 gap-10">
-                <!-- TOP SECTION: Photo & Text -->
-                <div class="flex flex-col lg:flex-row items-center lg:items-start gap-8 lg:gap-12 w-full">
-                    
-                    <!-- Foto Sekolah Top (Slideshow) -->
-                    <div class="w-full sm:max-w-md lg:max-w-none lg:w-[45%] flex-shrink-0 relative group">
-                        <div class="relative rounded-2xl p-1 bg-gradient-to-br from-orange-500 via-rose-500 to-violet-600 shadow-[0_0_40px_-10px_rgba(249,115,22,0.4)]">
-                            <div class="relative rounded-xl overflow-hidden aspect-[4/3] bg-[#090C15]">
-                                <!-- Slideshow jika ada foto -->
-                                <template v-if="slidePhotos.length > 0">
-                                    <div v-for="(photo, idx) in slidePhotos" :key="idx"
-                                        class="absolute inset-0 w-full h-full transition-opacity duration-1000"
-                                        :class="currentSlide === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'">
-                                        <img :src="photo" alt="Foto Sekolah" class="w-full h-full object-cover opacity-90 mix-blend-luminosity hover:mix-blend-normal transition-all duration-500">
-                                    </div>
-                                    <div v-if="slidePhotos.length > 1" class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-full">
-                                        <button v-for="(_, idx) in slidePhotos" :key="idx" @click="currentSlide = idx"
-                                            class="w-1.5 h-1.5 rounded-full transition-all"
-                                            :class="currentSlide === idx ? 'bg-orange-500 scale-125 w-3' : 'bg-white/50'"
-                                        ></button>
-                                    </div>
-                                </template>
-                                <!-- Placeholder jika belum ada foto -->
-                                <div v-else class="flex flex-col items-center justify-center h-full w-full text-center p-4">
-                                    <span class="text-5xl lg:text-6xl mb-2 opacity-50">🏫</span>
-                                    <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Foto Sekolah</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Text Right -->
-                    <div class="w-full lg:w-[55%] text-center lg:text-left mt-6 lg:mt-0 flex flex-col items-center lg:items-start px-4 lg:px-0">
-                        <h2 class="text-3xl sm:text-4xl lg:text-5xl xl:text-7xl font-black text-white leading-tight mb-2 tracking-tight sm:whitespace-nowrap">
-                            e-Rapor
-                        </h2>
-                        
-                        <h3 class="text-lg sm:text-xl lg:text-2xl xl:text-4xl font-bold text-slate-200 mb-8 drop-shadow-md leading-snug">
-                            Kurikulum Nasional
-                        </h3>
-                        
-                        <p class="text-sm sm:text-base lg:text-lg text-slate-400 font-medium italic leading-relaxed max-w-lg mx-auto lg:mx-0">
-                            <span class="text-slate-200 font-semibold">Dashboard Business Intelligence</span><br>
-                            Sebagai Early Warning System<br>
-                            Pencapaian Akademik Siswa.
-                        </p>
-                    </div>
+            <div class="relative z-10 flex flex-col w-full h-full max-w-5xl mx-auto justify-center gap-6">
+                
+                <!-- Watermark Tagline (menggantikan hero) -->
+                <div class="mb-2">
+                    <p class="text-2xl lg:text-3xl xl:text-4xl font-black italic text-white/20 leading-snug select-none tracking-tight">
+                        Early Warning System<br>
+                        <span class="text-white/30">Pencapaian Akademik Siswa.</span>
+                    </p>
                 </div>
 
-                <!-- BOTTOM SECTION: 3 CARDS -->
+                <!-- GRAFIK PERTUMBUHAN PENCAPAIAN AKADEMIK -->
                 <div class="w-full">
-                    <div class="bg-[#1A1333] border-b border-white/5 py-2 px-4 mb-4 text-center shadow-lg">
+                    <div class="bg-[#1A1333]/80 border-b border-white/5 py-2.5 px-4 mb-5 text-left shadow-lg rounded-t-xl">
                         <h4 class="text-white font-bold tracking-widest text-sm lg:text-base uppercase">GRAFIK PERTUMBUHAN PENCAPAIAN AKADEMIK</h4>
                     </div>
                     
@@ -116,7 +77,7 @@
                         <!-- Card Kelas X -->
                         <div class="flex flex-col gap-2">
                             <h5 class="text-white font-bold text-lg px-1">Kelas X</h5>
-                            <div class="relative rounded-2xl p-0.5 bg-gradient-to-r from-orange-500 to-violet-600 h-36 lg:h-44 shadow-[0_0_20px_-5px_rgba(249,115,22,0.3)]">
+                            <div class="relative rounded-2xl p-0.5 bg-gradient-to-r from-orange-500 to-violet-600 h-44 lg:h-52 shadow-[0_0_20px_-5px_rgba(249,115,22,0.3)]">
                                 <div class="w-full h-full bg-[#090C15] rounded-xl flex flex-col items-center justify-center text-center p-4">
                                     <span class="text-4xl lg:text-5xl mb-2 opacity-50">🏫</span>
                                     <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Foto Sekolah</span>
@@ -127,7 +88,7 @@
                         <!-- Card Kelas XI -->
                         <div class="flex flex-col gap-2">
                             <h5 class="text-white font-bold text-lg px-1">Kelas XI</h5>
-                            <div class="relative rounded-2xl p-0.5 bg-gradient-to-r from-orange-500 to-violet-600 h-36 lg:h-44 shadow-[0_0_20px_-5px_rgba(249,115,22,0.3)]">
+                            <div class="relative rounded-2xl p-0.5 bg-gradient-to-r from-orange-500 to-violet-600 h-44 lg:h-52 shadow-[0_0_20px_-5px_rgba(249,115,22,0.3)]">
                                 <div class="w-full h-full bg-[#090C15] rounded-xl flex flex-col items-center justify-center text-center p-4">
                                     <span class="text-4xl lg:text-5xl mb-2 opacity-50">🏫</span>
                                     <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Foto Sekolah</span>
@@ -138,7 +99,7 @@
                         <!-- Card Kelas XII -->
                         <div class="flex flex-col gap-2">
                             <h5 class="text-white font-bold text-lg px-1">Kelas XII</h5>
-                            <div class="relative rounded-2xl p-0.5 bg-gradient-to-r from-orange-500 to-violet-600 h-36 lg:h-44 shadow-[0_0_20px_-5px_rgba(249,115,22,0.3)]">
+                            <div class="relative rounded-2xl p-0.5 bg-gradient-to-r from-orange-500 to-violet-600 h-44 lg:h-52 shadow-[0_0_20px_-5px_rgba(249,115,22,0.3)]">
                                 <div class="w-full h-full bg-[#090C15] rounded-xl flex flex-col items-center justify-center text-center p-4">
                                     <span class="text-4xl lg:text-5xl mb-2 opacity-50">🏫</span>
                                     <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Foto Sekolah</span>
@@ -235,7 +196,7 @@
 </template>
 
 <script setup>
-import { reactive, ref, computed, onMounted, onUnmounted } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCookie } from '#app'
 
@@ -302,21 +263,6 @@ const getImageUrl = (path) => {
   return `${apiUrl}/${path.replace(/^\//, '')}`
 }
 
-// === SLIDESHOW ===
-const currentSlide = ref(0)
-const slidePhotos = computed(() => {
-  const photos = [sekolah.value?.foto_1, sekolah.value?.foto_2, sekolah.value?.foto_3]
-  return photos.filter(Boolean)
-})
-
-let slideTimer = null
-const startSlideshow = () => {
-  slideTimer = setInterval(() => {
-    if (slidePhotos.value.length > 1) {
-      currentSlide.value = (currentSlide.value + 1) % slidePhotos.value.length
-    }
-  }, 4000)
-}
 onMounted(async () => {
   try {
     const res = await $fetch(apiUrl + '/api/public/stats')
@@ -324,19 +270,13 @@ onMounted(async () => {
       sekolah.value = {
         ...sekolah.value,
         nama_sekolah: res.data.sekolah.nama_sekolah,
-        logo: getImageUrl(res.data.sekolah.logo),
-        foto_1: getImageUrl(res.data.sekolah.foto_1),
-        foto_2: getImageUrl(res.data.sekolah.foto_2),
-        foto_3: getImageUrl(res.data.sekolah.foto_3)
+        logo: getImageUrl(res.data.sekolah.logo)
       }
     }
   } catch (err) {
     console.error('Gagal mengambil data sekolah publik:', err)
   }
-  startSlideshow()
 })
-
-onUnmounted(() => { if (slideTimer) clearInterval(slideTimer) })
 
 const router = useRouter()
 const form = reactive({ username: '', password: '' })
