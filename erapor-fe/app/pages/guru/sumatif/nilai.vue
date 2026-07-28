@@ -194,12 +194,12 @@
                 </div>
               </div>
 
-              <div class="flex-1 overflow-auto custom-scrollbar relative pb-10 bg-slate-50 md:bg-transparent">
-                <table class="w-full text-left border-collapse bg-transparent md:bg-white table-fixed">
-                  <thead class="hidden md:table-header-group sticky top-0 z-20 shadow-sm">
+              <div class="flex-1 overflow-auto custom-scrollbar relative pb-10 bg-white">
+                <table class="w-full text-left border-collapse bg-white table-fixed">
+                  <thead class="sticky top-0 z-20 shadow-sm">
                     <!-- Header Grouping -->
                     <tr class="bg-slate-200 border-b border-slate-300">
-                      <th rowspan="2" class="py-3 px-4 text-[10px] font-black uppercase tracking-widest text-slate-500 sticky left-0 bg-slate-100 z-30 w-[180px] sm:w-[250px] border-r border-slate-300 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.05)] align-middle">
+                      <th rowspan="2" class="hidden md:table-cell py-3 px-4 text-[10px] font-black uppercase tracking-widest text-slate-500 sticky left-0 bg-slate-100 z-30 w-[180px] sm:w-[250px] border-r border-slate-300 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.05)] align-middle">
                         Nama Siswa
                       </th>
                       <th colspan="4" class="py-1.5 px-1 border-r border-slate-300 text-center bg-indigo-50 text-[10px] font-black text-indigo-700 uppercase tracking-widest">
@@ -229,52 +229,61 @@
                       <th class="py-2 px-1 border-r border-slate-300 text-center w-[70px] bg-teal-50/30 text-[9px] font-bold text-teal-600 uppercase">Teori</th>
                     </tr>
                   </thead>
-                  <tbody class="divide-y divide-slate-100 bg-transparent md:bg-white block md:table-row-group">
-                    <tr v-for="siswa in siswas" :key="siswa.id" class="grid grid-cols-4 sm:grid-cols-6 md:table-row gap-2 md:gap-0 p-3 md:p-0 mb-4 md:mb-0 bg-white md:bg-transparent rounded-2xl md:rounded-none shadow-sm md:shadow-none border border-slate-200 md:border-none hover:bg-sky-50/20 group transition-colors md:h-12">
-                      <td class="col-span-4 sm:col-span-6 md:table-cell py-2 px-3 md:px-4 md:sticky left-0 bg-slate-50 md:bg-white group-hover:bg-slate-100 md:group-hover:bg-slate-50/90 z-10 md:border-r border-slate-100 md:shadow-[2px_0_5px_-2px_rgba(0,0,0,0.02)] overflow-hidden text-ellipsis whitespace-nowrap rounded-lg md:rounded-none mb-2 md:mb-0">
-                        <h4 class="text-[12px] md:text-[11px] font-black text-slate-700 uppercase tracking-wide truncate" :title="siswa.nama">{{ siswa.nama }}</h4>
-                        <p class="text-[10px] md:text-[9px] font-bold text-slate-400">{{ siswa.nis }}</p>
-                      </td>
+                  <tbody class="divide-y divide-slate-100">
+                    <template v-for="siswa in siswas" :key="siswa.id">
+                      <!-- Mobile Name Row -->
+                      <tr class="md:hidden bg-slate-50 border-t-4 border-slate-200">
+                        <td colspan="15" class="py-2 px-3">
+                          <div class="sticky left-3">
+                            <h4 class="text-[12px] font-black text-slate-800 uppercase tracking-wide truncate" :title="siswa.nama">{{ siswa.nama }}</h4>
+                            <p class="text-[10px] font-bold text-slate-500">{{ siswa.nis }}</p>
+                          </div>
+                        </td>
+                      </tr>
                       
-                      <!-- INPUT Harian (UH1-UH4) -->
-                      <td v-for="uhField in ['uh1', 'uh2', 'uh3', 'uh4']" :key="uhField" class="col-span-1 md:table-cell p-0 md:border-r border-slate-100 text-center h-12 relative flex flex-col items-center justify-center bg-indigo-50/30 md:bg-transparent rounded-lg md:rounded-none border md:border-0 border-indigo-100">
-                        <span class="md:hidden text-[8px] font-black text-indigo-400 uppercase mt-1">{{ uhField }}</span>
-                        <input type="text" v-model="getNilai(siswa.id)[uhField]" @input="markAsUnsaved(siswa.id, uhField)" :disabled="!references.is_titimangsa_aktif"
-                          class="w-full h-full border-none p-0 text-center font-black text-sm md:text-xs transition-all focus:ring-inset focus:ring-2 focus:ring-indigo-500 rounded-lg md:rounded-none"
-                          :class="!references.is_titimangsa_aktif ? 'bg-slate-50 text-slate-400 cursor-not-allowed' : 'bg-transparent text-indigo-800 focus:bg-white hover:bg-indigo-50/30'"
-                          placeholder="-">
-                      </td>
+                      <!-- Inputs Row (Desktop Name + Inputs) -->
+                      <tr class="hover:bg-sky-50/20 group transition-colors h-12 border-b-2 border-slate-200 md:border-b-0">
+                        <!-- Desktop Name Cell -->
+                        <td class="hidden md:table-cell py-2 px-4 sticky left-0 bg-white group-hover:bg-slate-50/90 z-10 border-r border-slate-100 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.02)] overflow-hidden text-ellipsis whitespace-nowrap">
+                          <h4 class="text-[11px] font-black text-slate-700 uppercase tracking-wide truncate" :title="siswa.nama">{{ siswa.nama }}</h4>
+                          <p class="text-[9px] font-bold text-slate-400">{{ siswa.nis }}</p>
+                        </td>
+                        
+                        <!-- INPUT Harian (UH1-UH4) -->
+                        <td v-for="uhField in ['uh1', 'uh2', 'uh3', 'uh4']" :key="uhField" class="p-0 border-r border-slate-100 text-center h-12 relative min-w-[60px]">
+                          <input type="text" v-model="getNilai(siswa.id)[uhField]" @input="markAsUnsaved(siswa.id, uhField)" :disabled="!references.is_titimangsa_aktif"
+                            class="w-full h-full border-none p-0 text-center font-black text-sm md:text-xs transition-all focus:ring-inset focus:ring-2 focus:ring-indigo-500"
+                            :class="!references.is_titimangsa_aktif ? 'bg-slate-50 text-slate-400 cursor-not-allowed' : 'bg-transparent text-indigo-800 focus:bg-white hover:bg-indigo-50/30'"
+                            placeholder="-">
+                        </td>
 
-                      <!-- INPUT Ujian (Praktek, Teori) -->
-                      <td v-for="ujiField in ['praktek', 'teori']" :key="ujiField" class="col-span-2 sm:col-span-1 md:table-cell p-0 md:border-r border-slate-100 text-center h-12 relative flex flex-col items-center justify-center bg-teal-50/30 md:bg-transparent rounded-lg md:rounded-none border md:border-0 border-teal-100">
-                        <span class="md:hidden text-[8px] font-black text-teal-500 uppercase mt-1">{{ ujiField }}</span>
-                        <input type="text" v-model="getNilai(siswa.id)[ujiField]" @input="markAsUnsaved(siswa.id, ujiField)" :disabled="!references.is_titimangsa_aktif"
-                          class="w-full h-full border-none p-0 text-center font-black text-sm md:text-xs transition-all focus:ring-inset focus:ring-2 focus:ring-teal-500 rounded-lg md:rounded-none"
-                          :class="!references.is_titimangsa_aktif ? 'bg-slate-50 text-slate-400 cursor-not-allowed' : 'bg-transparent text-teal-800 focus:bg-white hover:bg-teal-50/30'"
-                          placeholder="-">
-                      </td>
+                        <!-- INPUT Ujian (Praktek, Teori) -->
+                        <td v-for="ujiField in ['praktek', 'teori']" :key="ujiField" class="p-0 border-r border-slate-100 text-center h-12 relative min-w-[70px]">
+                          <input type="text" v-model="getNilai(siswa.id)[ujiField]" @input="markAsUnsaved(siswa.id, ujiField)" :disabled="!references.is_titimangsa_aktif"
+                            class="w-full h-full border-none p-0 text-center font-black text-sm md:text-xs transition-all focus:ring-inset focus:ring-2 focus:ring-teal-500"
+                            :class="!references.is_titimangsa_aktif ? 'bg-slate-50 text-slate-400 cursor-not-allowed' : 'bg-transparent text-teal-800 focus:bg-white hover:bg-teal-50/30'"
+                            placeholder="-">
+                        </td>
 
-                      <!-- NILAI PSTS LALU (Read Only) -->
-                      <td v-if="!references.is_psts" class="col-span-2 sm:col-span-1 md:table-cell p-0 md:border-r border-slate-100 text-center h-12 bg-amber-50 md:bg-amber-50/30 rounded-lg md:rounded-none border md:border-0 border-amber-100 flex flex-col items-center justify-center">
-                          <span class="md:hidden text-[8px] font-black text-amber-500 uppercase mt-1 leading-tight text-center block">PSTS</span>
-                          <span class="font-black text-sm md:text-xs text-amber-700 h-full flex items-center justify-center">{{ getNilai(siswa.id).psts_lalu || '-' }}</span>
-                      </td>
+                        <!-- NILAI PSTS LALU (Read Only) -->
+                        <td v-if="!references.is_psts" class="p-0 border-r border-slate-100 text-center h-12 bg-amber-50/30 min-w-[80px]">
+                            <span class="font-black text-sm md:text-xs text-amber-700">{{ getNilai(siswa.id).psts_lalu || '-' }}</span>
+                        </td>
 
-                      <!-- INPUT Literasi -->
-                      <td class="col-span-2 sm:col-span-1 md:table-cell p-0 md:border-r border-slate-100 text-center h-12 relative flex flex-col items-center justify-center bg-slate-50/50 md:bg-transparent rounded-lg md:rounded-none border md:border-0 border-slate-200">
-                        <span class="md:hidden text-[8px] font-black text-slate-400 uppercase mt-1">LIT</span>
-                        <input type="text" v-model="getNilai(siswa.id).literasi" @input="markAsUnsaved(siswa.id, 'literasi')" :disabled="!references.is_titimangsa_aktif"
-                          class="w-full h-full border-none p-0 text-center font-black text-sm md:text-xs transition-all focus:ring-inset focus:ring-2 focus:ring-slate-500 rounded-lg md:rounded-none"
-                          :class="!references.is_titimangsa_aktif ? 'bg-slate-50 text-slate-400 cursor-not-allowed' : 'bg-transparent text-slate-700 focus:bg-white hover:bg-slate-100/50'"
-                          placeholder="-">
-                      </td>
+                        <!-- INPUT Literasi -->
+                        <td class="p-0 border-r border-slate-100 text-center h-12 relative min-w-[80px]">
+                          <input type="text" v-model="getNilai(siswa.id).literasi" @input="markAsUnsaved(siswa.id, 'literasi')" :disabled="!references.is_titimangsa_aktif"
+                            class="w-full h-full border-none p-0 text-center font-black text-sm md:text-xs transition-all focus:ring-inset focus:ring-2 focus:ring-slate-500"
+                            :class="!references.is_titimangsa_aktif ? 'bg-slate-50 text-slate-400 cursor-not-allowed' : 'bg-transparent text-slate-700 focus:bg-white hover:bg-slate-100/50'"
+                            placeholder="-">
+                        </td>
 
-                      <!-- HASIL NA (Computed Real-Time) -->
-                      <td class="col-span-4 sm:col-span-2 md:table-cell p-0 md:border-r border-slate-100 text-center h-12 bg-sky-100 md:bg-sky-50/50 rounded-lg md:rounded-none border md:border-0 border-sky-200 flex flex-row md:flex-col items-center justify-between md:justify-center px-4 md:px-0">
-                          <span class="md:hidden text-[10px] font-black text-sky-600 uppercase">Nilai Akhir (NA)</span>
-                          <span class="font-black text-lg md:text-sm text-sky-700 tracking-tight h-full flex items-center justify-center">{{ hitungNA(siswa.id) }}</span>
-                      </td>
-                    </tr>
+                        <!-- HASIL NA (Computed Real-Time) -->
+                        <td class="p-0 border-r border-slate-100 text-center h-12 bg-sky-50/50 min-w-[90px]">
+                            <span class="font-black text-lg md:text-sm text-sky-700 tracking-tight">{{ hitungNA(siswa.id) }}</span>
+                        </td>
+                      </tr>
+                    </template>
                   </tbody>
                 </table>
               </div>
