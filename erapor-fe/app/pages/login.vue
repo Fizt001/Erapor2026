@@ -301,6 +301,11 @@ const handleLogin = async () => {
   border-radius: 4px;
 }
 
+/* Hide native browser (Edge) reveal password icon */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
 
 /* Modal fade transition (mobile login dialog) */
 .modal-fade-enter-active {
