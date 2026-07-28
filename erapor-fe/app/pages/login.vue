@@ -325,14 +325,14 @@ const handleLogin = async () => {
 }
 
 @keyframes tv-on {
-  0% { transform: scale(0, 0); border-radius: 100px; opacity: 0; }
-  60% { transform: scale(1.02, 1.02); border-radius: 40px; opacity: 1; }
-  100% { transform: scale(1, 1); border-radius: 24px; opacity: 1; }
+  0% { transform: scale(0.01, 0.01); opacity: 0; }
+  60% { transform: scale(1.02, 1.02); opacity: 1; }
+  100% { transform: scale(1, 1); opacity: 1; }
 }
 
 @keyframes tv-off {
   0% { transform: scale(1, 1); opacity: 1; }
-  50% { transform: scale(1, 0.02); opacity: 1; }
+  50% { transform: scale(1, 0.01); opacity: 1; }
   100% { transform: scale(0, 0); opacity: 0; }
 }
 
