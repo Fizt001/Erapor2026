@@ -1,16 +1,25 @@
 <template>
   <div class="h-full flex flex-col min-h-0 bg-slate-50">
-    <div class="xl:hidden p-4 bg-white border-b border-slate-200 shrink-0 z-20 shadow-[0_4px_10px_-4px_rgba(0,0,0,0.05)] relative">
-      <div class="flex bg-slate-100 p-1 rounded-xl">
-         <button @click="activeMobileTab = 'filter'" :class="activeMobileTab === 'filter' ? 'bg-white text-sky-600 shadow-sm' : 'text-slate-500 hover:bg-slate-200'" class="flex-1 py-2.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all">Filter</button>
-         <button @click="activeMobileTab = 'pertemuan'" :class="activeMobileTab === 'pertemuan' ? 'bg-white text-sky-600 shadow-sm' : 'text-slate-500 hover:bg-slate-200'" class="flex-1 py-2.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all">Pertemuan</button>
-      </div>
-    </div>
-    
-    <div class="flex-1 flex overflow-hidden relative">
+    <div class="flex-1 flex flex-col xl:flex-row overflow-hidden relative">
       
+      <!-- MOBILE VIEW TABS -->
+      <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-2 grid grid-cols-2 gap-2 z-20 shadow-sm">
+        <button type="button" @click="activeMobileTab = 'filter'"
+          :class="activeMobileTab === 'filter' ? 'bg-gradient-to-br from-sky-500 to-sky-600 text-white shadow-md shadow-sky-500/20 ring-2 ring-sky-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
+          class="rounded-xl flex items-center justify-center py-2 px-1 transition-all active:scale-95">
+          <AppIcon name="adjustments-horizontal" class="text-lg mr-1.5 transition-transform" :class="activeMobileTab === 'filter' ? 'scale-110' : ''" />
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">Filter Data</span>
+        </button>
+        <button type="button" @click="activeMobileTab = 'pertemuan'"
+          :class="activeMobileTab === 'pertemuan' ? 'bg-gradient-to-br from-sky-500 to-sky-600 text-white shadow-md shadow-sky-500/20 ring-2 ring-sky-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
+          class="rounded-xl flex items-center justify-center py-2 px-1 transition-all active:scale-95">
+          <AppIcon name="calendar-days" class="text-lg mr-1.5 transition-transform" :class="activeMobileTab === 'pertemuan' ? 'scale-110' : ''" />
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">Kehadiran</span>
+        </button>
+      </div>
+
       <!-- Panel Dock Kiri -->
-      <div class="xl:w-[360px] w-full bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full xl:z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] overflow-y-auto custom-scrollbar" :class="{'hidden xl:flex': activeMobileTab !== 'filter'}">
+      <div class="w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full xl:z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] overflow-y-auto custom-scrollbar transition-all pt-[60px] xl:pt-0" :class="activeMobileTab === 'filter' ? 'block' : 'hidden xl:flex'">
         
         <div class="p-4 pb-2 space-y-4">
           <div class="bg-gradient-to-r from-sky-600 to-blue-700 rounded-2xl p-4 border border-sky-500 shadow-sm relative overflow-hidden flex items-center gap-3">
@@ -94,7 +103,7 @@
       </div>
 
       <!-- Panel Flow Kanan -->
-      <div class="flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative" :class="{'hidden xl:flex': activeMobileTab !== 'pertemuan'}">
+      <div class="flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative transition-all pt-[60px] xl:pt-0" :class="activeMobileTab === 'pertemuan' ? 'flex' : 'hidden xl:flex'">
         <div class="p-4 lg:p-6 max-w-7xl mx-auto w-full h-full flex flex-col relative z-0">
           <div class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
             <!-- Header -->
