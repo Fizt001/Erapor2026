@@ -54,10 +54,10 @@
                 <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')]"></div>
             </div>
 
-            <div class="relative z-10 flex flex-col w-full max-w-6xl mx-auto gap-8 p-6 lg:p-16 pb-36 lg:pb-16 lg:justify-center lg:h-full">
+            <div class="relative z-10 flex flex-col w-full px-6 lg:px-12 xl:px-16 pt-8 lg:pt-12 pb-36 lg:pb-12 h-full">
                 
                 <!-- Watermark Tagline (menggantikan hero) -->
-                <div class="mb-4">
+                <div class="mb-6 lg:mb-8 flex-shrink-0">
                     <p class="text-2xl lg:text-4xl xl:text-5xl font-black italic text-white/20 leading-snug select-none tracking-tight">
                         Early Warning System<br>
                         <span class="text-white/30">Pencapaian Akademik Siswa.</span>
@@ -65,13 +65,13 @@
                 </div>
 
                 <!-- CARD PENCAPAIAN AKADEMIK -->
-                <div class="w-full">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                <div class="w-full flex-1 flex flex-col min-h-0">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 flex-1">
                         <!-- Card Kelas X -->
-                        <div class="flex flex-col gap-3">
+                        <div class="flex flex-col gap-3 h-full">
                             <h5 class="text-white font-bold text-xl px-1">Kelas X</h5>
-                            <div class="relative rounded-3xl p-[3px] bg-gradient-to-r from-orange-500 to-violet-600 h-52 lg:h-72 shadow-[0_0_30px_-5px_rgba(249,115,22,0.4)]">
-                                <div class="w-full h-full bg-[#090C15] rounded-[22px] flex flex-col items-center justify-center text-center p-6">
+                            <div class="relative rounded-3xl p-[3px] bg-gradient-to-r from-orange-500 to-violet-600 flex-1 min-h-[220px] shadow-[0_0_30px_-5px_rgba(249,115,22,0.4)] flex flex-col">
+                                <div class="w-full flex-1 bg-[#090C15] rounded-[22px] flex flex-col items-center justify-center text-center p-6">
                                     <span class="text-5xl lg:text-7xl mb-4 opacity-50">🏫</span>
                                     <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Foto Sekolah</span>
                                 </div>
@@ -79,10 +79,10 @@
                         </div>
 
                         <!-- Card Kelas XI -->
-                        <div class="flex flex-col gap-3">
+                        <div class="flex flex-col gap-3 h-full">
                             <h5 class="text-white font-bold text-xl px-1">Kelas XI</h5>
-                            <div class="relative rounded-3xl p-[3px] bg-gradient-to-r from-orange-500 to-violet-600 h-52 lg:h-72 shadow-[0_0_30px_-5px_rgba(249,115,22,0.4)]">
-                                <div class="w-full h-full bg-[#090C15] rounded-[22px] flex flex-col items-center justify-center text-center p-6">
+                            <div class="relative rounded-3xl p-[3px] bg-gradient-to-r from-orange-500 to-violet-600 flex-1 min-h-[220px] shadow-[0_0_30px_-5px_rgba(249,115,22,0.4)] flex flex-col">
+                                <div class="w-full flex-1 bg-[#090C15] rounded-[22px] flex flex-col items-center justify-center text-center p-6">
                                     <span class="text-5xl lg:text-7xl mb-4 opacity-50">🏫</span>
                                     <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Foto Sekolah</span>
                                 </div>
@@ -90,10 +90,10 @@
                         </div>
 
                         <!-- Card Kelas XII -->
-                        <div class="flex flex-col gap-3">
+                        <div class="flex flex-col gap-3 h-full">
                             <h5 class="text-white font-bold text-xl px-1">Kelas XII</h5>
-                            <div class="relative rounded-3xl p-[3px] bg-gradient-to-r from-orange-500 to-violet-600 h-52 lg:h-72 shadow-[0_0_30px_-5px_rgba(249,115,22,0.4)]">
-                                <div class="w-full h-full bg-[#090C15] rounded-[22px] flex flex-col items-center justify-center text-center p-6">
+                            <div class="relative rounded-3xl p-[3px] bg-gradient-to-r from-orange-500 to-violet-600 flex-1 min-h-[220px] shadow-[0_0_30px_-5px_rgba(249,115,22,0.4)] flex flex-col">
+                                <div class="w-full flex-1 bg-[#090C15] rounded-[22px] flex flex-col items-center justify-center text-center p-6">
                                     <span class="text-5xl lg:text-7xl mb-4 opacity-50">🏫</span>
                                     <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Foto Sekolah</span>
                                 </div>
