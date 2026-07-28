@@ -54,7 +54,7 @@
                 <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')]"></div>
             </div>
 
-            <div class="relative z-10 flex flex-col w-full px-6 lg:px-12 xl:px-16 pt-8 lg:pt-12 pb-36 lg:pb-12 h-full">
+            <div class="relative z-10 flex flex-col w-full px-6 lg:px-12 xl:px-16 pt-8 lg:pt-12 pb-48 lg:pb-12 h-full">
                 
                 <!-- Watermark Tagline (menggantikan hero) -->
                 <div class="mb-6 lg:mb-8 flex-shrink-0">
@@ -114,7 +114,6 @@
             <button @click="showLoginModal = true"
                     class="w-full py-4 bg-gradient-to-r from-orange-500 to-rose-500 text-white font-black rounded-xl shadow-[0_10px_30px_-5px_rgba(249,115,22,0.6)] text-sm uppercase tracking-widest flex items-center justify-center gap-2 active:scale-95 transition-transform">
                 <span>Masuk ke Aplikasi</span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
             </button>
         </div>
     </main>
