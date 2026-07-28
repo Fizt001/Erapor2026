@@ -101,14 +101,11 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Explicit Mobile Scroll Spacer to guarantee clearance above the bottom dock -->
-                <div class="h-48 shrink-0 w-full lg:hidden" aria-hidden="true"></div>
             </div>
         </div>
 
-        <!-- MOBILE ONLY: Fixed Bottom Dock (Button + Fixed Footer) -->
-        <div class="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#090C15]/95 backdrop-blur-md border-t border-white/10 p-4 pb-3 flex flex-col gap-2.5 shadow-2xl">
+        <!-- MOBILE ONLY: Bottom Dock (Button + Footer) - Now sits natively in flex flow -->
+        <div class="lg:hidden shrink-0 z-20 bg-[#090C15]/95 backdrop-blur-md border-t border-white/10 p-4 pb-3 flex flex-col gap-2.5 shadow-2xl">
             <button @click="showLoginModal = true"
                     class="w-full py-3.5 bg-gradient-to-r from-orange-500 to-rose-500 text-white font-black rounded-xl shadow-[0_4px_20px_-3px_rgba(249,115,22,0.5)] text-xs sm:text-sm uppercase tracking-widest flex items-center justify-center active:scale-95 transition-transform">
                 <span>Masuk ke Aplikasi</span>
