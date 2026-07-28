@@ -75,9 +75,8 @@
       </div>
 
       <!-- Panel Flow Kanan -->
-      <div class="flex-1 bg-slate-50 flex flex-col h-full min-w-0 overflow-y-auto custom-scrollbar relative">
-        <div class="p-6 lg:p-8 max-w-5xl mx-auto w-full h-full flex flex-col">
-          <div class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative">
+      <div class="flex-1 bg-white flex flex-col h-full min-w-0 relative transition-all pt-[60px] xl:pt-0" :class="activeTabMobile === 'flow' ? 'flex' : 'hidden xl:flex'">
+          <div class="flex flex-col flex-1 relative min-h-0">
             
             <!-- Header Card Kanan -->
             <div class="px-6 py-5 border-b border-slate-200 flex justify-between items-center bg-white shrink-0 z-10">
@@ -177,8 +176,8 @@
                 <span class="mr-2 text-lg leading-none">+</span> Tambah Elemen Pembelajaran Baru
               </button>
             </div>
+            </div>
           </div>
-        </div>
       </div>
     </div>
   </div>
