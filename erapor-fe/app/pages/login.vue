@@ -72,8 +72,8 @@
                             <h5 class="text-white font-bold text-xl px-1">Kelas X</h5>
                             <div class="relative rounded-3xl p-[3px] bg-gradient-to-r from-orange-500 to-violet-600 flex-1 min-h-[220px] shadow-[0_0_30px_-5px_rgba(249,115,22,0.4)] flex flex-col">
                                 <div class="w-full flex-1 bg-[#090C15] rounded-[22px] flex flex-col items-center justify-center text-center p-6">
-                                    <span class="text-5xl lg:text-7xl mb-4 opacity-50">🏫</span>
-                                    <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Foto Sekolah</span>
+                                    <AppIcon name="chart-bar" class="text-5xl lg:text-7xl mb-4 opacity-50 text-white" />
+                                    <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Pencapaian Akademik</span>
                                 </div>
                             </div>
                         </div>
@@ -83,8 +83,8 @@
                             <h5 class="text-white font-bold text-xl px-1">Kelas XI</h5>
                             <div class="relative rounded-3xl p-[3px] bg-gradient-to-r from-orange-500 to-violet-600 flex-1 min-h-[220px] shadow-[0_0_30px_-5px_rgba(249,115,22,0.4)] flex flex-col">
                                 <div class="w-full flex-1 bg-[#090C15] rounded-[22px] flex flex-col items-center justify-center text-center p-6">
-                                    <span class="text-5xl lg:text-7xl mb-4 opacity-50">🏫</span>
-                                    <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Foto Sekolah</span>
+                                    <AppIcon name="chart-bar" class="text-5xl lg:text-7xl mb-4 opacity-50 text-white" />
+                                    <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Pencapaian Akademik</span>
                                 </div>
                             </div>
                         </div>
@@ -94,8 +94,8 @@
                             <h5 class="text-white font-bold text-xl px-1">Kelas XII</h5>
                             <div class="relative rounded-3xl p-[3px] bg-gradient-to-r from-orange-500 to-violet-600 flex-1 min-h-[220px] shadow-[0_0_30px_-5px_rgba(249,115,22,0.4)] flex flex-col">
                                 <div class="w-full flex-1 bg-[#090C15] rounded-[22px] flex flex-col items-center justify-center text-center p-6">
-                                    <span class="text-5xl lg:text-7xl mb-4 opacity-50">🏫</span>
-                                    <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Foto Sekolah</span>
+                                    <AppIcon name="chart-bar" class="text-5xl lg:text-7xl mb-4 opacity-50 text-white" />
+                                    <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Pencapaian Akademik</span>
                                 </div>
                             </div>
                         </div>
