@@ -82,10 +82,9 @@
                                     </template>
                                     <template v-else>
                                         <Transition name="fade-slide" mode="out-in">
-                                            <div :key="item.config.title" class="flex flex-col items-center justify-between w-full h-full">
-                                                <h6 class="text-[12px] font-black uppercase tracking-widest text-orange-400 mb-2">{{ item.config.title }}</h6>
-                                                <div class="relative flex-1 w-full min-h-[160px] flex items-center justify-center pb-2">
-                                                    <div class="relative w-44 h-44 sm:w-48 sm:h-48">
+                                            <div :key="item.config.title" class="flex flex-col items-center justify-center w-full h-full">
+                                                <div class="relative flex-1 w-full flex items-center justify-center">
+                                                    <div class="relative w-48 h-48 sm:w-56 sm:h-56">
                                                         <ClientOnly>
                                                             <Doughnut :data="item.config.chartData" :options="item.config.chartOptions" />
                                                             <template #fallback>
@@ -93,11 +92,12 @@
                                                             </template>
                                                         </ClientOnly>
                                                         <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center">
-                                                            <span class="text-3xl font-black text-white leading-none">{{ item.config.percentageText }}</span>
-                                                            <span class="text-[10px] font-bold text-emerald-500 uppercase tracking-widest mt-1">Tuntas</span>
+                                                            <span class="text-4xl font-black text-white leading-none">{{ item.config.percentageText }}</span>
+                                                            <span class="text-[12px] font-bold text-emerald-500 uppercase tracking-widest mt-1">Tuntas</span>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <h6 class="text-[14px] font-black uppercase tracking-widest text-orange-400 mt-4">{{ item.config.title }}</h6>
                                             </div>
                                         </Transition>
                                     </template>
