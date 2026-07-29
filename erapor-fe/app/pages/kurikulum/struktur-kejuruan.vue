@@ -62,7 +62,7 @@
                     <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Mata Pelajaran</label>
                     <select v-model="formData.mapel_id" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-800 outline-none cursor-pointer">
                         <option value="" disabled>-- Pilih Mapel Kejuruan --</option>
-                        <option v-for="mapel in availableMapels" :key="mapel.id" :value="mapel.id">{{ mapel.nama_mapel }}</option>
+                        <option v-for="mapel in availableMapels" :key="mapel.id" :value="mapel.id">{{ mapel.kode_mapel }} - {{ mapel.nama_mapel }}</option>
                     </select>
                     <p v-if="formData.unit_id && availableMapels.length === 0" class="text-[10px] text-rose-500 mt-1.5 font-bold ml-1">Semua mapel sudah diplot ke unit ini.</p>
                 </div>
@@ -269,10 +269,18 @@ watch(() => tingkat.value, () => {
 const availableMapels = computed(() => {
     if (!formData.unit_id) return []
     const unit = dataUnit.value.find(u => u.id === formData.unit_id)
-    if (!unit) return mapels.value
+    if (!unit) return []
     
     const existingMapelIds = unit.struktur_kejuruans.map(s => s.mapel_id)
-    return mapels.value.filter(m => !existingMapelIds.includes(m.id))
+    const searchToken = `.${tingkat.value}.`
+    
+    return mapels.value.filter(m => {
+        // Filter out already selected
+        if (existingMapelIds.includes(m.id)) return false
+        // Filter by kode_mapel pattern based on tingkat (e.g. .X., .XI., .XII.)
+        if (!m.kode_mapel || !m.kode_mapel.includes(searchToken)) return false
+        return true
+    })
 })
 
 // Delete State
