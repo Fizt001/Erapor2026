@@ -208,32 +208,32 @@
                       <th colspan="2" class="py-1.5 px-1 border-r border-slate-300 text-center bg-teal-50 text-[10px] font-black text-teal-700 uppercase tracking-widest">
                         Ujian Sumatif
                       </th>
-                      <th rowspan="2" class="py-2 px-1 border-r border-slate-300 text-center w-[80px] bg-slate-50 align-middle" v-if="!references.is_psts">
+                      <th rowspan="2" class="py-2 px-1 border-r border-slate-300 text-center w-[80px] min-w-[85px] md:min-w-0 bg-slate-50 align-middle" v-if="!references.is_psts">
                         <span class="text-[9px] font-black text-slate-600 uppercase tracking-tight block leading-tight">Nilai PSTS<br>Lalu</span>
                       </th>
-                      <th rowspan="2" class="py-2 px-1 border-r border-slate-300 text-center w-[80px] bg-slate-50 align-middle">
+                      <th rowspan="2" class="py-2 px-1 border-r border-slate-300 text-center w-[80px] min-w-[85px] md:min-w-0 bg-slate-50 align-middle">
                         <span class="text-[9px] font-black text-slate-600 uppercase tracking-tight block leading-tight">Nilai<br>Literasi</span>
                       </th>
-                      <th rowspan="2" class="py-2 px-1 border-r border-slate-300 text-center w-[90px] bg-sky-100 align-middle shadow-inner">
+                      <th rowspan="2" class="py-2 px-1 border-r border-slate-300 text-center w-[90px] min-w-[95px] md:min-w-0 bg-sky-100 align-middle shadow-inner">
                         <span class="text-[10px] font-black text-sky-800 uppercase tracking-wider block leading-tight">Nilai Akhir<br>(NA)</span>
                       </th>
                     </tr>
                     <!-- Sub Header -->
                     <tr class="bg-slate-100 border-b border-slate-200">
-                      <th class="py-2 px-1 border-r border-slate-200 text-center w-[60px] bg-indigo-50/30 text-[9px] font-bold text-indigo-600 uppercase">UH1</th>
-                      <th class="py-2 px-1 border-r border-slate-200 text-center w-[60px] bg-indigo-50/30 text-[9px] font-bold text-indigo-600 uppercase">UH2</th>
-                      <th class="py-2 px-1 border-r border-slate-200 text-center w-[60px] bg-indigo-50/30 text-[9px] font-bold text-indigo-600 uppercase">UH3</th>
-                      <th class="py-2 px-1 border-r border-slate-300 text-center w-[60px] bg-indigo-50/30 text-[9px] font-bold text-indigo-600 uppercase">UH4</th>
+                      <th class="py-2 px-1 border-r border-slate-200 text-center w-[60px] min-w-[75px] md:min-w-0 bg-indigo-50/30 text-[9px] font-bold text-indigo-600 uppercase">UH1</th>
+                      <th class="py-2 px-1 border-r border-slate-200 text-center w-[60px] min-w-[75px] md:min-w-0 bg-indigo-50/30 text-[9px] font-bold text-indigo-600 uppercase">UH2</th>
+                      <th class="py-2 px-1 border-r border-slate-200 text-center w-[60px] min-w-[75px] md:min-w-0 bg-indigo-50/30 text-[9px] font-bold text-indigo-600 uppercase">UH3</th>
+                      <th class="py-2 px-1 border-r border-slate-300 text-center w-[60px] min-w-[75px] md:min-w-0 bg-indigo-50/30 text-[9px] font-bold text-indigo-600 uppercase">UH4</th>
                       
-                      <th class="py-2 px-1 border-r border-slate-200 text-center w-[70px] bg-teal-50/30 text-[9px] font-bold text-teal-600 uppercase">Praktek</th>
-                      <th class="py-2 px-1 border-r border-slate-300 text-center w-[70px] bg-teal-50/30 text-[9px] font-bold text-teal-600 uppercase">Teori</th>
+                      <th class="py-2 px-1 border-r border-slate-200 text-center w-[70px] min-w-[85px] md:min-w-0 bg-teal-50/30 text-[9px] font-bold text-teal-600 uppercase">Praktek</th>
+                      <th class="py-2 px-1 border-r border-slate-300 text-center w-[70px] min-w-[85px] md:min-w-0 bg-teal-50/30 text-[9px] font-bold text-teal-600 uppercase">Teori</th>
                     </tr>
                   </thead>
                   <tbody class="divide-y divide-slate-100">
                     <template v-for="siswa in siswas" :key="siswa.id">
                       <!-- Mobile Name Row -->
                       <tr class="md:hidden bg-slate-50 border-t-4 border-slate-200">
-                        <td colspan="15" class="py-2 px-3">
+                        <td :colspan="!references.is_psts ? 9 : 8" class="py-2 px-3">
                           <div class="sticky left-3">
                             <h4 class="text-[12px] font-black text-slate-800 uppercase tracking-wide truncate" :title="siswa.nama">{{ siswa.nama }}</h4>
                             <p class="text-[10px] font-bold text-slate-500">{{ siswa.nis }}</p>
@@ -250,7 +250,7 @@
                         </td>
                         
                         <!-- INPUT Harian (UH1-UH4) -->
-                        <td v-for="uhField in ['uh1', 'uh2', 'uh3', 'uh4']" :key="uhField" class="p-0 border-r border-slate-100 text-center h-12 relative min-w-[60px]">
+                        <td v-for="uhField in ['uh1', 'uh2', 'uh3', 'uh4']" :key="uhField" class="p-0 border-r border-slate-100 text-center h-12 relative min-w-[75px] md:min-w-[60px]">
                           <input type="text" v-model="getNilai(siswa.id)[uhField]" @input="markAsUnsaved(siswa.id, uhField)" :disabled="!references.is_titimangsa_aktif"
                             class="w-full h-full border-none p-0 text-center font-black text-sm md:text-xs transition-all focus:ring-inset focus:ring-2 focus:ring-indigo-500"
                             :class="!references.is_titimangsa_aktif ? 'bg-slate-50 text-slate-400 cursor-not-allowed' : 'bg-transparent text-indigo-800 focus:bg-white hover:bg-indigo-50/30'"
@@ -258,7 +258,7 @@
                         </td>
 
                         <!-- INPUT Ujian (Praktek, Teori) -->
-                        <td v-for="ujiField in ['praktek', 'teori']" :key="ujiField" class="p-0 border-r border-slate-100 text-center h-12 relative min-w-[70px]">
+                        <td v-for="ujiField in ['praktek', 'teori']" :key="ujiField" class="p-0 border-r border-slate-100 text-center h-12 relative min-w-[85px] md:min-w-[70px]">
                           <input type="text" v-model="getNilai(siswa.id)[ujiField]" @input="markAsUnsaved(siswa.id, ujiField)" :disabled="!references.is_titimangsa_aktif"
                             class="w-full h-full border-none p-0 text-center font-black text-sm md:text-xs transition-all focus:ring-inset focus:ring-2 focus:ring-teal-500"
                             :class="!references.is_titimangsa_aktif ? 'bg-slate-50 text-slate-400 cursor-not-allowed' : 'bg-transparent text-teal-800 focus:bg-white hover:bg-teal-50/30'"
@@ -266,12 +266,12 @@
                         </td>
 
                         <!-- NILAI PSTS LALU (Read Only) -->
-                        <td v-if="!references.is_psts" class="p-0 border-r border-slate-100 text-center h-12 bg-amber-50/30 min-w-[80px]">
+                        <td v-if="!references.is_psts" class="p-0 border-r border-slate-100 text-center h-12 bg-amber-50/30 min-w-[85px] md:min-w-[80px]">
                             <span class="font-black text-sm md:text-xs text-amber-700">{{ getNilai(siswa.id).psts_lalu || '-' }}</span>
                         </td>
 
                         <!-- INPUT Literasi -->
-                        <td class="p-0 border-r border-slate-100 text-center h-12 relative min-w-[80px]">
+                        <td class="p-0 border-r border-slate-100 text-center h-12 relative min-w-[85px] md:min-w-[80px]">
                           <input type="text" v-model="getNilai(siswa.id).literasi" @input="markAsUnsaved(siswa.id, 'literasi')" :disabled="!references.is_titimangsa_aktif"
                             class="w-full h-full border-none p-0 text-center font-black text-sm md:text-xs transition-all focus:ring-inset focus:ring-2 focus:ring-slate-500"
                             :class="!references.is_titimangsa_aktif ? 'bg-slate-50 text-slate-400 cursor-not-allowed' : 'bg-transparent text-slate-700 focus:bg-white hover:bg-slate-100/50'"
@@ -279,7 +279,7 @@
                         </td>
 
                         <!-- HASIL NA (Computed Real-Time) -->
-                        <td class="p-0 border-r border-slate-100 text-center h-12 bg-sky-50/50 min-w-[90px]">
+                        <td class="p-0 border-r border-slate-100 text-center h-12 bg-sky-50/50 min-w-[95px] md:min-w-[90px]">
                             <span class="font-black text-lg md:text-sm text-sky-700 tracking-tight">{{ hitungNA(siswa.id) }}</span>
                         </td>
                       </tr>
