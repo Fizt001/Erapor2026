@@ -102,69 +102,6 @@
                 </div>
             </div>
 
-            <div v-if="!statsLoading && wStats" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                
-                <!-- Chart Gender -->
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/60 flex flex-col">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 text-xl border border-indigo-100">🍩</div>
-                        <div>
-                            <h3 class="text-sm font-bold text-slate-800">Komposisi Gender</h3>
-                            <p class="text-[10px] font-medium text-slate-500 uppercase tracking-widest">Siswa di Kelas</p>
-                        </div>
-                    </div>
-                    <div class="h-48 flex-1 flex justify-center relative">
-                        <ClientOnly>
-                            <Doughnut :data="chartGenderData" :options="chartGenderOptions" />
-                            <template #fallback>
-                                <div class="flex items-center justify-center h-full text-slate-400 text-xs font-bold">Memuat...</div>
-                            </template>
-                        </ClientOnly>
-                    </div>
-                </div>
-
-                <!-- Top 10 Besar -->
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-200/60 flex flex-col col-span-1 lg:col-span-2 overflow-hidden">
-                    <div class="p-5 border-b border-slate-100 flex items-center gap-3 bg-slate-50/50">
-                        <div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 text-xl border border-emerald-100">🏆</div>
-                        <div>
-                            <h3 class="text-sm font-bold text-slate-800">Top 10 Siswa Berprestasi</h3>
-                            <p class="text-[10px] font-medium text-slate-500 uppercase tracking-widest">Berdasarkan Rata-rata Nilai Tertinggi</p>
-                        </div>
-                    </div>
-                    <div class="flex-1 overflow-auto custom-scrollbar p-0">
-                        <table class="w-full text-left border-collapse">
-                            <thead class="bg-slate-50/70 text-[10px] font-black text-slate-400 uppercase tracking-widest sticky top-0 border-b border-slate-200">
-                                <tr>
-                                    <th class="py-2.5 px-4 w-12 text-center">Rnk</th>
-                                    <th class="py-2.5 px-4">Nama Siswa</th>
-                                    <th class="py-2.5 px-4 text-center">Rata-rata</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-slate-50 text-sm">
-                                <tr v-if="wStats.top_10?.length === 0">
-                                    <td colspan="3" class="text-center py-6 text-slate-400 text-xs font-bold">Belum ada data nilai</td>
-                                </tr>
-                                <tr v-for="(siswa, index) in wStats.top_10" :key="siswa.id" class="hover:bg-slate-50/80 transition-colors group">
-                                    <td class="py-2.5 px-4 text-center font-black text-slate-400 group-hover:text-emerald-500">
-                                        {{ index + 1 }}
-                                    </td>
-                                    <td class="py-2.5 px-4">
-                                        <p class="font-bold text-slate-800 text-[13px]">{{ siswa.nama }}</p>
-                                    </td>
-                                    <td class="py-2.5 px-4 text-center">
-                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-black bg-emerald-100 text-emerald-700">
-                                            {{ siswa.rata_rata }}
-                                        </span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-            </div>
-
             <!-- Notifikasi Eskalasi -->
             <div v-if="!statsLoading && wStats && wStats.notifikasi?.length > 0" class="mb-6">
                 <div class="bg-gradient-to-r from-rose-50 to-orange-50 p-6 rounded-2xl shadow-sm border border-rose-200/60">
@@ -200,7 +137,6 @@
 
             <!-- Grafik Prestasi Akademik (2 Cards: Per-Siswa & Per-Kelas) -->
             <div v-if="!statsLoading && wStats" class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                
                 <!-- Card 1: Tren Nilai Per Siswa -->
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col">
                     <div class="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50/50">
@@ -253,7 +189,6 @@
                         </ClientOnly>
                     </div>
                 </div>
-
             </div>
 
             <!-- Evaluasi KKM Per Periode (4 Doughnut Charts) -->
@@ -298,34 +233,49 @@
                 </div>
             </div>
 
-            <!-- Analisis Khusus & Prestasi Mapel -->
-            <div v-if="!statsLoading && wStats" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                
-                <!-- Butuh Penanganan -->
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/60">
-                    <div class="flex items-center gap-3 mb-5">
-                        <div class="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600 text-xl border border-rose-100">🚨</div>
+            <!-- Peringkat & Bintang Kelas -->
+            <div v-if="!statsLoading && wStats" class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                <!-- Top 10 Besar -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200/60 flex flex-col h-80 overflow-hidden">
+                    <div class="p-5 border-b border-slate-100 flex items-center gap-3 bg-slate-50/50 shrink-0">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 text-xl border border-emerald-100">🏆</div>
                         <div>
-                            <h3 class="text-sm font-bold text-slate-800">Siswa Butuh Penanganan</h3>
-                            <p class="text-[10px] font-medium text-slate-500 uppercase tracking-widest">Risiko poin & absensi</p>
+                            <h3 class="text-sm font-bold text-slate-800">Top 10 Siswa Berprestasi</h3>
+                            <p class="text-[10px] font-medium text-slate-500 uppercase tracking-widest">Rata-rata Nilai Tertinggi</p>
                         </div>
                     </div>
-                    <div class="space-y-3">
-                        <div v-if="wStats.penanganan?.length === 0" class="text-center py-4 text-slate-400 text-xs font-bold bg-slate-50 rounded-xl border border-slate-100">Semua siswa aman.</div>
-                        <div v-for="p in wStats.penanganan" :key="p.id" class="flex items-center justify-between p-3 rounded-xl bg-rose-50/50 border border-rose-100/50">
-                            <div>
-                                <p class="text-xs font-bold text-slate-800">{{ p.nama }}</p>
-                                <p class="text-[10px] text-slate-500 mt-0.5">Skor Risiko: <span class="font-bold text-rose-600">{{ p.skor_risiko }}</span></p>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-[9px] font-black uppercase tracking-wider text-rose-500">{{ p.poin_pelanggaran }} Poin BK</p>
-                                <p class="text-[9px] font-black uppercase tracking-wider text-amber-500">{{ p.alpha }} Hari Alpha</p>
-                            </div>
-                        </div>
+                    <div class="flex-1 overflow-auto custom-scrollbar p-0">
+                        <table class="w-full text-left border-collapse">
+                            <thead class="bg-slate-50/70 text-[10px] font-black text-slate-400 uppercase tracking-widest sticky top-0 border-b border-slate-200">
+                                <tr>
+                                    <th class="py-2.5 px-4 w-12 text-center">Rnk</th>
+                                    <th class="py-2.5 px-4">Nama Siswa</th>
+                                    <th class="py-2.5 px-4 text-center">Rata-rata</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-50 text-sm">
+                                <tr v-if="wStats.top_10?.length === 0">
+                                    <td colspan="3" class="text-center py-6 text-slate-400 text-xs font-bold">Belum ada data nilai</td>
+                                </tr>
+                                <tr v-for="(siswa, index) in wStats.top_10" :key="siswa.id" class="hover:bg-slate-50/80 transition-colors group">
+                                    <td class="py-2.5 px-4 text-center font-black text-slate-400 group-hover:text-emerald-500">
+                                        {{ index + 1 }}
+                                    </td>
+                                    <td class="py-2.5 px-4">
+                                        <p class="font-bold text-slate-800 text-[13px]">{{ siswa.nama }}</p>
+                                    </td>
+                                    <td class="py-2.5 px-4 text-center">
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-black bg-emerald-100 text-emerald-700">
+                                            {{ siswa.rata_rata }}
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
-                <!-- Prestasi Tiap Mapel -->
+                <!-- Prestasi Tiap Mapel (Bintang Kelas) -->
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/60 flex flex-col h-80">
                     <div class="flex items-center gap-3 mb-5 shrink-0">
                         <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 text-xl border border-amber-100">🏅</div>
@@ -347,9 +297,54 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-            
+
+            <!-- Gender & Penanganan -->
+            <div v-if="!statsLoading && wStats" class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                <!-- Chart Gender -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/60 flex flex-col">
+                    <div class="flex items-center gap-3 mb-6 shrink-0">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 text-xl border border-indigo-100">🍩</div>
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-800">Komposisi Gender</h3>
+                            <p class="text-[10px] font-medium text-slate-500 uppercase tracking-widest">Siswa di Kelas</p>
+                        </div>
+                    </div>
+                    <div class="h-48 flex-1 flex justify-center relative">
+                        <ClientOnly>
+                            <Doughnut :data="chartGenderData" :options="chartGenderOptions" />
+                            <template #fallback>
+                                <div class="flex items-center justify-center h-full text-slate-400 text-xs font-bold">Memuat...</div>
+                            </template>
+                        </ClientOnly>
+                    </div>
+                </div>
+
+                <!-- Butuh Penanganan -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/60 col-span-1 lg:col-span-2 flex flex-col h-80">
+                    <div class="flex items-center gap-3 mb-5 shrink-0">
+                        <div class="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600 text-xl border border-rose-100">🚨</div>
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-800">Siswa Butuh Penanganan</h3>
+                            <p class="text-[10px] font-medium text-slate-500 uppercase tracking-widest">Risiko poin & absensi</p>
+                        </div>
+                    </div>
+                    <div class="space-y-3 overflow-y-auto custom-scrollbar flex-1 pr-2">
+                        <div v-if="wStats.penanganan?.length === 0" class="text-center py-4 text-slate-400 text-xs font-bold bg-slate-50 rounded-xl border border-slate-100">Semua siswa aman.</div>
+                        <div v-for="p in wStats.penanganan" :key="p.id" class="flex items-center justify-between p-3 rounded-xl bg-rose-50/50 border border-rose-100/50">
+                            <div>
+                                <p class="text-xs font-bold text-slate-800">{{ p.nama }}</p>
+                                <p class="text-[10px] text-slate-500 mt-0.5">Skor Risiko: <span class="font-bold text-rose-600">{{ p.skor_risiko }}</span></p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-[9px] font-black uppercase tracking-wider text-rose-500">{{ p.poin_pelanggaran }} Poin BK</p>
+                                <p class="text-[9px] font-black uppercase tracking-wider text-amber-500">{{ p.alpha }} Hari Alpha</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- MENU WALI KELAS -->
             <div class="mt-2">
               <h3 class="text-xs font-black text-amber-500 uppercase tracking-widest mb-4 flex items-center">✨ Panel Wali Kelas</h3>
