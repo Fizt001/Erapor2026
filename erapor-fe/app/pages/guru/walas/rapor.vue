@@ -229,10 +229,10 @@
                                       </template>
                                   </template>
                                   <td class="py-2 px-2 border-r border-slate-100 text-center text-[11px] font-black text-slate-800 bg-slate-50/50 print:bg-transparent print:border-black print:text-[9px] print:text-black">
-                                      {{ legerData.rekapSiswa[siswa.id]?.jumlah || '-' }}
+                                      {{ formatAngka(legerData.rekapSiswa[siswa.id]?.jumlah) }}
                                   </td>
                                   <td class="py-2 px-2 border-r border-slate-100 text-center text-[11px] font-black text-indigo-600 bg-indigo-50/30 print:bg-transparent print:border-black print:text-[9px] print:text-black">
-                                      {{ legerData.rekapSiswa[siswa.id]?.rata || '-' }}
+                                      {{ formatAngka(legerData.rekapSiswa[siswa.id]?.rata) }}
                                   </td>
                                   <td class="py-2 px-2 text-center text-[11px] font-black text-rose-600 bg-rose-50/30 print:bg-transparent print:border-black print:text-[9px] print:text-black">
                                       {{ legerData.rekapSiswa[siswa.id]?.rank || '-' }}
@@ -622,6 +622,13 @@ const mobileTabs = [
 const isLoading = ref(true)
 const errorMessage = ref('')
 const searchQuery = ref('')
+
+const formatAngka = (val) => {
+    if (val === undefined || val === null || val === '-' || val === '') return '-'
+    const num = Number(val)
+    if (isNaN(num)) return val
+    return Number.isInteger(num) ? num : Number(num.toFixed(2))
+}
 
 // Preview State
 const showPreview = ref(false)
