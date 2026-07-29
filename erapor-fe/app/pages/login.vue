@@ -82,18 +82,20 @@
                                     </template>
                                     <template v-else>
                                         <Transition name="fade-slide" mode="out-in">
-                                            <div :key="item.config.title" class="flex flex-col items-center justify-center w-full h-full">
-                                                <h6 class="text-[11px] font-black uppercase tracking-widest text-orange-400 mb-4">{{ item.config.title }}</h6>
-                                                <div class="relative w-36 h-36 mb-2 shrink-0">
-                                                    <ClientOnly>
-                                                        <Doughnut :data="item.config.chartData" :options="item.config.chartOptions" />
-                                                        <template #fallback>
-                                                            <div class="flex items-center justify-center h-full w-full bg-slate-800 rounded-full border border-slate-700 animate-pulse"></div>
-                                                        </template>
-                                                    </ClientOnly>
-                                                    <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center">
-                                                        <span class="text-2xl font-black text-white leading-none">{{ item.config.percentageText }}</span>
-                                                        <span class="text-[9px] font-bold text-emerald-500 uppercase tracking-widest mt-1">Tuntas</span>
+                                            <div :key="item.config.title" class="flex flex-col items-center justify-between w-full h-full">
+                                                <h6 class="text-[12px] font-black uppercase tracking-widest text-orange-400 mb-2">{{ item.config.title }}</h6>
+                                                <div class="relative flex-1 w-full min-h-[160px] flex items-center justify-center pb-2">
+                                                    <div class="relative w-44 h-44 sm:w-48 sm:h-48">
+                                                        <ClientOnly>
+                                                            <Doughnut :data="item.config.chartData" :options="item.config.chartOptions" />
+                                                            <template #fallback>
+                                                                <div class="flex items-center justify-center h-full w-full bg-slate-800 rounded-full border border-slate-700 animate-pulse"></div>
+                                                            </template>
+                                                        </ClientOnly>
+                                                        <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center">
+                                                            <span class="text-3xl font-black text-white leading-none">{{ item.config.percentageText }}</span>
+                                                            <span class="text-[10px] font-bold text-emerald-500 uppercase tracking-widest mt-1">Tuntas</span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -268,10 +270,15 @@ const getChartConfig = (tingkat) => {
     
     const activeClass = classes[activeClassIndex.value[tingkat]]
     
+    let displayTitle = activeClass.nama_kelas
+    if (!displayTitle.startsWith(tingkat)) {
+        displayTitle = tingkat + ' ' + displayTitle
+    }
+    
     if (!activeClass.kkm_set || !activeClass.has_data || activeClass.total === 0) {
         return {
             isEmpty: true,
-            title: activeClass.nama_kelas,
+            title: displayTitle,
             chartData: { labels: ['Belum Tersedia'], datasets: [{ data: [1], backgroundColor: ['#1e293b'], borderWidth: 0 }] },
             chartOptions: { responsive: true, maintainAspectRatio: false, cutout: '80%', plugins: { tooltip: { enabled: false } } }
         }
@@ -280,7 +287,7 @@ const getChartConfig = (tingkat) => {
     const percentage = Math.round((activeClass.tuntas / activeClass.total) * 100)
     return {
         isEmpty: false,
-        title: activeClass.nama_kelas,
+        title: displayTitle,
         percentageText: percentage + '%',
         chartData: {
             labels: ['Tuntas (≥ ' + activeClass.kkm_value + ')', 'Belum Tuntas (< ' + activeClass.kkm_value + ')'],
