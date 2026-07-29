@@ -52,9 +52,9 @@ class PublicController extends Controller
 
         // 6. Early Warning System (Akumulasi Nilai per Kelas)
         $earlyWarning = [
-            '10' => [],
-            '11' => [],
-            '12' => []
+            'X' => [],
+            'XI' => [],
+            'XII' => []
         ];
 
         if ($tahunAjaranAktif) {

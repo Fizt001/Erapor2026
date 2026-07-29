@@ -208,15 +208,15 @@ const getImageUrl = (path) => {
 }
 
 const earlyWarningData = ref({
-  '10': [],
-  '11': [],
-  '12': []
+  'X': [],
+  'XI': [],
+  'XII': []
 })
 
 const activeClassIndex = ref({
-  '10': 0,
-  '11': 0,
-  '12': 0
+  'X': 0,
+  'XI': 0,
+  'XII': 0
 })
 
 let intervalId = null;
@@ -242,7 +242,7 @@ onMounted(async () => {
   
   // Set interval to rotate classes
   intervalId = setInterval(() => {
-    ['10', '11', '12'].forEach(tingkat => {
+    ['X', 'XI', 'XII'].forEach(tingkat => {
       const classes = earlyWarningData.value[tingkat]
       if (classes && classes.length > 1) {
         activeClassIndex.value[tingkat] = (activeClassIndex.value[tingkat] + 1) % classes.length
@@ -317,9 +317,9 @@ const getChartConfig = (tingkat) => {
 
 const chartConfigs = computed(() => {
     return [
-        { tingkatStr: 'X', config: getChartConfig('10') },
-        { tingkatStr: 'XI', config: getChartConfig('11') },
-        { tingkatStr: 'XII', config: getChartConfig('12') },
+        { tingkatStr: 'X', config: getChartConfig('X') },
+        { tingkatStr: 'XI', config: getChartConfig('XI') },
+        { tingkatStr: 'XII', config: getChartConfig('XII') },
     ]
 })
 
