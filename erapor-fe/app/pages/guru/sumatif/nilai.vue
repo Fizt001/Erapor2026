@@ -252,7 +252,7 @@
                         <!-- INPUT Harian (UH1-UH4) -->
                         <td v-for="uhField in ['uh1', 'uh2', 'uh3', 'uh4']" :key="uhField" class="p-0 border-r border-slate-100 text-center h-12 relative min-w-[75px] md:min-w-[60px]">
                           <input type="text" v-model="getNilai(siswa.id)[uhField]" @input="markAsUnsaved(siswa.id, uhField)" :disabled="!references.is_titimangsa_aktif"
-                            class="w-full h-full border-none p-0 text-center font-black text-sm md:text-xs transition-all focus:ring-inset focus:ring-2 focus:ring-indigo-500"
+                            class="w-full h-full border-none p-0 text-center font-black text-[11px] md:text-xs transition-all focus:ring-inset focus:ring-2 focus:ring-indigo-500"
                             :class="!references.is_titimangsa_aktif ? 'bg-slate-50 text-slate-400 cursor-not-allowed' : 'bg-transparent text-indigo-800 focus:bg-white hover:bg-indigo-50/30'"
                             placeholder="-">
                         </td>
@@ -260,27 +260,27 @@
                         <!-- INPUT Ujian (Praktek, Teori) -->
                         <td v-for="ujiField in ['praktek', 'teori']" :key="ujiField" class="p-0 border-r border-slate-100 text-center h-12 relative min-w-[85px] md:min-w-[70px]">
                           <input type="text" v-model="getNilai(siswa.id)[ujiField]" @input="markAsUnsaved(siswa.id, ujiField)" :disabled="!references.is_titimangsa_aktif"
-                            class="w-full h-full border-none p-0 text-center font-black text-sm md:text-xs transition-all focus:ring-inset focus:ring-2 focus:ring-teal-500"
+                            class="w-full h-full border-none p-0 text-center font-black text-[11px] md:text-xs transition-all focus:ring-inset focus:ring-2 focus:ring-teal-500"
                             :class="!references.is_titimangsa_aktif ? 'bg-slate-50 text-slate-400 cursor-not-allowed' : 'bg-transparent text-teal-800 focus:bg-white hover:bg-teal-50/30'"
                             placeholder="-">
                         </td>
 
                         <!-- NILAI PSTS LALU (Read Only) -->
                         <td v-if="!references.is_psts" class="p-0 border-r border-slate-100 text-center h-12 bg-amber-50/30 min-w-[85px] md:min-w-[80px]">
-                            <span class="font-black text-sm md:text-xs text-amber-700">{{ getNilai(siswa.id).psts_lalu || '-' }}</span>
+                            <span class="font-black text-[11px] md:text-xs text-amber-700">{{ getNilai(siswa.id).psts_lalu || '-' }}</span>
                         </td>
 
                         <!-- INPUT Literasi -->
                         <td class="p-0 border-r border-slate-100 text-center h-12 relative min-w-[85px] md:min-w-[80px]">
                           <input type="text" v-model="getNilai(siswa.id).literasi" @input="markAsUnsaved(siswa.id, 'literasi')" :disabled="!references.is_titimangsa_aktif"
-                            class="w-full h-full border-none p-0 text-center font-black text-sm md:text-xs transition-all focus:ring-inset focus:ring-2 focus:ring-slate-500"
+                            class="w-full h-full border-none p-0 text-center font-black text-[11px] md:text-xs transition-all focus:ring-inset focus:ring-2 focus:ring-slate-500"
                             :class="!references.is_titimangsa_aktif ? 'bg-slate-50 text-slate-400 cursor-not-allowed' : 'bg-transparent text-slate-700 focus:bg-white hover:bg-slate-100/50'"
                             placeholder="-">
                         </td>
 
                         <!-- HASIL NA (Computed Real-Time) -->
                         <td class="p-0 border-r border-slate-100 text-center h-12 bg-sky-50/50 min-w-[95px] md:min-w-[90px]">
-                            <span class="font-black text-lg md:text-sm text-sky-700 tracking-tight">{{ hitungNA(siswa.id) }}</span>
+                            <span class="font-black text-[13px] md:text-sm text-sky-700 tracking-tight">{{ hitungNA(siswa.id) }}</span>
                         </td>
                       </tr>
                     </template>
