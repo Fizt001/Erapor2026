@@ -194,7 +194,6 @@ class WalasDashboardStatsController extends Controller
         
         $grafikSiswa = array_values($grafikSiswa); // Convert to array
 
-        // Hitung rata-rata 1 kelas per periode
         $grafikKelas = [];
         foreach ($titimangsas as $t) {
             $grafikKelas[$t->nama_periode] = 0;
@@ -205,6 +204,49 @@ class WalasDashboardStatsController extends Controller
             if ($t) {
                 $grafikKelas[$t->nama_periode] = round($nilais->avg('na_value'), 1);
             }
+        }
+
+        // 7. Data KKM Evaluasi (4 Periode Statis)
+        $kelasInfo = \App\Models\Kelas::find($kelasId);
+        $kkmModel = \App\Models\Kkm::where('kurikulum_id', $kelasInfo->kurikulum_id)
+            ->where('tingkat', $kelasInfo->tingkat)
+            ->first();
+        
+        $kkmValue = $kkmModel ? $kkmModel->nilai : null;
+        $kkmSet = !is_null($kkmValue);
+        
+        $grafikKkm = [];
+        $staticPeriods = ['ASTS Ganjil', 'ASAS', 'ASTS Genap', 'ASAT'];
+        
+        foreach ($staticPeriods as $periodName) {
+            $t = $titimangsas->firstWhere('nama_periode', $periodName);
+            // Cek apakah ada nilai di periode ini
+            $hasData = false;
+            $tuntas = 0;
+            $belumTuntas = 0;
+            $totalCount = 0;
+
+            if ($t) {
+                $totalNilai = $allSumatif->where('titimangsa_id', $t->id);
+                $totalCount = $totalNilai->count();
+                
+                if ($totalCount > 0 && $kkmSet) {
+                    $hasData = true;
+                    $tuntas = $totalNilai->where('na_value', '>=', $kkmValue)->count();
+                    $belumTuntas = $totalNilai->where('na_value', '<', $kkmValue)->count();
+                }
+            }
+            
+            $grafikKkm[] = [
+                'periode' => $periodName,
+                'aktif' => $t ? true : false,
+                'has_data' => $hasData,
+                'kkm_set' => $kkmSet,
+                'tuntas' => $tuntas,
+                'belum_tuntas' => $belumTuntas,
+                'total' => $totalCount,
+                'kkm_value' => $kkmValue
+            ];
         }
 
         return response()->json([
@@ -222,7 +264,9 @@ class WalasDashboardStatsController extends Controller
                 'notifikasi' => $notifikasi,
                 'grafik_siswa' => $grafikSiswa,
                 'grafik_kelas' => $grafikKelas,
-                'periode_labels' => $titimangsas->pluck('nama_periode')
+                'periode_labels' => $titimangsas->pluck('nama_periode'),
+                'grafik_kkm' => $grafikKkm,
+                'kkm_set' => $kkmSet
             ]
         ]);
     }

@@ -256,6 +256,48 @@
 
             </div>
 
+            <!-- Evaluasi KKM Per Periode (4 Doughnut Charts) -->
+            <div v-if="!statsLoading && wStats" class="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col mb-6">
+                <div class="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50/50">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-teal-50 flex items-center justify-center text-teal-600 text-xl border border-teal-100">🎯</div>
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-800">Evaluasi Ketuntasan Belajar (KKM)</h3>
+                            <p class="text-[10px] font-medium text-slate-500 uppercase tracking-widest">Akumulasi seluruh siswa & mata pelajaran</p>
+                        </div>
+                    </div>
+                    <!-- Legend -->
+                    <div class="flex items-center gap-3 text-[9px] font-black tracking-widest uppercase bg-white px-3 py-2 rounded-xl border border-slate-200 shadow-sm">
+                        <span class="flex items-center gap-1.5 text-emerald-600"><div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div> Tuntas</span>
+                        <span class="flex items-center gap-1.5 text-rose-600"><div class="w-2.5 h-2.5 rounded-full bg-rose-500"></div> Belum Tuntas</span>
+                        <span class="flex items-center gap-1.5 text-slate-400"><div class="w-2.5 h-2.5 rounded-full bg-slate-300"></div> Abu-abu</span>
+                    </div>
+                </div>
+                <div class="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div v-for="(kkm, idx) in kkmCharts" :key="idx" class="flex flex-col items-center">
+                        <h4 class="text-[11px] font-black uppercase text-slate-700 tracking-wider mb-4">{{ kkm.periode }}</h4>
+                        <div class="relative w-32 h-32 mb-4">
+                            <ClientOnly>
+                                <Doughnut :data="kkm.chartData" :options="kkm.chartOptions" />
+                                <template #fallback>
+                                    <div class="flex items-center justify-center h-full w-full bg-slate-50 rounded-full border border-slate-100 animate-pulse"></div>
+                                </template>
+                            </ClientOnly>
+                            <!-- Inner Text -->
+                            <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center px-2">
+                                <span v-if="kkm.kkm_set && kkm.has_data" class="text-lg font-black text-slate-800 leading-none">{{ kkm.percentageText }}</span>
+                                <span v-if="kkm.kkm_set && kkm.has_data" class="text-[8px] font-bold text-emerald-600 uppercase tracking-widest mt-1">Tuntas</span>
+                                <span v-if="!kkm.kkm_set" class="text-[9px] font-bold text-slate-400 uppercase leading-tight">KKM<br>Belum<br>Diseting</span>
+                                <span v-if="kkm.kkm_set && (!kkm.has_data || kkm.total === 0)" class="text-[9px] font-bold text-slate-400 uppercase leading-tight">Belum<br>Ada<br>Nilai</span>
+                            </div>
+                        </div>
+                        <div v-if="kkm.kkm_set" class="text-center bg-slate-50 border border-slate-100 rounded-lg px-3 py-1.5 w-full">
+                            <p class="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Batas KKM: <span class="text-slate-800">{{ kkm.kkm_value }}</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Analisis Khusus & Prestasi Mapel -->
             <div v-if="!statsLoading && wStats" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 
@@ -517,6 +559,73 @@ const chartClassProgressData = computed(() => {
             }
         ]
     }
+})
+
+const kkmCharts = computed(() => {
+    if (!wStats.value || !wStats.value.grafik_kkm) return []
+    return wStats.value.grafik_kkm.map(k => {
+        let datasets = []
+        if (!k.kkm_set || !k.has_data || k.total === 0) {
+            datasets = [{
+                data: [1],
+                backgroundColor: ['#e2e8f0'], // Gray
+                borderWidth: 0
+            }]
+        } else {
+            datasets = [{
+                data: [k.tuntas, k.belum_tuntas],
+                backgroundColor: ['#10b981', '#ef4444'], // Green, Red
+                borderWidth: 0,
+                hoverOffset: 4
+            }]
+        }
+        
+        let percentageText = "0%";
+        if (k.kkm_set && k.has_data && k.total > 0) {
+            percentageText = Math.round((k.tuntas / k.total) * 100) + "%";
+        }
+        
+        return {
+            periode: k.periode,
+            kkm_set: k.kkm_set,
+            has_data: k.has_data,
+            total: k.total,
+            tuntas: k.tuntas,
+            belum_tuntas: k.belum_tuntas,
+            kkm_value: k.kkm_value,
+            percentageText: percentageText,
+            chartData: {
+                labels: (!k.kkm_set || !k.has_data || k.total === 0) ? ['Belum Tersedia'] : ['Tuntas (≥ ' + k.kkm_value + ')', 'Belum Tuntas (< ' + k.kkm_value + ')'],
+                datasets: datasets
+            },
+            chartOptions: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '80%',
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    if (!k.kkm_set || !k.has_data || k.total === 0) {
+                                        return 'Belum ada data';
+                                    }
+                                    let percentage = Math.round((context.parsed / k.total) * 100) + '%';
+                                    label += context.parsed + ' Nilai (' + percentage + ')';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    })
 })
 
 const chartProgressOptions = {
