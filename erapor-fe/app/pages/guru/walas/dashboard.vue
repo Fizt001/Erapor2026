@@ -607,18 +607,14 @@ const kkmCharts = computed(() => {
                     tooltip: {
                         callbacks: {
                             label: function(context) {
-                                let label = context.label || '';
-                                if (label) {
-                                    label += ': ';
-                                }
                                 if (context.parsed !== null) {
                                     if (!k.kkm_set || !k.has_data || k.total === 0) {
                                         return 'Belum ada data';
                                     }
                                     let percentage = Math.round((context.parsed / k.total) * 100) + '%';
-                                    label += context.parsed + ' Nilai (' + percentage + ')';
+                                    return context.parsed + ' Nilai (' + percentage + ')';
                                 }
-                                return label;
+                                return '';
                             }
                         }
                     }
