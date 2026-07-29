@@ -71,38 +71,38 @@
                 <!-- CARD PENCAPAIAN AKADEMIK -->
                 <div class="w-full lg:flex-1 flex flex-col min-h-0">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 lg:flex-1">
-                        <!-- Card Kelas X -->
-                        <div class="flex flex-col gap-3 w-full lg:h-full">
-                            <h5 class="text-white font-bold text-xl px-1">Kelas X</h5>
-                            <div class="relative rounded-3xl p-[3px] bg-gradient-to-r from-orange-500 to-violet-600 lg:flex-1 min-h-[220px] shadow-[0_0_30px_-5px_rgba(249,115,22,0.4)] flex flex-col">
-                                <div class="w-full flex-1 bg-[#090C15] rounded-[22px] flex flex-col items-center justify-center text-center p-6 min-h-[200px]">
-                                    <AppIcon name="chart-bar" class="text-5xl lg:text-7xl mb-4 opacity-50 text-white" />
-                                    <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Pencapaian Akademik</span>
+                        
+                        <div v-for="item in chartConfigs" :key="item.tingkatStr" class="flex flex-col gap-3 w-full lg:h-full">
+                            <h5 class="text-white font-bold text-xl px-1">Kelas {{ item.tingkatStr }}</h5>
+                            <div class="relative rounded-3xl p-[3px] bg-gradient-to-r from-orange-500 to-violet-600 lg:flex-1 min-h-[240px] shadow-[0_0_30px_-5px_rgba(249,115,22,0.4)] flex flex-col transition-all duration-500">
+                                <div class="w-full flex-1 bg-[#090C15] rounded-[22px] flex flex-col items-center justify-center text-center p-4 min-h-[220px] relative overflow-hidden">
+                                    <template v-if="item.config.isEmpty">
+                                        <AppIcon name="chart-bar" class="text-5xl lg:text-7xl mb-4 opacity-30 text-white" />
+                                        <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Belum Ada Data</span>
+                                    </template>
+                                    <template v-else>
+                                        <Transition name="fade-slide" mode="out-in">
+                                            <div :key="item.config.title" class="flex flex-col items-center justify-center w-full h-full">
+                                                <h6 class="text-[11px] font-black uppercase tracking-widest text-orange-400 mb-4">{{ item.config.title }}</h6>
+                                                <div class="relative w-36 h-36 mb-2 shrink-0">
+                                                    <ClientOnly>
+                                                        <Doughnut :data="item.config.chartData" :options="item.config.chartOptions" />
+                                                        <template #fallback>
+                                                            <div class="flex items-center justify-center h-full w-full bg-slate-800 rounded-full border border-slate-700 animate-pulse"></div>
+                                                        </template>
+                                                    </ClientOnly>
+                                                    <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center">
+                                                        <span class="text-2xl font-black text-white leading-none">{{ item.config.percentageText }}</span>
+                                                        <span class="text-[9px] font-bold text-emerald-500 uppercase tracking-widest mt-1">Tuntas</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </Transition>
+                                    </template>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Card Kelas XI -->
-                        <div class="flex flex-col gap-3 w-full lg:h-full">
-                            <h5 class="text-white font-bold text-xl px-1">Kelas XI</h5>
-                            <div class="relative rounded-3xl p-[3px] bg-gradient-to-r from-orange-500 to-violet-600 lg:flex-1 min-h-[220px] shadow-[0_0_30px_-5px_rgba(249,115,22,0.4)] flex flex-col">
-                                <div class="w-full flex-1 bg-[#090C15] rounded-[22px] flex flex-col items-center justify-center text-center p-6 min-h-[200px]">
-                                    <AppIcon name="chart-bar" class="text-5xl lg:text-7xl mb-4 opacity-50 text-white" />
-                                    <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Pencapaian Akademik</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card Kelas XII -->
-                        <div class="flex flex-col gap-3 w-full lg:h-full">
-                            <h5 class="text-white font-bold text-xl px-1">Kelas XII</h5>
-                            <div class="relative rounded-3xl p-[3px] bg-gradient-to-r from-orange-500 to-violet-600 lg:flex-1 min-h-[220px] shadow-[0_0_30px_-5px_rgba(249,115,22,0.4)] flex flex-col">
-                                <div class="w-full flex-1 bg-[#090C15] rounded-[22px] flex flex-col items-center justify-center text-center p-6 min-h-[200px]">
-                                    <AppIcon name="chart-bar" class="text-5xl lg:text-7xl mb-4 opacity-50 text-white" />
-                                    <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Pencapaian Akademik</span>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 </div>
@@ -184,7 +184,11 @@
 </template>
 
 <script setup>
-import { reactive, ref, onMounted } from 'vue'
+import { reactive, ref, computed, onMounted, onUnmounted } from 'vue'
+import { Chart as ChartJS, ArcElement, Tooltip } from 'chart.js'
+import { Doughnut } from 'vue-chartjs'
+
+ChartJS.register(ArcElement, Tooltip)
 import { useRouter } from 'vue-router'
 import { useCookie } from '#app'
 
@@ -203,19 +207,120 @@ const getImageUrl = (path) => {
   return `${apiUrl}/${path.replace(/^\//, '')}`
 }
 
+const earlyWarningData = ref({
+  '10': [],
+  '11': [],
+  '12': []
+})
+
+const activeClassIndex = ref({
+  '10': 0,
+  '11': 0,
+  '12': 0
+})
+
+let intervalId = null;
+
 onMounted(async () => {
   try {
     const res = await $fetch(apiUrl + '/api/public/stats')
-    if (res.success && res.data && res.data.sekolah) {
-      sekolah.value = {
-        ...sekolah.value,
-        nama_sekolah: res.data.sekolah.nama_sekolah,
-        logo: getImageUrl(res.data.sekolah.logo)
+    if (res.success && res.data) {
+      if (res.data.sekolah) {
+        sekolah.value = {
+          ...sekolah.value,
+          nama_sekolah: res.data.sekolah.nama_sekolah,
+          logo: getImageUrl(res.data.sekolah.logo)
+        }
+      }
+      if (res.data.early_warning) {
+        earlyWarningData.value = res.data.early_warning
       }
     }
   } catch (err) {
     console.error('Gagal mengambil data sekolah publik:', err)
   }
+  
+  // Set interval to rotate classes
+  intervalId = setInterval(() => {
+    ['10', '11', '12'].forEach(tingkat => {
+      const classes = earlyWarningData.value[tingkat]
+      if (classes && classes.length > 1) {
+        activeClassIndex.value[tingkat] = (activeClassIndex.value[tingkat] + 1) % classes.length
+      }
+    })
+  }, 3000)
+})
+
+onUnmounted(() => {
+  if (intervalId) clearInterval(intervalId)
+})
+
+const getChartConfig = (tingkat) => {
+    const classes = earlyWarningData.value[tingkat] || [];
+    if (classes.length === 0) {
+        return {
+            isEmpty: true,
+            title: 'Belum Ada Data',
+            chartData: { labels: ['Belum Tersedia'], datasets: [{ data: [1], backgroundColor: ['#1e293b'], borderWidth: 0 }] },
+            chartOptions: { responsive: true, maintainAspectRatio: false, cutout: '80%', plugins: { tooltip: { enabled: false } } }
+        }
+    }
+    
+    const activeClass = classes[activeClassIndex.value[tingkat]]
+    
+    if (!activeClass.kkm_set || !activeClass.has_data || activeClass.total === 0) {
+        return {
+            isEmpty: true,
+            title: activeClass.nama_kelas,
+            chartData: { labels: ['Belum Tersedia'], datasets: [{ data: [1], backgroundColor: ['#1e293b'], borderWidth: 0 }] },
+            chartOptions: { responsive: true, maintainAspectRatio: false, cutout: '80%', plugins: { tooltip: { enabled: false } } }
+        }
+    }
+
+    const percentage = Math.round((activeClass.tuntas / activeClass.total) * 100)
+    return {
+        isEmpty: false,
+        title: activeClass.nama_kelas,
+        percentageText: percentage + '%',
+        chartData: {
+            labels: ['Tuntas (≥ ' + activeClass.kkm_value + ')', 'Belum Tuntas (< ' + activeClass.kkm_value + ')'],
+            datasets: [{
+                data: [activeClass.tuntas, activeClass.belum_tuntas],
+                backgroundColor: ['#10b981', '#ef4444'], // Emerald, Rose
+                borderWidth: 0
+            }]
+        },
+        chartOptions: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '80%',
+            animation: {
+                duration: 500 // faster animation for the 3s interval
+            },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            if (context.parsed !== null) {
+                                let p = Math.round((context.parsed / activeClass.total) * 100) + '%';
+                                return context.parsed + ' Nilai (' + p + ')';
+                            }
+                            return '';
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+const chartConfigs = computed(() => {
+    return [
+        { tingkatStr: 'X', config: getChartConfig('10') },
+        { tingkatStr: 'XI', config: getChartConfig('11') },
+        { tingkatStr: 'XII', config: getChartConfig('12') },
+    ]
 })
 
 const router = useRouter()

@@ -50,6 +50,65 @@ class PublicController extends Controller
         // 5. Data Sekolah
         $sekolah = Sekolah::first();
 
+        // 6. Early Warning System (Akumulasi Nilai per Kelas)
+        $earlyWarning = [
+            '10' => [],
+            '11' => [],
+            '12' => []
+        ];
+
+        if ($tahunAjaranAktif) {
+            $kelasList = \App\Models\Kelas::where('tahun_ajaran_id', $tahunAjaranAktif->id)->get();
+            
+            // Ambil semua KKM
+            $kkmList = \App\Models\Kkm::all();
+            
+            // Ambil semua SumatifNilai untuk tahun ajaran aktif, dikelompokkan berdasarkan kelas
+            $sumatifQuery = SumatifNilai::where('tahun_ajaran_id', $tahunAjaranAktif->id)
+                                        ->whereNotNull('na_value')
+                                        ->get()
+                                        ->groupBy('kelas_id');
+            
+            foreach ($kelasList as $kelas) {
+                // Cari KKM untuk kelas ini
+                $kkm = $kkmList->where('kurikulum_id', $kelas->kurikulum_id)
+                               ->where('tingkat', $kelas->tingkat)
+                               ->first();
+                
+                $kkmValue = $kkm ? $kkm->nilai : null;
+                $kkmSet = !is_null($kkmValue);
+                
+                $tuntas = 0;
+                $belumTuntas = 0;
+                $totalCount = 0;
+                $hasData = false;
+                
+                if (isset($sumatifQuery[$kelas->id])) {
+                    $nilais = $sumatifQuery[$kelas->id];
+                    $totalCount = $nilais->count();
+                    
+                    if ($totalCount > 0 && $kkmSet) {
+                        $hasData = true;
+                        $tuntas = $nilais->where('na_value', '>=', $kkmValue)->count();
+                        $belumTuntas = $nilais->where('na_value', '<', $kkmValue)->count();
+                    }
+                }
+                
+                $tingkatStr = (string)$kelas->tingkat;
+                if (isset($earlyWarning[$tingkatStr])) {
+                    $earlyWarning[$tingkatStr][] = [
+                        'nama_kelas' => $kelas->nama_kelas,
+                        'kkm_set' => $kkmSet,
+                        'kkm_value' => $kkmValue,
+                        'has_data' => $hasData,
+                        'tuntas' => $tuntas,
+                        'belum_tuntas' => $belumTuntas,
+                        'total' => $totalCount
+                    ];
+                }
+            }
+        }
+
         return response()->json([
             'success' => true,
             'data' => [
@@ -57,7 +116,8 @@ class PublicController extends Controller
                 'guru_umum' => $guruUmumCount,
                 'guru_produktif' => $guruProduktifCount,
                 'walas' => $walasCount,
-                'top_student' => $topStudent
+                'top_student' => $topStudent,
+                'early_warning' => $earlyWarning
             ]
         ]);
     }
