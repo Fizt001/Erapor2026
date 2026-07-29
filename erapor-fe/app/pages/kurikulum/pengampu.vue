@@ -128,7 +128,9 @@
                         <div class="p-4 flex-1 flex flex-col gap-4">
                             <div v-for="kelas in kelases" :key="kelas.id" class="border border-slate-100 rounded-xl p-3 bg-white hover:border-amber-100 transition-colors shadow-sm">
                                 <div class="flex justify-between items-center mb-3">
-                                    <span class="text-[11px] font-black uppercase tracking-widest text-slate-700">{{ kelas.nama_kelas }}</span>
+                                    <span class="text-[11px] font-black uppercase tracking-widest text-slate-700">
+                                        {{ kelas.nama_kelas.startsWith(selectedTingkat + ' ') ? kelas.nama_kelas : (selectedTingkat + ' ' + kelas.nama_kelas) }}
+                                    </span>
                                     <span class="text-[9px] font-black tracking-widest px-2 py-1 rounded-md flex items-center gap-1" 
                                         :class="getSisaJp(struktur, kelas.id) <= 0 ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-rose-50 text-rose-600 border border-rose-100'">
                                         <template v-if="getSisaJp(struktur, kelas.id) <= 0">
