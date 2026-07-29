@@ -54,7 +54,7 @@
                     <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">{{ tingkat === 'X' ? 'Program Keahlian' : 'Konsentrasi Keahlian' }}</label>
                     <select v-model="formData.unit_id" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-800 outline-none cursor-pointer">
                         <option value="" disabled>-- Pilih Unit --</option>
-                        <option v-for="unit in dataUnit" :key="unit.id" :value="unit.id">{{ unit.nama_program || unit.nama_kejuruan }}</option>
+                        <option v-for="unit in dataUnit" :key="unit.id" :value="unit.id">{{ unit.nama_program || unit.nama_konsentrasi }}</option>
                     </select>
                 </div>
 
@@ -131,7 +131,7 @@
                             <span class="w-8 h-8 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center font-black text-sm"><AppIcon name="wrench" class="w-6 h-6" /></span>
                             <div>
                                 <p class="text-[9px] font-black uppercase text-slate-400 tracking-widest">{{ tingkat === 'X' ? 'Program Keahlian' : 'Konsentrasi Keahlian' }}</p>
-                                <h4 class="font-black text-slate-800 text-sm uppercase tracking-wider mt-0.5">{{ unit.nama_program || unit.nama_kejuruan }}</h4>
+                                <h4 class="font-black text-slate-800 text-sm uppercase tracking-wider mt-0.5">{{ unit.nama_program || unit.nama_konsentrasi }}</h4>
                             </div>
                         </div>
                     </div>
