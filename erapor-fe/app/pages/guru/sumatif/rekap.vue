@@ -234,6 +234,19 @@ definePageMeta({
 const tokenCookie = useCookie('auth_token')
 const isLoading = ref(false)
 
+// Mobile tab state
+const activeTabMobile = ref('filter')
+const mobileTabs = [
+  { id: 'filter', title: 'Filter Data', icon: 'funnel' },
+  { id: 'flow', title: 'Rekap Nilai', icon: 'table-cells' }
+]
+
+if (typeof window !== 'undefined') {
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 1280) activeTabMobile.value = 'filter'
+  })
+}
+
 const filter = reactive({
   tahun_ajaran_id: '',
   kurikulum_id: '',
