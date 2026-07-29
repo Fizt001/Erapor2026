@@ -568,9 +568,9 @@ const submitEdit = async () => {
 const fetchReferenceOptions = async () => {
     try {
         const [agamaRes, pekerjaanRes, jkRes] = await Promise.all([
-            $fetch(import.meta.env.VITE_API_BASE_URL + '/api/admin/referensi?jenis=Kategori%20Agama', { headers: { Authorization: `Bearer ${token.value}` } }),
-            $fetch(import.meta.env.VITE_API_BASE_URL + '/api/admin/referensi?jenis=Kategori%20Pekerjaan', { headers: { Authorization: `Bearer ${token.value}` } }),
-            $fetch(import.meta.env.VITE_API_BASE_URL + '/api/admin/referensi?jenis=Jenis%20Kelamin', { headers: { Authorization: `Bearer ${token.value}` } })
+            $fetch(import.meta.env.VITE_API_BASE_URL + '/api/referensi?jenis=Kategori%20Agama', { headers: { Authorization: `Bearer ${token.value}` } }),
+            $fetch(import.meta.env.VITE_API_BASE_URL + '/api/referensi?jenis=Kategori%20Pekerjaan', { headers: { Authorization: `Bearer ${token.value}` } }),
+            $fetch(import.meta.env.VITE_API_BASE_URL + '/api/referensi?jenis=Jenis%20Kelamin', { headers: { Authorization: `Bearer ${token.value}` } })
         ])
         
         if (agamaRes.success) agamaOptions.value = agamaRes.data
