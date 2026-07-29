@@ -15,7 +15,7 @@
 
       
       <!-- Panel Dock Kiri -->
-      <div class="xl:w-[360px] w-full bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full xl:z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] overflow-y-auto custom-scrollbar print:hidden">
+      <div class="xl:w-[360px] w-full bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full xl:z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] overflow-y-auto custom-scrollbar transition-all pt-[60px] xl:pt-0 print:hidden" :class="activeTabMobile === 'filter' ? 'block' : 'hidden xl:flex'">
         <div class="p-4 pb-2 space-y-4">
           <div class="bg-gradient-to-r from-sky-600 to-blue-700 rounded-2xl p-4 border border-sky-500 shadow-sm relative overflow-hidden flex items-center gap-3">
             <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="document-text" class="w-5 h-5" /></div>
@@ -75,7 +75,7 @@
       </div>
 
       <!-- Panel Flow Kanan -->
-      <div class="flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative print:bg-white print:block print:h-auto print:overflow-visible">
+      <div class="flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative transition-all pt-[60px] xl:pt-0 print:bg-white print:block print:h-auto print:overflow-visible print:pt-0" :class="activeTabMobile === 'flow' ? 'flex' : 'hidden xl:flex'">
         <div class="p-6 lg:p-8 max-w-6xl mx-auto w-full h-full flex flex-col relative z-0 print:p-0 print:max-w-none print:block print:h-auto print:overflow-visible">
           <div class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0 print-container print:border-none print:shadow-none print:block print:h-auto print:overflow-visible">
             
