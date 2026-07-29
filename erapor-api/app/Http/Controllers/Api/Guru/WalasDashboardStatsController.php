@@ -216,30 +216,29 @@ class WalasDashboardStatsController extends Controller
         $kkmSet = !is_null($kkmValue);
         
         $grafikKkm = [];
-        $staticPeriods = ['ASTS Ganjil', 'ASAS', 'ASTS Genap', 'ASAT'];
+        $count = 0;
         
-        foreach ($staticPeriods as $periodName) {
-            $t = $titimangsas->firstWhere('nama_periode', $periodName);
-            // Cek apakah ada nilai di periode ini
+        foreach ($titimangsas as $t) {
+            if ($count >= 4) break;
+            
+            $periodName = $t->nama_periode;
             $hasData = false;
             $tuntas = 0;
             $belumTuntas = 0;
             $totalCount = 0;
 
-            if ($t) {
-                $totalNilai = $allSumatif->where('titimangsa_id', $t->id);
-                $totalCount = $totalNilai->count();
-                
-                if ($totalCount > 0 && $kkmSet) {
-                    $hasData = true;
-                    $tuntas = $totalNilai->where('na_value', '>=', $kkmValue)->count();
-                    $belumTuntas = $totalNilai->where('na_value', '<', $kkmValue)->count();
-                }
+            $totalNilai = $allSumatif->where('titimangsa_id', $t->id);
+            $totalCount = $totalNilai->count();
+            
+            if ($totalCount > 0 && $kkmSet) {
+                $hasData = true;
+                $tuntas = $totalNilai->where('na_value', '>=', $kkmValue)->count();
+                $belumTuntas = $totalNilai->where('na_value', '<', $kkmValue)->count();
             }
             
             $grafikKkm[] = [
                 'periode' => $periodName,
-                'aktif' => $t ? true : false,
+                'aktif' => true,
                 'has_data' => $hasData,
                 'kkm_set' => $kkmSet,
                 'tuntas' => $tuntas,
@@ -247,6 +246,24 @@ class WalasDashboardStatsController extends Controller
                 'total' => $totalCount,
                 'kkm_value' => $kkmValue
             ];
+            
+            $count++;
+        }
+        
+        // Fill remaining slots up to 4 if titimangsas has less than 4
+        $defaultPeriods = ['Periode 1', 'Periode 2', 'Periode 3', 'Periode 4'];
+        while ($count < 4) {
+            $grafikKkm[] = [
+                'periode' => $defaultPeriods[$count],
+                'aktif' => false,
+                'has_data' => false,
+                'kkm_set' => $kkmSet,
+                'tuntas' => 0,
+                'belum_tuntas' => 0,
+                'total' => 0,
+                'kkm_value' => $kkmValue
+            ];
+            $count++;
         }
 
         return response()->json([
