@@ -251,7 +251,7 @@
                         
                         <!-- INPUT Harian (UH1-UH4) -->
                         <td v-for="uhField in ['uh1', 'uh2', 'uh3', 'uh4']" :key="uhField" class="p-0 border-r border-slate-100 text-center h-12 relative min-w-[75px] md:min-w-[60px]">
-                          <input type="text" v-model="getNilai(siswa.id)[uhField]" @input="markAsUnsaved(siswa.id, uhField)" :disabled="!references.is_titimangsa_aktif"
+                          <input type="text" v-model="getNilai(siswa.id)[uhField]" @input="markAsUnsaved(siswa.id, uhField)" @keydown="handleTableKeydown" :disabled="!references.is_titimangsa_aktif"
                             class="w-full h-full border-none p-0 text-center font-black text-[11px] md:text-xs transition-all focus:ring-inset focus:ring-2 focus:ring-indigo-500"
                             :class="!references.is_titimangsa_aktif ? 'bg-slate-50 text-slate-400 cursor-not-allowed' : 'bg-transparent text-indigo-800 focus:bg-white hover:bg-indigo-50/30'"
                             placeholder="-">
@@ -259,7 +259,7 @@
 
                         <!-- INPUT Ujian (Praktek, Teori) -->
                         <td v-for="ujiField in ['praktek', 'teori']" :key="ujiField" class="p-0 border-r border-slate-100 text-center h-12 relative min-w-[85px] md:min-w-[70px]">
-                          <input type="text" v-model="getNilai(siswa.id)[ujiField]" @input="markAsUnsaved(siswa.id, ujiField)" :disabled="!references.is_titimangsa_aktif"
+                          <input type="text" v-model="getNilai(siswa.id)[ujiField]" @input="markAsUnsaved(siswa.id, ujiField)" @keydown="handleTableKeydown" :disabled="!references.is_titimangsa_aktif"
                             class="w-full h-full border-none p-0 text-center font-black text-[11px] md:text-xs transition-all focus:ring-inset focus:ring-2 focus:ring-teal-500"
                             :class="!references.is_titimangsa_aktif ? 'bg-slate-50 text-slate-400 cursor-not-allowed' : 'bg-transparent text-teal-800 focus:bg-white hover:bg-teal-50/30'"
                             placeholder="-">
@@ -272,7 +272,7 @@
 
                         <!-- INPUT Literasi -->
                         <td class="p-0 border-r border-slate-100 text-center h-12 relative min-w-[85px] md:min-w-[80px]">
-                          <input type="text" v-model="getNilai(siswa.id).literasi" @input="markAsUnsaved(siswa.id, 'literasi')" :disabled="!references.is_titimangsa_aktif"
+                          <input type="text" v-model="getNilai(siswa.id).literasi" @input="markAsUnsaved(siswa.id, 'literasi')" @keydown="handleTableKeydown" :disabled="!references.is_titimangsa_aktif"
                             class="w-full h-full border-none p-0 text-center font-black text-[11px] md:text-xs transition-all focus:ring-inset focus:ring-2 focus:ring-slate-500"
                             :class="!references.is_titimangsa_aktif ? 'bg-slate-50 text-slate-400 cursor-not-allowed' : 'bg-transparent text-slate-700 focus:bg-white hover:bg-slate-100/50'"
                             placeholder="-">
@@ -624,6 +624,53 @@ onBeforeRouteLeave((to, from, next) => {
         next()
     }
 })
+
+// Excel-like Keyboard Navigation
+const handleTableKeydown = (e) => {
+  if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) return;
+  
+  const currentInput = e.target;
+  const tr = currentInput.closest('tr');
+  if (!tr) return;
+  
+  const rowInputs = Array.from(tr.querySelectorAll('input:not([disabled])'));
+  const colIndex = rowInputs.indexOf(currentInput);
+  if (colIndex === -1) return;
+  
+  if (e.key === 'ArrowLeft' && colIndex > 0) {
+    e.preventDefault();
+    rowInputs[colIndex - 1].focus();
+    rowInputs[colIndex - 1].select();
+  } else if (e.key === 'ArrowRight' && colIndex < rowInputs.length - 1) {
+    e.preventDefault();
+    rowInputs[colIndex + 1].focus();
+    rowInputs[colIndex + 1].select();
+  } else if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+    const tbody = tr.closest('tbody');
+    if (!tbody) return;
+    
+    // Find all rows that contain inputs (skipping the mobile name rows)
+    const rowsWithInputs = Array.from(tbody.querySelectorAll('tr')).filter(row => row.querySelector('input:not([disabled])'));
+    const rowIndex = rowsWithInputs.indexOf(tr);
+    if (rowIndex === -1) return;
+    
+    let targetRow;
+    if (e.key === 'ArrowUp' && rowIndex > 0) {
+      targetRow = rowsWithInputs[rowIndex - 1];
+    } else if (e.key === 'ArrowDown' && rowIndex < rowsWithInputs.length - 1) {
+      targetRow = rowsWithInputs[rowIndex + 1];
+    }
+    
+    if (targetRow) {
+      e.preventDefault();
+      const targetInputs = Array.from(targetRow.querySelectorAll('input:not([disabled])'));
+      if (targetInputs[colIndex]) {
+        targetInputs[colIndex].focus();
+        targetInputs[colIndex].select();
+      }
+    }
+  }
+};
 
 </script>
 
