@@ -236,7 +236,7 @@
             <!-- Peringkat & Bintang Kelas -->
             <div v-if="!statsLoading && wStats" class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
                 <!-- Top 10 Besar -->
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-200/60 flex flex-col h-80 overflow-hidden">
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200/60 flex flex-col overflow-hidden">
                     <div class="p-5 border-b border-slate-100 flex items-center gap-3 bg-slate-50/50 shrink-0">
                         <div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 text-xl border border-emerald-100">🏆</div>
                         <div>
@@ -276,7 +276,7 @@
                 </div>
 
                 <!-- Prestasi Tiap Mapel (Bintang Kelas) -->
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/60 flex flex-col h-80">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/60 flex flex-col">
                     <div class="flex items-center gap-3 mb-5 shrink-0">
                         <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 text-xl border border-amber-100">🏅</div>
                         <div>
@@ -302,7 +302,7 @@
             <!-- Gender & Penanganan -->
             <div v-if="!statsLoading && wStats" class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
                 <!-- Chart Gender -->
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/60 flex flex-col">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/60 flex flex-col h-80">
                     <div class="flex items-center gap-3 mb-6 shrink-0">
                         <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 text-xl border border-indigo-100">🍩</div>
                         <div>
