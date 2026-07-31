@@ -12,7 +12,7 @@
 export function useSessionKeepAlive() {
   if (import.meta.server) return
 
-  const COOKIE_MAX_AGE = 3600               // 1 jam
+  const COOKIE_MAX_AGE = 86400              // 24 jam
   const REFRESH_INTERVAL = 15 * 60 * 1000  // Refresh setiap 15 menit
 
   let intervalId: ReturnType<typeof setInterval> | null = null
