@@ -160,8 +160,8 @@
           <div class="grid grid-cols-4 gap-y-5 gap-x-3">
             <template v-for="(menu, idx) in currentDrawerMenus" :key="'g-'+idx">
               <NuxtLink v-if="!menu.divider" :to="menu.path" @click="closeDrawer" class="flex flex-col items-center gap-1.5 active:scale-95 transition-transform">
-                <div class="w-14 h-14 rounded-2xl flex items-center justify-center shadow-sm transition-all text-sky-600" :class="route.path === menu.path ? 'bg-sky-500 text-white shadow-sky-200 shadow-lg' : 'bg-slate-50 border border-slate-100'" v-html="getSvgIcon(menu.icon)"></div>
-                <span class="text-[9px] font-bold text-center leading-tight w-full" :class="route.path === menu.path ? 'text-sky-700' : 'text-slate-500'">{{ menu.name }}</span>
+                <div class="w-14 h-14 rounded-2xl flex items-center justify-center shadow-sm transition-all text-sky-600" :class="(route.path === menu.path || route.path.startsWith(menu.path + '/')) ? 'bg-sky-500 text-white shadow-sky-200 shadow-lg' : 'bg-slate-50 border border-slate-100'" v-html="getSvgIcon(menu.icon)"></div>
+                <span class="text-[9px] font-bold text-center leading-tight w-full" :class="(route.path === menu.path || route.path.startsWith(menu.path + '/')) ? 'text-sky-700' : 'text-slate-500'">{{ menu.name }}</span>
               </NuxtLink>
             </template>
           </div>
