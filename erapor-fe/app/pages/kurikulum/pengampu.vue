@@ -69,9 +69,8 @@
       </div>
 
       <!-- Main Content Flow -->
-      <div class="flex-1 flex flex-col min-w-0 bg-slate-50 relative h-full" :class="activeTabMobile === 'flow' || isDesktop ? 'flex' : 'hidden'">
-            
-            <!-- Header Flow -->
+      <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative', activeTabMobile === 'flow' || isDesktop ? 'flex' : 'hidden', !isDesktop ? 'pt-[52px]' : '']">
+<!-- Header Flow -->
             <div class="p-4 bg-white border-b border-slate-200 flex justify-between items-center gap-4 shrink-0 z-10 shadow-sm">
                 <div class="flex items-center gap-4">
                     <div class="w-10 h-10 rounded-2xl bg-amber-50 shadow-sm border border-amber-100 flex items-center justify-center text-xl hidden sm:flex text-amber-500"><AppIcon name="users" class="w-6 h-6" /></div>
