@@ -6,12 +6,12 @@
       
       <!-- MOBILE VIEW TABS -->
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-2 grid grid-cols-2 gap-2 z-20">
-        <button type="button" @click="activeTab = 'generate'" :class="activeTab === 'generate' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
-          <span class="text-lg mb-0.5 transition-transform" :class="activeTab === 'generate' ? 'scale-110' : ''"><AppIcon name="shield" />️</span>
+        <button type="button" @click="activeTab = 'generate'" :class="activeTab === 'generate' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="rounded-xl flex items-center justify-center py-2 px-1 transition-all active:scale-95">
+          <span class="text-lg mr-1.5 transition-transform" :class="activeTab === 'generate' ? 'scale-110' : ''"><AppIcon name="shield" />️</span>
           <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">Generate</span>
         </button>
-        <button type="button" @click="activeTab = 'riwayat'" :class="activeTab === 'riwayat' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
-          <span class="text-lg mb-0.5 transition-transform" :class="activeTab === 'riwayat' ? 'scale-110' : ''"><AppIcon name="clipboard" /></span>
+        <button type="button" @click="activeTab = 'riwayat'" :class="activeTab === 'riwayat' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="rounded-xl flex items-center justify-center py-2 px-1 transition-all active:scale-95">
+          <span class="text-lg mr-1.5 transition-transform" :class="activeTab === 'riwayat' ? 'scale-110' : ''"><AppIcon name="clipboard" /></span>
           <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">Riwayat</span>
         </button>
       </div>
