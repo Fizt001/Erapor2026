@@ -5,14 +5,14 @@
     <div class="flex-1 flex overflow-hidden relative">
       
       <!-- MOBILE VIEW TABS -->
-      <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 grid grid-cols-2 gap-2 z-20">
-        <button type="button" @click="activeTab = 'form'" :class="activeTab === 'form' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="rounded-xl flex items-center justify-center py-1.5 px-1 transition-all active:scale-95">
-          <span class="text-lg mr-1.5 transition-transform" :class="activeTab === 'form' ? 'scale-110' : ''"><AppIcon name="building" /></span>
-          <span class="text-[10px] font-black uppercase tracking-wider">Entry Kelas</span>
+      <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 shadow-sm z-20">
+        <button type="button" @click="activeTab = 'form'" :class="activeTab === 'form' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+          <span class="text-lg mb-0.5 transition-transform" :class="activeTab === 'form' ? 'scale-110' : ''"><AppIcon name="building" /></span>
+          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">Entry Kelas</span>
         </button>
-        <button type="button" @click="activeTab = 'table'" :class="activeTab === 'table' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="rounded-xl flex items-center justify-center py-1.5 px-1 transition-all active:scale-95">
-          <span class="text-lg mr-1.5 transition-transform" :class="activeTab === 'table' ? 'scale-110' : ''"><AppIcon name="clipboard" /></span>
-          <span class="text-[10px] font-black uppercase tracking-wider">Database</span>
+        <button type="button" @click="activeTab = 'table'" :class="activeTab === 'table' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+          <span class="text-lg mb-0.5 transition-transform" :class="activeTab === 'table' ? 'scale-110' : ''"><AppIcon name="clipboard" /></span>
+          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">Database</span>
         </button>
       </div>
 
