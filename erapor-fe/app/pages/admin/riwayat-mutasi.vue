@@ -147,7 +147,18 @@ const filterStatus = ref('')
 const isProcessing = ref(false)
 
 const cancelMutasi = async (m) => {
-  if (!confirm(`Apakah Anda yakin ingin MEMBATALKAN mutasi untuk ${m.siswa?.user?.name}? Siswa akan dikembalikan ke status Aktif di kelas asalnya.`)) return
+  const result = await useSwal().fire({
+    title: 'Batalkan Mutasi?',
+    text: `Siswa ${m.siswa?.user?.name} akan dikembalikan ke status Aktif di kelas asalnya.`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#10b981',
+    cancelButtonColor: '#ef4444',
+    confirmButtonText: 'Ya, Batalkan!',
+    cancelButtonText: 'Tutup'
+  })
+  
+  if (!result.isConfirmed) return
 
   isProcessing.value = true
   try {
