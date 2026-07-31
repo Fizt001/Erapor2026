@@ -17,13 +17,16 @@
       <!-- Panel Dock Kiri -->
       <div :class="['w-full xl:w-[320px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', activeTab === 'filter' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[76px]' : '']">
 <!-- Panel Dock Kiri (FILTER) -->
-        <div class="p-6 border-b border-slate-100 flex items-center gap-3 shrink-0">
-            <div class="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-500 border border-slate-200 shadow-sm">
-                <AppIcon name="funnel" class="w-5 h-5" />
-            </div>
-            <div>
-                <h2 class="text-xs font-black text-slate-800 uppercase tracking-widest">Filter Data</h2>
-                <p class="text-[9px] font-bold text-slate-400 uppercase mt-0.5">Saring hasil pencarian</p>
+        <div class="p-4 pb-2 shrink-0">
+            <div class="bg-gradient-to-r from-teal-600 to-emerald-700 rounded-2xl p-4 border border-teal-500 shadow-sm relative overflow-hidden flex items-center gap-3">
+                <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="funnel" class="w-5 h-5" /></div>
+                <div class="relative z-10">
+                    <h3 class="text-xs font-black uppercase tracking-widest text-white">Filter Data</h3>
+                    <p class="text-[9px] text-teal-100 font-semibold uppercase mt-0.5">Saring Hasil Pencarian</p>
+                </div>
+                <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
+                  <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
+                </div>
             </div>
         </div>
         <div class="flex-1 overflow-y-auto p-6 space-y-6 bg-slate-50/30">
