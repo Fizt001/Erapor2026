@@ -263,4 +263,4 @@ const handleLogout = async () => {
 .drawer-overlay-enter-from, .drawer-overlay-leave-to { opacity: 0; }
 .drawer-panel-enter-active, .drawer-panel-leave-active { transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1); }
 .drawer-panel-enter-from, .drawer-panel-leave-to { transform: translateY(100%); }
-</style>
+</style> 
