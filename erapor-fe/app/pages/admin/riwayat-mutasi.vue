@@ -35,8 +35,8 @@
 
     <!-- PANEL KANAN (FLOW) -->
     <div class="flex-1 min-w-0 flex flex-col bg-slate-50 relative z-0 min-h-0">
-      <div class="flex-1 p-6 md:p-8 overflow-hidden flex flex-col">
-        <div class="bg-white rounded-3xl border border-slate-200 shadow-sm shadow-slate-200/50 flex-1 flex flex-col overflow-hidden relative">
+      <div class="flex-1 p-0 md:p-8 overflow-hidden flex flex-col">
+        <div class="bg-white rounded-none sm:rounded-3xl border border-slate-200 shadow-sm shadow-slate-200/50 flex-1 flex flex-col overflow-hidden relative">
           
           <div v-if="isLoading" class="flex-grow flex items-center justify-center flex-col p-10 opacity-60">
             <div class="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mb-4"></div>

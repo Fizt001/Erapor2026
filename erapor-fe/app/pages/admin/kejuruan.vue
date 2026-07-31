@@ -15,7 +15,7 @@
       </div>
 
       <!-- Panel Dock Kiri -->
-      <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', activeTab === 'bidang' || activeTab === 'program' || activeTab === 'konsentrasi' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[76px]' : '']">
+      <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', activeTab === 'bidang' || activeTab === 'program' || activeTab === 'konsentrasi' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[54px]' : '']">
         
         <!-- Desktop Tabs (Toggle Form) -->
         <div class="hidden xl:flex bg-slate-50/50 border-b border-slate-200 p-2 shrink-0">
@@ -144,9 +144,9 @@
       </div>
 
       <!-- Panel Flow Kanan -->
-      <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative', activeTab === 'table' || isDesktop ? 'flex' : 'hidden', !isDesktop ? 'pt-[76px]' : '']">
-        <div class="p-2 sm:pt-3 sm:pb-6 sm:px-6 lg:pt-3 lg:pb-8 lg:px-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
-          <div class="bg-white rounded-2xl sm:rounded-[2rem] shadow-[0_2px_15px_-3px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col flex-1 relative min-h-0">
+      <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative', activeTab === 'table' || isDesktop ? 'flex' : 'hidden', !isDesktop ? 'pt-[54px]' : '']">
+        <div class="p-0 sm:pt-3 sm:pb-6 sm:px-6 lg:pt-3 lg:pb-8 lg:px-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
+          <div class="bg-white rounded-none sm:rounded-[2rem] shadow-[0_2px_15px_-3px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col flex-1 relative min-h-0">
             <div class="px-6 py-5 border-b border-slate-50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white shrink-0 z-10">
                 <div class="flex items-center gap-4 w-full sm:w-auto">
                     <div class="w-10 h-10 rounded-2xl bg-slate-50 shadow-sm border border-slate-200 flex items-center justify-center text-xl hidden sm:flex"><AppIcon name="clipboard" /></div>
