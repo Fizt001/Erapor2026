@@ -252,7 +252,14 @@ const closeDrawer = () => {
 }
 const isGroupActive = (group) => {
   if (activeDrawer.value === group && drawerOpen.value) return true;
-  const groupMenus = drawerMenuGroups[group]?.menus || [];
+  let startIndex = 0
+  let endIndex = walasMenus.length
+  if (group === 'siswa') { startIndex = 2; endIndex = 5 }
+  else if (group === 'kegiatan') { startIndex = 6; endIndex = 10 }
+  else if (group === 'rapor') { startIndex = 11; endIndex = 14 }
+  else return false;
+
+  const groupMenus = walasMenus.slice(startIndex, endIndex).filter(m => !m.divider);
   return groupMenus.some(menu => route.path === menu.path || route.path.startsWith(menu.path + '/'));
 }
 

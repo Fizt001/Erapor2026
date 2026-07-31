@@ -253,7 +253,14 @@ const closeDrawer = () => {
 }
 const isGroupActive = (group) => {
   if (activeDrawer.value === group && drawerOpen.value) return true;
-  const groupMenus = drawerMenuGroups[group]?.menus || [];
+  let startIndex = 0
+  let endIndex = guruMenus.length
+  if (group === 'kbm') { startIndex = 2; endIndex = 4 }
+  else if (group === 'formatif') { startIndex = 5; endIndex = 7 }
+  else if (group === 'sumatif') { startIndex = 8; endIndex = 10 }
+  else return false;
+  
+  const groupMenus = guruMenus.slice(startIndex, endIndex);
   return groupMenus.some(menu => route.path === menu.path || route.path.startsWith(menu.path + '/'));
 }
 

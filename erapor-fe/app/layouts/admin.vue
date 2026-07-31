@@ -214,13 +214,13 @@ const openDrawer = (group) => {
 }
 const closeDrawer = () => {
   drawerOpen.value = false
-  setTimeout(() => { activeDrawer.value = null }
+  setTimeout(() => { activeDrawer.value = null }, 300)
+}
+
 const isGroupActive = (group) => {
   if (activeDrawer.value === group && drawerOpen.value) return true;
   const groupMenus = drawerMenuGroups[group]?.menus || [];
   return groupMenus.some(menu => route.path === menu.path || route.path.startsWith(menu.path + '/'));
-}
-, 300)
 }
 
 watch(() => route.path, () => { closeDrawer() })
