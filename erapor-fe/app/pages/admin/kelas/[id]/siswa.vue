@@ -7,13 +7,13 @@
         <button type="button" @click="activeTab = 'table'"
           :class="activeTab === 'table' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
           class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
-          <span class="text-lg mb-0.5 transition-transform" :class="activeTab === 'table' ? 'scale-110' : ''"><AppIcon name="user" />‍<AppIcon name="academic-cap" /></span>
+          <div class="text-lg mb-0.5 transition-transform" :class="activeTab === 'table' ? 'scale-110' : ''"><AppIcon name="user" />‍<AppIcon name="academic-cap" /></div>
           <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">Anggota Kelas</span>
         </button>
         <button type="button" @click="activeTab = 'form'"
           :class="activeTab === 'form' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
           class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
-          <span class="text-lg mb-0.5 transition-transform" :class="activeTab === 'form' ? 'scale-110' : ''"><AppIcon name="inbox" /></span>
+          <AppIcon name="inbox" class="text-lg mb-0.5 transition-transform" :class="activeTab === 'form' ? 'scale-110' : ''" />
           <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">Tarik User</span>
         </button>
       </div>

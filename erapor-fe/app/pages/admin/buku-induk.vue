@@ -7,11 +7,11 @@
         <!-- MOBILE VIEW TABS -->
         <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 shadow-sm z-20">
             <button type="button" @click="activeTab = 'filter'" :class="activeTab === 'filter' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
-              <span class="text-lg mb-0.5 transition-transform" :class="activeTab === 'filter' ? 'scale-110' : ''"><AppIcon name="magnifying-glass" /></span>
+              <AppIcon name="magnifying-glass" class="text-lg mb-0.5 transition-transform" :class="activeTab === 'filter' ? 'scale-110' : ''" />
               <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">Filter Data</span>
             </button>
             <button type="button" @click="activeTab = 'preview'" :class="activeTab === 'preview' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
-              <span class="text-lg mb-0.5 transition-transform" :class="activeTab === 'preview' ? 'scale-110' : ''"><AppIcon name="document-text" /></span>
+              <AppIcon name="document-text" class="text-lg mb-0.5 transition-transform" :class="activeTab === 'preview' ? 'scale-110' : ''" />
               <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">Preview Buku</span>
             </button>
         </div>
