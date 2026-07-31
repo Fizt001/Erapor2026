@@ -8,7 +8,7 @@
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 z-20 shadow-sm">
         <button v-for="tab in tabs" :key="'mob-'+tab.id" type="button" @click="activeTab = tab.id"
           :class="activeTab === tab.id ? 'bg-emerald-500 text-white shadow-sm ring-1 ring-emerald-400 ring-offset-1' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'"
-          class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-0.5 transition-all active:scale-95">
+          class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
           <AppIcon :name="tab.iconName" class="text-lg mb-0.5 transition-transform" :class="activeTab === tab.id ? 'scale-110' : ''" />
           <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">{{ tab.shortTitle }}</span>
         </button>
@@ -61,7 +61,7 @@
       </div>
 
       <!-- Panel Flow Kanan -->
-      <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative', !isDesktop ? 'pt-[60px]' : '']">
+      <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative', !isDesktop ? 'pt-[52px]' : '']">
         <div class="p-2 sm:pt-3 sm:pb-6 sm:px-6 lg:pt-3 lg:pb-8 lg:px-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
           <div class="bg-white rounded-none sm:rounded-[2rem] shadow-[0_2px_15px_-3px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col flex-1 relative min-h-0">
             <!-- Table Header & Filters -->
