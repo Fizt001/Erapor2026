@@ -283,7 +283,19 @@ const fetchPengampu = async () => {
 }
 
 const getRelevantClasses = (struktur) => {
-    return kelases.value
+    if (activeKategori.value === 'umum') {
+        return kelases.value
+    } else {
+        return kelases.value.filter(k => {
+            if (struktur.konsentrasi_id) {
+                return k.kejuruan_id === struktur.konsentrasi_id;
+            }
+            if (struktur.program_id) {
+                return k.kejuruan && k.kejuruan.program_id === struktur.program_id;
+            }
+            return true;
+        })
+    }
 }
 
 const getPengampus = (struktur, kelasId) => {
