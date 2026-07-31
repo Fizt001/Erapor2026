@@ -75,19 +75,19 @@
           <span class="text-xl leading-none">📊</span>
           <span class="text-[9px] font-black uppercase tracking-wider">Dashboard</span>
         </NuxtLink>
-        <button @click="openDrawer('pokok')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="activeDrawer === 'pokok' && drawerOpen ? 'text-rose-600' : 'text-slate-400'">
+        <button @click="openDrawer('pokok')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="isGroupActive('pokok') ? 'text-rose-600' : 'text-slate-400'">
           <span class="text-xl leading-none">🗄️</span>
           <span class="text-[9px] font-black uppercase tracking-wider">Master</span>
         </button>
-        <button @click="openDrawer('layanan')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="activeDrawer === 'layanan' && drawerOpen ? 'text-rose-600' : 'text-slate-400'">
+        <button @click="openDrawer('layanan')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="isGroupActive('layanan') ? 'text-rose-600' : 'text-slate-400'">
           <span class="text-xl leading-none">⚖️</span>
           <span class="text-[9px] font-black uppercase tracking-wider">Layanan</span>
         </button>
-        <button @click="openDrawer('laporan')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="activeDrawer === 'laporan' && drawerOpen ? 'text-rose-600' : 'text-slate-400'">
+        <button @click="openDrawer('laporan')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="isGroupActive('laporan') ? 'text-rose-600' : 'text-slate-400'">
           <span class="text-xl leading-none">📖</span>
           <span class="text-[9px] font-black uppercase tracking-wider">Laporan</span>
         </button>
-        <button @click="openDrawer('all')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="activeDrawer === 'all' && drawerOpen ? 'text-rose-600' : 'text-slate-400'">
+        <button @click="openDrawer('all')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="isGroupActive('all') ? 'text-rose-600' : 'text-slate-400'">
           <span class="text-xl leading-none">☰</span>
           <span class="text-[9px] font-black uppercase tracking-wider">Menu</span>
         </button>
@@ -191,7 +191,13 @@ const openDrawer = (group) => {
 }
 const closeDrawer = () => {
   drawerOpen.value = false
-  setTimeout(() => { activeDrawer.value = null }, 300)
+  setTimeout(() => { activeDrawer.value = null }
+const isGroupActive = (group) => {
+  if (activeDrawer.value === group && drawerOpen.value) return true;
+  const groupMenus = drawerMenuGroups[group]?.menus || [];
+  return groupMenus.some(menu => route.path === menu.path || route.path.startsWith(menu.path + '/'));
+}
+, 300)
 }
 
 watch(() => route.path, () => { closeDrawer() })

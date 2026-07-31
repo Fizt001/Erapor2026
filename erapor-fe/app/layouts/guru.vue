@@ -113,15 +113,15 @@
           <span class="flex items-center justify-center" v-html="getSvgIcon('📊')"></span>
           <span class="text-[9px] font-black uppercase tracking-wider">Dashboard</span>
         </NuxtLink>
-        <button @click="openDrawer('kbm')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="activeDrawer === 'kbm' && drawerOpen ? 'text-sky-600' : 'text-slate-400'">
+        <button @click="openDrawer('kbm')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="isGroupActive('kbm') ? 'text-sky-600' : 'text-slate-400'">
           <span class="flex items-center justify-center" v-html="getSvgIcon('📓')"></span>
           <span class="text-[9px] font-black uppercase tracking-wider">KBM</span>
         </button>
-        <button @click="openDrawer('formatif')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="activeDrawer === 'formatif' && drawerOpen ? 'text-sky-600' : 'text-slate-400'">
+        <button @click="openDrawer('formatif')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="isGroupActive('formatif') ? 'text-sky-600' : 'text-slate-400'">
           <span class="flex items-center justify-center" v-html="getSvgIcon('📝')"></span>
           <span class="text-[9px] font-black uppercase tracking-wider">Formatif</span>
         </button>
-        <button @click="openDrawer('sumatif')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="activeDrawer === 'sumatif' && drawerOpen ? 'text-sky-600' : 'text-slate-400'">
+        <button @click="openDrawer('sumatif')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="isGroupActive('sumatif') ? 'text-sky-600' : 'text-slate-400'">
           <span class="flex items-center justify-center" v-html="getSvgIcon('📋')"></span>
           <span class="text-[9px] font-black uppercase tracking-wider">Sumatif</span>
         </button>
@@ -251,6 +251,12 @@ const openDrawer = (drawerName) => {
 const closeDrawer = () => {
   drawerOpen.value = false
 }
+const isGroupActive = (group) => {
+  if (activeDrawer.value === group && drawerOpen.value) return true;
+  const groupMenus = drawerMenuGroups[group]?.menus || [];
+  return groupMenus.some(menu => route.path === menu.path || route.path.startsWith(menu.path + '/'));
+}
+
 
 onMounted(() => {
   fetchSekolah()
