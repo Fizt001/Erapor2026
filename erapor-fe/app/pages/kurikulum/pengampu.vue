@@ -125,7 +125,7 @@
 
                         <!-- Class List -->
                         <div class="p-4 flex-1 flex flex-col gap-4">
-                            <div v-for="kelas in kelases" :key="kelas.id" class="border border-slate-100 rounded-xl p-3 bg-white hover:border-amber-100 transition-colors shadow-sm">
+                            <div v-for="kelas in getRelevantClasses(struktur)" :key="kelas.id" class="border border-slate-100 rounded-xl p-3 bg-white hover:border-amber-100 transition-colors shadow-sm">
                                 <div class="flex justify-between items-center mb-3">
                                     <span class="text-[11px] font-black uppercase tracking-widest text-slate-700">
                                         {{ kelas.nama_kelas.startsWith(selectedTingkat + ' ') ? kelas.nama_kelas : (selectedTingkat + ' ' + kelas.nama_kelas) }}
