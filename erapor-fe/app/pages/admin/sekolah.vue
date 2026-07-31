@@ -8,8 +8,8 @@
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 z-20 shadow-sm">
         <button v-for="tab in tabs" :key="'mob-'+tab.id" type="button" @click="activeTab = tab.id"
           :class="activeTab === tab.id ? 'bg-emerald-500 text-white shadow-sm ring-1 ring-emerald-400 ring-offset-1' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'"
-          class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-0.5 transition-all active:scale-95">
-          <AppIcon :name="tab.iconName" class="text-lg mb-0.5 transition-transform" :class="activeTab === tab.id ? 'scale-110' : ''" />
+          class="flex-1 rounded-lg flex items-center justify-center py-2 px-0.5 transition-all active:scale-95">
+          <AppIcon :name="tab.iconName" class="text-lg mr-1.5 transition-transform" :class="activeTab === tab.id ? 'scale-110' : ''" />
           <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">{{ tab.shortTitle }}</span>
         </button>
       </div>

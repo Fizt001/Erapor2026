@@ -6,14 +6,14 @@
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-2 grid grid-cols-2 gap-2 z-20">
         <button type="button" @click="activeTab = 'table'"
           :class="activeTab === 'table' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
-          <span class="text-lg mb-0.5 transition-transform" :class="activeTab === 'table' ? 'scale-110' : ''"><AppIcon name="user" />‍<AppIcon name="academic-cap" /></span>
+          class="rounded-xl flex items-center justify-center py-2 px-1 transition-all active:scale-95">
+          <span class="text-lg mr-1.5 transition-transform" :class="activeTab === 'table' ? 'scale-110' : ''"><AppIcon name="user" />‍<AppIcon name="academic-cap" /></span>
           <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">Anggota Kelas</span>
         </button>
         <button type="button" @click="activeTab = 'form'"
           :class="activeTab === 'form' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
-          <span class="text-lg mb-0.5 transition-transform" :class="activeTab === 'form' ? 'scale-110' : ''"><AppIcon name="inbox" /></span>
+          class="rounded-xl flex items-center justify-center py-2 px-1 transition-all active:scale-95">
+          <span class="text-lg mr-1.5 transition-transform" :class="activeTab === 'form' ? 'scale-110' : ''"><AppIcon name="inbox" /></span>
           <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">Tarik User</span>
         </button>
       </div>
