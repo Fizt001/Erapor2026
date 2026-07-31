@@ -3,23 +3,23 @@
     <!-- Layout 2 Panel Dock & Flow -->
     <div class="flex-1 flex flex-col xl:flex-row overflow-hidden relative">
       <!-- MOBILE VIEW TABS -->
-      <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-2 grid grid-cols-2 gap-2 z-20">
+      <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 grid grid-cols-2 gap-2 z-20">
         <button type="button" @click="activeTab = 'table'"
           :class="activeTab === 'table' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
+          class="rounded-xl flex flex-col items-center justify-center py-1.5 px-1 transition-all active:scale-95">
           <span class="text-lg mb-0.5 transition-transform" :class="activeTab === 'table' ? 'scale-110' : ''"><AppIcon name="user" />‍<AppIcon name="academic-cap" /></span>
           <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">Anggota Kelas</span>
         </button>
         <button type="button" @click="activeTab = 'form'"
           :class="activeTab === 'form' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
+          class="rounded-xl flex flex-col items-center justify-center py-1.5 px-1 transition-all active:scale-95">
           <span class="text-lg mb-0.5 transition-transform" :class="activeTab === 'form' ? 'scale-110' : ''"><AppIcon name="inbox" /></span>
           <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">Tarik User</span>
         </button>
       </div>
 
       <!-- Panel Dock Kiri -->
-      <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', activeTab === 'form' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[54px]' : '']">
+      <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', activeTab === 'form' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[44px]' : '']">
         
         <div class="p-4 pb-2 shrink-0 z-10 relative">
           <div class="bg-gradient-to-r from-teal-600 to-emerald-700 rounded-2xl p-4 border border-teal-500 shadow-sm relative overflow-hidden flex items-center gap-3">
@@ -72,7 +72,7 @@
       </div>
 
       <!-- Panel Flow Kanan -->
-      <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0', !isDesktop && activeTab === 'form' ? 'hidden' : 'flex', !isDesktop ? 'pt-[54px]' : '']">
+      <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0', !isDesktop && activeTab === 'form' ? 'hidden' : 'flex', !isDesktop ? 'pt-[44px]' : '']">
         <div class="p-0 sm:pt-3 sm:pb-6 sm:px-6 lg:pt-3 lg:pb-8 lg:px-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
           <div class="bg-white rounded-none sm:rounded-[2rem] shadow-[0_2px_15px_-3px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col flex-1 relative min-h-0">
             

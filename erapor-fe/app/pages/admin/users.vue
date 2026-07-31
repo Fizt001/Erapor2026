@@ -5,17 +5,17 @@
     <div class="flex-1 flex overflow-hidden relative">
       
       <!-- MOBILE VIEW TABS -->
-      <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-2 grid grid-cols-2 gap-2 z-20">
+      <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 grid grid-cols-2 gap-2 z-20">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTab = tab.id"
           :class="activeTab === tab.id ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="rounded-xl flex items-center justify-center py-2 px-1 transition-all active:scale-95">
+          class="rounded-xl flex items-center justify-center py-1.5 px-1 transition-all active:scale-95">
           <AppIcon :name="tab.iconName" class="text-lg mr-1.5 transition-transform" :class="activeTab === tab.id ? 'scale-110' : ''" />
           <span class="text-[10px] font-black uppercase tracking-wider">{{ tab.title }}</span>
         </button>
       </div>
 
       <!-- Panel Dock Kiri -->
-      <div :class="['w-full xl:w-[320px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', activeTab === 'filter' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[54px]' : '']">
+      <div :class="['w-full xl:w-[320px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', activeTab === 'filter' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[44px]' : '']">
 <!-- Panel Dock Kiri (FILTER) -->
         <div class="p-4 pb-2 shrink-0">
             <div class="bg-gradient-to-r from-teal-600 to-emerald-700 rounded-2xl p-4 border border-teal-500 shadow-sm relative overflow-hidden flex items-center gap-3">
@@ -56,7 +56,7 @@
       </div>
 
       <!-- Panel Flow Kanan -->
-      <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative', activeTab === 'table' || isDesktop ? 'flex' : 'hidden', !isDesktop ? 'pt-[54px]' : '']">
+      <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative', activeTab === 'table' || isDesktop ? 'flex' : 'hidden', !isDesktop ? 'pt-[44px]' : '']">
         <div class="p-0 sm:pt-3 sm:pb-6 sm:px-6 lg:pt-3 lg:pb-8 lg:px-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
           <div class="bg-white rounded-none sm:rounded-[2rem] shadow-[0_2px_15px_-3px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col flex-1 relative min-h-0">
             <!-- Table Header & Actions -->
