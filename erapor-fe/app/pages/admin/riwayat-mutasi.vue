@@ -3,24 +3,23 @@
 
     <!-- PANEL KIRI (DOCK) -->
     <div class="w-full md:w-[360px] bg-white border-b md:border-b-0 md:border-r border-slate-200 shrink-0 flex flex-col z-10 transition-all duration-300 relative">
-      <div class="p-6 border-b border-slate-200 bg-white/80 backdrop-blur-md sticky top-0 z-20 shrink-0">
-        <h1 class="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-3">
-          <span class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shadow-sm">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-          </span>
-          Riwayat Mutasi Siswa
-        </h1>
-        <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest mt-2 ml-13">Arsip Mutasi & Siswa Keluar</p>
+      <div class="p-4 pb-2 shrink-0 border-b border-slate-100">
+          <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-4 border border-emerald-500 shadow-sm relative overflow-hidden flex items-center gap-3">
+            <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div class="relative z-10">
+              <h3 class="text-xs font-black uppercase tracking-widest text-white">Riwayat Mutasi</h3>
+              <p class="text-[9px] text-emerald-100 font-semibold uppercase mt-0.5">Arsip & Filter Siswa Keluar</p>
+            </div>
+            <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
+                <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+          </div>
       </div>
 
       <div class="md:flex-1 md:overflow-y-auto custom-scrollbar p-6 space-y-6">
         <div class="space-y-4">
-          <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-4 border border-emerald-500 shadow-sm relative overflow-hidden">
-            <div class="relative z-10">
-              <h3 class="text-xs font-black uppercase tracking-widest text-white">Filter Riwayat</h3>
-              <p class="text-[9px] text-emerald-200 font-semibold mt-0.5">Filter berdasarkan jenis mutasi</p>
-            </div>
-          </div>
 
           <div class="space-y-2">
             <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest ml-1">Tampilkan Status</label>
