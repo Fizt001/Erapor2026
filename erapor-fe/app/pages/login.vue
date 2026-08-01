@@ -76,13 +76,16 @@
                             <h5 class="text-white font-bold text-xl px-1">Kelas {{ item.tingkatStr }}</h5>
                             <div class="relative rounded-3xl p-[3px] bg-gradient-to-r from-orange-500 to-violet-600 lg:flex-1 min-h-[240px] shadow-[0_0_30px_-5px_rgba(249,115,22,0.4)] flex flex-col transition-all duration-500">
                                 <div class="w-full flex-1 bg-[#090C15] rounded-[22px] flex flex-col items-center justify-center text-center p-4 min-h-[220px] relative overflow-hidden">
-                                    <template v-if="item.config.isEmpty">
-                                        <AppIcon name="chart-bar" class="text-5xl lg:text-7xl mb-4 opacity-30 text-white" />
-                                        <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Belum Ada Data</span>
-                                    </template>
-                                    <template v-else>
-                                        <Transition name="fade-slide" mode="out-in">
-                                            <div :key="item.config.title" class="flex flex-col items-center justify-center w-full h-full">
+                                    <Transition name="fade-slide" mode="out-in">
+                                        <div :key="item.config.title" class="flex flex-col items-center justify-center w-full h-full">
+                                            
+                                            <template v-if="item.config.isEmpty">
+                                                <div class="relative flex-1 w-full flex flex-col items-center justify-center">
+                                                    <AppIcon name="chart-bar" class="text-5xl lg:text-7xl mb-4 opacity-30 text-white" />
+                                                    <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Belum Ada Data</span>
+                                                </div>
+                                            </template>
+                                            <template v-else>
                                                 <div class="relative flex-1 w-full flex items-center justify-center">
                                                     <div class="relative w-48 h-48 sm:w-56 sm:h-56">
                                                         <ClientOnly>
@@ -97,10 +100,12 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <h6 class="text-[14px] font-black uppercase tracking-widest text-orange-400 mt-4">{{ item.config.title }}</h6>
-                                            </div>
-                                        </Transition>
-                                    </template>
+                                            </template>
+
+                                            <!-- Always show class name -->
+                                            <h6 class="text-[14px] font-black uppercase tracking-widest text-orange-400 mt-4">{{ item.config.title }}</h6>
+                                        </div>
+                                    </Transition>
                                 </div>
                             </div>
                         </div>
