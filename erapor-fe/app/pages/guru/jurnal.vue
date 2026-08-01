@@ -48,12 +48,12 @@
             <span class="text-[10px] font-black uppercase tracking-widest">Memuat...</span>
           </div>
           <div v-else-if="!jurnalData" class="flex-1 flex flex-col items-center justify-center py-10 opacity-50">
-             <AppIcon name="exclamation-circle" class="w-10 h-10 text-slate-400 mb-2" />
+             <AppIcon name="exclamation-triangle" class="w-10 h-10 text-slate-400 mb-2" />
              <p class="text-[10px] font-black uppercase tracking-widest text-slate-500">Gagal memuat data</p>
           </div>
-          <div v-else-if="Object.keys(activeData.total || {}).length === 0" class="flex-1 flex flex-col items-center justify-center py-10 opacity-50">
-            <AppIcon name="folder-open" class="w-10 h-10 text-slate-400 mb-2" />
-            <p class="text-[10px] font-black uppercase tracking-widest text-slate-500">Belum ada rekap</p>
+          <div v-else-if="!activeData.total || Object.keys(activeData.total).length === 0" class="flex flex-col items-center justify-center p-10 text-center h-full opacity-60">
+             <AppIcon name="information-circle" class="w-10 h-10 text-slate-400 mb-2" />
+             <p class="text-xs font-bold text-slate-500 uppercase tracking-widest">Belum Ada Rekap</p>
           </div>
           <div v-else class="space-y-2">
             <div v-for="(pertemuans, mapelKelas) in activeData.total" :key="mapelKelas" class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex flex-col hover:border-sky-200 transition-colors">
@@ -106,7 +106,7 @@
                   
                   <div class="p-0">
                     <div v-if="Object.keys(activeData.bulanan[bulan.code] || {}).length === 0" class="text-center py-8 text-slate-400 bg-white">
-                      <div class="flex justify-center mb-2 opacity-50 grayscale text-slate-400"><AppIcon name="moon" class="w-6 h-6" /></div>
+                      <div class="flex justify-center mb-2 opacity-50 grayscale text-slate-400"><AppIcon name="folder" class="w-6 h-6" /></div>
                       <p class="text-[10px] font-black uppercase tracking-widest">Tidak ada pertemuan</p>
                     </div>
                     
@@ -169,8 +169,10 @@
               <div class="absolute left-0 top-0 bottom-0 w-1 bg-sky-400 opacity-0 group-hover:opacity-100 transition-opacity"></div>
               <div class="flex items-start justify-between">
                 <div class="min-w-0 pr-2">
-                  <div class="flex items-center text-xs font-bold text-slate-700 mb-1 truncate">
-                    <AppIcon name="calendar-days" class="w-4 h-4 mr-1.5 text-sky-600" /> {{ formatDate(item.tanggal) }}
+                  <div class="font-black text-slate-700 text-sm flex items-center justify-between mb-2">
+                    <div class="flex items-center">
+                      <AppIcon name="calendar" class="w-4 h-4 mr-1.5 text-sky-600" /> {{ formatDate(item.tanggal) }}
+                    </div>
                   </div>
                   <div class="text-[10px] text-slate-500 flex items-center font-medium">
                     <AppIcon name="clock" class="w-3.5 h-3.5 mr-1.5 opacity-60" /> {{ item.jam }}
