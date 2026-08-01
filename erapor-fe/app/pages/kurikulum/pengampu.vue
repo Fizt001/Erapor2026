@@ -102,75 +102,86 @@
                     <h3 class="text-sm font-black text-slate-500 uppercase tracking-widest">Struktur/Kelas Belum Tersedia</h3>
                 </div>
 
-                <!-- Data Grid -->
-                <div v-else class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-6 items-start">
+                <!-- Data List (Memanjang) -->
+                <div v-else class="flex flex-col gap-6">
                     
                     <div v-for="struktur in strukturs" :key="struktur.id" class="bg-white border border-slate-200 rounded-2xl shadow-sm flex flex-col overflow-hidden hover:shadow-md transition-all">
                         
                         <!-- Card Header -->
-                        <div class="p-4 bg-slate-50/80 border-b border-slate-100 shrink-0">
+                        <div class="p-4 md:p-5 bg-slate-50/80 border-b border-slate-200 shrink-0">
                             <div class="flex justify-between items-start mb-2">
                                 <div class="text-[10px] font-black tracking-widest text-amber-500 uppercase">{{ struktur.mapel?.kode_mapel }}</div>
                                 <div class="flex items-center gap-2">
-                                    <span class="px-2 py-0.5 text-[9px] font-black text-amber-700 bg-white border border-amber-100 rounded-md shadow-sm">
+                                    <span class="px-2 py-0.5 text-[10px] font-black text-amber-700 bg-white border border-amber-200 rounded-md shadow-sm">
                                         {{ struktur.jp }} JP
                                     </span>
                                 </div>
                             </div>
-                            <h4 class="font-black text-slate-800 text-xs leading-snug uppercase tracking-wide">{{ struktur.mapel?.nama_mapel }}</h4>
+                            <h4 class="font-black text-slate-800 text-sm md:text-base leading-snug uppercase tracking-wide">{{ struktur.mapel?.nama_mapel }}</h4>
                             <div class="mt-2 text-[10px] text-slate-400 font-bold tracking-widest flex items-center gap-2">
                                 <span>{{ activeKategori === 'umum' ? 'UMUM' : (struktur.program?.nama_program || 'KEJURUAN') }}</span>
                             </div>
                         </div>
 
-                        <!-- Class List -->
-                        <div class="p-4 flex-1 flex flex-col gap-4">
-                            <div v-for="kelas in getRelevantClasses(struktur)" :key="kelas.id" class="border border-slate-100 rounded-xl p-3 bg-white hover:border-amber-100 transition-colors shadow-sm">
-                                <div class="flex justify-between items-center mb-3">
-                                    <span class="text-[11px] font-black uppercase tracking-widest text-slate-700">
-                                        {{ kelas.nama_kelas.startsWith(selectedTingkat + ' ') ? kelas.nama_kelas : (selectedTingkat + ' ' + kelas.nama_kelas) }}
-                                    </span>
-                                    <span class="text-[9px] font-black tracking-widest px-2 py-1 rounded-md flex items-center gap-1" 
-                                        :class="getSisaJp(struktur, kelas.id) <= 0 ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-rose-50 text-rose-600 border border-rose-100'">
-                                        <template v-if="getSisaJp(struktur, kelas.id) <= 0">
-                                            <AppIcon name="check" class="w-3 h-3" />
-                                            <span>Tuntas</span>
-                                        </template>
-                                        <template v-else>
-                                            <span>Sisa {{ getSisaJp(struktur, kelas.id) }} JP</span>
-                                        </template>
-                                    </span>
-                                </div>
-
-                                <!-- Existing Pengampus -->
-                                <div class="space-y-1.5 mb-2">
-                                    <div v-for="p in getPengampus(struktur, kelas.id)" :key="p.id" class="flex justify-between items-center bg-slate-50 border border-slate-100 p-2 rounded-lg text-[10px] group hover:border-amber-100 transition-colors">
-                                        <div class="flex flex-col truncate pr-2">
-                                            <span class="font-black text-slate-800 uppercase truncate" :title="p.guru?.name">{{ p.guru?.name }}</span>
-                                            <span class="text-[8px] text-amber-600 font-black tracking-widest">{{ p.jp }} JAM</span>
-                                        </div>
-                                        <button @click="confirmDelete(p.id)" class="text-slate-300 hover:text-rose-600 p-1.5 bg-white rounded-md border border-slate-100 shadow-sm transition-colors active:scale-90 shrink-0" title="Hapus Guru">
-                                            <svg viewBox="0 0 20 20" fill="currentColor" class="w-3.5 h-3.5"><path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" /></svg>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <!-- Add Form -->
-                                <div v-if="getSisaJp(struktur, kelas.id) > 0" class="flex items-center gap-1.5 pt-2 border-t border-dashed border-slate-200">
-                                    <select v-model="formAssign[struktur.id + '_' + kelas.id].guru" class="flex-1 py-1.5 px-2 text-[9px] font-bold rounded-lg border-slate-200 bg-slate-50 cursor-pointer min-w-0 focus:ring-2 focus:ring-amber-500 outline-none border">
-                                        <option value="">+ Guru</option>
-                                        <option v-for="g in gurus" :key="g.id" :value="g.id">{{ g.name }}</option>
-                                    </select>
-                                    <input type="number" min="1" :max="getSisaJp(struktur, kelas.id)" v-model="formAssign[struktur.id + '_' + kelas.id].jp" class="w-12 py-1.5 px-2 text-[10px] font-bold rounded-lg border border-slate-200 bg-white text-center focus:ring-2 focus:ring-amber-500 outline-none shrink-0" />
-                                    <button @click="assignGuru(struktur, kelas.id)" class="w-7 h-7 rounded-lg bg-amber-600 text-white flex items-center justify-center hover:bg-amber-700 active:scale-90 transition-all shrink-0 disabled:opacity-50" :disabled="isSaving[struktur.id + '_' + kelas.id]">
-                                        <span v-if="isSaving[struktur.id + '_' + kelas.id]" class="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
-                                        <span v-else>+</span>
-                                    </button>
-                                </div>
-                            </div>
+                        <!-- Class Table -->
+                        <div class="w-full overflow-x-auto">
+                            <table class="w-full text-left border-collapse min-w-[600px]">
+                                <thead>
+                                    <tr class="bg-slate-50/50 border-b border-slate-200">
+                                        <th class="py-3 px-4 md:px-5 text-[10px] font-black text-slate-500 uppercase tracking-widest w-40 md:w-56">Kelas</th>
+                                        <th class="py-3 px-4 md:px-5 text-[10px] font-black text-slate-500 uppercase tracking-widest w-32 md:w-40">Status</th>
+                                        <th class="py-3 px-4 md:px-5 text-[10px] font-black text-slate-500 uppercase tracking-widest">Guru Pengampu</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100">
+                                    <tr v-for="kelas in getRelevantClasses(struktur)" :key="kelas.id" class="hover:bg-slate-50/30 transition-colors">
+                                        <td class="py-4 px-4 md:px-5 align-top">
+                                            <div class="text-xs md:text-sm font-black uppercase tracking-widest text-slate-700">
+                                                {{ kelas.nama_kelas.startsWith(selectedTingkat + ' ') ? kelas.nama_kelas : (selectedTingkat + ' ' + kelas.nama_kelas) }}
+                                            </div>
+                                        </td>
+                                        <td class="py-4 px-4 md:px-5 align-top">
+                                            <span class="text-[9px] md:text-[10px] font-black tracking-widest px-2.5 py-1.5 rounded-md inline-flex items-center gap-1.5 shadow-sm" 
+                                                :class="getSisaJp(struktur, kelas.id) <= 0 ? 'bg-emerald-50 text-emerald-600 border border-emerald-200' : 'bg-rose-50 text-rose-600 border border-rose-200'">
+                                                <template v-if="getSisaJp(struktur, kelas.id) <= 0">
+                                                    <AppIcon name="check" class="w-3.5 h-3.5" />
+                                                    <span>Tuntas</span>
+                                                </template>
+                                                <template v-else>
+                                                    <span>Sisa {{ getSisaJp(struktur, kelas.id) }} JP</span>
+                                                </template>
+                                            </span>
+                                        </td>
+                                        <td class="py-4 px-4 md:px-5">
+                                            <div class="flex flex-col gap-2.5">
+                                                <!-- Existing Pengampus -->
+                                                <div v-for="p in getPengampus(struktur, kelas.id)" :key="p.id" class="flex items-center gap-3 bg-white border border-slate-200 p-2 rounded-xl w-full max-w-lg shadow-sm group hover:border-amber-200 transition-all">
+                                                    <div class="flex-1 text-[10px] md:text-xs font-black uppercase text-slate-700 truncate pl-2" :title="p.guru?.name">{{ p.guru?.name }}</div>
+                                                    <div class="text-[10px] font-bold text-amber-600 px-3 py-1 bg-amber-50 rounded-lg">{{ p.jp }} JP</div>
+                                                    <button @click="confirmDelete(p.id)" class="text-slate-400 hover:text-white hover:bg-rose-500 p-1.5 bg-slate-50 rounded-lg border border-slate-200 transition-all active:scale-90" title="Hapus Guru">
+                                                        <svg viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4"><path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" /></svg>
+                                                    </button>
+                                                </div>
+                                                
+                                                <!-- Add Form -->
+                                                <div v-if="getSisaJp(struktur, kelas.id) > 0" class="flex items-center gap-2 w-full max-w-lg">
+                                                    <select v-model="formAssign[struktur.id + '_' + kelas.id].guru" class="flex-1 py-2 px-3 text-[10px] md:text-xs font-bold rounded-xl border border-slate-200 bg-slate-50 cursor-pointer focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all shadow-inner">
+                                                        <option value="">+ Pilih Guru Pengampu</option>
+                                                        <option v-for="g in gurus" :key="g.id" :value="g.id">{{ g.name }}</option>
+                                                    </select>
+                                                    <input type="number" min="1" :max="getSisaJp(struktur, kelas.id)" v-model="formAssign[struktur.id + '_' + kelas.id].jp" class="w-16 md:w-20 py-2 px-2 text-[11px] md:text-xs text-center font-bold rounded-xl border border-slate-200 bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 outline-none transition-all shadow-inner shrink-0" placeholder="JP" />
+                                                    <button @click="assignGuru(struktur, kelas.id)" class="w-9 h-9 rounded-xl bg-amber-600 text-white flex items-center justify-center hover:bg-amber-700 hover:shadow-lg hover:shadow-amber-600/30 active:scale-90 transition-all disabled:opacity-50 shrink-0" :disabled="isSaving[struktur.id + '_' + kelas.id]" title="Tambahkan Guru">
+                                                        <span v-if="isSaving[struktur.id + '_' + kelas.id]" class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                                                        <span v-else class="text-xl font-black leading-none pb-0.5">+</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-
                 </div>
             </div>
       </div>
