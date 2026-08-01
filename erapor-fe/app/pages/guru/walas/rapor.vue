@@ -17,10 +17,10 @@
       <!-- Panel Dock Kiri -->
       <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full xl:z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] overflow-y-auto custom-scrollbar transition-all', activeTabMobile === 'filter' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[60px]' : '']">
         <div class="p-6 space-y-6">
-          <div class="bg-gradient-to-r from-sky-600 to-blue-700 rounded-2xl p-5 border border-sky-500 shadow-sm relative overflow-hidden">
+          <div class="bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl p-5 border border-amber-400 shadow-sm relative overflow-hidden">
             <div class="relative z-10">
               <h3 class="text-sm font-black uppercase tracking-widest text-white">Cetak Rapor & Leger</h3>
-              <p class="text-[10px] text-slate-400 font-semibold mt-0.5">Cetak buku rapor individu dan leger kelas</p>
+              <p class="text-[10px] text-amber-100 font-semibold mt-0.5">Cetak buku rapor individu dan leger kelas</p>
             </div>
             <div class="absolute right-0 bottom-0 opacity-10">
               <svg class="w-24 h-24 transform translate-x-6 translate-y-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
@@ -42,7 +42,7 @@
                 <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-1">Periode</span>
                 <select 
                   v-model="activeTitimangsaId"
-                  class="text-[11px] font-bold text-indigo-700 bg-transparent border-none p-0 focus:ring-0 cursor-pointer outline-none text-right max-w-[150px]"
+                  class="text-[11px] font-bold text-amber-700 bg-transparent border-none p-0 focus:ring-0 cursor-pointer outline-none text-right max-w-[150px]"
                   :disabled="!pageData?.titimangsas?.length"
                 >
                   <option v-if="!pageData?.titimangsas?.length" value="" disabled>Belum diseting</option>
@@ -59,14 +59,14 @@
               <div class="bg-slate-100 p-1 rounded-xl flex items-center shadow-inner">
                   <button 
                       @click="mode = 'rapor'"
-                      :class="mode === 'rapor' ? 'bg-white text-indigo-700 shadow-sm font-black' : 'text-slate-500 font-bold hover:text-slate-700'"
+                      :class="mode === 'rapor' ? 'bg-white text-amber-700 shadow-sm font-black' : 'text-slate-500 font-bold hover:text-slate-700'"
                       class="flex-1 px-4 py-2 rounded-lg text-[10px] uppercase tracking-widest transition-all duration-200"
                   >
                       Rapor Individu
                   </button>
                   <button 
                       @click="mode = 'leger'"
-                      :class="mode === 'leger' ? 'bg-white text-indigo-700 shadow-sm font-black' : 'text-slate-500 font-bold hover:text-slate-700'"
+                      :class="mode === 'leger' ? 'bg-white text-amber-700 shadow-sm font-black' : 'text-slate-500 font-bold hover:text-slate-700'"
                       class="flex-1 px-4 py-2 rounded-lg text-[10px] uppercase tracking-widest transition-all duration-200"
                   >
                       Tabel Leger
@@ -80,7 +80,7 @@
               <div class="relative">
                   <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 pointer-events-none"><AppIcon name="search" /></span>
                   <input type="text" v-model="searchQuery" placeholder="Cari nama siswa..." 
-                    class="w-full pl-10 pr-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all font-semibold text-xs text-slate-700 outline-none">
+                    class="w-full pl-10 pr-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all font-semibold text-xs text-slate-700 outline-none">
               </div>
             </div>
           </div>
@@ -93,7 +93,7 @@
           
           <!-- Loading State -->
           <div v-if="isLoading" class="flex-grow flex flex-col items-center justify-center p-20 opacity-60 bg-white rounded-3xl shadow-sm border border-slate-200/60">
-            <div class="w-10 h-10 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+            <div class="w-10 h-10 border-4 border-amber-500 border-t-transparent rounded-full animate-spin mb-4"></div>
             <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Memuat Data Kelas...</span>
           </div>
 
@@ -113,7 +113,7 @@
             <!-- HEADER KANAN -->
             <div class="px-6 py-5 border-b border-slate-200 flex justify-between items-center bg-white shrink-0 z-10">
               <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center text-lg border border-indigo-100">
+                <div class="w-10 h-10 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center text-lg border border-amber-100">
                   <span v-if="mode === 'rapor'"><AppIcon name="document-text" /></span>
                   <span v-else><AppIcon name="chart-bar" /></span>
                 </div>
@@ -127,7 +127,7 @@
                 </div>
               </div>
               <div v-if="mode === 'leger' && legerData" class="flex items-center space-x-4 shrink-0 mt-4 md:mt-0">
-                 <button @click="printLeger" class="flex items-center space-x-2 text-[10px] font-black uppercase tracking-widest px-4 py-2.5 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 shadow-md transition-all active:scale-95" :disabled="isLoadingLeger">
+                 <button @click="printLeger" class="flex items-center space-x-2 text-[10px] font-black uppercase tracking-widest px-4 py-2.5 bg-amber-600 text-white rounded-xl hover:bg-amber-700 shadow-md transition-all active:scale-95" :disabled="isLoadingLeger">
                   <span><AppIcon name="printer" /> CETAK LEGER</span>
                 </button>
               </div>
@@ -159,7 +159,7 @@
                     <td class="py-3 px-2 sm:px-4 text-center bg-slate-50/30">
                       <button 
                         @click="bukaPreviewRapor(siswa)"
-                        class="px-2 sm:px-3 py-1.5 bg-white border border-indigo-200 text-indigo-600 hover:bg-indigo-50 font-black rounded-lg transition-all text-[9px] sm:text-[10px] uppercase tracking-widest shadow-sm hover:shadow active:scale-95 inline-flex items-center justify-center w-full"
+                        class="px-2 sm:px-3 py-1.5 bg-white border border-amber-200 text-amber-600 hover:bg-amber-50 font-black rounded-lg transition-all text-[9px] sm:text-[10px] uppercase tracking-widest shadow-sm hover:shadow active:scale-95 inline-flex items-center justify-center w-full"
                         title="Preview Rapor"
                       >
                         <AppIcon name="eye" class="sm:mr-1" /> <span class="hidden sm:inline">Preview</span>
@@ -179,7 +179,7 @@
             <!-- CONTENT: LEGER -->
             <div v-else class="flex-1 flex flex-col min-h-0 bg-slate-50/30">
               <div v-if="isLoadingLeger" class="flex-grow flex flex-col items-center justify-center p-20 opacity-60">
-                  <div class="w-10 h-10 border-4 border-indigo-400 border-t-transparent rounded-full animate-spin mb-4"></div>
+                  <div class="w-10 h-10 border-4 border-amber-400 border-t-transparent rounded-full animate-spin mb-4"></div>
                   <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Memuat Tabel Leger...</span>
               </div>
               <div v-else-if="legerData" class="flex-1 overflow-auto custom-scrollbar relative p-4" id="leger-print-area">
@@ -198,7 +198,7 @@
                               <tr class="text-[10px] font-black uppercase tracking-widest text-slate-500 bg-slate-100 print:text-[10px] print:text-black border-b border-slate-200">
                                   <th rowspan="2" class="w-[20%] py-3 px-4 border-r border-slate-200 align-middle text-center sticky left-0 bg-slate-100 z-30 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.05)] print:static print:bg-transparent print:border-black print:shadow-none">NAMA SISWA</th>
                                   <template v-for="(grup, key) in legerData.dataTabel" :key="key">
-                                      <th v-if="grup.items.length > 0" :colspan="grup.items.length" class="py-2 px-2 border-r border-slate-200 text-center bg-indigo-50/50 text-indigo-700 print:bg-transparent print:border-black print:text-black">
+                                      <th v-if="grup.items.length > 0" :colspan="grup.items.length" class="py-2 px-2 border-r border-slate-200 text-center bg-amber-50/50 text-amber-700 print:bg-transparent print:border-black print:text-black">
                                           {{ grup.nama_kelompok }}
                                       </th>
                                   </template>
@@ -220,7 +220,7 @@
                               </tr>
                           </thead>
                           <tbody class="divide-y divide-slate-100">
-                              <tr v-for="siswa in legerData.siswas" :key="activeTab + '-' + siswa.id" class="hover:bg-indigo-50/30 print:break-inside-avoid">
+                              <tr v-for="siswa in legerData.siswas" :key="activeTab + '-' + siswa.id" class="hover:bg-amber-50/30 print:break-inside-avoid">
                                   <td class="py-2 px-4 text-[11px] font-black text-slate-700 uppercase border-r border-slate-100 sticky left-0 bg-white shadow-[2px_0_5px_-2px_rgba(0,0,0,0.02)] print:static print:bg-transparent print:border-black print:shadow-none print:text-[10px] print:text-black">
                                       {{ siswa.user?.name || '-' }}
                                   </td>
@@ -234,7 +234,7 @@
                                   <td class="py-2 px-2 border-r border-slate-100 text-center text-[11px] font-black text-slate-800 bg-slate-50/50 print:bg-transparent print:border-black print:text-[10px] print:text-black">
                                       {{ formatAngka(legerData.rekapSiswa[siswa.id]?.jumlah) }}
                                   </td>
-                                  <td class="py-2 px-2 border-r border-slate-100 text-center text-[11px] font-black text-indigo-600 bg-indigo-50/30 print:bg-transparent print:border-black print:text-[10px] print:text-black">
+                                  <td class="py-2 px-2 border-r border-slate-100 text-center text-[11px] font-black text-amber-600 bg-amber-50/30 print:bg-transparent print:border-black print:text-[10px] print:text-black">
                                       {{ formatAngka(legerData.rekapSiswa[siswa.id]?.rata) }}
                                   </td>
                                   <td class="py-2 px-2 text-center text-[11px] font-black text-rose-600 bg-rose-50/30 print:bg-transparent print:border-black print:text-[10px] print:text-black">
