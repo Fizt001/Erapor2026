@@ -4,12 +4,12 @@
     <div class="flex-1 flex flex-col xl:flex-row overflow-hidden relative">
       
       <!-- MOBILE VIEW TABS -->
-      <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-2 grid grid-cols-2 gap-2 z-20 shadow-sm">
+      <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 z-20 shadow-sm">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
           :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-sky-500 to-sky-600 text-white shadow-md shadow-sky-500/20 ring-2 ring-sky-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="rounded-xl flex items-center justify-center py-2 px-1 transition-all active:scale-95">
-          <AppIcon :name="tab.icon" class="text-lg mr-1.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
-          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
+          class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+          <AppIcon :name="tab.icon" class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
+          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
 
@@ -82,7 +82,7 @@
             <!-- Header Card Kanan -->
             <div class="px-6 py-5 border-b border-slate-200 flex justify-between items-center bg-white shrink-0 z-10 print:hidden">
               <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-sky-50 text-sky-600 rounded-xl flex items-center justify-center text-lg border border-sky-100">📊</div>
+                <div class="w-10 h-10 bg-sky-50 text-sky-600 rounded-xl flex items-center justify-center border border-sky-100"><AppIcon name="chart-bar" class="w-5 h-5" /></div>
                 <div>
                   <h3 class="text-[13px] font-black leading-none uppercase tracking-wide text-slate-800">Rekapitulasi Akhir Sumatif</h3>
                   <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">{{ isFilterComplete ? siswas.length + ' Siswa Aktif' : 'Pilih filter untuk memuat data' }}</p>
@@ -91,7 +91,7 @@
               
               <div class="flex items-center space-x-4 shrink-0 mt-4 md:mt-0" v-if="isFilterComplete">
                  <button class="flex items-center space-x-2 text-[10px] font-black uppercase tracking-widest px-4 py-2.5 bg-slate-800 text-white rounded-xl shadow hover:bg-slate-700 hover:shadow-md transition-all active:scale-95" @click="printRekap">
-                  <span>🖨️ CETAK PDF</span>
+                  <span class="flex items-center gap-1.5"><AppIcon name="printer" class="w-4 h-4" /> CETAK PDF</span>
                 </button>
               </div>
             </div>
@@ -99,14 +99,14 @@
             <!-- Alert Belum Lengkap -->
             <div v-if="!isFilterComplete" class="flex-grow flex flex-col items-center justify-center p-16 text-center relative overflow-hidden bg-slate-50/50 print:hidden">
               <div class="w-24 h-24 mb-6 rounded-full bg-sky-50 flex items-center justify-center border-8 border-white shadow-sm relative z-10">
-                  <span class="text-4xl animate-bounce" style="animation-duration: 3s;">📈</span>
+                  <div class="animate-bounce-slow text-sky-400 flex justify-center"><AppIcon name="presentation-chart-line" class="w-10 h-10" /></div>
               </div>
               <h3 class="font-black text-slate-700 text-xl tracking-tight relative z-10 mb-2">Pilih Filter Data</h3>
               <p class="text-sm font-semibold text-slate-500 max-w-md relative z-10 leading-relaxed">
                   Tabel rekapitulasi nilai akhir masih kosong. Silakan lengkapi parameter filter di panel sebelah kiri untuk memuat data siswa.
               </p>
               <div class="mt-8 flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest relative z-10">
-                  <span class="animate-pulse text-lg">👈</span> Arahkan perhatian ke panel kiri
+                  <span class="animate-pulse flex items-center"><AppIcon name="hand-point-left" class="w-5 h-5" /></span> Arahkan perhatian ke panel kiri
               </div>
             </div>
 

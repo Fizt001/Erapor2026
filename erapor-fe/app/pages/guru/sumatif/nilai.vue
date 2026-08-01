@@ -127,7 +127,7 @@
               <!-- Panel Konfigurasi Bobot Global -->
               <div class="bg-white border-b border-slate-200 p-3 shrink-0 shadow-sm z-10 flex flex-col xl:flex-row xl:items-center gap-3 xl:gap-6 justify-between">
                   <div class="flex items-center gap-2 shrink-0">
-                      <span class="text-lg leading-none">⚖️</span>
+                      <AppIcon name="scale" class="w-6 h-6 text-slate-500" />
                       <div>
                           <h4 class="text-[10px] font-black text-slate-700 uppercase tracking-widest leading-none">Konfigurasi Bobot (%)</h4>
                           <div class="text-[8px] font-black uppercase tracking-widest mt-1">
@@ -187,7 +187,7 @@
 
               <!-- Alert Periode Terkunci (Portal) -->
               <div v-if="!references.is_titimangsa_aktif" class="p-3 bg-amber-50 border-b border-amber-200 flex items-center gap-3 shadow-sm z-20">
-                <div class="w-8 h-8 bg-white border border-amber-200 rounded-full flex items-center justify-center text-sm shrink-0 shadow-sm">🔒</div>
+                <div class="w-8 h-8 bg-white border border-amber-200 rounded-full flex items-center justify-center shrink-0 shadow-sm"><AppIcon name="lock-closed" class="w-4 h-4 text-amber-600" /></div>
                 <div>
                     <h4 class="text-[11px] font-black text-amber-700 uppercase tracking-widest">Akses Terkunci (Read-Only)</h4>
                     <p class="text-[9px] font-bold text-amber-600 uppercase tracking-widest mt-0.5">Periode ini sudah ditutup Admin. Data nilai tidak dapat diubah.</p>

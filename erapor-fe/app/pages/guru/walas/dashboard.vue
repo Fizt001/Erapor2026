@@ -31,7 +31,7 @@
 
           <!-- Peran Status Widget -->
           <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100">
-            <h3 class="text-xs font-bold text-slate-700 uppercase tracking-widest mb-4 flex items-center"><span class="mr-2">🛡️</span> Hak Akses Aktif</h3>
+            <h3 class="text-xs font-bold text-slate-700 uppercase tracking-widest mb-4 flex items-center"><AppIcon name="shield-check" class="w-4 h-4 mr-2" /> Hak Akses Aktif</h3>
             <div class="space-y-3">
               <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex items-center gap-3 border-l-4 border-l-amber-500">
                 <div class="w-8 h-8 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center text-sm font-black">WK</div>
@@ -372,7 +372,7 @@
                 <NuxtLink to="/guru/walas/biodata" class="group bg-white rounded-2xl p-5 border border-slate-200/60 shadow-sm hover:border-amber-300 hover:shadow-md hover:shadow-amber-100 transition-all cursor-pointer block">
                   <div class="flex items-center gap-4">
                     <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 group-hover:bg-amber-500 group-hover:text-white transition-colors border border-amber-100">
-                      <span class="text-lg">🧑‍<AppIcon name="academic-cap" /></span>
+                      <span class="text-lg"><AppIcon name="academic-cap" /></span>
                     </div>
                     <div>
                       <div class="font-black text-slate-800 text-[11px] uppercase tracking-wide mb-0.5">Kelola Biodata</div>

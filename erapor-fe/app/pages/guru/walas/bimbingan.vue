@@ -94,7 +94,7 @@
                                             <AppIcon name="pencil" /> {{ kasus.status === 'Proses' ? 'Tindak Lanjut' : 'Edit Tindakan' }}
                                         </button>
                                         <div v-else class="px-3 py-1.5 rounded-lg bg-rose-50 border border-rose-100 text-[9px] font-black text-rose-600 uppercase tracking-widest flex items-center gap-1">
-                                            🛡️ Ditangani oleh BK
+                                            <AppIcon name="shield-check" class="w-3 h-3" /> Ditangani oleh BK
                                         </div>
                                     </div>
                                 </div>

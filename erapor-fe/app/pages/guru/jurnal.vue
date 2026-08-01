@@ -3,7 +3,7 @@
     <div class="flex items-center justify-between mb-4">
       <div>
         <h1 class="text-2xl font-black text-slate-800 tracking-tight flex items-center">
-          <span class="mr-3 text-3xl">📓</span> Jurnal Mengajar
+          <AppIcon name="book-open" class="w-8 h-8 mr-3 text-slate-700" /> Jurnal Mengajar
         </h1>
         <p class="text-sm text-slate-500 mt-1 font-medium">Rekapitulasi jumlah absensi pertemuan Anda per bulan.</p>
       </div>
@@ -37,42 +37,52 @@
     </div>
 
     <div v-else class="space-y-6">
-      <!-- GRID BULANAN -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        <!-- Bulan Cards -->
+      <!-- LIST BULANAN -->
+      <div class="space-y-4">
+        <!-- Bulan Items -->
         <div v-for="bulan in activeBulanList" :key="bulan.code" class="bg-white rounded-2xl border border-slate-200/60 shadow-sm overflow-hidden flex flex-col hover:border-sky-300 transition-colors">
-          <div class="bg-slate-50 border-b border-slate-100 px-4 py-3 flex items-center justify-between">
+          <div class="bg-slate-50 border-b border-slate-100 px-5 py-4 flex items-center justify-between">
             <h3 class="font-bold text-slate-700 text-sm flex items-center">
-              <span class="mr-2">🗓️</span> {{ bulan.name }}
+              <AppIcon name="calendar" class="w-5 h-5 mr-2 text-sky-500" /> {{ bulan.name }}
             </h3>
-            <span class="bg-white border border-slate-200 text-slate-500 text-[10px] px-2 py-0.5 rounded-full font-bold shadow-sm">
-              {{ countKeys(activeData.bulanan[bulan.code]) }} Mapel
+            <span class="bg-white border border-slate-200 text-slate-500 text-[10px] px-3 py-1 rounded-full font-bold shadow-sm">
+              {{ countKeys(activeData.bulanan[bulan.code]) }} Kelas/Mapel
             </span>
           </div>
           
-          <div class="p-4 flex-1">
-            <div v-if="Object.keys(activeData.bulanan[bulan.code] || {}).length === 0" class="text-center py-6 text-slate-400">
-              <span class="text-2xl mb-2 block opacity-50 grayscale">💤</span>
+          <div class="p-0">
+            <div v-if="Object.keys(activeData.bulanan[bulan.code] || {}).length === 0" class="text-center py-8 text-slate-400 bg-slate-50/50">
+              <div class="flex justify-center mb-2 opacity-50 grayscale text-slate-400"><AppIcon name="moon" class="w-8 h-8" /></div>
               <p class="text-xs font-bold">Tidak ada pertemuan</p>
             </div>
             
-            <div v-else class="space-y-3">
-              <div v-for="(pertemuans, mapelKelas) in activeData.bulanan[bulan.code]" :key="mapelKelas" class="flex items-center justify-between group">
-                <div class="min-w-0 pr-3">
-                  <p class="text-xs font-bold text-slate-700 truncate" :title="mapelKelas">{{ mapelKelas }}</p>
-                </div>
-                <div class="flex items-center shrink-0">
-                  <span class="inline-flex items-center justify-center bg-sky-100 text-sky-700 text-xs font-black px-2 py-1 rounded-md min-w-[2rem] text-center">
-                    {{ pertemuans.length }}x
-                  </span>
-                  <button @click="showDetail(bulan.name, mapelKelas, pertemuans)" class="ml-2 text-slate-300 hover:text-sky-500 transition-colors p-1" title="Lihat Rincian Tanggal">
-                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
+            <div v-else class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="bg-slate-50/50 text-[10px] font-black uppercase tracking-widest text-slate-400 border-b border-slate-100">
+                    <th class="px-5 py-3">Rombongan Belajar / Mapel</th>
+                    <th class="px-5 py-3 w-32 text-center">Total Pertemuan</th>
+                    <th class="px-5 py-3 w-24 text-center">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                  <tr v-for="(pertemuans, mapelKelas) in activeData.bulanan[bulan.code]" :key="mapelKelas" class="hover:bg-slate-50 transition-colors">
+                    <td class="px-5 py-3">
+                      <p class="text-xs font-bold text-slate-700">{{ mapelKelas }}</p>
+                    </td>
+                    <td class="px-5 py-3 text-center">
+                      <span class="inline-flex items-center justify-center bg-sky-100 text-sky-700 text-xs font-black px-2.5 py-1 rounded-md min-w-[2.5rem] shadow-sm">
+                        {{ pertemuans.length }}x
+                      </span>
+                    </td>
+                    <td class="px-5 py-3 text-center">
+                      <button @click="showDetail(bulan.name, mapelKelas, pertemuans)" class="text-sky-500 hover:text-sky-600 hover:bg-sky-50 transition-colors p-1.5 rounded-lg border border-transparent hover:border-sky-200" title="Lihat Rincian Tanggal">
+                        <AppIcon name="eye" class="w-4 h-4" />
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -89,7 +99,7 @@
           <div class="flex items-center justify-between mb-3">
             <div>
               <h2 class="text-sm font-black text-sky-800 flex items-center uppercase tracking-widest">
-                <span class="mr-2 text-sky-500 text-lg">🎯</span> Total Semester {{ activeSemester === 'ganjil' ? 'Ganjil' : 'Genap' }}
+                <AppIcon name="chart-bar" class="w-5 h-5 mr-2 text-sky-500" /> Total Semester {{ activeSemester === 'ganjil' ? 'Ganjil' : 'Genap' }}
               </h2>
               <p class="text-sky-600/70 text-[10px] font-bold mt-0.5">Akumulasi seluruh pertemuan selama 1 semester.</p>
             </div>
@@ -98,13 +108,31 @@
           <div v-if="Object.keys(activeData.total || {}).length === 0" class="text-sky-500 text-xs font-bold italic">
             Belum ada rekapitulasi semester ini.
           </div>
-          <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-            <div v-for="(pertemuans, mapelKelas) in activeData.total" :key="mapelKelas" class="bg-white border border-sky-100 rounded-xl px-3 py-2 flex items-center justify-between group hover:border-sky-300 hover:shadow-sm transition-all cursor-pointer" @click="showDetail('Semester ' + (activeSemester === 'ganjil' ? 'Ganjil' : 'Genap'), mapelKelas, pertemuans)">
-              <p class="text-[10px] font-bold text-slate-600 truncate pr-2 group-hover:text-sky-700 transition-colors" :title="mapelKelas">{{ mapelKelas }}</p>
-              <span class="bg-sky-100 text-sky-700 text-[10px] font-black px-2 py-1 rounded-lg min-w-[2rem] text-center shadow-sm shrink-0">
-                {{ pertemuans.length }}x
-              </span>
-            </div>
+          <div v-else class="overflow-x-auto mt-4 bg-white rounded-xl border border-sky-100">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-sky-50/50 text-[10px] font-black uppercase tracking-widest text-sky-600 border-b border-sky-100">
+                  <th class="px-4 py-2">Rombongan Belajar / Mapel</th>
+                  <th class="px-4 py-2 w-32 text-center">Total Pertemuan</th>
+                  <th class="px-4 py-2 w-24 text-center">Aksi</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-sky-50">
+                <tr v-for="(pertemuans, mapelKelas) in activeData.total" :key="mapelKelas" class="hover:bg-sky-50 transition-colors">
+                  <td class="px-4 py-2 text-xs font-bold text-slate-700">{{ mapelKelas }}</td>
+                  <td class="px-4 py-2 text-center">
+                    <span class="bg-sky-100 text-sky-700 text-[10px] font-black px-2 py-1 rounded-lg min-w-[2rem] shadow-sm">
+                      {{ pertemuans.length }}x
+                    </span>
+                  </td>
+                  <td class="px-4 py-2 text-center">
+                    <button @click="showDetail('Semester ' + (activeSemester === 'ganjil' ? 'Ganjil' : 'Genap'), mapelKelas, pertemuans)" class="text-sky-500 hover:text-sky-600 hover:bg-sky-100 transition-colors p-1 rounded-lg border border-transparent hover:border-sky-200" title="Lihat Rincian Tanggal">
+                      <AppIcon name="eye" class="w-4 h-4" />
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -116,7 +144,7 @@
       <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-4xl relative z-10 flex flex-col max-h-[85vh] overflow-hidden transform transition-all">
         <div class="bg-slate-50 border-b border-slate-200 px-5 py-4 flex items-center justify-between">
           <div>
-            <h3 class="font-black text-slate-800 text-base flex items-center"><span class="mr-2">🔎</span> Rincian Pertemuan</h3>
+            <h3 class="font-black text-slate-800 text-base flex items-center"><AppIcon name="magnifying-glass" class="w-5 h-5 mr-2 text-slate-600" /> Rincian Pertemuan</h3>
             <p class="text-[11px] text-slate-500 font-medium mt-0.5">{{ detailModal.mapelKelas }} • {{ detailModal.bulan }}</p>
           </div>
           <button @click="detailModal.show = false" class="text-slate-400 hover:text-rose-500 transition-colors p-1 bg-white rounded-lg border border-slate-200 hover:border-rose-200">
@@ -131,10 +159,10 @@
               <div class="flex items-start justify-between">
                 <div class="min-w-0 pr-2">
                   <div class="flex items-center text-xs font-bold text-slate-700 mb-1 truncate">
-                    <span class="text-sky-600 mr-1.5">📅</span> {{ formatDate(item.tanggal) }}
+                    <AppIcon name="calendar-days" class="w-4 h-4 mr-1.5 text-sky-600" /> {{ formatDate(item.tanggal) }}
                   </div>
                   <div class="text-[10px] text-slate-500 flex items-center font-medium">
-                    <span class="mr-1.5 opacity-60">⏰</span> {{ item.jam }}
+                    <AppIcon name="clock" class="w-3.5 h-3.5 mr-1.5 opacity-60" /> {{ item.jam }}
                   </div>
                 </div>
                 <div class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-bold border border-slate-200 whitespace-nowrap shrink-0">

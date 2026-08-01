@@ -10,13 +10,13 @@
           <!-- Welcome Widget -->
           <div class="bg-gradient-to-br from-sky-600 to-indigo-800 rounded-2xl p-5 shadow-sm text-white relative overflow-hidden">
             <div class="relative z-10">
-              <h2 class="text-lg font-extrabold mb-1">Halo, {{ dashboardData?.user?.name?.split(' ')[0] || 'Bapak/Ibu' }} 👋</h2>
+              <h2 class="text-lg font-extrabold mb-1 flex items-center">Halo, {{ dashboardData?.user?.name?.split(' ')[0] || 'Bapak/Ibu' }} <AppIcon name="hand-raised" class="w-5 h-5 ml-2 text-amber-300" /></h2>
               <p class="text-sky-100 text-xs leading-relaxed">
                 Tahun Ajaran <span class="font-bold text-white bg-indigo-900/50 px-1.5 py-0.5 rounded">{{ dashboardData?.akademik?.tahun_ajaran || '...' }}</span>
               </p>
               <div class="mt-4 flex items-center justify-between bg-white/10 p-2.5 rounded-xl border border-white/20 backdrop-blur-sm">
                   <div class="flex items-center gap-2">
-                      <span class="text-lg">⏱️</span>
+                      <div class="text-sky-200"><AppIcon name="clock" class="w-6 h-6" /></div>
                       <div>
                           <p class="text-[9px] text-sky-200 uppercase tracking-widest font-bold">Total Beban Mengajar</p>
                           <p class="text-sm font-black text-white leading-none">{{ dashboardData?.stats?.total_jp || 0 }} JP</p>
@@ -34,7 +34,7 @@
 
           <!-- Peran Status Widget -->
           <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100">
-            <h3 class="text-xs font-bold text-slate-700 uppercase tracking-widest mb-4 flex items-center"><span class="mr-2">🛡️</span> Hak Akses Aktif</h3>
+            <h3 class="text-xs font-bold text-slate-700 uppercase tracking-widest mb-4 flex items-center"><AppIcon name="shield-check" class="w-4 h-4 mr-2" /> Hak Akses Aktif</h3>
             <div class="space-y-3">
               <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex items-center gap-3 border-l-4 border-l-sky-500">
                 <div class="w-8 h-8 rounded-full bg-sky-100 text-sky-600 flex items-center justify-center text-sm font-black">GM</div>
@@ -75,7 +75,7 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <!-- Card 1 -->
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center gap-4 transition-all hover:-translate-y-1 hover:shadow-md hover:border-indigo-200">
-                    <div class="h-12 w-12 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 text-2xl border border-indigo-100">🏫</div>
+                    <div class="h-12 w-12 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 border border-indigo-100"><AppIcon name="building-office-2" class="w-6 h-6" /></div>
                     <div>
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Kelas Diajar</p>
                         <p class="text-2xl font-black text-slate-800 leading-none">{{ dashboardData?.stats?.total_kelas || 0 }}</p>
@@ -83,7 +83,7 @@
                 </div>
                 <!-- Card 2 -->
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center gap-4 transition-all hover:-translate-y-1 hover:shadow-md hover:border-sky-200">
-                    <div class="h-12 w-12 rounded-xl bg-sky-50 flex items-center justify-center text-sky-600 text-2xl border border-sky-100">📚</div>
+                    <div class="h-12 w-12 rounded-xl bg-sky-50 flex items-center justify-center text-sky-600 border border-sky-100"><AppIcon name="book-open" class="w-6 h-6" /></div>
                     <div>
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Mata Pelajaran</p>
                         <p class="text-2xl font-black text-slate-800 leading-none">{{ dashboardData?.stats?.total_mapel || 0 }}</p>
@@ -91,7 +91,7 @@
                 </div>
                 <!-- Card 3 -->
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center gap-4 transition-all hover:-translate-y-1 hover:shadow-md hover:border-emerald-200">
-                    <div class="h-12 w-12 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 text-2xl border border-emerald-100">👥</div>
+                    <div class="h-12 w-12 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 border border-emerald-100"><AppIcon name="users" class="w-6 h-6" /></div>
                     <div>
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Total Siswa</p>
                         <p class="text-2xl font-black text-slate-800 leading-none">{{ dashboardData?.stats?.total_siswa || 0 }}</p>
@@ -99,7 +99,7 @@
                 </div>
                 <!-- Card 4 -->
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center gap-4 transition-all hover:-translate-y-1 hover:shadow-md hover:border-rose-200">
-                    <div class="h-12 w-12 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600 text-2xl border border-rose-100">📓</div>
+                    <div class="h-12 w-12 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600 border border-rose-100"><AppIcon name="clipboard-document-list" class="w-6 h-6" /></div>
                     <div class="min-w-0">
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5 truncate">Total Pertemuan</p>
                         <p class="text-2xl font-black text-slate-800 leading-none">{{ dashboardData?.stats?.total_pertemuan || 0 }}</p>
@@ -109,7 +109,7 @@
 
             <!-- AKSI CEPAT -->
             <div>
-              <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center">⚡ Akses Cepat Guru</h3>
+              <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center"><AppIcon name="bolt" class="w-4 h-4 mr-2" /> Akses Cepat Guru</h3>
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <!-- Tombol Formatif -->
                 <NuxtLink to="/guru/formatif/nilai" class="group bg-white rounded-2xl p-5 border border-slate-200/60 shadow-sm hover:border-sky-300 hover:shadow-md hover:shadow-sky-100 transition-all cursor-pointer block relative overflow-hidden">
@@ -153,7 +153,7 @@
             
             <!-- GRAFIK NILAI SISWA -->
             <div v-if="dashboardData && dashboardData.grafik_nilai" class="mt-8">
-              <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center">📊 Rata-Rata Nilai Akhir Siswa (Per Kelas/Mapel)</h3>
+              <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center"><AppIcon name="chart-bar" class="w-4 h-4 mr-2" /> Rata-Rata Nilai Akhir Siswa (Per Kelas/Mapel)</h3>
               <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden">
                   <div class="h-64 sm:h-80" v-if="dashboardData.grafik_nilai.length > 0">
                       <ClientOnly>
@@ -164,7 +164,7 @@
                       </ClientOnly>
                   </div>
                   <div v-else class="h-64 sm:h-80 flex flex-col items-center justify-center text-center">
-                      <div class="text-4xl mb-3 opacity-50 grayscale">📉</div>
+                      <div class="mb-3 opacity-50 grayscale text-slate-400 flex justify-center"><AppIcon name="chart-pie" class="w-10 h-10" /></div>
                       <p class="text-sm font-bold text-slate-600">Belum ada data nilai</p>
                       <p class="text-[11px] text-slate-400 mt-1 max-w-sm">Grafik rata-rata akan muncul setelah Anda memasukkan dan menyimpan nilai akhir Sumatif (STS/SAS) untuk kelas dan mapel yang Anda ampu.</p>
                   </div>
@@ -191,7 +191,7 @@
                   <div class="absolute bottom-[-10%] left-[-20%] w-40 h-40 bg-orange-600/30 rounded-full blur-2xl"></div>
                   
                   <div class="relative z-10 text-center animate-bounce-slow">
-                    <div class="text-[5rem] leading-none filter drop-shadow-lg">🏃‍♂️💨</div>
+                    <div class="flex justify-center text-white drop-shadow-lg"><AppIcon name="face-smile" class="w-20 h-20" /></div>
                   </div>
                 </div>
                 
@@ -229,7 +229,7 @@
               <div class="bg-white rounded-[1.5rem] shadow-2xl w-full max-w-lg relative z-10 overflow-hidden transform transition-all flex flex-col max-h-[80vh]">
                 <div class="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50 shrink-0">
                   <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-xl font-bold shadow-inner">⏱️</div>
+                    <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold shadow-inner"><AppIcon name="clock" class="w-5 h-5" /></div>
                     <div>
                       <h3 class="text-sm font-black text-slate-800 uppercase tracking-wide">Detail Beban Mengajar</h3>
                       <p class="text-[10px] font-bold text-slate-500 mt-0.5">Total: <span class="text-indigo-600 px-1 bg-indigo-50 rounded">{{ dashboardData?.stats?.total_jp || 0 }} Jam Pelajaran</span></p>
@@ -242,7 +242,7 @@
                 
                 <div class="p-5 overflow-y-auto custom-scrollbar flex-1">
                     <div v-if="!dashboardData?.detail_mengajar || dashboardData.detail_mengajar.length === 0" class="text-center py-10 opacity-50">
-                        <div class="text-4xl mb-3 grayscale">📁</div>
+                        <div class="mb-3 grayscale text-slate-400 flex justify-center"><AppIcon name="folder-open" class="w-10 h-10" /></div>
                         <p class="text-xs font-bold text-slate-600">Belum ada kelas yang diampu</p>
                     </div>
                     <div v-else class="space-y-4">

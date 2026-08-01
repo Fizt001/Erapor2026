@@ -3,23 +3,17 @@
     <div class="flex-1 flex flex-col xl:flex-row overflow-hidden relative">
       
       <!-- MOBILE VIEW TABS -->
-      <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-2 grid grid-cols-2 gap-2 z-20 shadow-sm">
-        <button type="button" @click="activeMobileTab = 'filter'"
-          :class="activeMobileTab === 'filter' ? 'bg-gradient-to-br from-sky-500 to-sky-600 text-white shadow-md shadow-sky-500/20 ring-2 ring-sky-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="rounded-xl flex items-center justify-center py-2 px-1 transition-all active:scale-95">
-          <AppIcon name="adjustments-horizontal" class="text-lg mr-1.5 transition-transform" :class="activeMobileTab === 'filter' ? 'scale-110' : ''" />
-          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">Filter Data</span>
-        </button>
-        <button type="button" @click="activeMobileTab = 'pertemuan'"
-          :class="activeMobileTab === 'pertemuan' ? 'bg-gradient-to-br from-sky-500 to-sky-600 text-white shadow-md shadow-sky-500/20 ring-2 ring-sky-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="rounded-xl flex items-center justify-center py-2 px-1 transition-all active:scale-95">
-          <AppIcon name="clipboard" class="text-lg mr-1.5 transition-transform" :class="activeMobileTab === 'pertemuan' ? 'scale-110' : ''" />
-          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">Kehadiran</span>
+      <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 z-20 shadow-sm">
+        <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
+          :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-sky-500 to-sky-600 text-white shadow-md shadow-sky-500/20 ring-2 ring-sky-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
+          class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+          <AppIcon :name="tab.icon" class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
+          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
 
       <!-- Panel Dock Kiri -->
-      <div class="w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full xl:z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] overflow-y-auto custom-scrollbar transition-all pt-[60px] xl:pt-0" :class="activeMobileTab === 'filter' ? 'block' : 'hidden xl:flex'">
+      <div class="w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full xl:z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] overflow-y-auto custom-scrollbar transition-all pt-[60px] xl:pt-0" :class="activeTabMobile === 'filter' ? 'block' : 'hidden xl:flex'">
         
         <div class="p-4 pb-2 space-y-4">
           <div class="bg-gradient-to-r from-sky-600 to-blue-700 rounded-2xl p-4 border border-sky-500 shadow-sm relative overflow-hidden flex items-center gap-3">
@@ -103,13 +97,13 @@
       </div>
 
       <!-- Panel Flow Kanan -->
-      <div class="flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative transition-all pt-[60px] xl:pt-0" :class="activeMobileTab === 'pertemuan' ? 'flex' : 'hidden xl:flex'">
+      <div class="flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative transition-all pt-[60px] xl:pt-0" :class="activeTabMobile === 'pertemuan' ? 'flex' : 'hidden xl:flex'">
         <div class="p-2 lg:p-6 max-w-7xl mx-auto w-full h-full flex flex-col relative z-0">
           <div class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
             <!-- Header -->
             <div class="px-4 py-3 bg-white border-b border-slate-200 flex justify-between items-center shrink-0">
                 <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-2xl bg-sky-50 border border-sky-100 flex items-center justify-center text-sky-500 text-xl">📋</div>
+                    <div class="w-10 h-10 rounded-2xl bg-sky-50 border border-sky-100 flex items-center justify-center text-sky-500"><AppIcon name="clipboard-document-list" class="w-6 h-6" /></div>
                     <div>
                         <h3 class="text-sm font-black uppercase tracking-widest text-slate-700">Data Kehadiran Siswa</h3>
                         <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">
@@ -126,7 +120,7 @@
             <!-- Content -->
             <div class="flex-1 overflow-hidden bg-slate-50 p-3 flex flex-col">
                 <div v-if="!isFilterComplete" class="bg-white rounded-2xl p-20 border-2 border-dashed border-slate-200 text-center h-full flex flex-col items-center justify-center">
-                    <div class="text-6xl opacity-20 mb-4">👈</div>
+                    <div class="opacity-20 mb-4 text-slate-400 flex justify-center"><AppIcon name="hand-point-left" class="w-16 h-16" /></div>
                     <h3 class="text-sm font-black text-slate-700 uppercase tracking-widest">Silakan pilih Kelas & Mapel</h3>
                 </div>
                 <div v-else-if="isLoadingSiswa" class="bg-white rounded-2xl p-20 border border-slate-200 text-center h-full flex flex-col items-center justify-center opacity-60">
@@ -134,7 +128,7 @@
                     <span class="text-xs font-black text-slate-500 uppercase tracking-widest">Memuat...</span>
                 </div>
                 <div v-else-if="pertemuans.length === 0" class="bg-white rounded-2xl p-20 border border-slate-200 text-center h-full flex flex-col items-center justify-center">
-                    <div class="text-5xl mb-4">📅</div>
+                    <div class="mb-4 text-slate-400 flex justify-center"><AppIcon name="calendar-days" class="w-12 h-12" /></div>
                     <h3 class="text-sm font-black text-slate-700 uppercase tracking-widest">Belum ada pertemuan</h3>
                     <p class="text-xs text-slate-500 font-bold mt-2">Klik tombol Tambah Pertemuan di sebelah kiri.</p>
                 </div>
@@ -240,7 +234,12 @@ definePageMeta({
 })
 
 const isLoading = ref(true)
-const activeMobileTab = ref('filter')
+const activeTabMobile = ref('filter')
+
+const mobileTabs = [
+  { id: 'filter', title: 'Filter Data', icon: 'adjustments-horizontal' },
+  { id: 'pertemuan', title: 'Kehadiran', icon: 'clipboard' }
+]
 
 const swal = useSwal()
 const token = useCookie('auth_token')
