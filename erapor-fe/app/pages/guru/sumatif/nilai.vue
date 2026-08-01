@@ -105,14 +105,14 @@
             <!-- Alert Belum Lengkap -->
             <div v-if="!isFilterComplete" class="flex-grow flex flex-col items-center justify-center p-16 text-center relative overflow-hidden bg-slate-50/50">
               <div class="w-24 h-24 mb-6 rounded-full bg-sky-50 flex items-center justify-center border-8 border-white shadow-sm relative z-10">
-                  <span class="text-4xl animate-bounce" style="animation-duration: 3s;">📋</span>
+                  <div class="animate-bounce text-sky-400 flex justify-center" style="animation-duration: 3s;"><AppIcon name="document-text" class="w-10 h-10" /></div>
               </div>
               <h3 class="font-black text-slate-700 text-xl tracking-tight relative z-10 mb-2">Pilih Filter Data</h3>
               <p class="text-sm font-semibold text-slate-500 max-w-md relative z-10 leading-relaxed">
                   Matriks penilaian masih kosong. Silakan lengkapi parameter filter di panel sebelah kiri untuk memuat data siswa.
               </p>
               <div class="mt-8 flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest relative z-10">
-                  <span class="animate-pulse text-lg">👈</span> Arahkan perhatian ke panel kiri
+                  <span class="animate-pulse flex items-center"><AppIcon name="hand-point-left" class="w-5 h-5" /></span> Arahkan perhatian ke panel kiri
               </div>
             </div>
 
