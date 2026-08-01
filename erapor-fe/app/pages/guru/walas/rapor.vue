@@ -865,6 +865,13 @@ onMounted(() => {
     transform: rotate(180deg);
 }
 
+/* Zoom out di HP agar rapor terlihat utuh (PDF-like) */
+@media (max-width: 768px) {
+    #rapor-print-area {
+        zoom: 0.5;
+    }
+}
+
 @media print {
     @page {
         size: A4 portrait;
