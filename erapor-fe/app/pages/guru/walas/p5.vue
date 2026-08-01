@@ -52,7 +52,7 @@
 
             <div class="bg-indigo-50 p-4 rounded-2xl border border-indigo-100 flex flex-col items-center justify-center text-center">
                 <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center mb-2">
-                    <span class="animate-pulse">💾</span>
+                    <span class="animate-pulse"><AppIcon name="save" /></span>
                 </div>
                 <h4 class="text-[11px] font-black uppercase tracking-widest text-indigo-800">Auto-Save</h4>
                 <p class="text-[10px] font-bold text-indigo-600 mt-1">Catatan akan tersimpan otomatis saat Anda selesai mengetik.</p>
@@ -73,7 +73,7 @@
 
           <!-- Error State -->
           <div v-else-if="error" class="flex-grow flex flex-col items-center justify-center p-16 text-center bg-white rounded-3xl shadow-sm border border-slate-200/60">
-            <div class="text-rose-500 text-4xl mb-4">🔒</div>
+            <div class="text-rose-500 text-4xl mb-4"><AppIcon name="lock-closed" /></div>
             <h3 class="text-rose-800 font-black mb-1">Akses Ditolak</h3>
             <p class="text-rose-600 text-sm font-semibold max-w-md">{{ error.message || 'Terjadi kesalahan saat memuat data.' }}</p>
             <button @click="fetchData" class="mt-4 px-4 py-2 bg-rose-100 hover:bg-rose-200 text-rose-700 text-[10px] font-black uppercase tracking-widest rounded-lg transition-colors">
@@ -118,10 +118,10 @@
                                     Menyimpan...
                                 </span>
                                 <span v-else-if="savingStatus[`${siswa.id}_${tm.id}`] === 'saved'" class="flex items-center text-[10px] font-bold text-emerald-500 bg-white/90 backdrop-blur px-2 py-0.5 rounded shadow-sm">
-                                    ✓ Tersimpan
+                                    <AppIcon name="check" /> Tersimpan
                                 </span>
                                 <span v-else-if="savingStatus[`${siswa.id}_${tm.id}`] === 'error'" class="flex items-center text-[10px] font-bold text-rose-500 bg-white/90 backdrop-blur px-2 py-0.5 rounded shadow-sm">
-                                    ⚠️ Gagal
+                                    <AppIcon name="exclamation-triangle" /> Gagal
                                 </span>
                             </div>
                         </div>
@@ -129,7 +129,7 @@
                   </tr>
                   <tr v-if="!pageData.data || pageData.data.length === 0">
                     <td :colspan="pageData.periodes.length + 1" class="py-12 text-center text-slate-500 bg-slate-50/50">
-                      <div class="text-3xl mb-3 opacity-50">👥</div>
+                      <div class="text-3xl mb-3 opacity-50"><AppIcon name="users" /></div>
                       <div class="text-xs font-bold">Tidak ada data siswa.</div>
                     </td>
                   </tr>

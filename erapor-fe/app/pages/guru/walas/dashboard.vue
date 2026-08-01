@@ -19,7 +19,7 @@
           <!-- Welcome Widget -->
           <div class="bg-gradient-to-br from-sky-600 to-indigo-800 rounded-2xl p-5 shadow-sm text-white relative overflow-hidden">
             <div class="relative z-10">
-              <h2 class="text-lg font-extrabold mb-1">Halo, {{ dashboardData?.user?.name?.split(' ')[0] || 'Bapak/Ibu' }} 👋</h2>
+              <h2 class="text-lg font-extrabold mb-1">Halo, {{ dashboardData?.user?.name?.split(' ')[0] || 'Bapak/Ibu' }} <AppIcon name="hand-raised" /></h2>
               <p class="text-sky-100 text-xs leading-relaxed">
                 Tahun Ajaran <span class="font-bold text-white bg-indigo-900/50 px-1.5 py-0.5 rounded">{{ dashboardData?.akademik?.tahun_ajaran || '...' }}</span>
               </p>
@@ -47,7 +47,7 @@
           <!-- Panduan Alur Kerja Walas -->
           <WorkflowGuide
             title="Alur Kerja Wali Kelas"
-            icon="🧑‍🏫"
+            iconName="users"
             color="amber"
             :note="'Lakukan pengisian secara berurutan pada setiap akhir semester (khususnya akhir tahun ajaran).'"
             :steps="walasWorkflow"
@@ -82,28 +82,28 @@
             <!-- STATISTIK KELAS (4 COLUMNS) -->
             <div v-if="!statsLoading && wStats" class="grid grid-cols-2 lg:grid-cols-4 gap-4">
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center space-x-4 transition-all hover:-translate-y-1 hover:shadow-md hover:border-sky-200">
-                    <div class="h-12 w-12 rounded-xl bg-sky-50 flex items-center justify-center text-sky-600 text-2xl border border-sky-100">👥</div>
+                    <div class="h-12 w-12 rounded-xl bg-sky-50 flex items-center justify-center text-sky-600 text-2xl border border-sky-100"><AppIcon name="users" /></div>
                     <div>
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Total Siswa</p>
                         <p class="text-2xl font-black text-slate-800 leading-none">{{ wStats.populasi?.total || 0 }}</p>
                     </div>
                 </div>
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center space-x-4 transition-all hover:-translate-y-1 hover:shadow-md hover:border-blue-200">
-                    <div class="h-12 w-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 text-2xl border border-blue-100">👦</div>
+                    <div class="h-12 w-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 text-2xl border border-blue-100"><AppIcon name="user" /></div>
                     <div>
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Laki-laki</p>
                         <p class="text-2xl font-black text-slate-800 leading-none">{{ wStats.populasi?.laki || 0 }}</p>
                     </div>
                 </div>
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center space-x-4 transition-all hover:-translate-y-1 hover:shadow-md hover:border-rose-200">
-                    <div class="h-12 w-12 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600 text-2xl border border-rose-100">👧</div>
+                    <div class="h-12 w-12 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600 text-2xl border border-rose-100"><AppIcon name="user" /></div>
                     <div>
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Perempuan</p>
                         <p class="text-2xl font-black text-slate-800 leading-none">{{ wStats.populasi?.perempuan || 0 }}</p>
                     </div>
                 </div>
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center space-x-4 transition-all hover:-translate-y-1 hover:shadow-md hover:border-emerald-200">
-                    <div class="h-12 w-12 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 text-2xl border border-emerald-100">⭐</div>
+                    <div class="h-12 w-12 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 text-2xl border border-emerald-100"><AppIcon name="star" /></div>
                     <div>
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Rata-rata Kelas</p>
                         <p class="text-2xl font-black text-slate-800 leading-none">{{ wStats.rata_rata_kelas || 0 }}</p>
@@ -116,7 +116,7 @@
                 <div class="bg-gradient-to-r from-rose-50 to-orange-50 p-6 rounded-2xl shadow-sm border border-rose-200/60">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-rose-600 text-xl border border-rose-100 shadow-sm animate-pulse">⚠️</div>
+                            <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-rose-600 text-xl border border-rose-100 shadow-sm animate-pulse"><AppIcon name="exclamation-triangle" /></div>
                             <div>
                                 <h3 class="text-sm font-bold text-rose-800">Peringatan Sistem (Eskalasi)</h3>
                                 <p class="text-[10px] font-medium text-rose-600 uppercase tracking-widest">Siswa butuh tindak lanjut wali kelas segera</p>
@@ -150,7 +150,7 @@
                 <div class="bg-white rounded-none sm:rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col">
                     <div class="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50/50">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-sky-50 flex items-center justify-center text-sky-600 text-xl border border-sky-100">👤</div>
+                            <div class="w-10 h-10 rounded-xl bg-sky-50 flex items-center justify-center text-sky-600 text-xl border border-sky-100"><AppIcon name="user" /></div>
                             <div>
                                 <h3 class="text-sm font-bold text-slate-800">Perkembangan Nilai Siswa</h3>
                                 <p class="text-[10px] font-medium text-slate-500 uppercase tracking-widest">Pilih siswa untuk melihat tren</p>
@@ -176,7 +176,7 @@
                 <div class="bg-white rounded-none sm:rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col">
                     <div class="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50/50">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 text-xl border border-indigo-100">📊</div>
+                            <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 text-xl border border-indigo-100"><AppIcon name="chart-bar" /></div>
                             <div>
                                 <h3 class="text-sm font-bold text-slate-800">Rata-Rata Nilai Kelas</h3>
                                 <p class="text-[10px] font-medium text-slate-500 uppercase tracking-widest">Tren performa kelas per periode</p>
@@ -204,7 +204,7 @@
             <div v-if="!statsLoading && wStats" class="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col mb-6">
                 <div class="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50/50">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-teal-50 flex items-center justify-center text-teal-600 text-xl border border-teal-100">🎯</div>
+                        <div class="w-10 h-10 rounded-xl bg-teal-50 flex items-center justify-center text-teal-600 text-xl border border-teal-100"><AppIcon name="presentation-chart-bar" /></div>
                         <div>
                             <h3 class="text-sm font-bold text-slate-800">Evaluasi Ketuntasan Belajar (KKM)</h3>
                             <p class="text-[10px] font-medium text-slate-500 uppercase tracking-widest">Akumulasi seluruh siswa & mata pelajaran</p>
@@ -247,7 +247,7 @@
                 <!-- Top 10 Besar -->
                 <div class="bg-white rounded-none sm:rounded-2xl shadow-sm border border-slate-200/60 flex flex-col overflow-hidden">
                     <div class="p-5 border-b border-slate-100 flex items-center gap-3 bg-slate-50/50 shrink-0">
-                        <div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 text-xl border border-emerald-100">🏆</div>
+                        <div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 text-xl border border-emerald-100"><AppIcon name="star" /></div>
                         <div>
                             <h3 class="text-sm font-bold text-slate-800">Top 10 Siswa Berprestasi</h3>
                             <p class="text-[10px] font-medium text-slate-500 uppercase tracking-widest">Rata-rata Nilai Tertinggi</p>
@@ -287,7 +287,7 @@
                 <!-- Prestasi Tiap Mapel (Bintang Kelas) -->
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/60 flex flex-col">
                     <div class="flex items-center gap-3 mb-5 shrink-0">
-                        <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 text-xl border border-amber-100">🏅</div>
+                        <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 text-xl border border-amber-100"><AppIcon name="star" /></div>
                         <div>
                             <h3 class="text-sm font-bold text-slate-800">Bintang Kelas per Mapel</h3>
                             <p class="text-[10px] font-medium text-slate-500 uppercase tracking-widest">Nilai tertinggi</p>
@@ -298,7 +298,7 @@
                         <div v-for="(pm, idx) in wStats.prestasi_mapel" :key="idx" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-colors">
                             <div class="min-w-0 pr-3">
                                 <p class="text-[11px] font-bold text-slate-800 truncate">{{ pm.mapel }}</p>
-                                <p class="text-[10px] text-emerald-600 font-bold truncate mt-0.5">🏆 {{ pm.siswa }}</p>
+                                <p class="text-[10px] text-emerald-600 font-bold truncate mt-0.5"><AppIcon name="star" /> {{ pm.siswa }}</p>
                             </div>
                             <span class="inline-flex items-center justify-center min-w-[36px] px-1.5 py-1 rounded bg-slate-100 text-[11px] font-black text-slate-700 shrink-0">
                                 {{ pm.nilai }}
@@ -313,7 +313,7 @@
                 <!-- Chart Gender -->
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/60 flex flex-col h-80">
                     <div class="flex items-center gap-3 mb-6 shrink-0">
-                        <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 text-xl border border-indigo-100">🍩</div>
+                        <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 text-xl border border-indigo-100"><AppIcon name="chart-pie" /></div>
                         <div>
                             <h3 class="text-sm font-bold text-slate-800">Komposisi Gender</h3>
                             <p class="text-[10px] font-medium text-slate-500 uppercase tracking-widest">Siswa di Kelas</p>
@@ -332,7 +332,7 @@
                 <!-- Butuh Penanganan -->
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/60 col-span-1 lg:col-span-2 flex flex-col h-80">
                     <div class="flex items-center gap-3 mb-5 shrink-0">
-                        <div class="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600 text-xl border border-rose-100">🚨</div>
+                        <div class="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600 text-xl border border-rose-100"><AppIcon name="exclamation-triangle" /></div>
                         <div>
                             <h3 class="text-sm font-bold text-slate-800">Siswa Butuh Penanganan</h3>
                             <p class="text-[10px] font-medium text-slate-500 uppercase tracking-widest">Risiko poin & absensi</p>
@@ -356,12 +356,12 @@
 
             <!-- MENU WALI KELAS -->
             <div class="mt-2">
-              <h3 class="text-xs font-black text-amber-500 uppercase tracking-widest mb-4 flex items-center">✨ Panel Wali Kelas</h3>
+              <h3 class="text-xs font-black text-amber-500 uppercase tracking-widest mb-4 flex items-center"><AppIcon name="sparkles" /> Panel Wali Kelas</h3>
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <NuxtLink to="/guru/walas/monitoring" class="group bg-white rounded-2xl p-5 border border-slate-200/60 shadow-sm hover:border-amber-300 hover:shadow-md hover:shadow-amber-100 transition-all cursor-pointer block">
                   <div class="flex items-center gap-4">
                     <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 group-hover:bg-amber-500 group-hover:text-white transition-colors border border-amber-100">
-                      <span class="text-lg">👀</span>
+                      <span class="text-lg"><AppIcon name="eye" /></span>
                     </div>
                     <div>
                       <div class="font-black text-slate-800 text-[11px] uppercase tracking-wide mb-0.5">Monitoring Nilai</div>
@@ -372,7 +372,7 @@
                 <NuxtLink to="/guru/walas/biodata" class="group bg-white rounded-2xl p-5 border border-slate-200/60 shadow-sm hover:border-amber-300 hover:shadow-md hover:shadow-amber-100 transition-all cursor-pointer block">
                   <div class="flex items-center gap-4">
                     <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 group-hover:bg-amber-500 group-hover:text-white transition-colors border border-amber-100">
-                      <span class="text-lg">🧑‍🎓</span>
+                      <span class="text-lg">🧑‍<AppIcon name="academic-cap" /></span>
                     </div>
                     <div>
                       <div class="font-black text-slate-800 text-[11px] uppercase tracking-wide mb-0.5">Kelola Biodata</div>
@@ -383,7 +383,7 @@
                 <NuxtLink to="/guru/walas/rapor" class="group bg-white rounded-2xl p-5 border border-slate-200/60 shadow-sm hover:border-amber-300 hover:shadow-md hover:shadow-amber-100 transition-all cursor-pointer block">
                   <div class="flex items-center gap-4">
                     <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 group-hover:bg-amber-500 group-hover:text-white transition-colors border border-amber-100">
-                      <span class="text-lg">🖨️</span>
+                      <span class="text-lg"><AppIcon name="printer" /></span>
                     </div>
                     <div>
                       <div class="font-black text-slate-800 text-[11px] uppercase tracking-wide mb-0.5">Cetak Rapor</div>
@@ -671,7 +671,7 @@ const walasWorkflow = computed(() => {
         {
             label: 'Monitor Nilai Mapel',
             desc: 'Pastikan seluruh guru mapel sudah menyelesaikan input nilai.',
-            emoji: '👀',
+            emoji: '<AppIcon name="eye" />',
             active: true,
             done: false,
             to: '/guru/walas/monitoring'
@@ -679,7 +679,7 @@ const walasWorkflow = computed(() => {
         {
             label: 'Input Absensi',
             desc: 'Rekap kehadiran siswa jika tidak otomatis dari BK.',
-            emoji: '📅',
+            emoji: '<AppIcon name="calendar" />',
             active: true,
             done: false,
             to: '/guru/walas/rekap'
@@ -687,7 +687,7 @@ const walasWorkflow = computed(() => {
         {
             label: 'Input Ekstrakurikuler',
             desc: 'Masukkan nilai ekskul yang diikuti siswa.',
-            emoji: '🎯',
+            emoji: '<AppIcon name="presentation-chart-bar" />',
             active: true,
             done: false,
             to: '/guru/walas/ekskul'
@@ -695,7 +695,7 @@ const walasWorkflow = computed(() => {
         {
             label: 'Catatan & Keputusan',
             desc: 'Isi catatan dan tentukan kelulusan/kenaikan kelas.',
-            emoji: '📝',
+            emoji: '<AppIcon name="document-text" />',
             active: true,
             done: false,
             to: '/guru/walas/catatan'
@@ -703,7 +703,7 @@ const walasWorkflow = computed(() => {
         {
             label: 'Cetak Rapor',
             desc: 'Hasilkan dokumen PDF rapor.',
-            emoji: '🖨️',
+            emoji: '<AppIcon name="printer" />',
             active: true,
             done: false,
             to: '/guru/walas/rapor'

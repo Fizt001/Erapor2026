@@ -77,7 +77,7 @@
                 </template>
                 <div v-else class="text-center py-10 px-4 bg-slate-50 rounded-2xl border border-slate-200 border-dashed">
                   <div class="bg-slate-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-2">
-                    <span class="text-xl">📭</span>
+                    <span class="text-xl"><AppIcon name="archive-box" /></span>
                   </div>
                   <p class="text-xs font-bold text-slate-600">Tidak ada siswa sesuai.</p>
                 </div>
@@ -107,7 +107,7 @@
             <div class="p-6 sm:p-8 flex-1 overflow-y-auto custom-scrollbar">
               <div class="flex items-start gap-4 mb-8">
                 <div class="w-16 h-16 rounded-2xl bg-indigo-50 flex items-center justify-center shrink-0 border border-indigo-100">
-                  <span class="text-3xl">🧑‍🎓</span>
+                  <span class="text-3xl">🧑‍<AppIcon name="academic-cap" /></span>
                 </div>
                 <div>
                   <h2 class="text-2xl font-black text-slate-800 tracking-tight">{{ selectedStudent.user?.name || selectedStudent.nama_lengkap }}</h2>
@@ -119,9 +119,9 @@
               </div>
 
               <div v-if="isSemesterGenap && !hasPsatBackup" class="bg-rose-50 border-2 border-rose-200 rounded-2xl p-8 text-center relative overflow-hidden">
-                <div class="absolute right-0 top-0 opacity-5 p-4 text-8xl pointer-events-none">🔒</div>
+                <div class="absolute right-0 top-0 opacity-5 p-4 text-8xl pointer-events-none"><AppIcon name="lock-closed" /></div>
                 <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 border-4 border-rose-100 shadow-sm">
-                  <span class="text-2xl">🔒</span>
+                  <span class="text-2xl"><AppIcon name="lock-closed" /></span>
                 </div>
                 <h3 class="text-lg font-black text-rose-700 tracking-tight mb-2 uppercase">Fitur Terkunci!</h3>
                 <p class="text-[11px] font-semibold text-rose-600 max-w-md mx-auto leading-relaxed">
@@ -132,7 +132,7 @@
               </div>
 
               <div v-else class="bg-slate-50 rounded-2xl p-6 border border-slate-200 mb-6 relative overflow-hidden">
-                <div class="absolute right-0 top-0 opacity-5 p-4 text-6xl pointer-events-none">🔄</div>
+                <div class="absolute right-0 top-0 opacity-5 p-4 text-6xl pointer-events-none"><AppIcon name="arrow-path" /></div>
                 <label class="block text-[11px] font-black tracking-widest text-slate-500 uppercase mb-3 ml-1 relative z-10">Tentukan Status Baru:</label>
                 <div class="relative z-10">
                   <select v-model="formKelasTujuan" class="block w-full rounded-xl border-2 border-slate-200/70 py-3.5 pl-4 pr-10 text-slate-800 text-sm font-bold focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 bg-white shadow-sm transition-all appearance-none cursor-pointer outline-none">
@@ -168,7 +168,7 @@
                   :disabled="isSaving || !formKelasTujuan"
                   class="px-8 py-3 bg-indigo-600 text-white text-[11px] font-black uppercase tracking-widest rounded-xl shadow-md hover:shadow-lg hover:bg-indigo-700 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
                 >
-                  <span v-if="isSaving" class="mr-2 animate-spin">⏳</span>
+                  <span v-if="isSaving" class="mr-2 animate-spin"><AppIcon name="clock" /></span>
                   {{ isSaving ? 'Menyimpan...' : 'Simpan Status' }}
                 </button>
             </div>

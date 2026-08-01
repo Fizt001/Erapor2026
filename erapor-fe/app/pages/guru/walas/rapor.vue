@@ -78,7 +78,7 @@
             <div v-show="mode === 'rapor'">
               <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Pencarian Siswa</label>
               <div class="relative">
-                  <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 pointer-events-none">🔍</span>
+                  <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 pointer-events-none"><AppIcon name="search" /></span>
                   <input type="text" v-model="searchQuery" placeholder="Cari nama siswa..." 
                     class="w-full pl-10 pr-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all font-semibold text-xs text-slate-700 outline-none">
               </div>
@@ -99,7 +99,7 @@
 
           <!-- Error State -->
           <div v-else-if="errorMessage" class="flex-grow flex flex-col items-center justify-center p-16 text-center bg-white rounded-3xl shadow-sm border border-slate-200/60">
-            <div class="text-rose-500 text-4xl mb-4">⚠️</div>
+            <div class="text-rose-500 text-4xl mb-4"><AppIcon name="exclamation-triangle" /></div>
             <h3 class="text-rose-800 font-black mb-1">Gagal Memuat Data</h3>
             <p class="text-rose-600 text-sm font-semibold max-w-md">{{ errorMessage }}</p>
             <button @click="loadData" class="mt-4 px-4 py-2 bg-rose-100 hover:bg-rose-200 text-rose-700 text-[10px] font-black uppercase tracking-widest rounded-lg transition-colors">
@@ -114,8 +114,8 @@
             <div class="px-6 py-5 border-b border-slate-200 flex justify-between items-center bg-white shrink-0 z-10">
               <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center text-lg border border-indigo-100">
-                  <span v-if="mode === 'rapor'">📄</span>
-                  <span v-else>📊</span>
+                  <span v-if="mode === 'rapor'"><AppIcon name="document-text" /></span>
+                  <span v-else><AppIcon name="chart-bar" /></span>
                 </div>
                 <div>
                   <h3 class="text-[13px] font-black leading-none uppercase tracking-wide text-slate-800">
@@ -128,7 +128,7 @@
               </div>
               <div v-if="mode === 'leger' && legerData" class="flex items-center space-x-4 shrink-0 mt-4 md:mt-0">
                  <button @click="printLeger" class="flex items-center space-x-2 text-[10px] font-black uppercase tracking-widest px-4 py-2.5 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 shadow-md transition-all active:scale-95" :disabled="isLoadingLeger">
-                  <span>🖨️ CETAK LEGER</span>
+                  <span><AppIcon name="printer" /> CETAK LEGER</span>
                 </button>
               </div>
             </div>
@@ -159,13 +159,13 @@
                         @click="bukaPreviewRapor(siswa)"
                         class="px-3 py-1.5 bg-white border border-indigo-200 text-indigo-600 hover:bg-indigo-50 font-black rounded-lg transition-all text-[10px] uppercase tracking-widest shadow-sm hover:shadow active:scale-95 inline-flex items-center justify-center w-full"
                       >
-                        👁️ Preview
+                        <AppIcon name="eye" /> Preview
                       </button>
                     </td>
                   </tr>
                   <tr v-if="filteredStudents.length === 0">
                     <td colspan="4" class="py-12 text-center text-slate-500 bg-slate-50/50">
-                      <div class="text-3xl mb-3 opacity-50">🔍</div>
+                      <div class="text-3xl mb-3 opacity-50"><AppIcon name="search" /></div>
                       <div class="text-xs font-bold">Tidak ada siswa yang sesuai.</div>
                     </td>
                   </tr>
@@ -261,7 +261,7 @@
                 </div>
                 <div class="flex items-center gap-3">
                     <button @click="printRapor" class="px-5 py-2.5 bg-indigo-600 text-white hover:bg-indigo-700 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md hover:shadow-lg transition-all active:scale-95 flex items-center gap-2">
-                        <span>🖨️</span> CETAK PDF
+                        <span><AppIcon name="printer" /></span> CETAK PDF
                     </button>
                     <button @click="showPreview = false" class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-slate-700 transition-colors font-bold text-lg">&times;</button>
                 </div>

@@ -55,7 +55,7 @@
             <div>
               <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Pencarian Siswa</label>
               <div class="relative">
-                  <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 pointer-events-none">🔍</span>
+                  <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 pointer-events-none"><AppIcon name="search" /></span>
                   <input type="text" v-model="searchQuery" placeholder="Cari nama siswa..." 
                     class="w-full pl-10 pr-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all font-semibold text-xs text-slate-700 outline-none">
               </div>
@@ -76,7 +76,7 @@
 
           <!-- Error State -->
           <div v-else-if="error" class="flex-grow flex flex-col items-center justify-center p-16 text-center bg-white rounded-3xl shadow-sm border border-slate-200/60">
-            <div class="text-rose-500 text-4xl mb-4">🔒</div>
+            <div class="text-rose-500 text-4xl mb-4"><AppIcon name="lock-closed" /></div>
             <h3 class="text-rose-800 font-black mb-1">Akses Ditolak</h3>
             <p class="text-rose-600 text-sm font-semibold max-w-md">{{ error.message || 'Terjadi kesalahan saat memuat data.' }}</p>
             <button @click="fetchData" class="mt-6 px-6 py-2 bg-rose-600 hover:bg-rose-700 text-white font-bold text-sm rounded-lg shadow-sm transition-colors">Coba Lagi</button>
@@ -88,7 +88,7 @@
             <!-- Header Card Kanan -->
             <div class="px-6 py-5 border-b border-slate-200 flex justify-between items-center bg-white shrink-0 z-10">
               <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center text-lg border border-emerald-100">🌿</div>
+                <div class="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center text-lg border border-emerald-100"><AppIcon name="sparkles" /></div>
                 <div>
                   <h3 class="text-[13px] font-black leading-none uppercase tracking-wide text-slate-800">Catatan Capaian P5</h3>
                   <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Otomatis tersimpan saat mengetik</p>
@@ -134,15 +134,15 @@
                                     
                                     <!-- Save Status Indicator Mini -->
                                     <div class="absolute bottom-2 right-2 text-[10px]">
-                                        <span v-if="saveStatus[siswa.id]?.[tm.id] === 'saving'" class="text-slate-400 animate-pulse">⏳</span>
-                                        <span v-else-if="saveStatus[siswa.id]?.[tm.id] === 'saved'" class="text-emerald-500">✓</span>
+                                        <span v-if="saveStatus[siswa.id]?.[tm.id] === 'saving'" class="text-slate-400 animate-pulse"><AppIcon name="clock" /></span>
+                                        <span v-else-if="saveStatus[siswa.id]?.[tm.id] === 'saved'" class="text-emerald-500"><AppIcon name="check" /></span>
                                     </div>
                                 </div>
                             </td>
                         </tr>
                         <tr v-if="filteredStudents.length === 0">
                             <td :colspan="pageData.periodes.length + 1" class="py-12 text-center text-slate-500 bg-slate-50/50">
-                                <div class="text-3xl mb-2">🔍</div>
+                                <div class="text-3xl mb-2"><AppIcon name="search" /></div>
                                 <div class="text-xs font-bold">Tidak ada siswa yang cocok.</div>
                             </td>
                         </tr>

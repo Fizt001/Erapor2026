@@ -60,7 +60,7 @@
           <!-- Forbidden State -->
           <div v-else-if="errorMessage && errorMessage.toLowerCase().includes('wali kelas')" class="flex-grow flex flex-col items-center justify-center py-20 text-center bg-white rounded-3xl border border-slate-200/60 shadow-sm">
             <div class="w-24 h-24 bg-amber-50 border-4 border-amber-100 rounded-full flex items-center justify-center mb-6 shadow-inner">
-                <span class="text-5xl">🚫</span>
+                <span class="text-5xl"><AppIcon name="no-symbol" /></span>
             </div>
             <h3 class="text-2xl font-black text-slate-800 mb-2 tracking-tight">Akses Ditolak</h3>
             <p class="text-slate-500 font-medium max-w-md mx-auto leading-relaxed text-sm">
@@ -70,7 +70,7 @@
 
           <!-- Error State -->
           <div v-else-if="errorMessage" class="flex-grow flex flex-col items-center justify-center p-16 text-center bg-white rounded-3xl shadow-sm border border-slate-200/60">
-            <div class="text-rose-500 text-4xl mb-4">⚠️</div>
+            <div class="text-rose-500 text-4xl mb-4"><AppIcon name="exclamation-triangle" /></div>
             <h3 class="text-rose-800 font-black mb-1">Gagal Memuat Data</h3>
             <p class="text-rose-600 text-sm font-semibold max-w-md">{{ errorMessage }}</p>
             <button @click="fetchData" class="mt-4 px-4 py-2 bg-rose-100 hover:bg-rose-200 text-rose-700 text-[10px] font-black uppercase tracking-widest rounded-lg transition-colors">
@@ -83,7 +83,7 @@
             
             <div class="px-6 py-5 border-b border-slate-200 flex justify-between items-center bg-white shrink-0 z-10">
               <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-sky-50 text-sky-600 rounded-xl flex items-center justify-center text-lg border border-sky-100">🏆</div>
+                <div class="w-10 h-10 bg-sky-50 text-sky-600 rounded-xl flex items-center justify-center text-lg border border-sky-100"><AppIcon name="star" /></div>
                 <div>
                   <h3 class="text-[13px] font-black leading-none uppercase tracking-wide text-slate-800">Daftar Prestasi</h3>
                   <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">{{ filteredPrestasi.length }} Prestasi Tercatat</p>
@@ -136,7 +136,7 @@
                   </tr>
                   <tr v-if="filteredPrestasi.length === 0">
                     <td colspan="6" class="py-12 text-center text-slate-500 bg-slate-50/50">
-                      <div class="text-4xl mb-3 opacity-50">🏆</div>
+                      <div class="text-4xl mb-3 opacity-50"><AppIcon name="star" /></div>
                       <div class="text-xs font-bold">Belum ada data prestasi yang sesuai.</div>
                     </td>
                   </tr>
@@ -230,7 +230,7 @@
               Batal
             </button>
             <button @click="submitForm" type="button" :disabled="isSubmitting" class="px-6 py-2.5 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-[11px] font-black uppercase tracking-widest transition-all shadow-md active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center">
-              <span v-if="isSubmitting" class="mr-2 animate-spin">⏳</span>
+              <span v-if="isSubmitting" class="mr-2 animate-spin"><AppIcon name="clock" /></span>
               Simpan Data
             </button>
           </div>

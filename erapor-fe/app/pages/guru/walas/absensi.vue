@@ -76,7 +76,7 @@
             <!-- Header Flow -->
             <div class="px-6 py-5 bg-white border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0 z-10 shadow-sm">
                 <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-2xl bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-500 text-xl">📋</div>
+                    <div class="w-10 h-10 rounded-2xl bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-500 text-xl"><AppIcon name="clipboard" /></div>
                     <div>
                         <div class="flex items-center gap-3">
                             <h3 class="text-sm font-black uppercase tracking-widest text-slate-700">Kalender Kehadiran</h3>

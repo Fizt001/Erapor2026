@@ -7,7 +7,7 @@
             <!-- Header -->
             <div class="px-6 py-5 bg-white border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0 z-10 shadow-sm">
                 <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-500 text-xl hidden sm:flex">🤝</div>
+                    <div class="w-10 h-10 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-500 text-xl hidden sm:flex"><AppIcon name="users" /></div>
                     <div>
                         <div class="flex items-center gap-3">
                             <h3 class="text-sm font-black uppercase tracking-widest text-slate-700">Tindak Lanjut Walas</h3>
@@ -17,7 +17,7 @@
                 </div>
                 
                 <div class="relative w-full sm:w-64">
-                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">🔍</span>
+                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"><AppIcon name="search" /></span>
                     <input type="text" v-model="searchQuery" placeholder="Cari nama/NIS..." class="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-xs font-bold outline-none text-slate-700">
                 </div>
             </div>
@@ -30,7 +30,7 @@
                 </div>
 
                 <div v-else-if="filteredSiswas.length === 0" class="bg-white rounded-2xl p-16 flex flex-col items-center justify-center border-2 border-dashed border-slate-200 shadow-sm text-center h-full max-h-[400px]">
-                    <div class="text-6xl opacity-20 mb-4">✨</div>
+                    <div class="text-6xl opacity-20 mb-4"><AppIcon name="sparkles" /></div>
                     <p class="text-sm font-bold text-slate-500">Bagus! Tidak ada kasus eskalasi yang butuh penanganan saat ini.</p>
                 </div>
 
@@ -78,20 +78,20 @@
                                     </div>
                                     <div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
                                         <div class="bg-slate-50 rounded-lg p-3 border border-slate-100">
-                                            <p class="font-black text-[10px] text-slate-400 uppercase tracking-widest mb-1.5 flex items-center gap-1.5"><span class="text-rose-500">🚨</span> Masalah / Peringatan</p>
+                                            <p class="font-black text-[10px] text-slate-400 uppercase tracking-widest mb-1.5 flex items-center gap-1.5"><span class="text-rose-500"><AppIcon name="exclamation-triangle" /></span> Masalah / Peringatan</p>
                                             <p class="text-slate-700 font-semibold leading-relaxed">{{ kasus.deskripsi_masalah }}</p>
                                         </div>
                                         <div class="bg-slate-50 rounded-lg p-3 border border-slate-100">
-                                            <p class="font-black text-[10px] text-slate-400 uppercase tracking-widest mb-1.5 flex items-center gap-1.5"><span class="text-indigo-500">💡</span> Tindakan / Solusi</p>
+                                            <p class="font-black text-[10px] text-slate-400 uppercase tracking-widest mb-1.5 flex items-center gap-1.5"><span class="text-indigo-500"><AppIcon name="light-bulb" /></span> Tindakan / Solusi</p>
                                             <p class="text-slate-700 font-semibold leading-relaxed">{{ kasus.tindakan_penyelesaian || 'Belum ada tindakan.' }}</p>
                                         </div>
                                     </div>
                                     <div class="px-4 py-2.5 bg-slate-50 border-t border-slate-100 flex justify-between items-center group/actions">
                                         <p class="text-[9px] text-slate-400 font-black uppercase tracking-widest flex items-center gap-1.5">
-                                            <span>👤</span> Pelapor: {{ kasus.guru?.name || 'Sistem' }}
+                                            <span><AppIcon name="user" /></span> Pelapor: {{ kasus.guru?.name || 'Sistem' }}
                                         </p>
                                         <button v-if="kasus.kategori === 'Bimbingan Walas'" @click.stop="openModal(siswa, kasus)" class="px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-[10px] font-bold text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50 hover:border-indigo-200 transition-all uppercase tracking-widest flex items-center gap-1 shadow-sm">
-                                            ✏️ {{ kasus.status === 'Proses' ? 'Tindak Lanjut' : 'Edit Tindakan' }}
+                                            <AppIcon name="pencil" /> {{ kasus.status === 'Proses' ? 'Tindak Lanjut' : 'Edit Tindakan' }}
                                         </button>
                                         <div v-else class="px-3 py-1.5 rounded-lg bg-rose-50 border border-rose-100 text-[9px] font-black text-rose-600 uppercase tracking-widest flex items-center gap-1">
                                             🛡️ Ditangani oleh BK
@@ -118,7 +118,7 @@
                     <p class="text-[10px] font-bold text-slate-500 mt-0.5">Siswa: {{ selectedSiswa?.nama }}</p>
                 </div>
                 <button @click="closeModal" class="w-8 h-8 flex items-center justify-center rounded-xl hover:bg-slate-200 text-slate-400 hover:text-slate-600 transition-colors">
-                    ✖
+                    <AppIcon name="x-mark" />
                 </button>
             </div>
 
@@ -139,11 +139,11 @@
                     <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1.5 ml-1">Status Penanganan</label>
                     <div class="grid grid-cols-2 gap-3">
                         <button type="button" @click="form.status = 'Proses'" :class="form.status === 'Proses' ? 'bg-rose-100 border-rose-300 text-rose-700 ring-2 ring-rose-500/20' : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50'" class="px-4 py-3 rounded-xl border font-bold text-xs transition-all uppercase tracking-widest flex flex-col items-center gap-1">
-                            <span class="text-lg">⏳</span>
+                            <span class="text-lg"><AppIcon name="clock" /></span>
                             Masih Proses
                         </button>
                         <button type="button" @click="form.status = 'Selesai'" :class="form.status === 'Selesai' ? 'bg-emerald-100 border-emerald-300 text-emerald-700 ring-2 ring-emerald-500/20' : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50'" class="px-4 py-3 rounded-xl border font-bold text-xs transition-all uppercase tracking-widest flex flex-col items-center gap-1">
-                            <span class="text-lg">✅</span>
+                            <span class="text-lg"><AppIcon name="check-circle" /></span>
                             Selesai
                         </button>
                     </div>

@@ -7,7 +7,7 @@
       </div>
       <div class="mt-4 sm:mt-0 flex gap-2">
         <button @click="printPage" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-xl shadow-sm transition-all flex items-center">
-          <span class="mr-2">🖨️</span> Cetak Dokumen
+          <span class="mr-2"><AppIcon name="printer" /></span> Cetak Dokumen
         </button>
       </div>
     </div>

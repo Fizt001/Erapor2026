@@ -32,7 +32,7 @@
             <div>
               <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Pencarian Siswa</label>
               <div class="relative">
-                  <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 pointer-events-none">🔍</span>
+                  <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 pointer-events-none"><AppIcon name="search" /></span>
                   <input type="text" v-model="searchQuery" placeholder="Cari nama atau NISN..." 
                     class="w-full pl-10 pr-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all font-semibold text-xs text-slate-700 outline-none">
               </div>
@@ -40,7 +40,7 @@
 
             <div class="bg-teal-50 border border-teal-100 p-4 rounded-2xl">
               <div class="flex items-start mb-2">
-                <span class="text-teal-500 mr-2 text-sm leading-none mt-0.5">💡</span>
+                <span class="text-teal-500 mr-2 text-sm leading-none mt-0.5"><AppIcon name="light-bulb" /></span>
                 <div class="text-[11px] text-teal-800 font-semibold leading-relaxed">
                   Lengkapi data profil siswa hingga mencapai 100% untuk cetak cover buku rapor.
                 </div>
@@ -69,7 +69,7 @@
             <!-- Header Card Kanan -->
             <div class="px-6 py-5 border-b border-slate-200 flex justify-between items-center bg-white shrink-0 z-10">
               <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center text-lg border border-indigo-100">👥</div>
+                <div class="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center text-lg border border-indigo-100"><AppIcon name="users" /></div>
                 <div>
                   <h3 class="text-[13px] font-black leading-none uppercase tracking-wide text-slate-800">Daftar Siswa Perwalian</h3>
                   <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">{{ filteredStudents.length }} Siswa Aktif</p>
@@ -78,7 +78,7 @@
               
               <div class="flex items-center space-x-4 shrink-0 mt-4 md:mt-0">
                  <button @click="refreshData" class="flex items-center space-x-2 text-[10px] font-black uppercase tracking-widest px-4 py-2.5 bg-slate-100 text-slate-600 rounded-xl hover:bg-slate-200 transition-all active:scale-95" :disabled="pending">
-                  <span :class="{'animate-spin': pending}">🔄</span> <span>REFRESH</span>
+                  <span :class="{'animate-spin': pending}"><AppIcon name="arrow-path" /></span> <span>REFRESH</span>
                 </button>
               </div>
             </div>
@@ -91,7 +91,7 @@
 
             <!-- Error State -->
             <div v-else-if="error" class="flex-grow flex flex-col items-center justify-center p-16 text-center">
-              <div class="text-rose-500 text-4xl mb-4">⚠️</div>
+              <div class="text-rose-500 text-4xl mb-4"><AppIcon name="exclamation-triangle" /></div>
               <h3 class="text-rose-800 font-black mb-1">Gagal Memuat Data</h3>
               <p class="text-rose-600 text-sm font-semibold">{{ error.message || 'Terjadi kesalahan pada server.' }}</p>
               <button @click="refreshData" class="mt-4 px-4 py-2 bg-rose-100 hover:bg-rose-200 text-rose-700 text-[10px] font-black uppercase tracking-widest rounded-lg transition-colors">
@@ -151,14 +151,14 @@
                                 @click="openEditModal(siswa)"
                                 class="flex-1 px-2 py-2 bg-white border border-indigo-200 text-indigo-600 hover:bg-indigo-50 font-black rounded-lg transition-all text-[9px] uppercase tracking-widest shadow-sm hover:shadow active:scale-95 inline-flex items-center justify-center"
                             >
-                                ✏️ Edit
+                                <AppIcon name="pencil" /> Edit
                             </button>
                         </div>
                       </td>
                     </tr>
                     <tr v-if="filteredStudents.length === 0 && !pending">
                       <td colspan="5" class="py-12 text-center">
-                        <div class="text-slate-300 text-4xl mb-3">🔍</div>
+                        <div class="text-slate-300 text-4xl mb-3"><AppIcon name="search" /></div>
                         <div class="text-slate-500 font-bold text-sm">Tidak ada siswa yang sesuai.</div>
                       </td>
                     </tr>
@@ -257,7 +257,7 @@
                     <div v-show="activeTab === 'ortu'" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <!-- Data Ayah -->
                         <div class="space-y-4 p-5 border-2 border-slate-100 rounded-2xl bg-slate-50/50 relative overflow-hidden">
-                            <div class="absolute top-0 right-0 p-3 opacity-10 text-4xl">👨</div>
+                            <div class="absolute top-0 right-0 p-3 opacity-10 text-4xl"><AppIcon name="user" /></div>
                             <h3 class="text-xs font-black text-indigo-700 uppercase tracking-widest border-b-2 border-indigo-100 pb-2 mb-4">Data Ayah</h3>
                             <div class="space-y-1.5 relative z-10">
                                 <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1">Nama Ayah</label>
@@ -282,7 +282,7 @@
 
                         <!-- Data Ibu -->
                         <div class="space-y-4 p-5 border-2 border-slate-100 rounded-2xl bg-slate-50/50 relative overflow-hidden">
-                            <div class="absolute top-0 right-0 p-3 opacity-10 text-4xl">👩</div>
+                            <div class="absolute top-0 right-0 p-3 opacity-10 text-4xl"><AppIcon name="user" /></div>
                             <h3 class="text-xs font-black text-pink-700 uppercase tracking-widest border-b-2 border-pink-100 pb-2 mb-4">Data Ibu</h3>
                             <div class="space-y-1.5 relative z-10">
                                 <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1">Nama Ibu</label>
@@ -307,7 +307,7 @@
 
                         <!-- Data Wali -->
                         <div class="space-y-4 p-5 border-2 border-slate-100 rounded-2xl bg-slate-50/50 relative overflow-hidden">
-                            <div class="absolute top-0 right-0 p-3 opacity-10 text-4xl">🧑‍🦳</div>
+                            <div class="absolute top-0 right-0 p-3 opacity-10 text-4xl">🧑‍<AppIcon name="user" /></div>
                             <h3 class="text-xs font-black text-amber-700 uppercase tracking-widest border-b-2 border-amber-100 pb-2 mb-4">Data Wali</h3>
                             <div class="space-y-1.5 relative z-10">
                                 <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1">Nama Wali</label>
@@ -424,7 +424,7 @@
                     :disabled="isSaving"
                     class="px-6 py-2.5 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-[11px] font-black uppercase tracking-widest shadow-md hover:shadow-lg transition-all active:scale-95 flex items-center disabled:opacity-50"
                 >
-                    <span v-if="isSaving" class="mr-2 animate-spin">⏳</span>
+                    <span v-if="isSaving" class="mr-2 animate-spin"><AppIcon name="clock" /></span>
                     Simpan Perubahan
                 </button>
             </div>

@@ -54,7 +54,7 @@
             <div>
               <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Pencarian Siswa</label>
               <div class="relative">
-                  <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 pointer-events-none">🔍</span>
+                  <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 pointer-events-none"><AppIcon name="search" /></span>
                   <input type="text" v-model="searchQuery" placeholder="Cari nama siswa..." 
                     class="w-full pl-10 pr-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all font-semibold text-xs text-slate-700 outline-none">
               </div>
@@ -62,7 +62,7 @@
             
             <div class="bg-indigo-50 p-4 rounded-2xl border border-indigo-100 flex flex-col items-center justify-center text-center">
                 <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center mb-2">
-                    <span class="animate-pulse">💾</span>
+                    <span class="animate-pulse"><AppIcon name="save" /></span>
                 </div>
                 <h4 class="text-[11px] font-black uppercase tracking-widest text-indigo-800">Auto-Save</h4>
                 <p class="text-[10px] font-bold text-indigo-600 mt-1">Catatan akan tersimpan otomatis saat Anda selesai mengetik.</p>
@@ -83,7 +83,7 @@
 
           <!-- Error State -->
           <div v-else-if="error" class="flex-grow flex flex-col items-center justify-center p-16 text-center bg-white rounded-3xl shadow-sm border border-slate-200/60">
-            <div class="text-rose-500 text-4xl mb-4">🔒</div>
+            <div class="text-rose-500 text-4xl mb-4"><AppIcon name="lock-closed" /></div>
             <h3 class="text-rose-800 font-black mb-1">Akses Ditolak</h3>
             <p class="text-rose-600 text-sm font-semibold max-w-md">{{ error.message || 'Terjadi kesalahan saat memuat data.' }}</p>
             <button @click="fetchData" class="mt-4 px-4 py-2 bg-rose-100 hover:bg-rose-200 text-rose-700 text-[10px] font-black uppercase tracking-widest rounded-lg transition-colors">
@@ -108,7 +108,7 @@
                         !titimangsa.is_aktif ? 'opacity-60' : ''
                     ]"
                 >
-                    <span v-if="!titimangsa.is_aktif" class="mr-1">🔒</span>
+                    <span v-if="!titimangsa.is_aktif" class="mr-1"><AppIcon name="lock-closed" /></span>
                     {{ titimangsa.nama_periode_panjang || titimangsa.nama_periode }}
                     <div v-if="activeTab === titimangsa.id" class="absolute bottom-0 left-0 w-full h-[3px] bg-indigo-500 rounded-t-full"></div>
                 </button>
@@ -116,7 +116,7 @@
             
             <!-- Warning Closed -->
             <div v-if="activeTitimangsaData && !activeTitimangsaData.is_aktif" class="bg-amber-50 border-b border-amber-100 px-6 py-3 flex items-center gap-3 shrink-0">
-                <span class="text-amber-500">🔒</span>
+                <span class="text-amber-500"><AppIcon name="lock-closed" /></span>
                 <p class="text-[11px] font-black uppercase tracking-widest text-amber-700">Periode ini sudah ditutup. Catatan wali kelas bersifat Read-Only.</p>
             </div>
 
@@ -200,17 +200,17 @@
                                     <svg class="animate-spin h-3 w-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                                 </span>
                                 <span v-else-if="savingStatus[siswa.id] === 'saved'" class="text-emerald-500 text-[10px]">
-                                    ✓
+                                    <AppIcon name="check" />
                                 </span>
                                 <span v-else-if="savingStatus[siswa.id] === 'error'" class="text-rose-500 text-[10px]">
-                                    ⚠️
+                                    <AppIcon name="exclamation-triangle" />
                                 </span>
                             </div>
                         </td>
                     </tr>
                     <tr v-if="filteredSiswa.length === 0">
                         <td colspan="9" class="py-12 text-center text-slate-500 bg-slate-50/50">
-                            <div class="text-3xl mb-3 opacity-50">🔍</div>
+                            <div class="text-3xl mb-3 opacity-50"><AppIcon name="search" /></div>
                             <div class="text-xs font-bold">Tidak ada siswa yang sesuai.</div>
                         </td>
                     </tr>
