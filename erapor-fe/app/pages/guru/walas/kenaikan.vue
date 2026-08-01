@@ -82,8 +82,8 @@
               <td class="border border-black p-2 text-center">{{ siswa.no }}</td>
               <td class="border border-black p-2">{{ siswa.nama }}</td>
               <td class="border border-black p-2">
-                <div><span class="font-semibold">Smt Ganjil:</span> {{ siswa.absensi.ganjil }}</div>
-                <div class="mt-1"><span class="font-semibold">Smt Genap:</span> {{ siswa.absensi.genap }}</div>
+                <div v-if="formatAbsensi(siswa.absensi.ganjil)"><span class="font-semibold">Smt Ganjil:</span> {{ formatAbsensi(siswa.absensi.ganjil) }}</div>
+                <div v-if="formatAbsensi(siswa.absensi.genap)" :class="{'mt-1': formatAbsensi(siswa.absensi.ganjil)}"><span class="font-semibold">Smt Genap:</span> {{ formatAbsensi(siswa.absensi.genap) }}</div>
               </td>
               <td class="border border-black p-2">
                 <template v-if="siswa.mapel_bawah_kkm.length > 0">
@@ -150,6 +150,29 @@ const loadData = async () => {
     } finally {
         pending.value = false
     }
+}
+
+const formatAbsensi = (str) => {
+  if (!str) return null;
+  
+  let result = str;
+  const match = str.match(/(S:\d+\s+I:\d+\s+A:\d+)/);
+  if (match) {
+    const siaArr = match[1].split(' ');
+    const filteredSia = siaArr.filter(item => !item.endsWith(':0'));
+    
+    if (filteredSia.length === 0) {
+      if (str.includes('%')) {
+        result = str.replace(/\s*\(S:\d+\s+I:\d+\s+A:\d+\)/, '');
+      } else {
+        return null;
+      }
+    } else {
+      const newSiaStr = filteredSia.join(' ');
+      result = str.replace(/S:\d+\s+I:\d+\s+A:\d+/, newSiaStr);
+    }
+  }
+  return result;
 }
 
 onMounted(() => {
