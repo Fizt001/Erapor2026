@@ -131,7 +131,6 @@
                     <th class="py-3 px-4 text-center text-[10px] font-black uppercase tracking-widest text-slate-500 w-16 border-r border-slate-200" title="Alpha">A</th>
                     <th class="py-3 px-4 text-center text-[10px] font-black uppercase tracking-widest text-slate-500 w-20 border-r border-slate-200">Rekap Poin BK</th>
                     <th class="py-3 px-4 text-center text-[10px] font-black uppercase tracking-widest text-slate-500 w-32 border-r border-slate-200">Tambahan Poin</th>
-                    <th class="py-3 px-4 text-[10px] font-black uppercase tracking-widest text-slate-500 min-w-[200px] border-r border-slate-200">Keterangan</th>
                     <th class="py-3 px-4 text-center text-[10px] font-black uppercase tracking-widest text-slate-500 w-24">Poin Final</th>
                   </tr>
                 </thead>
@@ -175,20 +174,6 @@
                                 ]"
                                 placeholder="0"
                             />
-                        </td>
-                        <td class="py-2 px-3 align-top border-r border-slate-100">
-                            <div class="relative w-full">
-                                <textarea
-                                    v-model="siswa.poin.keterangan"
-                                    :disabled="!activeTitimangsaData.is_aktif"
-                                    @input="handleInput(siswa)"
-                                    :class="[
-                                        'w-full text-xs font-bold text-slate-700 placeholder-slate-300 border-2 focus:ring-4 focus:ring-indigo-500/10 rounded-xl p-2 min-h-[40px] transition-all resize-none custom-scrollbar outline-none',
-                                        !activeTitimangsaData.is_aktif ? 'bg-slate-50 border-slate-200/50 opacity-70 cursor-not-allowed' : 'bg-white border-slate-200/70 focus:border-indigo-500'
-                                    ]"
-                                    placeholder="Keterangan..."
-                                ></textarea>
-                            </div>
                         </td>
                         <td class="py-3 px-4 text-center bg-indigo-50/50 align-middle relative">
                             <span class="text-[13px] font-black text-indigo-700">
