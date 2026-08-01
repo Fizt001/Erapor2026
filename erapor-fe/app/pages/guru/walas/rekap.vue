@@ -124,8 +124,8 @@
               <table class="w-full text-left border-collapse bg-white">
                 <thead class="sticky top-0 z-20 shadow-sm">
                   <tr class="bg-slate-100 border-b border-slate-200">
-                    <th class="py-3 px-4 text-center text-[10px] font-black uppercase tracking-widest text-slate-500 w-[60px] border-r border-slate-200">No</th>
-                    <th class="py-3 px-4 text-[10px] font-black uppercase tracking-widest text-slate-500 border-r border-slate-200 min-w-[200px] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.05)] sticky left-0 bg-slate-100 z-30">Nama Siswa</th>
+                    <th class="hidden sm:table-cell py-3 px-4 text-center text-[10px] font-black uppercase tracking-widest text-slate-500 w-[60px] border-r border-slate-200">No</th>
+                    <th class="hidden sm:table-cell py-3 px-4 text-[10px] font-black uppercase tracking-widest text-slate-500 border-r border-slate-200 min-w-[200px] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.05)] sticky left-0 bg-slate-100 z-30">Nama Siswa</th>
                     <th class="py-3 px-4 text-center text-[10px] font-black uppercase tracking-widest text-slate-500 w-16 border-r border-slate-200" title="Sakit">S</th>
                     <th class="py-3 px-4 text-center text-[10px] font-black uppercase tracking-widest text-slate-500 w-16 border-r border-slate-200" title="Izin">I</th>
                     <th class="py-3 px-4 text-center text-[10px] font-black uppercase tracking-widest text-slate-500 w-16 border-r border-slate-200" title="Alpha">A</th>
@@ -136,20 +136,26 @@
                 </thead>
                 <tbody class="divide-y divide-slate-100">
                   <template v-if="activeTitimangsaData">
-                    <tr 
-                        v-for="(siswa, idx) in filteredSiswa" 
-                        :key="activeTab + '-' + siswa.id"
-                        class="hover:bg-slate-50/80 transition-colors group"
-                    >
-                        <td class="py-3 px-4 text-center text-[11px] font-bold text-slate-400 border-r border-slate-100 align-top">
-                            {{ idx + 1 }}
-                        </td>
-                        <td class="py-3 px-4 border-r border-slate-100 sticky left-0 bg-white group-hover:bg-slate-50/90 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.02)] z-10 align-top">
-                            <div class="flex items-center gap-2">
-                                <div class="text-[12px] font-black uppercase tracking-wide" :class="siswa.tanggal_keluar ? 'text-rose-600 line-through' : 'text-slate-700'">{{ siswa.nama_siswa }}</div>
-                                <span v-if="siswa.tanggal_keluar" class="px-1.5 py-0.5 bg-rose-100 text-rose-700 text-[10px] font-black uppercase tracking-widest rounded whitespace-nowrap">Keluar</span>
-                            </div>
-                        </td>
+                    <template v-for="(siswa, idx) in filteredSiswa" :key="activeTab + '-' + siswa.id">
+                        <!-- Mobile Name Row -->
+                        <tr class="sm:hidden bg-slate-50 border-t-[3px] border-slate-200">
+                            <td colspan="6" class="py-2 px-3">
+                                <div class="sticky left-3 flex items-center gap-2">
+                                    <h4 class="text-[12px] font-black uppercase tracking-wide truncate" :class="siswa.tanggal_keluar ? 'text-rose-600 line-through' : 'text-slate-800'" :title="siswa.nama_siswa">{{ siswa.nama_siswa }}</h4>
+                                    <span v-if="siswa.tanggal_keluar" class="px-1.5 py-0.5 bg-rose-100 text-rose-700 text-[10px] font-black uppercase tracking-widest rounded whitespace-nowrap">Keluar</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-slate-50/80 transition-colors group">
+                            <td class="hidden sm:table-cell py-3 px-4 text-center text-[11px] font-bold text-slate-400 border-r border-slate-100 align-top">
+                                {{ idx + 1 }}
+                            </td>
+                            <td class="hidden sm:table-cell py-3 px-4 border-r border-slate-100 sticky left-0 bg-white group-hover:bg-slate-50/90 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.02)] z-10 align-top truncate" :title="siswa.nama_siswa">
+                                <div class="flex items-center gap-2">
+                                    <div class="text-[12px] font-black uppercase tracking-wide" :class="siswa.tanggal_keluar ? 'text-rose-600 line-through' : 'text-slate-700'">{{ siswa.nama_siswa }}</div>
+                                    <span v-if="siswa.tanggal_keluar" class="px-1.5 py-0.5 bg-rose-100 text-rose-700 text-[10px] font-black uppercase tracking-widest rounded whitespace-nowrap">Keluar</span>
+                                </div>
+                            </td>
                         <td class="py-3 px-4 text-center border-r border-slate-100 bg-slate-50/50 align-top">
                             <span class="text-[11px] font-black text-slate-500">{{ siswa.absensi.s }}</span>
                         </td>
@@ -175,7 +181,7 @@
                                 placeholder="0"
                             />
                         </td>
-                        <td class="py-3 px-4 text-center bg-indigo-50/50 align-middle relative">
+                        <td class="py-3 px-4 text-center bg-indigo-50/50 align-middle relative border-b border-slate-100 sm:border-b-0">
                             <span class="text-[13px] font-black text-indigo-700">
                                 {{ parseInt(siswa.poin.bk || 0) + parseInt(siswa.poin.tambahan || 0) }}
                             </span>
@@ -193,6 +199,7 @@
                             </div>
                         </td>
                     </tr>
+                    </template>
                     <tr v-if="filteredSiswa.length === 0">
                         <td colspan="9" class="py-12 text-center text-slate-500 bg-slate-50/50">
                             <div class="text-3xl mb-3 opacity-50"><AppIcon name="search" /></div>
