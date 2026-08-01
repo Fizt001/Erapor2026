@@ -96,56 +96,76 @@
               </div>
             </div>
 
-            <!-- Form Matrix -->
+            <!-- Tabs Periode -->
+            <div class="flex border-b border-slate-200 bg-slate-50 overflow-x-auto custom-scrollbar shrink-0">
+                <button 
+                    v-for="periode in pageData.periodes" 
+                    :key="periode.id"
+                    @click="activeTab = periode.id"
+                    :class="[
+                        'px-8 py-4 text-[11px] font-black uppercase tracking-widest transition-all whitespace-nowrap outline-none relative',
+                        activeTab === periode.id 
+                            ? 'text-amber-700 bg-white' 
+                            : 'text-slate-400 hover:text-slate-600 hover:bg-slate-100/50',
+                        !periode.is_aktif ? 'opacity-60' : ''
+                    ]"
+                >
+                    <span v-if="!periode.is_aktif" class="mr-1"><AppIcon name="lock-closed" /></span>
+                    {{ periode.nama_periode_panjang || periode.nama_periode }}
+                    <div v-if="activeTab === periode.id" class="absolute bottom-0 left-0 w-full h-[3px] bg-amber-500 rounded-t-full"></div>
+                </button>
+            </div>
+            
+            <!-- Warning Closed -->
+            <div v-if="activePeriodeData && !activePeriodeData.is_aktif" class="bg-amber-50 border-b border-amber-100 px-6 py-3 flex items-center gap-3 shrink-0">
+                <span class="text-amber-500"><AppIcon name="lock-closed" /></span>
+                <p class="text-[11px] font-black uppercase tracking-widest text-amber-700">Periode ini sudah ditutup. Catatan bersifat Read-Only.</p>
+            </div>
+
+            <!-- Form Table -->
             <div class="flex-1 overflow-auto custom-scrollbar relative bg-slate-50/30 flex flex-col">
-                <table class="w-full text-left border-collapse min-w-[800px] bg-white">
+                <table class="w-full text-left border-collapse bg-white">
                     <thead class="sticky top-0 z-20 shadow-sm">
-                        <tr>
-                            <th class="py-4 px-6 border-b border-slate-300 bg-slate-100 sticky left-0 z-30 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.05)] border-r text-[10px] font-black text-slate-500 uppercase tracking-widest min-w-[200px] w-64 align-middle">
-                                Nama Peserta Didik
-                            </th>
-                            <th v-for="(tm, tmIndex) in pageData.periodes" :key="tm.id" :class="tmIndex % 2 === 1 ? 'bg-indigo-50 border-indigo-100' : 'bg-teal-50 border-emerald-100'" class="py-4 px-4 border-b border-r text-center align-middle">
-                                <span :class="tmIndex % 2 === 1 ? 'text-indigo-700' : 'text-emerald-700'" class="text-[10px] font-black uppercase tracking-widest block mb-1">Capaian Projek ({{ tm.nama_periode_panjang || tm.nama_periode }})</span>
-                                <span v-if="!tm.is_aktif" class="text-[8px] font-bold text-rose-500 uppercase">Tertutup (Read-Only)</span>
-                                <span v-else class="text-[8px] font-bold text-slate-400 uppercase">Aktif</span>
-                            </th>
+                        <tr class="bg-slate-100 border-b border-slate-200">
+                            <th class="py-3 px-4 text-center text-[10px] font-black uppercase tracking-widest text-slate-500 w-[60px] border-r border-slate-200">No</th>
+                            <th class="py-3 px-4 text-[10px] font-black uppercase tracking-widest text-slate-500 border-r border-slate-200 min-w-[200px] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.05)] sticky left-0 bg-slate-100 z-30">Nama Siswa</th>
+                            <th class="py-3 px-4 text-[10px] font-black uppercase tracking-widest text-slate-500 min-w-[300px]">Catatan Capaian P5</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100">
-                        <tr v-for="siswa in filteredStudents" :key="activeTab + '-' + siswa.id" class="hover:bg-sky-50/30 transition-colors group">
-                            
-                            <!-- Nama Siswa (Sticky) -->
-                            <td class="py-4 px-6 text-[11px] font-black text-slate-700 uppercase bg-white group-hover:bg-slate-50 sticky left-0 z-10 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.02)] transition-colors align-top border-r border-slate-100">
-                                {{ siswa.nama_lengkap }}
-                            </td>
-                            
-                            <!-- Textarea Kolom -->
-                            <td v-for="(tm, tmIndex) in pageData.periodes" :key="tm.id" :class="tmIndex % 2 === 1 ? 'bg-indigo-50/10 border-indigo-50/50' : 'bg-teal-50/10 border-emerald-50/50'" class="py-3 px-3 border-r align-top">
-                                <div class="relative">
-                                    <textarea 
-                                        v-model="formKo[siswa.id][tm.id]" 
-                                        rows="2"
-                                        placeholder="Ketercapaian projek..." 
-                                        :disabled="!tm.is_aktif"
-                                        @input="handleInput(siswa.id, tm.id)"
-                                        :class="tmIndex % 2 === 1 ? 'focus:ring-indigo-500/20 focus:border-indigo-500 border-indigo-200' : 'focus:ring-teal-500/20 focus:border-teal-500 border-emerald-200'"
-                                        class="w-full rounded-xl text-[11px] font-semibold shadow-sm py-2.5 px-3 transition-colors outline-none disabled:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed bg-white border resize-none"
-                                    ></textarea>
-                                    
-                                    <!-- Save Status Indicator Mini -->
-                                    <div class="absolute bottom-2 right-2 text-[10px]">
-                                        <span v-if="saveStatus[siswa.id]?.[tm.id] === 'saving'" class="text-slate-400 animate-pulse"><AppIcon name="clock" /></span>
-                                        <span v-else-if="saveStatus[siswa.id]?.[tm.id] === 'saved'" class="text-emerald-500"><AppIcon name="check" /></span>
+                        <template v-if="activePeriodeData">
+                            <tr v-for="(siswa, idx) in filteredStudents" :key="activeTab + '-' + siswa.id" class="hover:bg-slate-50/80 transition-colors group">
+                                <td class="py-3 px-4 text-center text-[11px] font-bold text-slate-400 border-r border-slate-100 align-top">
+                                    {{ idx + 1 }}
+                                </td>
+                                <td class="py-3 px-4 border-r border-slate-100 sticky left-0 bg-white group-hover:bg-slate-50/90 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.02)] z-10 align-top">
+                                    <div class="text-[12px] font-black text-slate-700 uppercase tracking-wide">{{ siswa.nama_lengkap }}</div>
+                                </td>
+                                <td class="py-3 px-4 align-top">
+                                    <div class="relative">
+                                        <textarea 
+                                            v-model="formKo[siswa.id][activeTab]" 
+                                            rows="3"
+                                            placeholder="Ketercapaian projek..." 
+                                            :disabled="!activePeriodeData.is_aktif"
+                                            @input="handleInput(siswa.id, activeTab)"
+                                            class="w-full rounded-xl text-[12px] font-semibold shadow-sm py-3 px-4 transition-colors outline-none disabled:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed bg-white border border-slate-200 focus:ring-amber-500/20 focus:border-amber-500 resize-y min-h-[80px]"
+                                        ></textarea>
+                                        <div class="absolute bottom-3 right-3 text-[10px] font-bold bg-white/90 backdrop-blur-sm rounded-lg px-2 py-1 shadow-[0_0_5px_rgba(0,0,0,0.05)] border border-slate-100 pointer-events-none">
+                                            <span v-if="saveStatus[siswa.id]?.[activeTab] === 'saving'" class="text-slate-400 animate-pulse flex items-center gap-1"><AppIcon name="clock" /> Menyimpan...</span>
+                                            <span v-else-if="saveStatus[siswa.id]?.[activeTab] === 'saved'" class="text-emerald-500 flex items-center gap-1"><AppIcon name="check" /> Tersimpan</span>
+                                            <span v-else class="text-slate-300 opacity-50"><AppIcon name="document-text" /></span>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr v-if="filteredStudents.length === 0">
-                            <td :colspan="pageData.periodes.length + 1" class="py-12 text-center text-slate-500 bg-slate-50/50">
-                                <div class="text-3xl mb-2"><AppIcon name="search" /></div>
-                                <div class="text-xs font-bold">Tidak ada siswa yang cocok.</div>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
+                            <tr v-if="filteredStudents.length === 0">
+                                <td colspan="3" class="py-12 text-center text-slate-500 bg-slate-50/50">
+                                    <div class="text-3xl mb-2"><AppIcon name="search" /></div>
+                                    <div class="text-xs font-bold">Tidak ada siswa yang cocok.</div>
+                                </td>
+                            </tr>
+                        </template>
                     </tbody>
                 </table>
             </div>
@@ -189,6 +209,11 @@ const pending = ref(true)
 const error = ref(null)
 const pageData = ref(null)
 const searchQuery = ref('')
+const activeTab = ref(null)
+
+const activePeriodeData = computed(() => {
+    return pageData.value?.periodes?.find(t => t.id === activeTab.value)
+})
 
 // State for inputs: formKo[siswa_id][titimangsa_id] = "keterangan"
 const formKo = ref({})
@@ -234,6 +259,9 @@ const fetchData = async () => {
             saveStatus.value = statusState
             
             pageData.value = response
+            if (response.periodes && response.periodes.length > 0 && !activeTab.value) {
+                activeTab.value = response.periodes[0].id
+            }
         } else {
             error.value = { message: response.message || 'Gagal memuat data.' }
         }

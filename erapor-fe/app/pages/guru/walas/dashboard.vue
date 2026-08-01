@@ -671,7 +671,7 @@ const walasWorkflow = computed(() => {
         {
             label: 'Monitor Nilai Mapel',
             desc: 'Pastikan seluruh guru mapel sudah menyelesaikan input nilai.',
-            emoji: '<AppIcon name="eye" />',
+            iconName: 'eye',
             active: true,
             done: false,
             to: '/guru/walas/monitoring'
@@ -679,7 +679,7 @@ const walasWorkflow = computed(() => {
         {
             label: 'Input Absensi',
             desc: 'Rekap kehadiran siswa jika tidak otomatis dari BK.',
-            emoji: '<AppIcon name="calendar" />',
+            iconName: 'calendar',
             active: true,
             done: false,
             to: '/guru/walas/rekap'
@@ -687,7 +687,7 @@ const walasWorkflow = computed(() => {
         {
             label: 'Input Ekstrakurikuler',
             desc: 'Masukkan nilai ekskul yang diikuti siswa.',
-            emoji: '<AppIcon name="presentation-chart-bar" />',
+            iconName: 'presentation-chart-bar',
             active: true,
             done: false,
             to: '/guru/walas/ekskul'
@@ -695,7 +695,7 @@ const walasWorkflow = computed(() => {
         {
             label: 'Catatan & Keputusan',
             desc: 'Isi catatan dan tentukan kelulusan/kenaikan kelas.',
-            emoji: '<AppIcon name="document-text" />',
+            iconName: 'document-text',
             active: true,
             done: false,
             to: '/guru/walas/catatan'
@@ -703,7 +703,7 @@ const walasWorkflow = computed(() => {
         {
             label: 'Cetak Rapor',
             desc: 'Hasilkan dokumen PDF rapor.',
-            emoji: '<AppIcon name="printer" />',
+            iconName: 'printer',
             active: true,
             done: false,
             to: '/guru/walas/rapor'
