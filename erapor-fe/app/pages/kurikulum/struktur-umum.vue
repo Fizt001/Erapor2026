@@ -7,9 +7,9 @@
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 shadow-sm z-20">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
           :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-amber-500 to-amber-600 text-white shadow-md shadow-amber-500/20 ring-2 ring-amber-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+          class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon :name="tab.icon" class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
-          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
 
@@ -22,7 +22,7 @@
                 <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg"><AppIcon name="book-open" class="w-5 h-5 text-white" /></div>
                 <div>
                     <h3 class="text-xs font-black uppercase tracking-widest text-white">Struktur Umum</h3>
-                    <p class="text-[9px] text-amber-100/90 font-semibold uppercase mt-0.5">Plotting Mapel Umum</p>
+                    <p class="text-[10px] text-amber-100/90 font-semibold uppercase mt-0.5">Plotting Mapel Umum</p>
                 </div>
             </div>
             
@@ -37,7 +37,7 @@
                     <option v-for="kur in kurikulums" :key="kur.id" :value="kur.id" class="text-slate-800">{{ kur.nama_kurikulum }}</option>
                 </select>
                 <div class="grid gap-1" :style="`grid-template-columns: repeat(${refTingkatKelas.length || 3}, minmax(0, 1fr))`">
-                    <button v-for="tk in refTingkatKelas" :key="tk.kode" @click="tingkat = tk.kode" :class="tingkat === tk.kode ? 'bg-white text-amber-700 shadow-sm' : 'bg-amber-900/40 text-amber-200 hover:bg-amber-900/60'" class="py-1 rounded-lg font-black text-[9px] uppercase tracking-widest transition-all">{{ tk.nama }}</button>
+                    <button v-for="tk in refTingkatKelas" :key="tk.kode" @click="tingkat = tk.kode" :class="tingkat === tk.kode ? 'bg-white text-amber-700 shadow-sm' : 'bg-amber-900/40 text-amber-200 hover:bg-amber-900/60'" class="py-1 rounded-lg font-black text-[10px] uppercase tracking-widest transition-all">{{ tk.nama }}</button>
                 </div>
             </div>
           </div>
@@ -95,7 +95,7 @@
                 <div class="w-10 h-10 rounded-2xl bg-amber-50 shadow-sm border border-amber-100 flex items-center justify-center text-xl hidden sm:flex text-amber-500"><AppIcon name="book-open" class="w-6 h-6" /></div>
                 <div>
                     <h3 class="text-[11px] sm:text-sm font-black uppercase tracking-widest text-amber-700">Database Struktur Umum</h3>
-                    <p class="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase mt-0.5">Daftar mapel umum Kelas {{ tingkat }}</p>
+                    <p class="text-[10px] sm:text-[10px] font-bold text-slate-400 uppercase mt-0.5">Daftar mapel umum Kelas {{ tingkat }}</p>
                 </div>
             </div>
             <button @click="fetchData" class="w-10 h-10 rounded-xl bg-slate-100 text-slate-500 flex items-center justify-center hover:bg-slate-200 hover:text-slate-700 font-bold transition-colors shrink-0" title="Refresh">
@@ -130,7 +130,7 @@
                         <div class="flex items-center gap-3">
                             <span class="w-8 h-8 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center font-black text-sm"><AppIcon name="folder" class="w-6 h-6" /></span>
                             <div>
-                                <p class="text-[9px] font-black uppercase text-slate-400 tracking-widest">Kelompok</p>
+                                <p class="text-[10px] font-black uppercase text-slate-400 tracking-widest">Kelompok</p>
                                 <h4 class="font-black text-slate-800 text-sm uppercase tracking-wider mt-0.5">{{ kelompok.nama }}</h4>
                             </div>
                         </div>
@@ -152,7 +152,7 @@
                                 </tr>
                                 <tr v-for="(struk, index) in filteredStrukturs(kelompok.kode)" :key="struk.id" class="hover:bg-slate-50/50 transition-colors bg-white group flex flex-col md:table-row border-b md:border-b-0 border-slate-100 p-4 md:p-0">
                                     <td class="p-0 md:p-4 md:pl-6 text-left md:text-center text-[11px] font-bold text-slate-400 flex items-center justify-between md:table-cell mb-2 md:mb-0">
-                                        <span class="md:hidden font-black uppercase tracking-widest text-[9px]">No</span>
+                                        <span class="md:hidden font-black uppercase tracking-widest text-[10px]">No</span>
                                         <span>{{ index + 1 }}</span>
                                     </td>
                                     <td class="p-0 md:p-4 flex flex-row md:table-cell items-center justify-between mb-2 md:mb-0 w-full">

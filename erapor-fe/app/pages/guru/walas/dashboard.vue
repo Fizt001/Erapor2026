@@ -7,8 +7,8 @@
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 shadow-sm z-20">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
           :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-amber-500 to-amber-600 text-white shadow-md shadow-amber-500/20 ring-2 ring-amber-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
-          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none mt-1">{{ tab.title }}</span>
+          class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none mt-1">{{ tab.title }}</span>
         </button>
       </div>
 
@@ -17,11 +17,11 @@
         <div class="p-6 space-y-6">
           
           <!-- Welcome Widget -->
-          <div class="bg-gradient-to-br from-sky-600 to-indigo-800 rounded-2xl p-5 shadow-sm text-white relative overflow-hidden">
+          <div class="bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl p-5 shadow-sm text-white relative overflow-hidden">
             <div class="relative z-10">
               <h2 class="text-lg font-extrabold mb-1">Halo, {{ dashboardData?.user?.name?.split(' ')[0] || 'Bapak/Ibu' }} <AppIcon name="hand-raised" /></h2>
-              <p class="text-sky-100 text-xs leading-relaxed">
-                Tahun Ajaran <span class="font-bold text-white bg-indigo-900/50 px-1.5 py-0.5 rounded">{{ dashboardData?.akademik?.tahun_ajaran || '...' }}</span>
+              <p class="text-amber-50 text-xs leading-relaxed">
+                Tahun Ajaran <span class="font-bold text-white bg-orange-900/40 px-1.5 py-0.5 rounded">{{ dashboardData?.akademik?.tahun_ajaran || '...' }}</span>
               </p>
             </div>
             <div class="absolute right-0 bottom-0 opacity-10">
@@ -37,7 +37,7 @@
                 <div class="w-8 h-8 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center text-sm font-black">WK</div>
                 <div>
                   <p class="font-bold text-slate-800 text-[11px] uppercase tracking-wider">Wali Kelas</p>
-                  <p class="text-[9px] text-slate-500 mt-0.5">Akses kelola siswa & cetak rapor</p>
+                  <p class="text-[10px] text-slate-500 mt-0.5">Akses kelola siswa & cetak rapor</p>
                 </div>
               </div>
 
@@ -131,13 +131,13 @@
                             <div>
                                 <div class="flex items-center gap-2 mb-1">
                                     <p class="text-xs font-black text-slate-800">{{ notif.siswa }}</p>
-                                    <span class="px-2 py-0.5 bg-rose-100 text-rose-700 text-[9px] font-black uppercase tracking-widest rounded">Baru</span>
+                                    <span class="px-2 py-0.5 bg-rose-100 text-rose-700 text-[10px] font-black uppercase tracking-widest rounded">Baru</span>
                                 </div>
                                 <p class="text-[11px] font-medium text-slate-600">{{ notif.deskripsi }}</p>
                             </div>
                             <div class="text-left sm:text-right shrink-0">
-                                <p class="text-[9px] font-black uppercase tracking-wider text-slate-400">Dilaporkan oleh: <span class="text-sky-600">{{ notif.guru }}</span></p>
-                                <p class="text-[9px] font-bold text-slate-400">{{ notif.waktu }}</p>
+                                <p class="text-[10px] font-black uppercase tracking-wider text-slate-400">Dilaporkan oleh: <span class="text-sky-600">{{ notif.guru }}</span></p>
+                                <p class="text-[10px] font-bold text-slate-400">{{ notif.waktu }}</p>
                             </div>
                         </div>
                     </div>
@@ -183,7 +183,7 @@
                             </div>
                         </div>
                         <!-- Indikator Warna -->
-                        <div class="flex items-center gap-2 text-[9px] font-black tracking-widest uppercase bg-white px-2.5 py-1.5 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="flex items-center gap-2 text-[10px] font-black tracking-widest uppercase bg-white px-2.5 py-1.5 rounded-xl border border-slate-200 shadow-sm">
                             <span class="flex items-center gap-1 text-emerald-600" title="Aman (>= 80)"><div class="w-2 h-2 rounded-full bg-emerald-500"></div> &ge;80</span>
                             <span class="flex items-center gap-1 text-amber-600" title="Waspada (70-79)"><div class="w-2 h-2 rounded-full bg-amber-500"></div> 70-79</span>
                             <span class="flex items-center gap-1 text-rose-600" title="Bahaya (< 70)"><div class="w-2 h-2 rounded-full bg-rose-500"></div> &lt;70</span>
@@ -211,7 +211,7 @@
                         </div>
                     </div>
                     <!-- Legend -->
-                    <div class="flex items-center gap-3 text-[9px] font-black tracking-widest uppercase bg-white px-3 py-2 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="flex items-center gap-3 text-[10px] font-black tracking-widest uppercase bg-white px-3 py-2 rounded-xl border border-slate-200 shadow-sm">
                         <span class="flex items-center gap-1.5 text-emerald-600"><div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div> Tuntas</span>
                         <span class="flex items-center gap-1.5 text-rose-600"><div class="w-2.5 h-2.5 rounded-full bg-rose-500"></div> Belum Tuntas</span>
                         <span class="flex items-center gap-1.5 text-slate-400"><div class="w-2.5 h-2.5 rounded-full bg-slate-300"></div> Abu-abu</span>
@@ -230,13 +230,13 @@
                             <!-- Inner Text -->
                             <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center px-2">
                                 <span v-if="kkm.kkm_set && kkm.has_data" class="text-lg font-black text-slate-800 leading-none">{{ kkm.percentageText }}</span>
-                                <span v-if="kkm.kkm_set && kkm.has_data" class="text-[8px] font-bold text-emerald-600 uppercase tracking-widest mt-1">Tuntas</span>
-                                <span v-if="!kkm.kkm_set" class="text-[9px] font-bold text-slate-400 uppercase leading-tight">KKM<br>Belum<br>Diseting</span>
-                                <span v-if="kkm.kkm_set && (!kkm.has_data || kkm.total === 0)" class="text-[9px] font-bold text-slate-400 uppercase leading-tight">Belum<br>Ada<br>Nilai</span>
+                                <span v-if="kkm.kkm_set && kkm.has_data" class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mt-1">Tuntas</span>
+                                <span v-if="!kkm.kkm_set" class="text-[10px] font-bold text-slate-400 uppercase leading-tight">KKM<br>Belum<br>Diseting</span>
+                                <span v-if="kkm.kkm_set && (!kkm.has_data || kkm.total === 0)" class="text-[10px] font-bold text-slate-400 uppercase leading-tight">Belum<br>Ada<br>Nilai</span>
                             </div>
                         </div>
                         <div v-if="kkm.kkm_set" class="text-center bg-slate-50 border border-slate-100 rounded-lg px-3 py-1.5 w-full">
-                            <p class="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Batas KKM: <span class="text-slate-800">{{ kkm.kkm_value }}</span></p>
+                            <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Batas KKM: <span class="text-slate-800">{{ kkm.kkm_value }}</span></p>
                         </div>
                     </div>
                 </div>
@@ -346,8 +346,8 @@
                                 <p class="text-[10px] text-slate-500 mt-0.5">Skor Risiko: <span class="font-bold text-rose-600">{{ p.skor_risiko }}</span></p>
                             </div>
                             <div class="text-right">
-                                <p class="text-[9px] font-black uppercase tracking-wider text-rose-500">{{ p.poin_pelanggaran }} Poin BK</p>
-                                <p class="text-[9px] font-black uppercase tracking-wider text-amber-500">{{ p.alpha }} Hari Alpha</p>
+                                <p class="text-[10px] font-black uppercase tracking-wider text-rose-500">{{ p.poin_pelanggaran }} Poin BK</p>
+                                <p class="text-[10px] font-black uppercase tracking-wider text-amber-500">{{ p.alpha }} Hari Alpha</p>
                             </div>
                         </div>
                     </div>
@@ -365,7 +365,7 @@
                     </div>
                     <div>
                       <div class="font-black text-slate-800 text-[11px] uppercase tracking-wide mb-0.5">Monitoring Nilai</div>
-                      <div class="text-[9px] font-bold text-slate-400 uppercase">Pantau kelengkapan mapel</div>
+                      <div class="text-[10px] font-bold text-slate-400 uppercase">Pantau kelengkapan mapel</div>
                     </div>
                   </div>
                 </NuxtLink>
@@ -376,7 +376,7 @@
                     </div>
                     <div>
                       <div class="font-black text-slate-800 text-[11px] uppercase tracking-wide mb-0.5">Kelola Biodata</div>
-                      <div class="text-[9px] font-bold text-slate-400 uppercase">Validasi data siswa</div>
+                      <div class="text-[10px] font-bold text-slate-400 uppercase">Validasi data siswa</div>
                     </div>
                   </div>
                 </NuxtLink>
@@ -387,7 +387,7 @@
                     </div>
                     <div>
                       <div class="font-black text-slate-800 text-[11px] uppercase tracking-wide mb-0.5">Cetak Rapor</div>
-                      <div class="text-[9px] font-bold text-slate-400 uppercase">Hasilkan dokumen resmi</div>
+                      <div class="text-[10px] font-bold text-slate-400 uppercase">Hasilkan dokumen resmi</div>
                     </div>
                   </div>
                 </NuxtLink>

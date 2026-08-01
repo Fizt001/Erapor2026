@@ -5,9 +5,9 @@
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 shadow-sm z-20">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
           :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-rose-500 to-rose-600 text-white shadow-md shadow-rose-500/20 ring-2 ring-rose-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+          class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon :name="tab.icon" class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
-          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
 
@@ -19,7 +19,7 @@
               <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="shield-check" class="w-5 h-5" /></div>
               <div class="relative z-10">
                   <h3 class="text-xs font-black uppercase tracking-widest text-white">Penanganan Kasus</h3>
-                  <p class="text-[9px] text-rose-100 font-semibold uppercase mt-0.5">Evaluasi Akhir Tingkat Kurikulum</p>
+                  <p class="text-[10px] text-rose-100 font-semibold uppercase mt-0.5">Evaluasi Akhir Tingkat Kurikulum</p>
               </div>
               <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
                 <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>

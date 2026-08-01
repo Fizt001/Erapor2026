@@ -9,7 +9,7 @@
           :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-rose-500 to-rose-600 text-white shadow-md shadow-rose-500/20 ring-2 ring-rose-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
           class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <span class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''">{{ tab.icon }}</span>
-          <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
 
@@ -58,7 +58,7 @@
 
             <!-- Form Edit/Tambah -->
             <div class="bg-rose-50/50 p-4 rounded-2xl border border-rose-100 relative">
-                <div v-if="editId" class="absolute -top-3 left-4 bg-amber-100 text-amber-700 border border-amber-200 text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full flex items-center gap-1 shadow-sm">
+                <div v-if="editId" class="absolute -top-3 left-4 bg-amber-100 text-amber-700 border border-amber-200 text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full flex items-center gap-1 shadow-sm">
                     <span class="animate-pulse">✏️</span> Mode Edit
                 </div>
 
@@ -139,7 +139,7 @@
 
             <table v-else class="w-full text-left border-collapse">
                 <thead class="sticky top-0 z-20 bg-slate-100/90 backdrop-blur-md shadow-sm border-b border-slate-200">
-                    <tr class="text-[9px] font-black uppercase tracking-widest text-slate-400">
+                    <tr class="text-[10px] font-black uppercase tracking-widest text-slate-400">
                         <th class="p-4 pl-6 w-16">No</th>
                         <th class="p-4">Nama Pelanggaran</th>
                         <th class="p-4 w-32">Kategori</th>
@@ -154,7 +154,7 @@
                             <p class="font-bold text-slate-800 text-[12px] leading-relaxed max-w-lg">{{ p.nama_pelanggaran }}</p>
                         </td>
                         <td class="p-4">
-                            <span class="inline-flex items-center px-2 py-1 rounded-md text-[9px] font-black tracking-widest uppercase border"
+                            <span class="inline-flex items-center px-2 py-1 rounded-md text-[10px] font-black tracking-widest uppercase border"
                                 :class="{
                                     'bg-amber-50 text-amber-600 border-amber-200': p.jenis === 'Ringan',
                                     'bg-orange-50 text-orange-600 border-orange-200': p.jenis === 'Sedang',

@@ -7,9 +7,9 @@
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 shadow-sm z-20">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
           :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-amber-500 to-amber-600 text-white shadow-md shadow-amber-500/20 ring-2 ring-amber-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+          class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon :name="tab.icon" class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
-          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
 
@@ -21,7 +21,7 @@
             <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="user-plus" class="w-5 h-5" /></div>
             <div class="relative z-10">
                 <h3 class="text-xs font-black uppercase tracking-widest text-white">{{ isEditing ? 'Edit Ekskul' : 'Ekskul Baru' }}</h3>
-                <p class="text-[9px] text-amber-100 font-semibold uppercase mt-0.5">{{ isEditing ? 'Perbarui Data' : 'Tambah Data Manual' }}</p>
+                <p class="text-[10px] text-amber-100 font-semibold uppercase mt-0.5">{{ isEditing ? 'Perbarui Data' : 'Tambah Data Manual' }}</p>
             </div>
             <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
               <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path></svg>
@@ -65,7 +65,7 @@
                 <div class="w-10 h-10 rounded-2xl bg-amber-50 shadow-sm border border-amber-100 flex items-center justify-center text-xl hidden sm:flex text-amber-500"><AppIcon name="user-plus" class="w-6 h-6" /></div>
                 <div>
                     <h3 class="text-[11px] sm:text-sm font-black uppercase tracking-widest text-amber-700">Database Ekstrakurikuler</h3>
-                    <p class="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase mt-0.5">Semua data ekstrakurikuler</p>
+                    <p class="text-[10px] sm:text-[10px] font-bold text-slate-400 uppercase mt-0.5">Semua data ekstrakurikuler</p>
                 </div>
             </div>
             <button @click="fetchData" class="w-10 h-10 rounded-xl bg-slate-100 text-slate-500 flex items-center justify-center hover:bg-slate-200 hover:text-slate-700 font-bold transition-colors shrink-0" title="Refresh">
@@ -84,7 +84,7 @@
             <!-- Table Content -->
             <table v-else class="w-full text-left border-collapse min-w-full">
                 <thead class="hidden sm:table-header-group sticky top-0 z-10 bg-slate-50 border-b border-slate-200 shadow-sm">
-                    <tr class="text-[9px] uppercase tracking-widest font-black text-slate-500">
+                    <tr class="text-[10px] uppercase tracking-widest font-black text-slate-500">
                         <th class="py-3 px-4 w-16 text-center">No</th>
                         <th class="py-3 px-4">Informasi Ekskul</th>
                         <th class="py-3 px-4 text-center w-24">Aksi</th>
@@ -99,14 +99,14 @@
                     </tr>
                      <tr v-for="(item, index) in ekskuls" :key="item.id" class="border-b border-slate-100 hover:bg-slate-50/80 transition-colors bg-white group flex flex-col sm:table-row p-4 sm:p-0 relative">
                         <td class="px-0 py-1 sm:p-4 text-left sm:text-center text-[11px] font-bold text-slate-400 flex sm:table-cell items-center justify-between mb-2 sm:mb-0">
-                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nomor</span>
+                            <span class="sm:hidden text-[10px] font-black uppercase tracking-widest text-slate-400">Nomor</span>
                             <span>{{ index + 1 }}</span>
                         </td>
                         <td class="px-0 py-1 sm:p-4 flex flex-row sm:table-cell items-center justify-between mb-2 sm:mb-0 w-full">
                             <div class="flex items-center gap-2">
                                 <span class="font-black text-slate-800 text-xs sm:text-sm">{{ item.nama_ekskul }}</span>
                             </div>
-                            <span class="text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded bg-slate-100 text-slate-500 border border-slate-200 shadow-sm leading-none">
+                            <span class="text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded bg-slate-100 text-slate-500 border border-slate-200 shadow-sm leading-none">
                                 Pembina: {{ item.nama_pembina || '-' }}
                             </span>
                         </td>

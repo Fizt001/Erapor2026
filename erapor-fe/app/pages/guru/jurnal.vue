@@ -7,9 +7,9 @@
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 z-20 shadow-sm">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
           :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-sky-500 to-sky-600 text-white shadow-md shadow-sky-500/20 ring-2 ring-sky-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+          class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon :name="tab.icon" class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
-          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
 
@@ -22,7 +22,7 @@
             <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="book-open" class="w-5 h-5" /></div>
             <div class="relative z-10">
                 <h3 class="text-xs font-black uppercase tracking-widest text-white">Jurnal Mengajar</h3>
-                <p class="text-[9px] text-sky-100 font-semibold uppercase mt-0.5">Rekapitulasi Absensi</p>
+                <p class="text-[10px] text-sky-100 font-semibold uppercase mt-0.5">Rekapitulasi Absensi</p>
             </div>
             <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
               <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
@@ -63,7 +63,7 @@
                   {{ pertemuans.length }}x
                 </span>
               </div>
-              <button @click="showDetail('Semester ' + (activeSemester === 'ganjil' ? 'Ganjil' : 'Genap'), mapelKelas, pertemuans)" class="w-full py-1.5 bg-slate-50 hover:bg-sky-50 text-slate-500 hover:text-sky-600 rounded-lg text-[9px] font-black uppercase tracking-widest transition-colors flex items-center justify-center">
+              <button @click="showDetail('Semester ' + (activeSemester === 'ganjil' ? 'Ganjil' : 'Genap'), mapelKelas, pertemuans)" class="w-full py-1.5 bg-slate-50 hover:bg-sky-50 text-slate-500 hover:text-sky-600 rounded-lg text-[10px] font-black uppercase tracking-widest transition-colors flex items-center justify-center">
                 <AppIcon name="eye" class="w-3.5 h-3.5 mr-1" /> Rincian
               </button>
             </div>
@@ -99,7 +99,7 @@
                     <h3 class="font-black text-slate-700 text-[11px] uppercase tracking-widest flex items-center">
                       <AppIcon name="calendar" class="w-4 h-4 mr-2 text-sky-500" /> {{ bulan.name }}
                     </h3>
-                    <span class="bg-white border border-slate-200 text-slate-500 text-[9px] px-2.5 py-0.5 rounded font-bold shadow-sm uppercase tracking-widest">
+                    <span class="bg-white border border-slate-200 text-slate-500 text-[10px] px-2.5 py-0.5 rounded font-bold shadow-sm uppercase tracking-widest">
                       {{ countKeys(activeData.bulanan[bulan.code]) }} Kelas/Mapel
                     </span>
                   </div>
@@ -113,7 +113,7 @@
                     <div v-else class="overflow-x-auto custom-scrollbar">
                       <table class="w-full text-left border-collapse min-w-[500px]">
                         <thead>
-                          <tr class="bg-white text-[9px] font-black uppercase tracking-widest text-slate-400 border-b border-slate-100">
+                          <tr class="bg-white text-[10px] font-black uppercase tracking-widest text-slate-400 border-b border-slate-100">
                             <th class="px-5 py-3 w-[60px] text-center border-r border-slate-100">No</th>
                             <th class="px-5 py-3 border-r border-slate-100">Rombongan Belajar / Mapel</th>
                             <th class="px-5 py-3 w-[120px] text-center border-r border-slate-100">Total</th>
@@ -132,7 +132,7 @@
                               </span>
                             </td>
                             <td class="px-5 py-3 text-center">
-                              <button @click="showDetail(bulan.name, mapelKelas, pertemuans)" class="text-sky-500 hover:text-sky-600 hover:bg-sky-50 transition-colors px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest" title="Lihat Rincian Tanggal">
+                              <button @click="showDetail(bulan.name, mapelKelas, pertemuans)" class="text-sky-500 hover:text-sky-600 hover:bg-sky-50 transition-colors px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest" title="Lihat Rincian Tanggal">
                                 Rincian
                               </button>
                             </td>
@@ -176,7 +176,7 @@
                     <AppIcon name="clock" class="w-3.5 h-3.5 mr-1.5 opacity-60" /> {{ item.jam }}
                   </div>
                 </div>
-                <div class="text-[9px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-black border border-slate-200 whitespace-nowrap shrink-0 uppercase tracking-widest">
+                <div class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-black border border-slate-200 whitespace-nowrap shrink-0 uppercase tracking-widest">
                   Pert. #{{ idx + 1 }}
                 </div>
               </div>

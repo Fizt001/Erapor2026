@@ -6,13 +6,13 @@
       
       <!-- MOBILE VIEW TABS -->
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 shadow-sm z-20">
-        <button type="button" @click="activeTab = 'generate'" :class="activeTab === 'generate' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+        <button type="button" @click="activeTab = 'generate'" :class="activeTab === 'generate' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon name="shield" class="text-lg mb-0.5 transition-transform" :class="activeTab === 'generate' ? 'scale-110' : ''" />
-          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none text-center leading-none">Generate</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none text-center leading-none">Generate</span>
         </button>
-        <button type="button" @click="activeTab = 'riwayat'" :class="activeTab === 'riwayat' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+        <button type="button" @click="activeTab = 'riwayat'" :class="activeTab === 'riwayat' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon name="clipboard" class="text-lg mb-0.5 transition-transform" :class="activeTab === 'riwayat' ? 'scale-110' : ''" />
-          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none text-center leading-none">Riwayat</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none text-center leading-none">Riwayat</span>
         </button>
       </div>
 
@@ -24,7 +24,7 @@
             <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="shield" class="w-5 h-5" />️</div>
             <div class="relative z-10">
                 <h3 class="text-xs font-black uppercase tracking-widest text-white">Generate Backup</h3>
-                <p class="text-[9px] text-teal-100 font-semibold uppercase mt-0.5" :class="activeRole === 'admin' ? 'text-yellow-200' : 'text-teal-100'">{{ activeRole === 'admin' ? '⚡ Full Database' : 'Pilih Konteks Data' }}</p>
+                <p class="text-[10px] text-teal-100 font-semibold uppercase mt-0.5" :class="activeRole === 'admin' ? 'text-yellow-200' : 'text-teal-100'">{{ activeRole === 'admin' ? '⚡ Full Database' : 'Pilih Konteks Data' }}</p>
             </div>
             <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
               <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 11v2h-2v2h2v2h-2v2h-2v-2h-2v2h-2v-2H9v2H7v-2H5v-2h2v-2H5v-2h2V9H5V7h2V5h2v2h2V5h2v2h2V5h2v2h2v2h-2v2h2zm-2-2h-2v2h2V9zm-4 4h-2v2h2v-2zm-4-4H7v2h2V9z"></path></svg>
@@ -43,7 +43,7 @@
                 >
                     <div class="w-8 h-8 rounded-lg flex items-center justify-center text-xl mb-1.5" :class="activeRole === 'admin' ? 'bg-emerald-100 text-emerald-600' : 'bg-slate-100 grayscale opacity-70 group-hover:grayscale-0'"><AppIcon name="cog" />️</div>
                     <p class="font-black text-[11px] text-slate-800">Admin</p>
-                    <p class="text-[8px] uppercase font-bold text-slate-500 leading-tight">Master Data</p>
+                    <p class="text-[10px] uppercase font-bold text-slate-500 leading-tight">Master Data</p>
                     <div v-if="activeRole === 'admin'" class="absolute top-2 right-2.5 text-emerald-500 font-bold text-xs"><AppIcon name="check" /></div>
                 </button>
                 
@@ -55,7 +55,7 @@
                 >
                     <div class="w-8 h-8 rounded-lg flex items-center justify-center text-xl mb-1.5" :class="activeRole === 'kurikulum' ? 'bg-blue-100 text-blue-600' : 'bg-slate-100 grayscale opacity-70 group-hover:grayscale-0'"><AppIcon name="book" /></div>
                     <p class="font-black text-[11px] text-slate-800">Kurikulum</p>
-                    <p class="text-[8px] uppercase font-bold text-slate-500 leading-tight">Struktur & Pengampu</p>
+                    <p class="text-[10px] uppercase font-bold text-slate-500 leading-tight">Struktur & Pengampu</p>
                     <div v-if="activeRole === 'kurikulum'" class="absolute top-2 right-2.5 text-blue-500 font-bold text-xs"><AppIcon name="check" /></div>
                 </button>
 
@@ -67,7 +67,7 @@
                 >
                     <div class="w-8 h-8 rounded-lg flex items-center justify-center text-xl mb-1.5" :class="activeRole === 'guru' ? 'bg-amber-100 text-amber-600' : 'bg-slate-100 grayscale opacity-70 group-hover:grayscale-0'"><AppIcon name="academic-cap" /></div>
                     <p class="font-black text-[11px] text-slate-800">Guru</p>
-                    <p class="text-[8px] uppercase font-bold text-slate-500 leading-tight">Nilai & TP</p>
+                    <p class="text-[10px] uppercase font-bold text-slate-500 leading-tight">Nilai & TP</p>
                     <div v-if="activeRole === 'guru'" class="absolute top-2 right-2.5 text-amber-500 font-bold text-xs"><AppIcon name="check" /></div>
                 </button>
 
@@ -79,7 +79,7 @@
                 >
                     <div class="w-8 h-8 rounded-lg flex items-center justify-center text-xl mb-1.5" :class="activeRole === 'walikelas' ? 'bg-purple-100 text-purple-600' : 'bg-slate-100 grayscale opacity-70 group-hover:grayscale-0'"><AppIcon name="user" />‍<AppIcon name="user" />‍<AppIcon name="user" />‍<AppIcon name="user" /></div>
                     <p class="font-black text-[11px] text-slate-800">Wali Kelas</p>
-                    <p class="text-[8px] uppercase font-bold text-slate-500 leading-tight">Absensi & Ekskul</p>
+                    <p class="text-[10px] uppercase font-bold text-slate-500 leading-tight">Absensi & Ekskul</p>
                     <div v-if="activeRole === 'walikelas'" class="absolute top-2 right-2.5 text-purple-500 font-bold text-xs"><AppIcon name="check" /></div>
                 </button>
 
@@ -91,7 +91,7 @@
                 >
                     <div class="w-8 h-8 rounded-lg flex items-center justify-center text-xl mb-1.5" :class="activeRole === 'bk' ? 'bg-rose-100 text-rose-600' : 'bg-slate-100 grayscale opacity-70 group-hover:grayscale-0'"><AppIcon name="shield" />️</div>
                     <p class="font-black text-[11px] text-slate-800">Konseling</p>
-                    <p class="text-[8px] uppercase font-bold text-slate-500 leading-tight">Poin & Kasus</p>
+                    <p class="text-[10px] uppercase font-bold text-slate-500 leading-tight">Poin & Kasus</p>
                     <div v-if="activeRole === 'bk'" class="absolute top-2 right-2.5 text-rose-500 font-bold text-xs"><AppIcon name="check" /></div>
                 </button>
 
@@ -103,7 +103,7 @@
                 >
                     <div class="w-8 h-8 rounded-lg flex items-center justify-center text-xl mb-1.5" :class="activeRole === 'siswa' ? 'bg-indigo-100 text-indigo-600' : 'bg-slate-100 grayscale opacity-70 group-hover:grayscale-0'"><AppIcon name="academic-cap" /></div>
                     <p class="font-black text-[11px] text-slate-800">Siswa</p>
-                    <p class="text-[8px] uppercase font-bold text-slate-500 leading-tight">Rapor Akademik</p>
+                    <p class="text-[10px] uppercase font-bold text-slate-500 leading-tight">Rapor Akademik</p>
                     <div v-if="activeRole === 'siswa'" class="absolute top-2 right-2.5 text-indigo-500 font-bold text-xs"><AppIcon name="check" /></div>
                 </button>
             </div>
@@ -117,7 +117,7 @@
                     <div class="w-8 h-8 rounded-lg flex items-center justify-center text-xl mr-3" :class="activeRole === 'kepsek' ? 'bg-teal-100 text-teal-600' : 'bg-slate-100 grayscale opacity-70 group-hover:grayscale-0'"><AppIcon name="building" /></div>
                     <div>
                         <p class="font-black text-xs text-slate-800">Kepala Sekolah</p>
-                        <p class="text-[9px] uppercase font-bold text-slate-500 mt-0.5">Laporan & Evaluasi</p>
+                        <p class="text-[10px] uppercase font-bold text-slate-500 mt-0.5">Laporan & Evaluasi</p>
                     </div>
                     <div v-if="activeRole === 'kepsek'" class="absolute right-3 text-teal-500 font-bold"><AppIcon name="check" /></div>
                 </button>
@@ -129,8 +129,8 @@
                 <span class="text-amber-500 text-lg shrink-0">⚡</span>
                 <div>
                     <p class="text-[10px] font-black text-amber-800 uppercase tracking-wide">Full Database Backup</p>
-                    <p class="text-[9px] text-amber-600 mt-0.5">Melakukan backup seluruh tabel database. Foto/file di-backup manual.</p>
-                    <button @click="openStorageFolder" class="mt-2 text-[9px] font-black text-amber-700 underline flex items-center gap-1 hover:text-amber-900 transition-colors">
+                    <p class="text-[10px] text-amber-600 mt-0.5">Melakukan backup seluruh tabel database. Foto/file di-backup manual.</p>
+                    <button @click="openStorageFolder" class="mt-2 text-[10px] font-black text-amber-700 underline flex items-center gap-1 hover:text-amber-900 transition-colors">
                         <AppIcon name="folder-open" class="w-3 h-3" /> Buka Folder Upload (Foto/File)
                     </button>
                 </div>
@@ -174,7 +174,7 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-2 w-full sm:w-auto">
-                    <button @click="triggerUpload" class="flex-1 sm:flex-none h-9 px-3.5 rounded-lg bg-indigo-50 text-indigo-600 font-black text-[9px] uppercase tracking-widest flex items-center justify-center gap-1.5 hover:bg-indigo-100 transition-colors border border-indigo-200 shadow-sm">
+                    <button @click="triggerUpload" class="flex-1 sm:flex-none h-9 px-3.5 rounded-lg bg-indigo-50 text-indigo-600 font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-1.5 hover:bg-indigo-100 transition-colors border border-indigo-200 shadow-sm">
                         <AppIcon name="outbox" class="w-4 h-4" /> <span>Upload</span>
                     </button>
                     <input type="file" ref="fileInput" class="hidden" accept=".json" @change="handleFileUpload">
@@ -203,7 +203,7 @@
         <div v-else class="flex-1 overflow-y-auto overflow-x-auto custom-scrollbar relative bg-white">
             <table class="w-full text-left border-collapse min-w-[600px] whitespace-nowrap">
                 <thead class="sticky top-0 z-10 bg-slate-50 border-b border-slate-200 shadow-sm">
-                    <tr class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-500">
+                    <tr class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">
                         <th class="p-4 w-16 text-center">#</th>
                         <th class="p-4">Informasi File</th>
                         <th class="p-4">Waktu Arsip</th>
@@ -221,16 +221,16 @@
                                 <div>
                                     <p class="font-black text-slate-800 font-mono text-xs">{{ backup.filename }}</p>
                                     <div class="flex items-center gap-2 mt-1">
-                                        <span class="text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded bg-slate-100 text-slate-500 border border-slate-200">{{ backup.size }}</span>
-                                        <span class="text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded border" :class="getRoleColorBadge(backup.role)">{{ backup.role }}</span>
-                                        <span class="text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded border border-slate-200 bg-slate-800 text-white">{{ backup.mode }}</span>
+                                        <span class="text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded bg-slate-100 text-slate-500 border border-slate-200">{{ backup.size }}</span>
+                                        <span class="text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded border" :class="getRoleColorBadge(backup.role)">{{ backup.role }}</span>
+                                        <span class="text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded border border-slate-200 bg-slate-800 text-white">{{ backup.mode }}</span>
                                     </div>
                                 </div>
                             </div>
                         </td>
                         <td class="p-4">
                             <p class="text-[11px] font-bold text-slate-700">{{ formatDate(backup.timestamp) }}</p>
-                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">{{ formatTime(backup.timestamp) }}</p>
+                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">{{ formatTime(backup.timestamp) }}</p>
                         </td>
                         <td class="p-4 text-center">
                             <div class="flex items-center justify-center gap-2 opacity-100 xl:opacity-0 xl:group-hover:opacity-100 transition-opacity">

@@ -6,13 +6,13 @@
         
         <!-- MOBILE VIEW TABS -->
         <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 shadow-sm z-20">
-            <button type="button" @click="activeTab = 'filter'" :class="activeTab === 'filter' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+            <button type="button" @click="activeTab = 'filter'" :class="activeTab === 'filter' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
               <AppIcon name="magnifying-glass" class="text-lg mb-0.5 transition-transform" :class="activeTab === 'filter' ? 'scale-110' : ''" />
-              <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">Filter Data</span>
+              <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">Filter Data</span>
             </button>
-            <button type="button" @click="activeTab = 'preview'" :class="activeTab === 'preview' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+            <button type="button" @click="activeTab = 'preview'" :class="activeTab === 'preview' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
               <AppIcon name="document-text" class="text-lg mb-0.5 transition-transform" :class="activeTab === 'preview' ? 'scale-110' : ''" />
-              <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">Preview Buku</span>
+              <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">Preview Buku</span>
             </button>
         </div>
 
@@ -23,7 +23,7 @@
                 <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="magnifying-glass" class="w-5 h-5" /></div>
                 <div class="relative z-10">
                     <h3 class="text-xs font-black uppercase tracking-widest text-white">Filter Data</h3>
-                    <p class="text-[9px] text-teal-100 font-semibold uppercase mt-0.5">Pilih Tahun & Kurikulum</p>
+                    <p class="text-[10px] text-teal-100 font-semibold uppercase mt-0.5">Pilih Tahun & Kurikulum</p>
                 </div>
                 <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
                   <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
@@ -66,7 +66,7 @@
                          </div>
                          <div class="overflow-hidden">
                              <p class="text-xs font-bold truncate text-slate-800" :class="currentStudentIndex === index ? 'text-emerald-700' : ''">{{ siswa.nama_lengkap }}</p>
-                             <p class="text-[9px] font-black uppercase tracking-widest text-slate-400 mt-0.5">NISN: {{ siswa.nisn || '-' }}</p>
+                             <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-0.5">NISN: {{ siswa.nisn || '-' }}</p>
                          </div>
                     </div>
                 </div>
@@ -116,7 +116,7 @@
                                 <h2 class="text-[15px] font-bold font-serif text-black leading-tight">HASIL PRESTASI BELAJAR SISWA {{ sekolah?.nama_sekolah || "NAMA SEKOLAH" }}</h2>
                                 <p class="text-[10px] font-serif text-black mt-1">{{ sekolah?.alamat || "Alamat Sekolah" }} Telp {{ sekolah?.telepon || "-" }}</p>
                             </div>
-                            <div class="w-1/4 flex flex-col justify-end text-[9px] font-sans text-black gap-0.5">
+                            <div class="w-1/4 flex flex-col justify-end text-[10px] font-sans text-black gap-0.5">
                                 <div class="flex"><div class="w-32">Bidang Studi Keahlian</div><div>: {{ currentKelas?.kejuruan?.program?.bidang?.nama_bidang || "-" }}</div></div>
                                 <div class="flex"><div class="w-32">Program Studi Keahlian</div><div>: {{ currentKelas?.kejuruan?.program?.nama_program || "-" }}</div></div>
                                 <div class="flex"><div class="w-32">Kompetensi Keahlian</div><div>: {{ currentKelas?.kejuruan?.nama_konsentrasi || "-" }}</div></div>
@@ -129,7 +129,7 @@
 
                         <div class="flex w-full items-stretch">
                             <!-- KIRI: BIODATA (22%) -->
-                            <div class="w-[22%] pr-6 text-[9px] text-black font-sans shrink-0 leading-tight">
+                            <div class="w-[22%] pr-6 text-[10px] text-black font-sans shrink-0 leading-tight">
                                 <div class="flex mb-0.5"><div class="w-32">NISN</div><div>: {{ currentStudent.nisn || "-" }}</div></div>
                                 <div class="flex mb-3"><div class="w-32">NIS</div><div>: {{ currentStudent.nis || "-" }}</div></div>
                                 

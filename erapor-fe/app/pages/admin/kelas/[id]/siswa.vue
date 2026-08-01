@@ -6,15 +6,15 @@
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 shadow-sm z-20">
         <button type="button" @click="activeTab = 'table'"
           :class="activeTab === 'table' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+          class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <div class="text-lg mb-0.5 transition-transform" :class="activeTab === 'table' ? 'scale-110' : ''"><AppIcon name="user" />‍<AppIcon name="academic-cap" /></div>
-          <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">Anggota Kelas</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">Anggota Kelas</span>
         </button>
         <button type="button" @click="activeTab = 'form'"
           :class="activeTab === 'form' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+          class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon name="inbox" class="text-lg mb-0.5 transition-transform" :class="activeTab === 'form' ? 'scale-110' : ''" />
-          <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">Tarik User</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">Tarik User</span>
         </button>
       </div>
 
@@ -26,7 +26,7 @@
             <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="inbox" class="w-5 h-5" /></div>
             <div class="relative z-10">
                 <h3 class="text-xs font-black uppercase tracking-widest text-white">Tarik User</h3>
-                <p class="text-[9px] text-teal-100 font-semibold uppercase mt-0.5">Tambah Siswa Ke Kelas</p>
+                <p class="text-[10px] text-teal-100 font-semibold uppercase mt-0.5">Tambah Siswa Ke Kelas</p>
             </div>
             <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
               <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path></svg>
@@ -52,7 +52,7 @@
                         <input type="checkbox" :value="u.id" v-model="selectedUsers" class="w-4 h-4 text-emerald-600 rounded border-slate-300 pointer-events-auto focus:ring-emerald-500 focus:ring-2 mt-0.5 shrink-0 transition-all">
                         <div class="flex-1 min-w-0">
                             <p class="text-xs font-black text-slate-800 truncate" :class="{'text-emerald-700': selectedUsers.includes(u.id)}">{{ u.name }}</p>
-                            <p class="text-[9px] font-bold text-slate-400 mt-0.5 truncate uppercase tracking-wider">{{ u.email || u.username || '-' }}</p>
+                            <p class="text-[10px] font-bold text-slate-400 mt-0.5 truncate uppercase tracking-wider">{{ u.email || u.username || '-' }}</p>
                             <div class="mt-2 pointer-events-auto">
                                 <input type="text" v-model="bulkNis[u.id]" @input="autoCheck(u.id)" placeholder="NIS (WAJIB)" class="w-full px-2.5 py-1.5 rounded-lg border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-[11px] font-bold text-slate-800 outline-none uppercase tracking-wider placeholder-slate-400">
                             </div>
@@ -134,26 +134,26 @@
                             <tbody class="text-sm flex flex-col sm:table-row-group">
                                 <tr v-for="(s, index) in paginatedStudents" :key="s.id" class="border-b border-slate-50 hover:bg-slate-50/50 transition-colors group bg-white flex flex-col sm:table-row p-4 sm:p-0 relative">
                                     <td class="px-0 py-1 sm:p-4 sm:pl-6 text-left sm:text-center text-xs font-bold text-slate-400 flex sm:table-cell items-center justify-between">
-                                        <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nomor</span>
+                                        <span class="sm:hidden text-[10px] font-black uppercase tracking-widest text-slate-400">Nomor</span>
                                         <span>{{ (currentPage - 1) * itemsPerPage + index + 1 }}</span>
                                     </td>
                                     <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-2 sm:pb-4 mb-1 sm:mb-0">
-                                        <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nama Siswa</span>
+                                        <span class="sm:hidden text-[10px] font-black uppercase tracking-widest text-slate-400">Nama Siswa</span>
                                         <p class="font-black text-slate-800 text-[13px]">{{ s.user?.name || 'Unknown' }}</p>
                                     </td>
                                     <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-2 sm:pb-4 mb-1 sm:mb-0 sm:text-center">
-                                        <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">NIS</span>
+                                        <span class="sm:hidden text-[10px] font-black uppercase tracking-widest text-slate-400">NIS</span>
                                         <span class="inline-flex items-center px-2.5 py-1.5 rounded-md bg-slate-100 text-slate-600 text-[11px] font-black uppercase tracking-widest border border-slate-200">
                                             {{ s.nis }}
                                         </span>
                                     </td>
                                     <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-3 sm:pb-4 mb-2 sm:mb-0 sm:text-center">
-                                        <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Status</span>
+                                        <span class="sm:hidden text-[10px] font-black uppercase tracking-widest text-slate-400">Status</span>
                                         <div class="flex flex-col items-end sm:items-center justify-center">
                                             <span :class="s.status_siswa === 'aktif' ? 'bg-emerald-100 text-emerald-700 border-emerald-200' : 'bg-rose-100 text-rose-700 border-rose-200'" class="inline-flex items-center px-2.5 py-1.5 rounded-md text-[11px] font-black uppercase tracking-widest border">
                                                 {{ s.status_siswa === 'pindah_sekolah' ? 'PINDAH SEKOLAH' : (s.status_siswa || 'aktif') }}
                                             </span>
-                                            <span v-if="s.status_siswa !== 'aktif' && s.alasan_keluar" class="text-[9px] text-rose-500 font-bold mt-1 max-w-[120px] truncate" :title="s.alasan_keluar">{{ s.alasan_keluar }}</span>
+                                            <span v-if="s.status_siswa !== 'aktif' && s.alasan_keluar" class="text-[10px] text-rose-500 font-bold mt-1 max-w-[120px] truncate" :title="s.alasan_keluar">{{ s.alasan_keluar }}</span>
                                         </div>
                                     </td>
                                     <td class="px-0 pt-2 sm:p-4 text-center border-t sm:border-0 border-slate-100 mt-2 sm:mt-0 flex sm:table-cell justify-end w-full sm:w-32">
@@ -210,7 +210,7 @@
                             <option value="keluar">Keluar</option>
                             <option value="dikeluarkan">Dikeluarkan</option>
                         </select>
-                        <p class="text-[9px] text-slate-400 mt-2 font-bold leading-relaxed">
+                        <p class="text-[10px] text-slate-400 mt-2 font-bold leading-relaxed">
                             Gunakan tombol Mutasi (<AppIcon name="arrow-path" />) untuk mencatat alasan dan tanggal keluar secara detail.
                         </p>
                     </div>

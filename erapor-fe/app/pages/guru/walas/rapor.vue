@@ -7,9 +7,9 @@
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 z-20 shadow-sm">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
           :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-sky-500 to-sky-600 text-white shadow-md shadow-sky-500/20 ring-2 ring-sky-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+          class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon :name="tab.icon" class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
-          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
 
@@ -152,7 +152,7 @@
                     </td>
                     <td class="py-3 px-4 border-r border-slate-100">
                       <div class="text-[11px] font-bold text-slate-600">{{ siswa.nisn || '-' }}</div>
-                      <div class="text-[9px] font-bold text-slate-400 tracking-widest uppercase mt-0.5">{{ siswa.nis || '-' }}</div>
+                      <div class="text-[10px] font-bold text-slate-400 tracking-widest uppercase mt-0.5">{{ siswa.nis || '-' }}</div>
                     </td>
                     <td class="py-3 px-4 text-center bg-slate-50/30">
                       <button 
@@ -192,7 +192,7 @@
                   <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-x-auto custom-scrollbar print:overflow-visible print:border-none print:shadow-none print:rounded-none">
                       <table class="w-full text-left border-collapse min-w-[1200px] print:min-w-0 table-fixed">
                           <thead class="sticky top-0 z-20 print:static">
-                              <tr class="text-[10px] font-black uppercase tracking-widest text-slate-500 bg-slate-100 print:text-[8px] print:text-black border-b border-slate-200">
+                              <tr class="text-[10px] font-black uppercase tracking-widest text-slate-500 bg-slate-100 print:text-[10px] print:text-black border-b border-slate-200">
                                   <th rowspan="2" class="w-[20%] py-3 px-4 border-r border-slate-200 align-middle text-center sticky left-0 bg-slate-100 z-30 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.05)] print:static print:bg-transparent print:border-black print:shadow-none">NAMA SISWA</th>
                                   <template v-for="(grup, key) in legerData.dataTabel" :key="key">
                                       <th v-if="grup.items.length > 0" :colspan="grup.items.length" class="py-2 px-2 border-r border-slate-200 text-center bg-indigo-50/50 text-indigo-700 print:bg-transparent print:border-black print:text-black">
@@ -201,7 +201,7 @@
                                   </template>
                                   <th colspan="3" class="py-2 px-2 text-center bg-slate-700 text-white print:bg-slate-300 print:text-black print:border-black">REKAPITULASI</th>
                               </tr>
-                              <tr class="text-[9px] font-bold uppercase print:text-[7px] print:text-black border-b border-slate-200 bg-slate-50">
+                              <tr class="text-[10px] font-bold uppercase print:text-[7px] print:text-black border-b border-slate-200 bg-slate-50">
                                   <template v-for="(grup, key) in legerData.dataTabel" :key="key">
                                       <template v-for="item in grup.items" :key="item.id">
                                           <th class="py-2 px-1 border-r border-slate-200 text-slate-600 align-bottom h-40 print:h-32 print:bg-transparent print:border-black print:text-black text-center">
@@ -218,23 +218,23 @@
                           </thead>
                           <tbody class="divide-y divide-slate-100">
                               <tr v-for="siswa in legerData.siswas" :key="activeTab + '-' + siswa.id" class="hover:bg-indigo-50/30 print:break-inside-avoid">
-                                  <td class="py-2 px-4 text-[11px] font-black text-slate-700 uppercase border-r border-slate-100 sticky left-0 bg-white shadow-[2px_0_5px_-2px_rgba(0,0,0,0.02)] print:static print:bg-transparent print:border-black print:shadow-none print:text-[9px] print:text-black">
+                                  <td class="py-2 px-4 text-[11px] font-black text-slate-700 uppercase border-r border-slate-100 sticky left-0 bg-white shadow-[2px_0_5px_-2px_rgba(0,0,0,0.02)] print:static print:bg-transparent print:border-black print:shadow-none print:text-[10px] print:text-black">
                                       {{ siswa.user?.name || '-' }}
                                   </td>
                                   <template v-for="(grup, key) in legerData.dataTabel" :key="key">
                                       <template v-for="item in grup.items" :key="item.id">
-                                          <td class="py-2 px-1 border-r border-slate-100 text-center text-[11px] text-slate-600 font-bold print:border-black print:text-[8px] print:text-black">
+                                          <td class="py-2 px-1 border-r border-slate-100 text-center text-[11px] text-slate-600 font-bold print:border-black print:text-[10px] print:text-black">
                                               {{ legerData.nilaiMatriks[siswa.id] && legerData.nilaiMatriks[siswa.id][item.id] !== undefined ? legerData.nilaiMatriks[siswa.id][item.id] : '-' }}
                                           </td>
                                       </template>
                                   </template>
-                                  <td class="py-2 px-2 border-r border-slate-100 text-center text-[11px] font-black text-slate-800 bg-slate-50/50 print:bg-transparent print:border-black print:text-[9px] print:text-black">
+                                  <td class="py-2 px-2 border-r border-slate-100 text-center text-[11px] font-black text-slate-800 bg-slate-50/50 print:bg-transparent print:border-black print:text-[10px] print:text-black">
                                       {{ formatAngka(legerData.rekapSiswa[siswa.id]?.jumlah) }}
                                   </td>
-                                  <td class="py-2 px-2 border-r border-slate-100 text-center text-[11px] font-black text-indigo-600 bg-indigo-50/30 print:bg-transparent print:border-black print:text-[9px] print:text-black">
+                                  <td class="py-2 px-2 border-r border-slate-100 text-center text-[11px] font-black text-indigo-600 bg-indigo-50/30 print:bg-transparent print:border-black print:text-[10px] print:text-black">
                                       {{ formatAngka(legerData.rekapSiswa[siswa.id]?.rata) }}
                                   </td>
-                                  <td class="py-2 px-2 text-center text-[11px] font-black text-rose-600 bg-rose-50/30 print:bg-transparent print:border-black print:text-[9px] print:text-black">
+                                  <td class="py-2 px-2 text-center text-[11px] font-black text-rose-600 bg-rose-50/30 print:bg-transparent print:border-black print:text-[10px] print:text-black">
                                       {{ legerData.rekapSiswa[siswa.id]?.rank || '-' }}
                                   </td>
                               </tr>
@@ -277,7 +277,7 @@
                         <!-- Logo Kiri -->
                         <div class="w-[110px] h-[110px] flex-shrink-0 flex items-center justify-center">
                             <img v-if="raporData.sekolah?.logo_kiri" :src="raporData.sekolah.logo_kiri" alt="Logo Dinas" class="max-w-full max-h-full object-contain">
-                            <div v-else class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center text-[9px] text-slate-400 border border-dashed border-slate-300">Logo<br>Kiri</div>
+                            <div v-else class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center text-[10px] text-slate-400 border border-dashed border-slate-300">Logo<br>Kiri</div>
                         </div>
                         
                         <!-- Text Tengah -->
@@ -298,7 +298,7 @@
                         <!-- Logo Kanan -->
                         <div class="w-[110px] h-[110px] flex-shrink-0 flex items-center justify-center">
                             <img v-if="raporData.sekolah?.logo" :src="raporData.sekolah.logo" alt="Logo Sekolah" class="max-w-full max-h-full object-contain">
-                            <div v-else class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center text-[9px] text-slate-400 border border-dashed border-slate-300">Logo<br>Kanan</div>
+                            <div v-else class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center text-[10px] text-slate-400 border border-dashed border-slate-300">Logo<br>Kanan</div>
                         </div>
                     </div>
                     <!-- Garis Ganda Kop Surat -->

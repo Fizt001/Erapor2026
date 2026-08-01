@@ -9,7 +9,7 @@
           :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-rose-500 to-rose-600 text-white shadow-md shadow-rose-500/20 ring-2 ring-rose-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
           class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <span class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''">{{ tab.icon }}</span>
-          <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
 
@@ -54,7 +54,7 @@
                         <h4 class="text-xs font-black uppercase tracking-wider transition-colors" :class="selectedKelasId === kelas.id ? 'text-rose-700' : 'text-slate-700 group-hover:text-rose-700'">
                             {{ kelas.tingkat }} {{ kelas.nama_kelas }}
                         </h4>
-                        <p class="text-[9px] font-bold text-slate-400 uppercase mt-1">{{ kelas.siswas_count || 0 }} Siswa Aktif</p>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase mt-1">{{ kelas.siswas_count || 0 }} Siswa Aktif</p>
                     </div>
                     <span v-if="selectedKelasId === kelas.id" class="text-rose-500 text-lg">▶</span>
                 </button>
@@ -124,7 +124,7 @@
                         <div class="flex items-center gap-6 w-full sm:w-auto justify-between sm:justify-end">
                             <div class="text-right bg-white px-4 py-1.5 rounded-xl border border-slate-200 shadow-sm flex items-center gap-3">
                                 <div>
-                                    <p class="text-[8px] font-black uppercase tracking-widest text-slate-400 mb-0.5">Status Kedisiplinan</p>
+                                    <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-0.5">Status Kedisiplinan</p>
                                     <p class="text-xs font-black leading-none" :class="siswa.sisa_poin < 50 ? 'text-rose-600' : 'text-emerald-600'">Sisa Poin: {{ siswa.sisa_poin }}</p>
                                 </div>
                                 <span v-if="siswa.penanganans && siswa.penanganans.some(p => p.status === 'Proses' || p.status === 'belum_diproses')" class="w-3 h-3 rounded-full bg-rose-500 animate-pulse shadow-lg shadow-rose-500/50" title="Ada Kasus Diproses"></span>
@@ -151,7 +151,7 @@
                                         <span class="text-[10px] font-black text-white px-2 py-1 rounded-md shadow-sm" :class="getKategoriColor(kasus.kategori)">{{ kasus.kategori }}</span>
                                         <span class="text-[10px] font-bold text-slate-500">{{ formatDate(kasus.created_at) }}</span>
                                     </div>
-                                    <span class="text-[9px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-sm" :class="kasus.status === 'belum_diproses' ? 'bg-amber-500 text-white animate-pulse' : (kasus.status === 'Proses' ? 'bg-rose-500 text-white animate-pulse' : 'bg-emerald-100 text-emerald-700 border border-emerald-200')">
+                                    <span class="text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-sm" :class="kasus.status === 'belum_diproses' ? 'bg-amber-500 text-white animate-pulse' : (kasus.status === 'Proses' ? 'bg-rose-500 text-white animate-pulse' : 'bg-emerald-100 text-emerald-700 border border-emerald-200')">
                                         {{ kasus.status === 'belum_diproses' ? 'Belum Diproses' : kasus.status }}
                                     </span>
                                 </div>
@@ -166,7 +166,7 @@
                                     </div>
                                 </div>
                                 <div class="px-4 py-2.5 bg-slate-50 border-t border-slate-100 flex justify-between items-center group/actions">
-                                    <p class="text-[9px] text-slate-400 font-black uppercase tracking-widest flex items-center gap-1.5">
+                                    <p class="text-[10px] text-slate-400 font-black uppercase tracking-widest flex items-center gap-1.5">
                                         <span>👤</span> Petugas: {{ kasus.guru?.name || 'BK' }}
                                     </p>
                                     <div class="flex gap-2">

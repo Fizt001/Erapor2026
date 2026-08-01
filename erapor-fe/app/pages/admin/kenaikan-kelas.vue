@@ -4,13 +4,13 @@
 
       <!-- MOBILE VIEW TABS -->
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 shadow-sm z-20">
-        <button type="button" @click="activeTab = 'filter'" :class="activeTab === 'filter' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+        <button type="button" @click="activeTab = 'filter'" :class="activeTab === 'filter' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon name="magnifying-glass" class="text-lg mb-0.5 transition-transform" :class="activeTab === 'filter' ? 'scale-110' : ''" />
-          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">Filter Data</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">Filter Data</span>
         </button>
-        <button type="button" @click="activeTab = 'table'" :class="activeTab === 'table' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+        <button type="button" @click="activeTab = 'table'" :class="activeTab === 'table' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon name="clipboard" class="text-lg mb-0.5 transition-transform" :class="activeTab === 'table' ? 'scale-110' : ''" />
-          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">Data Siswa</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">Data Siswa</span>
         </button>
       </div>
 
@@ -22,7 +22,7 @@
           <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-4 border border-emerald-500 shadow-sm relative overflow-hidden">
             <div class="relative z-10">
               <h3 class="text-xs font-black uppercase tracking-widest text-white">Kenaikan Kelas</h3>
-              <p class="text-[9px] text-emerald-200 font-semibold mt-0.5">Mutasi & Promosi Siswa Antar Tahun Ajaran</p>
+              <p class="text-[10px] text-emerald-200 font-semibold mt-0.5">Mutasi & Promosi Siswa Antar Tahun Ajaran</p>
             </div>
             <div class="absolute right-0 bottom-0 opacity-10 pointer-events-none">
               <svg class="w-16 h-16 transform translate-x-6 translate-y-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
@@ -164,7 +164,7 @@
                     </td>
                     
                     <td class="px-0 py-1 sm:p-4 text-left sm:text-center text-[10px] font-bold text-slate-400 flex sm:table-cell items-center justify-between">
-                        <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nomor</span>
+                        <span class="sm:hidden text-[10px] font-black uppercase tracking-widest text-slate-400">Nomor</span>
                         <div class="flex items-center gap-2">
                             <input type="checkbox" :value="s.id" v-model="selectedIds" class="sm:hidden w-4 h-4 text-emerald-600 rounded border-slate-300 focus:ring-emerald-500">
                             <span>{{ idx + 1 }}</span>
@@ -172,7 +172,7 @@
                     </td>
                     
                     <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-2 sm:pb-4 mb-1 sm:mb-0">
-                        <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nama Siswa</span>
+                        <span class="sm:hidden text-[10px] font-black uppercase tracking-widest text-slate-400">Nama Siswa</span>
                         <div class="text-right sm:text-left">
                           <p class="font-black text-slate-800 text-[13px]">{{ s.name }}</p>
                           <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wide">{{ s.status_siswa || 'aktif' }}</p>
@@ -180,12 +180,12 @@
                     </td>
                     
                     <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-2 sm:pb-4 mb-1 sm:mb-0 sm:text-center">
-                        <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">NIS</span>
+                        <span class="sm:hidden text-[10px] font-black uppercase tracking-widest text-slate-400">NIS</span>
                         <span class="inline-flex items-center px-2 py-1 rounded-md bg-slate-100 text-slate-600 text-[11px] font-black uppercase tracking-widest border border-slate-200">{{ s.nis }}</span>
                     </td>
                     
                     <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-2 sm:pb-4 mb-1 sm:mb-0 sm:text-center">
-                        <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Rekomendasi Walas</span>
+                        <span class="sm:hidden text-[10px] font-black uppercase tracking-widest text-slate-400">Rekomendasi Walas</span>
                         <span :class="rekomendasiClass(s.rekomendasi_walas)"
                           class="inline-flex items-center px-2.5 py-1.5 rounded-lg text-[11px] font-black uppercase tracking-widest border">
                           {{ rekomendasiLabel(s.rekomendasi_walas) }}
@@ -193,7 +193,7 @@
                     </td>
                     
                     <td class="px-0 py-1 sm:p-4 flex flex-col sm:table-cell gap-1 pb-3 sm:pb-4 mb-2 sm:mb-0 sm:text-center">
-                        <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Aksi Admin</span>
+                        <span class="sm:hidden text-[10px] font-black uppercase tracking-widest text-slate-400">Aksi Admin</span>
                         <select v-model="s.aksi_admin"
                           class="w-full text-[11px] font-bold border-2 rounded-xl px-2 py-2 sm:py-1.5 outline-none transition-all bg-white border-slate-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 text-slate-700">
                           <option value="">-- Pilih --</option>
@@ -207,7 +207,7 @@
                     </td>
                     
                     <td class="px-0 pt-2 sm:p-4 flex flex-col sm:table-cell gap-1 sm:text-center">
-                        <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Kelas Tujuan</span>
+                        <span class="sm:hidden text-[10px] font-black uppercase tracking-widest text-slate-400">Kelas Tujuan</span>
                         <select v-model="s.kelas_tujuan_override"
                           :disabled="!['naik','tinggal'].includes(s.aksi_admin)"
                           class="w-full text-[11px] font-bold border-2 rounded-xl px-2 py-2 sm:py-1.5 outline-none transition-all disabled:opacity-40 disabled:cursor-not-allowed"

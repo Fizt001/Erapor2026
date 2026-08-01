@@ -6,13 +6,13 @@
       
       <!-- MOBILE VIEW TABS -->
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 shadow-sm z-20">
-        <button type="button" @click="activeTab = 'form'" :class="activeTab === 'form' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+        <button type="button" @click="activeTab = 'form'" :class="activeTab === 'form' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon name="building" class="text-lg mb-0.5 transition-transform" :class="activeTab === 'form' ? 'scale-110' : ''" />
-          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">Entry Kelas</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">Entry Kelas</span>
         </button>
-        <button type="button" @click="activeTab = 'table'" :class="activeTab === 'table' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+        <button type="button" @click="activeTab = 'table'" :class="activeTab === 'table' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon name="clipboard" class="text-lg mb-0.5 transition-transform" :class="activeTab === 'table' ? 'scale-110' : ''" />
-          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">Database</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">Database</span>
         </button>
       </div>
 
@@ -26,7 +26,7 @@
                     <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="building" class="w-5 h-5" /></div>
                     <div class="relative z-10">
                         <h3 class="text-xs font-black uppercase tracking-widest text-white">Data Kelas</h3>
-                        <p class="text-[9px] text-emerald-100 font-semibold uppercase mt-0.5">{{ isEditing ? 'Mode Update' : 'Mode Tambah Baru' }}</p>
+                        <p class="text-[10px] text-emerald-100 font-semibold uppercase mt-0.5">{{ isEditing ? 'Mode Update' : 'Mode Tambah Baru' }}</p>
                     </div>
                     <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
                       <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"></path></svg>
@@ -103,7 +103,7 @@
             </div>
             
             <div class="flex flex-row gap-2 w-full sm:w-auto">
-                <select v-model="tingkatFilter" @change="fetchKelas(1)" class="w-1/2 sm:w-40 py-2 px-3 sm:px-4 rounded-xl border border-slate-200 bg-white focus:ring-2 focus:ring-emerald-500 text-[9px] sm:text-[11px] font-black uppercase tracking-wider text-slate-600 cursor-pointer shadow-sm appearance-none">
+                <select v-model="tingkatFilter" @change="fetchKelas(1)" class="w-1/2 sm:w-40 py-2 px-3 sm:px-4 rounded-xl border border-slate-200 bg-white focus:ring-2 focus:ring-emerald-500 text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-slate-600 cursor-pointer shadow-sm appearance-none">
                     <option value="">Semua Tingkat</option>
                     <option value="X">Kelas X</option>
                     <option value="XI">Kelas XI</option>
@@ -134,7 +134,7 @@
             <!-- Desktop Table -->
             <table v-else class="w-full text-left border-collapse min-w-full">
                 <thead class="hidden sm:table-header-group sticky top-0 z-10 bg-slate-50 border-b border-slate-200 shadow-sm">
-                    <tr class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-500">
+                    <tr class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">
                         <th class="p-4 w-16 text-center">#</th>
                         <th class="p-4">Nama Kelas</th>
                         <th class="p-4">Tingkat</th>
@@ -146,7 +146,7 @@
                 <tbody class="text-xs flex flex-col sm:table-row-group">
                     <tr v-for="(k, index) in kelasData.data" :key="k.id" class="border-b border-slate-50 hover:bg-slate-50/50 transition-colors group bg-white flex flex-col sm:table-row p-4 sm:p-0">
                         <td class="px-0 py-1 sm:p-4 text-left sm:text-center text-[11px] font-bold text-slate-400 flex sm:table-cell items-center justify-between mb-2 sm:mb-0">
-                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nomor</span>
+                            <span class="sm:hidden text-[10px] font-black uppercase tracking-widest text-slate-400">Nomor</span>
                             <span>{{ (kelasData.current_page - 1) * kelasData.per_page + index + 1 }}</span>
                         </td>
                         <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between">
@@ -165,7 +165,7 @@
                         </td>
 
                         <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between">
-                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Wali Kelas</span>
+                            <span class="sm:hidden text-[10px] font-black uppercase tracking-widest text-slate-400">Wali Kelas</span>
                             <div class="flex items-center gap-2 text-right sm:text-left" v-if="k.wali_kelas?.guru">
                                 <div class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-[10px] font-bold shrink-0">
                                     {{ k.wali_kelas.guru.name.substring(0, 2).toUpperCase() }}
@@ -176,7 +176,7 @@
                         </td>
                         <td class="px-0 pt-2 sm:p-4 text-center border-t sm:border-0 border-slate-100 mt-2 sm:mt-0 flex sm:table-cell justify-end w-full sm:w-48">
                             <div class="flex items-center justify-end sm:justify-center gap-2 opacity-100 xl:opacity-0 xl:group-hover:opacity-100 transition-opacity w-full">
-                                <NuxtLink :to="`/admin/kelas/${k.id}/siswa`" class="px-3 h-8 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-600 hover:text-emerald-700 hover:bg-emerald-100 flex items-center justify-center transition-all shadow-sm font-bold text-[9px] uppercase tracking-widest gap-1 group/btn" title="Anggota Rombel"><AppIcon name="users" class="w-4 h-4" /> Anggota</NuxtLink>
+                                <NuxtLink :to="`/admin/kelas/${k.id}/siswa`" class="px-3 h-8 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-600 hover:text-emerald-700 hover:bg-emerald-100 flex items-center justify-center transition-all shadow-sm font-bold text-[10px] uppercase tracking-widest gap-1 group/btn" title="Anggota Rombel"><AppIcon name="users" class="w-4 h-4" /> Anggota</NuxtLink>
                                 <button @click="editKelas(k)" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-indigo-500 hover:border-indigo-200 hover:bg-indigo-50 flex items-center justify-center transition-all shadow-sm" title="Edit">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
                                 </button>

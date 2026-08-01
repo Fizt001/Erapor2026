@@ -7,9 +7,9 @@
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 shadow-sm z-20">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
           :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-amber-500 to-amber-600 text-white shadow-md shadow-amber-500/20 ring-2 ring-amber-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+          class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon :name="tab.icon" class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
-          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
 
@@ -21,7 +21,7 @@
             <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="cog-6-tooth" class="w-5 h-5" /></div>
             <div class="relative z-10">
                 <h3 class="text-xs font-black uppercase tracking-widest text-white">Filter Plotting</h3>
-                <p class="text-[9px] text-amber-100 font-semibold uppercase mt-0.5">Pilih Kriteria Mapel</p>
+                <p class="text-[10px] text-amber-100 font-semibold uppercase mt-0.5">Pilih Kriteria Mapel</p>
             </div>
             <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
               <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M3 4c0-1.1.9-2 2-2h14c1.1 0 2 .9 2 2v16c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V4zm2 0v16h14V4H5zm2 4h10v2H7V8zm0 4h10v2H7v-2zm0 4h7v2H7v-2z"/></svg>
@@ -33,12 +33,12 @@
             
             <div class="flex bg-slate-100/80 p-1.5 rounded-xl border border-slate-200 shadow-inner w-full">
                 <button @click="activeKategori = 'umum'; fetchPengampu()" 
-                    class="flex-1 text-center py-2 text-[9px] font-black uppercase tracking-widest rounded-lg transition-all duration-300"
+                    class="flex-1 text-center py-2 text-[10px] font-black uppercase tracking-widest rounded-lg transition-all duration-300"
                     :class="activeKategori === 'umum' ? 'bg-white text-amber-600 shadow-sm ring-1 ring-slate-200/50' : 'text-slate-400 hover:text-slate-600'">
                     Unit Umum
                 </button>
                 <button @click="activeKategori = 'kejuruan'; fetchPengampu()" 
-                    class="flex-1 text-center py-2 text-[9px] font-black uppercase tracking-widest rounded-lg transition-all duration-300"
+                    class="flex-1 text-center py-2 text-[10px] font-black uppercase tracking-widest rounded-lg transition-all duration-300"
                     :class="activeKategori === 'kejuruan' ? 'bg-white text-amber-600 shadow-sm ring-1 ring-slate-200/50' : 'text-slate-400 hover:text-slate-600'">
                     Kejuruan
                 </button>
@@ -141,7 +141,7 @@
                                             </div>
                                         </td>
                                         <td class="py-4 px-4 md:px-5 align-top">
-                                            <span class="text-[9px] md:text-[10px] font-black tracking-widest px-2.5 py-1.5 rounded-md inline-flex items-center gap-1.5 shadow-sm" 
+                                            <span class="text-[10px] md:text-[10px] font-black tracking-widest px-2.5 py-1.5 rounded-md inline-flex items-center gap-1.5 shadow-sm" 
                                                 :class="getSisaJp(struktur, kelas.id) <= 0 ? 'bg-emerald-50 text-emerald-600 border border-emerald-200' : 'bg-rose-50 text-rose-600 border border-rose-200'">
                                                 <template v-if="getSisaJp(struktur, kelas.id) <= 0">
                                                     <AppIcon name="check" class="w-3.5 h-3.5" />

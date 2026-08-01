@@ -8,9 +8,9 @@
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 shadow-sm z-20">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTab = tab.id"
           :class="activeTab === tab.id ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+          class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon :name="tab.iconName" class="text-lg mb-0.5 transition-transform" :class="activeTab === tab.id ? 'scale-110' : ''" />
-          <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
 
@@ -38,7 +38,7 @@
                     <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="cog" class="w-5 h-5" />️</div>
                     <div class="relative z-10">
                         <h3 class="text-xs font-black uppercase tracking-widest text-white">Bidang Keahlian</h3>
-                        <p class="text-[9px] text-emerald-100 font-semibold uppercase mt-0.5">Tingkatan 1 (Tertinggi)</p>
+                        <p class="text-[10px] text-emerald-100 font-semibold uppercase mt-0.5">Tingkatan 1 (Tertinggi)</p>
                     </div>
                     <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
                       <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.5 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"></path></svg>
@@ -68,7 +68,7 @@
                     <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="academic-cap" class="w-5 h-5" /></div>
                     <div class="relative z-10">
                         <h3 class="text-xs font-black uppercase tracking-widest text-white">Program Keahlian</h3>
-                        <p class="text-[9px] text-blue-100 font-semibold uppercase mt-0.5">Tingkatan 2 (Menengah)</p>
+                        <p class="text-[10px] text-blue-100 font-semibold uppercase mt-0.5">Tingkatan 2 (Menengah)</p>
                     </div>
                     <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
                       <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"></path></svg>
@@ -105,7 +105,7 @@
                     <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="shield" class="w-5 h-5" /></div>
                     <div class="relative z-10">
                         <h3 class="text-xs font-black uppercase tracking-widest text-white">Konsentrasi Keahlian</h3>
-                        <p class="text-[9px] text-purple-100 font-semibold uppercase mt-0.5">Tingkatan 3 (Kejuruan/Jurusan)</p>
+                        <p class="text-[10px] text-purple-100 font-semibold uppercase mt-0.5">Tingkatan 3 (Kejuruan/Jurusan)</p>
                     </div>
                     <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
                       <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"></path></svg>
@@ -182,7 +182,7 @@
                     <div class="flex items-center gap-4 flex-1">
                         <span class="w-6 h-6 flex items-center justify-center rounded-md bg-slate-100 text-slate-500 transition-transform" :class="isNodeExpanded('b-'+b.id) ? 'rotate-90' : ''"><AppIcon name="arrow-right" /></span>
                         <div>
-                            <span class="text-[9px] font-black uppercase tracking-widest text-slate-400 bg-slate-100 px-2 py-0.5 rounded mr-2 border border-slate-200">BIDANG</span>
+                            <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 bg-slate-100 px-2 py-0.5 rounded mr-2 border border-slate-200">BIDANG</span>
                             <span class="text-sm font-bold text-slate-800">{{ b.nama_bidang }}</span>
                         </div>
                     </div>
@@ -210,7 +210,7 @@
                             <div class="flex items-center gap-3 flex-1">
                                 <span class="w-5 h-5 flex items-center justify-center rounded bg-slate-100 text-slate-400 transition-transform text-[10px]" :class="isNodeExpanded('p-'+p.id) ? 'rotate-90' : ''"><AppIcon name="arrow-right" /></span>
                                 <div>
-                                    <span class="text-[9px] font-black uppercase tracking-widest text-slate-400 bg-slate-100 px-2 py-0.5 rounded mr-2 border border-slate-200">PROGRAM</span>
+                                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 bg-slate-100 px-2 py-0.5 rounded mr-2 border border-slate-200">PROGRAM</span>
                                     <span class="text-xs font-bold text-slate-700">{{ p.nama_program }}</span>
                                 </div>
                             </div>
@@ -235,7 +235,7 @@
                                 <div class="flex items-center gap-3">
                                     <span class="text-lg"><AppIcon name="shield" /></span>
                                     <div>
-                                        <span class="text-[9px] font-black text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded uppercase tracking-widest mr-2 border border-emerald-200">{{ k.kode_konsentrasi }}</span>
+                                        <span class="text-[10px] font-black text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded uppercase tracking-widest mr-2 border border-emerald-200">{{ k.kode_konsentrasi }}</span>
                                         <span class="text-xs font-bold text-slate-700">{{ k.nama_konsentrasi }}</span>
                                     </div>
                                 </div>

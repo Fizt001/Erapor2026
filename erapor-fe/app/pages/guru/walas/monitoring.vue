@@ -7,9 +7,9 @@
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 z-20 shadow-sm">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
           :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-md shadow-amber-500/20 ring-2 ring-amber-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+          class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon :name="tab.icon" class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
-          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
 
@@ -21,7 +21,7 @@
             <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="presentation-chart-bar" class="w-5 h-5" /></div>
             <div class="relative z-10">
               <h3 class="text-xs font-black uppercase tracking-widest text-white">Monitoring Nilai</h3>
-              <p class="text-[9px] text-amber-100 font-semibold uppercase mt-0.5">Pantau Progres Nilai Mapel</p>
+              <p class="text-[10px] text-amber-100 font-semibold uppercase mt-0.5">Pantau Progres Nilai Mapel</p>
             </div>
             <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
               <svg class="w-16 h-16 transform translate-x-6 translate-y-6" fill="currentColor" viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
@@ -32,11 +32,11 @@
             <!-- Summary Chips -->
             <div v-if="!pending && !error && totalMapel > 0" class="grid grid-cols-2 gap-3">
               <div class="bg-emerald-50 border border-emerald-100 p-4 rounded-2xl flex flex-col shadow-sm items-center justify-center text-center">
-                <span class="text-[9px] uppercase font-black text-emerald-600 tracking-widest mb-1">Formatif Selesai</span>
+                <span class="text-[10px] uppercase font-black text-emerald-600 tracking-widest mb-1">Formatif Selesai</span>
                 <span class="text-2xl font-black text-emerald-700">{{ formatifCompletedCount }}<span class="text-sm text-emerald-500 font-bold ml-1">/ {{ totalMapel }}</span></span>
               </div>
               <div class="bg-sky-50 border border-sky-100 p-4 rounded-2xl flex flex-col shadow-sm items-center justify-center text-center">
-                <span class="text-[9px] uppercase font-black text-amber-600 tracking-widest mb-1">Sumatif Selesai</span>
+                <span class="text-[10px] uppercase font-black text-amber-600 tracking-widest mb-1">Sumatif Selesai</span>
                 <span class="text-2xl font-black text-sky-700">{{ sumatifCompletedCount }}<span class="text-sm text-sky-500 font-bold ml-1">/ {{ totalMapel }}</span></span>
               </div>
             </div>

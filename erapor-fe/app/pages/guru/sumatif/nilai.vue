@@ -7,9 +7,9 @@
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 z-20 shadow-sm">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
           :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-sky-500 to-sky-600 text-white shadow-md shadow-sky-500/20 ring-2 ring-sky-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+          class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon :name="tab.icon" class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
-          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
 
@@ -21,7 +21,7 @@
             <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="document-text" class="w-5 h-5" /></div>
             <div class="relative z-10">
               <h3 class="text-xs font-black uppercase tracking-widest text-white">Filter Data</h3>
-              <p class="text-[9px] text-sky-100 font-semibold uppercase mt-0.5">Asessmen Sumatif</p>
+              <p class="text-[10px] text-sky-100 font-semibold uppercase mt-0.5">Asessmen Sumatif</p>
             </div>
             <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
               <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
@@ -131,7 +131,7 @@
                       <AppIcon name="scale" class="w-6 h-6 text-slate-500" />
                       <div>
                           <h4 class="text-[10px] font-black text-slate-700 uppercase tracking-widest leading-none">Konfigurasi Bobot (%)</h4>
-                          <div class="text-[8px] font-black uppercase tracking-widest mt-1">
+                          <div class="text-[10px] font-black uppercase tracking-widest mt-1">
                               <span v-if="references.is_psts && (globalBobot.b_uh + globalBobot.b_ujian) !== 100" class="text-rose-500">⚠️ Harian+Ujian ≠ 100%</span>
                               <span v-else-if="!references.is_psts && (globalBobot.b_uh + globalBobot.b_ujian + globalBobot.b_psts_lalu) !== 100" class="text-rose-500">⚠️ UH+Ujian+PSTS ≠ 100%</span>
                               <span v-else-if="(globalBobot.b_praktek + globalBobot.b_teori) !== 100" class="text-rose-500">⚠️ Praktek+Teori ≠ 100%</span>
@@ -144,21 +144,21 @@
                       <!-- BOX 1: BOBOT RAPOR -->
                       <div class="flex-[3] border border-slate-200 rounded flex items-center bg-slate-50 overflow-hidden">
                           <div class="bg-slate-100 border-r border-slate-200 px-2 py-1.5 h-full flex items-center justify-center shrink-0">
-                              <span class="text-[9px] font-black text-slate-500 uppercase tracking-widest whitespace-nowrap">Rapor</span>
+                              <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest whitespace-nowrap">Rapor</span>
                           </div>
                           <div class="flex-1 flex items-center divide-x divide-slate-200 h-full">
                               <div class="flex-1 flex items-center px-1 group">
-                                  <span class="text-[9px] font-bold text-slate-400 mr-1">UH</span>
+                                  <span class="text-[10px] font-bold text-slate-400 mr-1">UH</span>
                                   <input type="number" v-model="globalBobot.b_uh" @input="markAsUnsaved(null, null)" min="0" max="100" :disabled="!references.is_titimangsa_aktif"
                                       class="w-full bg-transparent text-[11px] font-black text-slate-700 text-center outline-none focus:ring-0 group-hover:bg-white transition-colors h-full">
                               </div>
                               <div class="flex-1 flex items-center px-1 group">
-                                  <span class="text-[9px] font-bold text-slate-400 mr-1">UJI</span>
+                                  <span class="text-[10px] font-bold text-slate-400 mr-1">UJI</span>
                                   <input type="number" v-model="globalBobot.b_ujian" @input="markAsUnsaved(null, null)" min="0" max="100" :disabled="!references.is_titimangsa_aktif"
                                       class="w-full bg-transparent text-[11px] font-black text-slate-700 text-center outline-none focus:ring-0 group-hover:bg-white transition-colors h-full">
                               </div>
                               <div v-if="!references.is_psts" class="flex-1 flex items-center px-1 group">
-                                  <span class="text-[9px] font-bold text-slate-400 mr-1">PSTS</span>
+                                  <span class="text-[10px] font-bold text-slate-400 mr-1">PSTS</span>
                                   <input type="number" v-model="globalBobot.b_psts_lalu" @input="markAsUnsaved(null, null)" min="0" max="100" :disabled="!references.is_titimangsa_aktif"
                                       class="w-full bg-transparent text-[11px] font-black text-slate-700 text-center outline-none focus:ring-0 group-hover:bg-white transition-colors h-full">
                               </div>
@@ -168,16 +168,16 @@
                       <!-- BOX 2: BOBOT UJIAN -->
                       <div class="flex-[2] border border-slate-200 rounded flex items-center bg-slate-50 overflow-hidden">
                           <div class="bg-slate-100 border-r border-slate-200 px-2 py-1.5 h-full flex items-center justify-center shrink-0">
-                              <span class="text-[9px] font-black text-slate-500 uppercase tracking-widest whitespace-nowrap">Ujian</span>
+                              <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest whitespace-nowrap">Ujian</span>
                           </div>
                           <div class="flex-1 flex items-center divide-x divide-slate-200 h-full">
                               <div class="flex-1 flex items-center px-1 group">
-                                  <span class="text-[9px] font-bold text-slate-400 mr-1">PRK</span>
+                                  <span class="text-[10px] font-bold text-slate-400 mr-1">PRK</span>
                                   <input type="number" v-model="globalBobot.b_praktek" @input="markAsUnsaved(null, null)" min="0" max="100" :disabled="!references.is_titimangsa_aktif"
                                       class="w-full bg-transparent text-[11px] font-black text-slate-700 text-center outline-none focus:ring-0 group-hover:bg-white transition-colors h-full">
                               </div>
                               <div class="flex-1 flex items-center px-1 group">
-                                  <span class="text-[9px] font-bold text-slate-400 mr-1">TEO</span>
+                                  <span class="text-[10px] font-bold text-slate-400 mr-1">TEO</span>
                                   <input type="number" v-model="globalBobot.b_teori" @input="markAsUnsaved(null, null)" min="0" max="100" :disabled="!references.is_titimangsa_aktif"
                                       class="w-full bg-transparent text-[11px] font-black text-slate-700 text-center outline-none focus:ring-0 group-hover:bg-white transition-colors h-full">
                               </div>
@@ -191,7 +191,7 @@
                 <div class="w-8 h-8 bg-white border border-amber-200 rounded-full flex items-center justify-center shrink-0 shadow-sm"><AppIcon name="lock-closed" class="w-4 h-4 text-amber-600" /></div>
                 <div>
                     <h4 class="text-[11px] font-black text-amber-700 uppercase tracking-widest">Akses Terkunci (Read-Only)</h4>
-                    <p class="text-[9px] font-bold text-amber-600 uppercase tracking-widest mt-0.5">Periode ini sudah ditutup Admin. Data nilai tidak dapat diubah.</p>
+                    <p class="text-[10px] font-bold text-amber-600 uppercase tracking-widest mt-0.5">Periode ini sudah ditutup Admin. Data nilai tidak dapat diubah.</p>
                 </div>
               </div>
 
@@ -210,10 +210,10 @@
                         Ujian Sumatif
                       </th>
                       <th rowspan="2" class="py-2 px-1 border-r border-slate-300 text-center w-[80px] min-w-[85px] md:min-w-0 bg-slate-50 align-middle" v-if="!references.is_psts">
-                        <span class="text-[9px] font-black text-slate-600 uppercase tracking-tight block leading-tight">Nilai PSTS<br>Lalu</span>
+                        <span class="text-[10px] font-black text-slate-600 uppercase tracking-tight block leading-tight">Nilai PSTS<br>Lalu</span>
                       </th>
                       <th rowspan="2" class="py-2 px-1 border-r border-slate-300 text-center w-[80px] min-w-[85px] md:min-w-0 bg-slate-50 align-middle">
-                        <span class="text-[9px] font-black text-slate-600 uppercase tracking-tight block leading-tight">Nilai<br>Literasi</span>
+                        <span class="text-[10px] font-black text-slate-600 uppercase tracking-tight block leading-tight">Nilai<br>Literasi</span>
                       </th>
                       <th rowspan="2" class="py-2 px-1 border-r border-slate-300 text-center w-[90px] min-w-[95px] md:min-w-0 bg-sky-100 align-middle shadow-inner">
                         <span class="text-[10px] font-black text-sky-800 uppercase tracking-wider block leading-tight">Nilai Akhir<br>(NA)</span>
@@ -221,13 +221,13 @@
                     </tr>
                     <!-- Sub Header -->
                     <tr class="bg-slate-100 border-b border-slate-200">
-                      <th class="py-2 px-1 border-r border-slate-200 text-center w-[60px] min-w-[75px] md:min-w-0 bg-indigo-50/30 text-[9px] font-bold text-indigo-600 uppercase">UH1</th>
-                      <th class="py-2 px-1 border-r border-slate-200 text-center w-[60px] min-w-[75px] md:min-w-0 bg-indigo-50/30 text-[9px] font-bold text-indigo-600 uppercase">UH2</th>
-                      <th class="py-2 px-1 border-r border-slate-200 text-center w-[60px] min-w-[75px] md:min-w-0 bg-indigo-50/30 text-[9px] font-bold text-indigo-600 uppercase">UH3</th>
-                      <th class="py-2 px-1 border-r border-slate-300 text-center w-[60px] min-w-[75px] md:min-w-0 bg-indigo-50/30 text-[9px] font-bold text-indigo-600 uppercase">UH4</th>
+                      <th class="py-2 px-1 border-r border-slate-200 text-center w-[60px] min-w-[75px] md:min-w-0 bg-indigo-50/30 text-[10px] font-bold text-indigo-600 uppercase">UH1</th>
+                      <th class="py-2 px-1 border-r border-slate-200 text-center w-[60px] min-w-[75px] md:min-w-0 bg-indigo-50/30 text-[10px] font-bold text-indigo-600 uppercase">UH2</th>
+                      <th class="py-2 px-1 border-r border-slate-200 text-center w-[60px] min-w-[75px] md:min-w-0 bg-indigo-50/30 text-[10px] font-bold text-indigo-600 uppercase">UH3</th>
+                      <th class="py-2 px-1 border-r border-slate-300 text-center w-[60px] min-w-[75px] md:min-w-0 bg-indigo-50/30 text-[10px] font-bold text-indigo-600 uppercase">UH4</th>
                       
-                      <th class="py-2 px-1 border-r border-slate-200 text-center w-[70px] min-w-[85px] md:min-w-0 bg-teal-50/30 text-[9px] font-bold text-teal-600 uppercase">Praktek</th>
-                      <th class="py-2 px-1 border-r border-slate-300 text-center w-[70px] min-w-[85px] md:min-w-0 bg-teal-50/30 text-[9px] font-bold text-teal-600 uppercase">Teori</th>
+                      <th class="py-2 px-1 border-r border-slate-200 text-center w-[70px] min-w-[85px] md:min-w-0 bg-teal-50/30 text-[10px] font-bold text-teal-600 uppercase">Praktek</th>
+                      <th class="py-2 px-1 border-r border-slate-300 text-center w-[70px] min-w-[85px] md:min-w-0 bg-teal-50/30 text-[10px] font-bold text-teal-600 uppercase">Teori</th>
                     </tr>
                   </thead>
                   <tbody class="divide-y divide-slate-100">
@@ -247,7 +247,7 @@
                         <!-- Desktop Name Cell -->
                         <td class="hidden md:table-cell py-2 px-4 sticky left-0 bg-white group-hover:bg-slate-50/90 z-10 border-r border-slate-100 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.02)] overflow-hidden text-ellipsis whitespace-nowrap">
                           <h4 class="text-[11px] font-black text-slate-700 uppercase tracking-wide truncate" :title="siswa.nama">{{ siswa.nama }}</h4>
-                          <p class="text-[9px] font-bold text-slate-400">{{ siswa.nis }}</p>
+                          <p class="text-[10px] font-bold text-slate-400">{{ siswa.nis }}</p>
                         </td>
                         
                         <!-- INPUT Harian (UH1-UH4) -->
@@ -293,7 +293,7 @@
               <div class="p-3 bg-white border-t border-slate-100 flex items-center justify-between shrink-0 absolute bottom-0 left-0 right-0 z-30 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
                   <div class="flex items-center gap-2">
                       <div class="w-1.5 h-1.5 bg-sky-500 rounded-full"></div>
-                      <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest italic">
+                      <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest italic">
                           Pembagi Rata-Rata UH: {{ getMaxUh() }} Nilai Terbanyak
                       </p>
                   </div>

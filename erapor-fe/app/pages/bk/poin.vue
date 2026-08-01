@@ -9,7 +9,7 @@
           :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-rose-500 to-rose-600 text-white shadow-md shadow-rose-500/20 ring-2 ring-rose-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
           class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <span class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''">{{ tab.icon }}</span>
-          <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
 
@@ -76,7 +76,7 @@
                         <h4 class="text-xs font-black uppercase tracking-wider transition-colors" :class="selectedKelasId === kelas.id ? 'text-rose-700' : 'text-slate-700 group-hover:text-rose-700'">
                             {{ kelas.tingkat }} {{ kelas.nama_kelas }}
                         </h4>
-                        <p class="text-[9px] font-bold text-slate-400 uppercase mt-1">{{ kelas.siswas_count || 0 }} Siswa Aktif</p>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase mt-1">{{ kelas.siswas_count || 0 }} Siswa Aktif</p>
                     </div>
                     <span v-if="selectedKelasId === kelas.id" class="text-rose-500 text-lg">▶</span>
                 </button>
@@ -155,7 +155,7 @@
                         </div>
                         <div class="flex items-center gap-6 w-full sm:w-auto justify-between sm:justify-end">
                             <div class="text-right bg-white px-4 py-1.5 rounded-xl border border-slate-200 shadow-sm">
-                                <p class="text-[8px] font-black uppercase tracking-widest text-slate-400 mb-0.5">Sisa Poin</p>
+                                <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-0.5">Sisa Poin</p>
                                 <p class="text-lg font-black leading-none" :class="siswa.sisa_poin < 50 ? 'text-rose-600' : 'text-emerald-600'">{{ siswa.sisa_poin }}</p>
                             </div>
                             <button class="w-8 h-8 rounded-full flex items-center justify-center bg-slate-100 text-slate-400 group-hover:bg-rose-100 group-hover:text-rose-600 transition-all">
@@ -176,7 +176,7 @@
                         <div v-if="siswa.poin_logs && siswa.poin_logs.length > 0" class="overflow-x-auto rounded-xl border border-slate-200">
                             <table class="w-full text-left border-collapse">
                                 <thead>
-                                    <tr class="bg-slate-50 text-[9px] font-black uppercase tracking-widest text-slate-400 border-b border-slate-200">
+                                    <tr class="bg-slate-50 text-[10px] font-black uppercase tracking-widest text-slate-400 border-b border-slate-200">
                                         <th class="p-3 pl-4 w-32">Tanggal</th>
                                         <th class="p-3 w-48">Jenis / Kategori</th>
                                         <th class="p-3 min-w-[200px]">Keterangan</th>

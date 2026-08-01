@@ -7,9 +7,9 @@
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 z-20 shadow-sm">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
           :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-md shadow-amber-500/20 ring-2 ring-amber-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+          class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon :name="tab.icon" class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
-          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
 
@@ -148,7 +148,7 @@
                         <td class="py-3 px-4 border-r border-slate-100 sticky left-0 bg-white group-hover:bg-slate-50/90 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.02)] z-10 align-top">
                             <div class="flex items-center gap-2">
                                 <div class="text-[12px] font-black uppercase tracking-wide" :class="siswa.tanggal_keluar ? 'text-rose-600 line-through' : 'text-slate-700'">{{ siswa.nama_siswa }}</div>
-                                <span v-if="siswa.tanggal_keluar" class="px-1.5 py-0.5 bg-rose-100 text-rose-700 text-[8px] font-black uppercase tracking-widest rounded whitespace-nowrap">Keluar</span>
+                                <span v-if="siswa.tanggal_keluar" class="px-1.5 py-0.5 bg-rose-100 text-rose-700 text-[10px] font-black uppercase tracking-widest rounded whitespace-nowrap">Keluar</span>
                             </div>
                         </td>
                         <td class="py-3 px-4 text-center border-r border-slate-100 bg-slate-50/50 align-top">

@@ -8,9 +8,9 @@
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 shadow-sm z-20">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTab = tab.id"
           :class="activeTab === tab.id ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+          class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon :name="tab.iconName" class="text-lg mb-0.5 transition-transform" :class="activeTab === tab.id ? 'scale-110' : ''" />
-          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
 
@@ -22,7 +22,7 @@
                 <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="funnel" class="w-5 h-5" /></div>
                 <div class="relative z-10">
                     <h3 class="text-xs font-black uppercase tracking-widest text-white">Filter Data</h3>
-                    <p class="text-[9px] text-teal-100 font-semibold uppercase mt-0.5">Saring Hasil Pencarian</p>
+                    <p class="text-[10px] text-teal-100 font-semibold uppercase mt-0.5">Saring Hasil Pencarian</p>
                 </div>
                 <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
                   <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
@@ -89,7 +89,7 @@
         <div v-else class="flex-1 overflow-y-auto overflow-x-auto custom-scrollbar relative bg-white">
             <table class="w-full text-left border-collapse min-w-full">
                 <thead class="hidden sm:table-header-group sticky top-0 z-10 bg-slate-50 border-b border-slate-200 shadow-sm">
-                    <tr class="text-[9px] uppercase tracking-widest font-black text-slate-500">
+                    <tr class="text-[10px] uppercase tracking-widest font-black text-slate-500">
                         <th class="py-3 px-4 w-12 text-center">No</th>
                         <th class="py-3 px-4">Pengguna</th>
                         <th class="py-3 px-4 w-32">Hak Akses</th>
@@ -105,7 +105,7 @@
                     </tr>
                     <tr v-for="(u, index) in users" :key="u.id" class="hover:bg-slate-50/80 transition-colors bg-white group flex flex-col sm:table-row p-4 sm:p-0 relative">
                         <td class="px-0 py-1 sm:py-3 sm:px-4 text-left sm:text-center text-slate-400 font-bold flex sm:table-cell items-center justify-between">
-                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nomor</span>
+                            <span class="sm:hidden text-[10px] font-black uppercase tracking-widest text-slate-400">Nomor</span>
                             <span>{{ (pagination.currentPage - 1) * 15 + index + 1 }}</span>
                         </td>
                         <td class="px-0 py-1 sm:py-3 sm:px-4 flex sm:table-cell items-center justify-between">
@@ -114,12 +114,12 @@
                                 <div class="text-[10px] font-bold text-slate-400 mt-0.5">{{ u.email }}</div>
                             </div>
                             <!-- Show role badge only on mobile inside this column -->
-                            <span class="sm:hidden px-2.5 py-1 rounded bg-slate-100 text-slate-500 border border-slate-200 text-[9px] font-black uppercase tracking-widest shadow-sm leading-none" :class="getRoleBadgeClass(u.role)">
+                            <span class="sm:hidden px-2.5 py-1 rounded bg-slate-100 text-slate-500 border border-slate-200 text-[10px] font-black uppercase tracking-widest shadow-sm leading-none" :class="getRoleBadgeClass(u.role)">
                                 {{ u.role }}
                             </span>
                         </td>
                         <td class="hidden sm:table-cell px-0 py-1 sm:py-3 sm:px-4">
-                            <span class="px-3 py-1.5 rounded-md text-[9px] font-black uppercase tracking-widest border" :class="getRoleBadgeClass(u.role)">
+                            <span class="px-3 py-1.5 rounded-md text-[10px] font-black uppercase tracking-widest border" :class="getRoleBadgeClass(u.role)">
                                 {{ u.role }}
                             </span>
                         </td>
@@ -315,7 +315,7 @@
                     <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="user" class="w-5 h-5" /></div>
                     <div class="relative z-10">
                         <h3 class="text-xs font-black uppercase tracking-widest text-white">Akun Baru</h3>
-                        <p class="text-[9px] text-emerald-100 font-semibold uppercase mt-0.5">Tambah Pengguna Manual</p>
+                        <p class="text-[10px] text-emerald-100 font-semibold uppercase mt-0.5">Tambah Pengguna Manual</p>
                     </div>
                     <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
                       <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>
@@ -380,7 +380,7 @@
                     <span class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="rocket-launch" class="w-5 h-5" /></span>
                     <div class="relative z-10">
                         <h3 class="text-xs font-black uppercase tracking-widest text-white">Import Massal</h3>
-                        <p class="text-[9px] text-indigo-100 font-semibold uppercase mt-0.5">Via File CSV</p>
+                        <p class="text-[10px] text-indigo-100 font-semibold uppercase mt-0.5">Via File CSV</p>
                     </div>
                     <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
                       <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"></path></svg>
@@ -408,7 +408,7 @@
                                 <p class="text-[10px] font-semibold text-emerald-600/70 mt-1" v-if="!selectedFile">atau drag & drop ke area ini</p>
                                 <div v-else class="mt-2 bg-emerald-200/50 py-1.5 px-3 rounded-lg flex items-center justify-center gap-2">
                                     <span class="text-[10px] font-black text-emerald-800 truncate max-w-[150px]">{{ selectedFile.name }}</span>
-                                    <span class="text-[9px] text-emerald-600 font-bold shrink-0">({{ (selectedFile.size / 1024).toFixed(1) }} KB)</span>
+                                    <span class="text-[10px] text-emerald-600 font-bold shrink-0">({{ (selectedFile.size / 1024).toFixed(1) }} KB)</span>
                                 </div>
                             </div>
                         </div>

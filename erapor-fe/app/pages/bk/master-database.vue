@@ -93,7 +93,7 @@
                     <div class="overflow-x-auto custom-scrollbar">
                         <table class="w-full text-left border-collapse whitespace-nowrap">
                             <thead>
-                                <tr class="bg-white text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 border-b border-slate-100">
+                                <tr class="bg-white text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 border-b border-slate-100">
                                     <th class="px-6 py-4">Tampilan</th>
                                     <th class="px-6 py-4">Kode Internal</th>
                                     <th class="px-6 py-4">Keterangan</th>

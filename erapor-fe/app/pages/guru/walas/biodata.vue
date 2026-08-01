@@ -7,9 +7,9 @@
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 z-20 shadow-sm">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
           :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-md shadow-amber-500/20 ring-2 ring-amber-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+          class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon :name="tab.icon" class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
-          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
 
@@ -118,7 +118,7 @@
                       <td class="py-3 px-4 border-r border-slate-100 sticky left-0 bg-white group-hover:bg-slate-50/90 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.02)] z-10">
                         <div class="flex items-center gap-2">
                             <div class="text-[12px] font-black uppercase tracking-wide" :class="siswa.tanggal_keluar ? 'text-rose-600 line-through' : 'text-slate-700'">{{ siswa.nama_lengkap }}</div>
-                            <span v-if="siswa.tanggal_keluar" class="px-1.5 py-0.5 bg-rose-100 text-rose-700 text-[8px] font-black uppercase tracking-widest rounded">Keluar: {{ siswa.tanggal_keluar }}</span>
+                            <span v-if="siswa.tanggal_keluar" class="px-1.5 py-0.5 bg-rose-100 text-rose-700 text-[10px] font-black uppercase tracking-widest rounded">Keluar: {{ siswa.tanggal_keluar }}</span>
                         </div>
                         <div class="text-[10px] text-slate-400 font-bold tracking-widest mt-0.5">{{ siswa.nisn || 'NISN -' }} | {{ siswa.nis || 'NIS -' }}</div>
                       </td>
@@ -149,7 +149,7 @@
                         <div class="flex items-center justify-center gap-2">
                             <button 
                                 @click="openEditModal(siswa)"
-                                class="flex-1 px-2 py-2 bg-white border border-indigo-200 text-indigo-600 hover:bg-indigo-50 font-black rounded-lg transition-all text-[9px] uppercase tracking-widest shadow-sm hover:shadow active:scale-95 inline-flex items-center justify-center"
+                                class="flex-1 px-2 py-2 bg-white border border-indigo-200 text-indigo-600 hover:bg-indigo-50 font-black rounded-lg transition-all text-[10px] uppercase tracking-widest shadow-sm hover:shadow active:scale-95 inline-flex items-center justify-center"
                             >
                                 <AppIcon name="pencil" /> Edit
                             </button>
@@ -260,22 +260,22 @@
                             <div class="absolute top-0 right-0 p-3 opacity-10 text-4xl"><AppIcon name="user" /></div>
                             <h3 class="text-xs font-black text-indigo-700 uppercase tracking-widest border-b-2 border-indigo-100 pb-2 mb-4">Data Ayah</h3>
                             <div class="space-y-1.5 relative z-10">
-                                <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1">Nama Ayah</label>
+                                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Nama Ayah</label>
                                 <input v-model="editForm.nama_ayah" type="text" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
                             </div>
                             <div class="space-y-1.5 relative z-10">
-                                <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1">TTL Ayah</label>
+                                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">TTL Ayah</label>
                                 <input v-model="editForm.ttl_ayah" type="text" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
                             </div>
                             <div class="space-y-1.5 relative z-10">
-                                <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1">Pekerjaan Ayah</label>
+                                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Pekerjaan Ayah</label>
                                 <select v-model="editForm.pekerjaan_ayah" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
                                     <option value="" disabled>-- Pilih --</option>
                                     <option v-for="pek in pekerjaanOptions" :key="pek.kode" :value="pek.nama">{{ pek.nama }}</option>
                                 </select>
                             </div>
                             <div class="space-y-1.5 relative z-10">
-                                <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1">No HP Ayah</label>
+                                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">No HP Ayah</label>
                                 <input v-model="editForm.no_hp_ayah" type="text" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
                             </div>
                         </div>
@@ -285,22 +285,22 @@
                             <div class="absolute top-0 right-0 p-3 opacity-10 text-4xl"><AppIcon name="user" /></div>
                             <h3 class="text-xs font-black text-pink-700 uppercase tracking-widest border-b-2 border-pink-100 pb-2 mb-4">Data Ibu</h3>
                             <div class="space-y-1.5 relative z-10">
-                                <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1">Nama Ibu</label>
+                                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Nama Ibu</label>
                                 <input v-model="editForm.nama_ibu" type="text" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold focus:ring-2 focus:ring-pink-500 outline-none">
                             </div>
                             <div class="space-y-1.5 relative z-10">
-                                <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1">TTL Ibu</label>
+                                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">TTL Ibu</label>
                                 <input v-model="editForm.ttl_ibu" type="text" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold focus:ring-2 focus:ring-pink-500 outline-none">
                             </div>
                             <div class="space-y-1.5 relative z-10">
-                                <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1">Pekerjaan Ibu</label>
+                                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Pekerjaan Ibu</label>
                                 <select v-model="editForm.pekerjaan_ibu" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold focus:ring-2 focus:ring-pink-500 outline-none">
                                     <option value="" disabled>-- Pilih --</option>
                                     <option v-for="pek in pekerjaanOptions" :key="pek.kode" :value="pek.nama">{{ pek.nama }}</option>
                                 </select>
                             </div>
                             <div class="space-y-1.5 relative z-10">
-                                <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1">No HP Ibu</label>
+                                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">No HP Ibu</label>
                                 <input v-model="editForm.no_hp_ibu" type="text" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold focus:ring-2 focus:ring-pink-500 outline-none">
                             </div>
                         </div>
@@ -310,22 +310,22 @@
                             <div class="absolute top-0 right-0 p-3 opacity-10 text-4xl">🧑‍<AppIcon name="user" /></div>
                             <h3 class="text-xs font-black text-amber-700 uppercase tracking-widest border-b-2 border-amber-100 pb-2 mb-4">Data Wali</h3>
                             <div class="space-y-1.5 relative z-10">
-                                <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1">Nama Wali</label>
+                                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Nama Wali</label>
                                 <input v-model="editForm.nama_wali" type="text" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold focus:ring-2 focus:ring-amber-500 outline-none">
                             </div>
                             <div class="space-y-1.5 relative z-10">
-                                <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1">Pekerjaan Wali</label>
+                                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Pekerjaan Wali</label>
                                 <select v-model="editForm.pekerjaan_wali" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold focus:ring-2 focus:ring-amber-500 outline-none">
                                     <option value="" disabled>-- Pilih --</option>
                                     <option v-for="pek in pekerjaanOptions" :key="pek.kode" :value="pek.nama">{{ pek.nama }}</option>
                                 </select>
                             </div>
                             <div class="space-y-1.5 relative z-10">
-                                <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1">No HP Wali</label>
+                                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">No HP Wali</label>
                                 <input v-model="editForm.no_hp_wali" type="text" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold focus:ring-2 focus:ring-amber-500 outline-none">
                             </div>
                             <div class="space-y-1.5 relative z-10">
-                                <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1">Alamat Wali</label>
+                                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Alamat Wali</label>
                                 <textarea v-model="editForm.alamat_wali" rows="1" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold focus:ring-2 focus:ring-amber-500 outline-none resize-none"></textarea>
                             </div>
                         </div>

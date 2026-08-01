@@ -6,9 +6,9 @@
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 z-20 shadow-sm">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
           :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-sky-500 to-sky-600 text-white shadow-md shadow-sky-500/20 ring-2 ring-sky-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+          class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon :name="tab.icon" class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
-          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
 
@@ -20,7 +20,7 @@
             <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="document-text" class="w-5 h-5" /></div>
             <div class="relative z-10">
                 <h3 class="text-xs font-black uppercase tracking-widest text-white">Absensi Kelas</h3>
-                <p class="text-[9px] text-sky-100 font-semibold uppercase mt-0.5">Input Kehadiran Per Mapel</p>
+                <p class="text-[10px] text-sky-100 font-semibold uppercase mt-0.5">Input Kehadiran Per Mapel</p>
             </div>
             <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
               <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
@@ -136,11 +136,11 @@
                     <div class="overflow-auto flex-grow custom-scrollbar">
                         <table class="w-full text-left border-collapse text-[10px] sm:text-xs">
                             <thead class="sticky top-0 z-20">
-                                <tr class="bg-slate-100 text-[9px] font-black uppercase tracking-widest text-slate-500">
+                                <tr class="bg-slate-100 text-[10px] font-black uppercase tracking-widest text-slate-500">
                                     <th class="px-3 py-2 sticky left-0 bg-slate-100 border-b border-r border-slate-200 min-w-[150px] z-30">Nama Siswa</th>
                                     <th v-for="(pert, index) in reversedPertemuans" :key="pert.id" class="px-2 py-1.5 border-b border-r border-slate-200 text-center min-w-[60px] group relative">
                                         <div>Prt. {{ index + 1 }}</div>
-                                        <div class="text-[8px] mt-0.5 font-bold text-slate-400">{{ formatDateShort(pert.tanggal) }}</div>
+                                        <div class="text-[10px] mt-0.5 font-bold text-slate-400">{{ formatDateShort(pert.tanggal) }}</div>
                                         <div class="absolute inset-x-0 top-0 hidden group-hover:flex items-center justify-center space-x-1 bg-slate-100/95 py-1.5 border-b border-slate-200">
                                             <button @click="editPertemuan(pert)" class="text-sky-500 hover:text-sky-600 transition-colors" title="Edit Pertemuan">
                                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
@@ -173,12 +173,12 @@
             <div class="px-6 py-4 bg-white border-t border-slate-200 shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <h4 class="text-[10px] font-black uppercase tracking-widest text-slate-400">Panduan Warna Status</h4>
                 <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-[10px] font-bold text-slate-600">
-                    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-md bg-slate-100 text-slate-400 flex items-center justify-center border border-slate-200 text-[8px]">-</span> Kosong (Hadir)</div>
-                    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-md bg-emerald-100 text-emerald-600 flex items-center justify-center border border-emerald-200 text-[8px]">H</span> Hadir</div>
-                    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-md bg-amber-100 text-amber-600 flex items-center justify-center border border-amber-200 text-[8px]">S</span> Sakit</div>
-                    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-md bg-sky-100 text-sky-600 flex items-center justify-center border border-sky-200 text-[8px]">I</span> Izin</div>
-                    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-md bg-rose-100 text-rose-600 flex items-center justify-center border border-rose-200 text-[8px]">A</span> Alpa</div>
-                    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-md bg-indigo-100 text-indigo-600 flex items-center justify-center border border-indigo-200 text-[8px]">P</span> PKL</div>
+                    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-md bg-slate-100 text-slate-400 flex items-center justify-center border border-slate-200 text-[10px]">-</span> Kosong (Hadir)</div>
+                    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-md bg-emerald-100 text-emerald-600 flex items-center justify-center border border-emerald-200 text-[10px]">H</span> Hadir</div>
+                    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-md bg-amber-100 text-amber-600 flex items-center justify-center border border-amber-200 text-[10px]">S</span> Sakit</div>
+                    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-md bg-sky-100 text-sky-600 flex items-center justify-center border border-sky-200 text-[10px]">I</span> Izin</div>
+                    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-md bg-rose-100 text-rose-600 flex items-center justify-center border border-rose-200 text-[10px]">A</span> Alpa</div>
+                    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-md bg-indigo-100 text-indigo-600 flex items-center justify-center border border-indigo-200 text-[10px]">P</span> PKL</div>
                 </div>
             </div>
           </div>

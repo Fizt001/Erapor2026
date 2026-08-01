@@ -7,7 +7,7 @@
         :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-rose-500 to-rose-600 text-white shadow-md shadow-rose-500/20 ring-2 ring-rose-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
         class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
         <span class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''">{{ tab.icon }}</span>
-        <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
+        <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
       </button>
     </div>
 
@@ -36,7 +36,7 @@
             :class="selectedKelasId === null ? 'bg-rose-50 border-l-4 border-l-rose-500' : 'bg-white border-l-4 border-l-transparent'">
             <div>
                 <h4 class="text-xs font-black uppercase tracking-wider text-slate-700 group-hover:text-rose-700 transition-colors">Semua Kelas (Global)</h4>
-                <p class="text-[9px] font-bold text-slate-400 uppercase mt-1">Seluruh Siswa</p>
+                <p class="text-[10px] font-bold text-slate-400 uppercase mt-1">Seluruh Siswa</p>
             </div>
             <span v-if="selectedKelasId === null" class="text-rose-500 text-lg">▶</span>
         </button>
@@ -64,7 +64,7 @@
                         <h4 class="text-xs font-black uppercase tracking-wider transition-colors" :class="selectedKelasId === kelas.id ? 'text-rose-700' : 'text-slate-700 group-hover:text-rose-700'">
                             {{ kelas.tingkat }} {{ kelas.nama_kelas }}
                         </h4>
-                        <p class="text-[9px] font-bold text-slate-400 uppercase mt-1">{{ kelas.siswas_count || 0 }} Siswa Aktif</p>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase mt-1">{{ kelas.siswas_count || 0 }} Siswa Aktif</p>
                     </div>
                     <span v-if="selectedKelasId === kelas.id" class="text-rose-500 text-lg">▶</span>
                 </button>
@@ -137,17 +137,17 @@
                             <div class="mt-4 grid grid-cols-3 gap-2 border-t border-slate-100 pt-4">
                                 <div class="text-center">
                                     <span class="block w-3 h-3 rounded-full bg-amber-400 mx-auto mb-1"></span>
-                                    <span class="text-[9px] font-black text-slate-500 uppercase tracking-widest">Ringan</span>
+                                    <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Ringan</span>
                                     <span class="block text-sm font-black text-slate-800">{{ stats.categories[0] }}</span>
                                 </div>
                                 <div class="text-center border-x border-slate-100">
                                     <span class="block w-3 h-3 rounded-full bg-orange-500 mx-auto mb-1"></span>
-                                    <span class="text-[9px] font-black text-slate-500 uppercase tracking-widest">Sedang</span>
+                                    <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Sedang</span>
                                     <span class="block text-sm font-black text-slate-800">{{ stats.categories[1] }}</span>
                                 </div>
                                 <div class="text-center">
                                     <span class="block w-3 h-3 rounded-full bg-rose-600 mx-auto mb-1"></span>
-                                    <span class="text-[9px] font-black text-slate-500 uppercase tracking-widest">Berat</span>
+                                    <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Berat</span>
                                     <span class="block text-sm font-black text-slate-800">{{ stats.categories[2] }}</span>
                                 </div>
                             </div>
@@ -179,17 +179,17 @@
                             <div class="mt-4 grid grid-cols-3 gap-2 border-t border-slate-100 pt-4">
                                 <div class="text-center">
                                     <span class="block w-3 h-3 rounded-full bg-amber-400 mx-auto mb-1"></span>
-                                    <span class="text-[9px] font-black text-slate-500 uppercase tracking-widest">Sakit</span>
+                                    <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Sakit</span>
                                     <span class="block text-sm font-black text-slate-800">{{ stats.absensi_categories[0] }}</span>
                                 </div>
                                 <div class="text-center border-x border-slate-100">
                                     <span class="block w-3 h-3 rounded-full bg-sky-500 mx-auto mb-1"></span>
-                                    <span class="text-[9px] font-black text-slate-500 uppercase tracking-widest">Izin</span>
+                                    <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Izin</span>
                                     <span class="block text-sm font-black text-slate-800">{{ stats.absensi_categories[1] }}</span>
                                 </div>
                                 <div class="text-center">
                                     <span class="block w-3 h-3 rounded-full bg-rose-600 mx-auto mb-1"></span>
-                                    <span class="text-[9px] font-black text-slate-500 uppercase tracking-widest">Alpa</span>
+                                    <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Alpa</span>
                                     <span class="block text-sm font-black text-slate-800">{{ stats.absensi_categories[2] }}</span>
                                 </div>
                             </div>

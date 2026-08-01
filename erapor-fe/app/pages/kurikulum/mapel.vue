@@ -7,9 +7,9 @@
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 shadow-sm z-20">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
           :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-amber-500 to-amber-600 text-white shadow-md shadow-amber-500/20 ring-2 ring-amber-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+          class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon :name="tab.icon" class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
-          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
 
@@ -23,7 +23,7 @@
             <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="book-open" class="w-5 h-5" /></div>
             <div class="relative z-10">
                 <h3 class="text-xs font-black uppercase tracking-widest text-white">{{ isEditing ? 'Edit Mata Pelajaran' : 'Mapel Baru' }}</h3>
-                <p class="text-[9px] text-amber-100 font-semibold uppercase mt-0.5">{{ isEditing ? 'Perbarui Data' : 'Tambah Data Manual' }}</p>
+                <p class="text-[10px] text-amber-100 font-semibold uppercase mt-0.5">{{ isEditing ? 'Perbarui Data' : 'Tambah Data Manual' }}</p>
             </div>
             <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
               <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path></svg>
@@ -59,7 +59,7 @@
                         <!-- Input kode produktif khusus jika tidak ada di daftar -->
                     </select>
                     <!-- Tip untuk kode produktif khusus -->
-                    <p class="text-[9px] text-amber-600 font-bold mt-1.5 ml-1">
+                    <p class="text-[10px] text-amber-600 font-bold mt-1.5 ml-1">
                         💡 Mapel Kejuruan-Produktif? Gunakan kode kustom di bawah ini.
                     </p>
                 </div>
@@ -68,11 +68,11 @@
                 <div>
                     <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">
                         Kode Kelompok Kustom
-                        <span class="normal-case text-[9px] text-slate-400 font-semibold">(utk. Produktif, contoh: 251.XI)</span>
+                        <span class="normal-case text-[10px] text-slate-400 font-semibold">(utk. Produktif, contoh: 251.XI)</span>
                     </label>
                     <input type="text" v-model="formData.kelompok" placeholder="Contoh: 251.XI, 482.X, dsb."
                         class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-800 placeholder:text-slate-400 outline-none">
-                    <p class="text-[9px] text-slate-400 font-semibold mt-1 ml-1">Mengisi field ini akan override pilihan dropdown di atas.</p>
+                    <p class="text-[10px] text-slate-400 font-semibold mt-1 ml-1">Mengisi field ini akan override pilihan dropdown di atas.</p>
                 </div>
 
                 <!-- Kode Mapel -->
@@ -174,13 +174,13 @@
                                     <h4 class="font-black text-slate-700 text-xs uppercase tracking-widest">
                                         Kelompok {{ kelompokKey }}
                                     </h4>
-                                    <p class="text-[9px] text-slate-400 font-semibold mt-0.5" v-if="getKelompokNama(kelompokKey)">
+                                    <p class="text-[10px] text-slate-400 font-semibold mt-0.5" v-if="getKelompokNama(kelompokKey)">
                                         {{ getKelompokNama(kelompokKey) }}
                                     </p>
                                 </div>
                             </div>
                             <div class="flex items-center gap-3">
-                                <span class="text-[8px] font-black uppercase tracking-widest text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-100">
+                                <span class="text-[10px] font-black uppercase tracking-widest text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-100">
                                     {{ groupList.length }} Mapel
                                 </span>
                                 <AppIcon name="chevron-down" class="w-4 h-4 text-slate-400 transition-transform duration-300" :class="{ 'rotate-180': isCollapsed[kelompokKey] }" />
@@ -191,7 +191,7 @@
                         <div v-show="!isCollapsed[kelompokKey]" class="overflow-x-auto">
                             <table class="w-full text-left border-collapse">
                                 <thead>
-                                    <tr class="bg-white text-[8px] font-black uppercase tracking-widest text-slate-400 border-b border-slate-100">
+                                    <tr class="bg-white text-[10px] font-black uppercase tracking-widest text-slate-400 border-b border-slate-100">
                                         <th class="py-2.5 px-3 pl-6 w-10 text-center">No</th>
                                         <th class="py-2.5 px-3 w-20">Kode</th>
                                         <th class="py-2.5 px-3">Mata Pelajaran</th>
@@ -203,13 +203,13 @@
                                         class="border-b border-slate-100 hover:bg-amber-50/30 transition-colors bg-white group">
                                         <td class="py-2.5 px-3 pl-6 text-center w-10 text-[10px] font-bold text-slate-400">{{ index + 1 }}</td>
                                         <td class="py-2.5 px-3 w-20">
-                                            <span class="text-[9px] font-black uppercase tracking-widest px-2 py-1 rounded-lg bg-amber-50 text-amber-700 border border-amber-100">
+                                            <span class="text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded-lg bg-amber-50 text-amber-700 border border-amber-100">
                                                 {{ item.kode_mapel }}
                                             </span>
                                         </td>
                                         <td class="py-2.5 px-3">
                                             <p class="font-bold text-slate-700 text-[11px] leading-snug">{{ item.nama_mapel }}</p>
-                                            <p class="text-[9px] text-slate-400 mt-0.5" v-if="item.kurikulum">{{ item.kurikulum.nama_kurikulum }}</p>
+                                            <p class="text-[10px] text-slate-400 mt-0.5" v-if="item.kurikulum">{{ item.kurikulum.nama_kurikulum }}</p>
                                         </td>
                                         <td class="py-2.5 px-3 text-center w-10">
                                             <div class="flex flex-col items-center justify-center gap-1 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">

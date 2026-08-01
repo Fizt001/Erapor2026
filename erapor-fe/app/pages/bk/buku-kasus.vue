@@ -7,7 +7,7 @@
         :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-rose-500 to-rose-600 text-white shadow-md shadow-rose-500/20 ring-2 ring-rose-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
         class="rounded-xl flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
         <span class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''">{{ tab.icon }}</span>
-        <span class="text-[9px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
+        <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
       </button>
     </div>
 
@@ -50,7 +50,7 @@
                         <h4 class="text-xs font-black uppercase tracking-wider transition-colors" :class="selectedKelasId === kelas.id ? 'text-rose-700' : 'text-slate-700 group-hover:text-rose-700'">
                             {{ kelas.tingkat }} {{ kelas.nama_kelas }}
                         </h4>
-                        <p class="text-[9px] font-bold text-slate-400 uppercase mt-1">{{ kelas.siswas_count || 0 }} Siswa Aktif</p>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase mt-1">{{ kelas.siswas_count || 0 }} Siswa Aktif</p>
                     </div>
                     <span v-if="selectedKelasId === kelas.id" class="text-rose-500 text-lg">▶</span>
                 </button>
@@ -127,7 +127,7 @@
                                 <div>
                                     <h4 class="text-xs font-black text-slate-800 uppercase">{{ siswa.nama }}</h4>
                                     <div class="flex flex-wrap items-center gap-2 mt-1.5">
-                                        <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest px-2 py-0.5 rounded border border-slate-200 bg-white shadow-sm print:border-none print:shadow-none print:p-0 print:text-black">
+                                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest px-2 py-0.5 rounded border border-slate-200 bg-white shadow-sm print:border-none print:shadow-none print:p-0 print:text-black">
                                             SISA POIN: <b :class="siswa.sisa_poin < 50 ? 'text-rose-600 print:text-black' : 'text-emerald-600 print:text-black'">{{ siswa.sisa_poin }}</b>
                                         </span>
                                     </div>
@@ -140,10 +140,10 @@
                                         TA. {{ t.tahun_ajaran ? t.tahun_ajaran.tahun : '' }} - {{ t.nama_periode }}
                                     </option>
                                 </select>
-                                <button @click.stop="printSiswa(siswa.id)" class="px-3 sm:px-4 py-2 bg-slate-800 text-white text-[9px] sm:text-[10px] font-black rounded-lg sm:rounded-xl hover:bg-black transition shadow-sm uppercase tracking-widest flex items-center gap-1.5 active:scale-95">
+                                <button @click.stop="printSiswa(siswa.id)" class="px-3 sm:px-4 py-2 bg-slate-800 text-white text-[10px] sm:text-[10px] font-black rounded-lg sm:rounded-xl hover:bg-black transition shadow-sm uppercase tracking-widest flex items-center gap-1.5 active:scale-95">
                                     🖨️ CETAK
                                 </button>
-                                <button class="px-3 sm:px-4 py-2 bg-rose-600 text-white text-[9px] sm:text-[10px] font-black rounded-lg sm:rounded-xl hover:bg-rose-700 transition shadow-sm uppercase tracking-widest flex items-center gap-1.5 active:scale-95">
+                                <button class="px-3 sm:px-4 py-2 bg-rose-600 text-white text-[10px] sm:text-[10px] font-black rounded-lg sm:rounded-xl hover:bg-rose-700 transition shadow-sm uppercase tracking-widest flex items-center gap-1.5 active:scale-95">
                                     <span v-if="expandedSiswa === siswa.id">✕ TUTUP</span>
                                     <span v-else>➕ BUKA</span>
                                 </button>
@@ -156,7 +156,7 @@
                                 
                                 <!-- Kiri: Riwayat Poin -->
                                 <div class="print:border print:border-slate-300 print:p-2 print:rounded-lg">
-                                    <h5 class="text-[10px] font-black text-rose-600 uppercase tracking-widest mb-3 flex items-center gap-2 print:text-black print:mb-1 print:text-[8px]">
+                                    <h5 class="text-[10px] font-black text-rose-600 uppercase tracking-widest mb-3 flex items-center gap-2 print:text-black print:mb-1 print:text-[10px]">
                                         <span class="w-2 h-2 bg-rose-500 rounded-full no-print"></span> Riwayat Pelanggaran
                                     </h5>
                                     <div class="space-y-2 print:space-y-0">
@@ -164,30 +164,30 @@
                                             <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Pilih periode untuk melihat data.</p>
                                         </div>
                                         <div v-else-if="!getFilteredLogs(siswa.id, siswa.poin_logs) || getFilteredLogs(siswa.id, siswa.poin_logs).length === 0" class="p-4 text-center border-2 border-dashed border-slate-200 rounded-xl bg-white print:border-none print:text-left print:p-0">
-                                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest print:text-[8px]">✨ Bersih dari pelanggaran.</p>
+                                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest print:text-[10px]">✨ Bersih dari pelanggaran.</p>
                                         </div>
                                         <div v-else v-for="log in getFilteredLogs(siswa.id, siswa.poin_logs)" :key="log.id" class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm print:shadow-none print:border-b print:border-slate-300 print:rounded-none print:px-0 print:py-1">
-                                            <div class="flex justify-between font-black text-[11px] items-start print:text-[9px]">
+                                            <div class="flex justify-between font-black text-[11px] items-start print:text-[10px]">
                                                 <span class="text-slate-800 uppercase leading-tight pr-4">
                                                     {{ log.pelanggaran ? log.pelanggaran.nama_pelanggaran : 'Poin Manual / Plus' }}
                                                 </span>
                                                 <span v-if="log.skor_pengurang > 0" class="text-rose-600 bg-rose-50 px-2 py-0.5 rounded border border-rose-100 shrink-0 print:border-none print:text-black print:px-2">-{{ log.skor_pengurang }}</span>
                                                 <span v-if="log.skor_penambah > 0" class="text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100 shrink-0 print:border-none print:text-black print:px-2">+{{ log.skor_penambah }}</span>
                                             </div>
-                                            <p class="text-[9px] text-slate-400 mt-1.5 uppercase font-bold tracking-widest print:text-slate-600 print:text-[7px] print:mt-0.5">
+                                            <p class="text-[10px] text-slate-400 mt-1.5 uppercase font-bold tracking-widest print:text-slate-600 print:text-[7px] print:mt-0.5">
                                                 📅 {{ formatDate(log.tanggal) }}
                                                 <span v-if="log.tahun_ajaran" class="ml-2 text-indigo-600 bg-indigo-50 border border-indigo-100 px-1.5 py-0.5 rounded print:bg-transparent print:border-none print:text-black print:p-0 print:ml-1">
                                                     TA. {{ log.tahun_ajaran.tahun }} <span v-if="log.titimangsa">({{ log.titimangsa.nama_periode }})</span>
                                                 </span>
                                             </p>
-                                            <p v-if="log.catatan" class="text-[10px] text-slate-500 italic mt-1 bg-slate-50 p-2 rounded-lg border border-slate-100 print:bg-transparent print:border-none print:p-0 print:mt-0.5 print:text-[8px]">"{{ log.catatan }}"</p>
+                                            <p v-if="log.catatan" class="text-[10px] text-slate-500 italic mt-1 bg-slate-50 p-2 rounded-lg border border-slate-100 print:bg-transparent print:border-none print:p-0 print:mt-0.5 print:text-[10px]">"{{ log.catatan }}"</p>
                                         </div>
                                     </div>
                                 </div>
 
                                 <!-- Kanan: Riwayat Penanganan -->
                                 <div class="print:border print:border-slate-300 print:p-2 print:rounded-lg">
-                                    <h5 class="text-[10px] font-black text-emerald-600 uppercase tracking-widest mb-3 flex items-center gap-2 print:text-black print:mb-1 print:text-[8px]">
+                                    <h5 class="text-[10px] font-black text-emerald-600 uppercase tracking-widest mb-3 flex items-center gap-2 print:text-black print:mb-1 print:text-[10px]">
                                         <span class="w-2 h-2 bg-emerald-500 rounded-full no-print"></span> Tindak Lanjut BK
                                     </h5>
                                     <div class="space-y-2 print:space-y-0">
@@ -195,20 +195,20 @@
                                             <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Pilih periode untuk melihat data.</p>
                                         </div>
                                         <div v-else-if="!getFilteredPenanganans(siswa.id, siswa.penanganans) || getFilteredPenanganans(siswa.id, siswa.penanganans).length === 0" class="p-4 text-center border-2 border-dashed border-slate-200 rounded-xl bg-white print:border-none print:text-left print:p-0">
-                                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest print:text-[8px]">Tidak ada catatan penanganan.</p>
+                                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest print:text-[10px]">Tidak ada catatan penanganan.</p>
                                         </div>
                                         <div v-else v-for="pen in getFilteredPenanganans(siswa.id, siswa.penanganans)" :key="pen.id" class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm print:shadow-none print:border-b print:border-slate-300 print:rounded-none print:px-0 print:py-1">
                                             <div class="flex justify-between items-center mb-2 print:mb-0.5">
-                                                <span class="text-[9px] font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100 uppercase tracking-widest print:bg-transparent print:border-none print:text-black print:px-0 print:text-[8px]">{{ pen.kategori }}</span>
-                                                <span class="text-[9px] text-slate-400 font-bold uppercase tracking-widest print:text-slate-600 print:text-[7px]">
+                                                <span class="text-[10px] font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100 uppercase tracking-widest print:bg-transparent print:border-none print:text-black print:px-0 print:text-[10px]">{{ pen.kategori }}</span>
+                                                <span class="text-[10px] text-slate-400 font-bold uppercase tracking-widest print:text-slate-600 print:text-[7px]">
                                                     📅 {{ formatDateTime(pen.created_at) }}
                                                     <span v-if="pen.tahun_ajaran" class="ml-2 text-indigo-600 bg-indigo-50 border border-indigo-100 px-1.5 py-0.5 rounded print:bg-transparent print:border-none print:text-black print:p-0 print:ml-1">
                                                         TA. {{ pen.tahun_ajaran.tahun }}
                                                     </span>
                                                 </span>
                                             </div>
-                                            <p class="text-[10px] font-bold text-slate-700 leading-tight mt-1 print:text-black print:mt-0 print:text-[8px]"><span class="text-rose-500 print:text-black font-black">Kasus:</span> {{ pen.deskripsi_masalah }}</p>
-                                            <p class="text-[10px] text-slate-600 mt-1.5 bg-emerald-50/50 p-2 rounded-lg border border-emerald-100/50 print:border-none print:bg-transparent print:p-0 print:mt-0.5 print:text-[8px]">
+                                            <p class="text-[10px] font-bold text-slate-700 leading-tight mt-1 print:text-black print:mt-0 print:text-[10px]"><span class="text-rose-500 print:text-black font-black">Kasus:</span> {{ pen.deskripsi_masalah }}</p>
+                                            <p class="text-[10px] text-slate-600 mt-1.5 bg-emerald-50/50 p-2 rounded-lg border border-emerald-100/50 print:border-none print:bg-transparent print:p-0 print:mt-0.5 print:text-[10px]">
                                                 <b class="text-emerald-600 print:text-black">Solusi:</b> {{ pen.tindakan_penyelesaian }}
                                             </p>
                                         </div>

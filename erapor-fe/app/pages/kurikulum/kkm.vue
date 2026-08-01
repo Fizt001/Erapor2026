@@ -7,9 +7,9 @@
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 shadow-sm z-20">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
           :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-amber-500 to-amber-600 text-white shadow-md shadow-amber-500/20 ring-2 ring-amber-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+          class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon :name="tab.icon" class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
-          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
 
@@ -21,7 +21,7 @@
             <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="star" class="w-5 h-5" /></div>
             <div class="relative z-10">
                 <h3 class="text-xs font-black uppercase tracking-widest text-white">Standar Nilai</h3>
-                <p class="text-[9px] text-amber-100 font-semibold uppercase mt-0.5">Petunjuk Pengaturan</p>
+                <p class="text-[10px] text-amber-100 font-semibold uppercase mt-0.5">Petunjuk Pengaturan</p>
             </div>
           </div>
         </div>
@@ -100,7 +100,7 @@
                                     <span v-if="isSaving[kur.kurikulum_id + '_' + item.tingkat]" class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 border-2 border-amber-400 border-t-transparent rounded-full animate-spin"></span>
                                     <span v-else-if="item.nilai !== null" class="absolute right-3 top-1/2 -translate-y-1/2 text-emerald-500 font-black"><AppIcon name="check" class="w-4 h-4" /></span>
                                 </div>
-                                <p class="text-[8px] text-slate-400 text-left ml-1 font-bold mt-0.5">Tekan <kbd class="px-1 py-0.5 bg-slate-100 border border-slate-200 rounded">Enter</kbd> untuk simpan</p>
+                                <p class="text-[10px] text-slate-400 text-left ml-1 font-bold mt-0.5">Tekan <kbd class="px-1 py-0.5 bg-slate-100 border border-slate-200 rounded">Enter</kbd> untuk simpan</p>
                             </div>
                         </div>
                     </div>

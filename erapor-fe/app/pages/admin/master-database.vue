@@ -6,13 +6,13 @@
       
       <!-- MOBILE VIEW TABS -->
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 shadow-sm z-20">
-        <button type="button" @click="activeTab = 'form'" :class="activeTab === 'form' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+        <button type="button" @click="activeTab = 'form'" :class="activeTab === 'form' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon name="clipboard" class="text-lg mb-0.5 transition-transform" :class="activeTab === 'form' ? 'scale-110' : ''" />
-          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">Entry Ref</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">Entry Ref</span>
         </button>
-        <button type="button" @click="activeTab = 'table'" :class="activeTab === 'table' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+        <button type="button" @click="activeTab = 'table'" :class="activeTab === 'table' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon name="archive-box" class="text-lg mb-0.5 transition-transform" :class="activeTab === 'table' ? 'scale-110' : ''" />
-          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">Database</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">Database</span>
         </button>
       </div>
 
@@ -23,7 +23,7 @@
           <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-4 border border-emerald-500 shadow-sm relative overflow-hidden shrink-0">
             <div class="relative z-10">
                 <h3 class="text-xs font-black uppercase tracking-widest text-white">Data Referensi</h3>
-                <p class="text-[9px] text-emerald-100 font-semibold uppercase mt-0.5">{{ isEditing ? 'Mode Update' : 'Mode Tambah Baru' }}</p>
+                <p class="text-[10px] text-emerald-100 font-semibold uppercase mt-0.5">{{ isEditing ? 'Mode Update' : 'Mode Tambah Baru' }}</p>
             </div>
             <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
               <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M4 5a2 2 0 012-2h12a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm2 0v14h12V5H6zm2 3a1 1 0 011-1h6a1 1 0 110 2H9a1 1 0 01-1-1zm0 4a1 1 0 011-1h6a1 1 0 110 2H9a1 1 0 01-1-1zm0 4a1 1 0 011-1h6a1 1 0 110 2H9a1 1 0 01-1-1z"></path></svg>
@@ -102,7 +102,7 @@
                     <div v-show="isGroupExpanded(jenis)" class="overflow-x-auto custom-scrollbar">
                         <table class="w-full text-left border-collapse min-w-full">
                             <thead class="hidden sm:table-header-group">
-                                <tr class="bg-white text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 border-b border-slate-100">
+                                <tr class="bg-white text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 border-b border-slate-100">
                                     <th class="p-4 pl-6 w-16 text-center">#</th>
                                     <th class="p-4">Kode / Value</th>
                                     <th class="p-4">Nama (Display) & Keterangan</th>
@@ -112,15 +112,15 @@
                             <tbody class="text-xs flex flex-col sm:table-row-group">
                                 <tr v-for="(item, index) in group" :key="item.id" class="border-b border-slate-100 hover:bg-emerald-50/30 transition-colors group bg-white flex flex-col sm:table-row p-4 sm:p-0 relative">
                                     <td class="px-0 py-1 sm:p-4 sm:pl-6 text-left sm:text-center text-[10px] font-bold text-slate-400 flex sm:table-cell items-center justify-between">
-                                        <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nomor</span>
+                                        <span class="sm:hidden text-[10px] font-black uppercase tracking-widest text-slate-400">Nomor</span>
                                         <span>{{ index + 1 }}</span>
                                     </td>
                                     <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-2 sm:pb-4 mb-1 sm:mb-0">
-                                        <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Kode / Value</span>
+                                        <span class="sm:hidden text-[10px] font-black uppercase tracking-widest text-slate-400">Kode / Value</span>
                                         <span class="text-[10px] font-black uppercase tracking-widest px-2 py-1.5 rounded bg-slate-100 text-slate-600 border border-slate-200">{{ item.kode }}</span>
                                     </td>
                                     <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 pb-3 sm:pb-4 mb-2 sm:mb-0">
-                                        <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nama & Keterangan</span>
+                                        <span class="sm:hidden text-[10px] font-black uppercase tracking-widest text-slate-400">Nama & Keterangan</span>
                                         <div class="text-right sm:text-left">
                                             <p class="font-bold text-slate-800 text-[13px]">{{ item.nama }}</p>
                                             <p v-if="item.keterangan" class="text-[10px] text-slate-500 mt-0.5">{{ item.keterangan }}</p>

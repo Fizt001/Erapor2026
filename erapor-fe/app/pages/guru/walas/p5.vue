@@ -7,9 +7,9 @@
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 z-20 shadow-sm">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
           :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-md shadow-amber-500/20 ring-2 ring-amber-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+          class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon :name="tab.icon" class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
-          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
 
@@ -90,8 +90,8 @@
                     <th class="py-3 px-4 text-[10px] font-black uppercase tracking-widest text-slate-500 border-r border-slate-200 min-w-[200px] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.05)] sticky left-0 bg-slate-100 z-30">Nama Peserta Didik</th>
                     <th v-for="(tm, tmIndex) in pageData.periodes" :key="tm.id" :class="tmIndex % 2 === 1 ? 'bg-indigo-50 border-indigo-100' : 'bg-teal-50 border-emerald-100'" class="py-3 px-4 text-center border-r border-slate-200">
                         <span :class="tmIndex % 2 === 1 ? 'text-indigo-700' : 'text-emerald-700'" class="text-[10px] font-black uppercase tracking-widest block mb-1">Capaian Projek ({{ tm.nama_periode_panjang || tm.nama_periode }})</span>
-                        <span v-if="!tm.is_aktif" class="text-[8px] font-bold text-rose-500 uppercase tracking-widest">Tertutup (Read-Only)</span>
-                        <span v-else class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Aktif</span>
+                        <span v-if="!tm.is_aktif" class="text-[10px] font-bold text-rose-500 uppercase tracking-widest">Tertutup (Read-Only)</span>
+                        <span v-else class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Aktif</span>
                     </th>
                   </tr>
                 </thead>

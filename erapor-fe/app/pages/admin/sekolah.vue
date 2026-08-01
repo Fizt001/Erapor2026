@@ -8,9 +8,9 @@
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 z-20 shadow-sm">
         <button v-for="tab in tabs" :key="'mob-'+tab.id" type="button" @click="activeTab = tab.id"
           :class="activeTab === tab.id ? 'bg-emerald-500 text-white shadow-sm ring-1 ring-emerald-400 ring-offset-1' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'"
-          class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+          class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon :name="tab.iconName" class="text-lg mb-0.5 transition-transform" :class="activeTab === tab.id ? 'scale-110' : ''" />
-          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">{{ tab.shortTitle }}</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.shortTitle }}</span>
         </button>
       </div>
 
@@ -22,7 +22,7 @@
             <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="cog" class="w-5 h-5" />️</div>
             <div class="relative z-10">
                 <h3 class="text-xs font-black uppercase tracking-widest text-white">Pengaturan Profil</h3>
-                <p class="text-[9px] text-emerald-100 font-semibold uppercase mt-0.5">Navigasi Kategori</p>
+                <p class="text-[10px] text-emerald-100 font-semibold uppercase mt-0.5">Navigasi Kategori</p>
             </div>
             <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
               <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M4 5a2 2 0 012-2h12a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm2 0v14h12V5H6zm2 3a1 1 0 011-1h6a1 1 0 110 2H9a1 1 0 01-1-1zm0 4a1 1 0 011-1h6a1 1 0 110 2H9a1 1 0 01-1-1zm0 4a1 1 0 011-1h6a1 1 0 110 2H9a1 1 0 01-1-1z"></path></svg>
@@ -72,7 +72,7 @@
                     </div>
                     <div>
                         <h3 class="text-xs lg:text-sm font-black uppercase tracking-widest text-emerald-700 leading-tight">{{ currentTab.title }}</h3>
-                        <p class="text-[9px] lg:text-[10px] font-bold text-slate-400 uppercase mt-0.5 hidden sm:block">{{ currentTab.subtitle }}</p>
+                        <p class="text-[10px] lg:text-[10px] font-bold text-slate-400 uppercase mt-0.5 hidden sm:block">{{ currentTab.subtitle }}</p>
                     </div>
                 </div>
                 

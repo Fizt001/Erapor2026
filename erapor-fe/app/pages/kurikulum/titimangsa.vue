@@ -7,9 +7,9 @@
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 shadow-sm z-20">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTab = tab.id"
           :class="activeTab === tab.id ? 'bg-gradient-to-br from-amber-500 to-amber-600 text-white shadow-md shadow-amber-500/20 ring-2 ring-amber-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+          class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon :name="tab.icon" class="text-lg mb-0.5 transition-transform" :class="activeTab === tab.id ? 'scale-110' : ''" />
-          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
 
@@ -21,7 +21,7 @@
             <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="clock" class="w-5 h-5" /></div>
             <div class="relative z-10">
                 <h3 class="text-xs font-black uppercase tracking-widest text-white">{{ isEdit ? 'Edit Periode' : 'Periode Baru' }}</h3>
-                <p class="text-[9px] text-amber-100 font-semibold uppercase mt-0.5">{{ isEdit ? 'Perbarui Data' : 'Tambah Data Manual' }}</p>
+                <p class="text-[10px] text-amber-100 font-semibold uppercase mt-0.5">{{ isEdit ? 'Perbarui Data' : 'Tambah Data Manual' }}</p>
             </div>
             <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
               <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path></svg>
@@ -110,7 +110,7 @@
         <div class="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar relative bg-white">
             <table class="w-full text-left border-collapse min-w-full">
                 <thead class="hidden sm:table-header-group sticky top-0 z-10 bg-slate-50 border-b border-slate-200 shadow-sm">
-                    <tr class="text-[9px] uppercase tracking-widest font-black text-slate-500">
+                    <tr class="text-[10px] uppercase tracking-widest font-black text-slate-500">
                         <th class="py-3 px-4 w-12 text-center">No</th>
                         <th class="py-3 px-4">Kurikulum</th>
                         <th class="py-3 px-4">Periode & Kelas</th>
@@ -128,30 +128,30 @@
                     </tr>
                     <tr v-for="(item, index) in titimangsas" :key="item.id" class="border-b border-slate-100 hover:bg-slate-50/80 transition-colors bg-white group flex flex-col sm:table-row p-4 sm:p-0 relative">
                         <td class="px-0 py-1 sm:p-4 text-left sm:text-center text-[10px] sm:text-xs font-bold text-slate-400 flex sm:table-cell items-center justify-between">
-                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nomor</span>
+                            <span class="sm:hidden text-[10px] font-black uppercase tracking-widest text-slate-400">Nomor</span>
                             <span>{{ index + 1 }}</span>
                         </td>
                         <td class="px-0 py-2 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50">
-                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Kurikulum</span>
+                            <span class="sm:hidden text-[10px] font-black uppercase tracking-widest text-slate-400">Kurikulum</span>
                             <span class="px-2 py-1 bg-slate-100 text-slate-600 font-bold rounded text-[10px] uppercase tracking-wider border border-slate-200">{{ item.kurikulum?.nama_kurikulum }}</span>
                         </td>
                         <td class="px-0 py-2 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50">
-                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Periode & Kelas</span>
+                            <span class="sm:hidden text-[10px] font-black uppercase tracking-widest text-slate-400">Periode & Kelas</span>
                             <div class="text-right sm:text-left">
                                 <div class="font-black text-slate-800">{{ item.nama_periode }}</div>
                                 <div class="text-[10px] font-bold text-amber-500 uppercase tracking-widest mt-0.5">Tingkat: {{ item.target_tingkat }}</div>
                             </div>
                         </td>
                         <td class="px-0 py-2 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50">
-                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Cetak Rapor</span>
+                            <span class="sm:hidden text-[10px] font-black uppercase tracking-widest text-slate-400">Cetak Rapor</span>
                             <div class="text-right sm:text-left">
                                 <div class="font-bold text-slate-700">{{ item.tempat_cetak }}</div>
                                 <div class="text-[10px] font-medium text-slate-500 mt-0.5">{{ item.tanggal_cetak }}</div>
                             </div>
                         </td>
                         <td class="px-0 py-2 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50 sm:text-center">
-                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Status</span>
-                            <button @click="toggleStatus(item.id)" class="px-3 py-1 text-[9px] uppercase tracking-widest font-black rounded-full transition-colors border"
+                            <span class="sm:hidden text-[10px] font-black uppercase tracking-widest text-slate-400">Status</span>
+                            <button @click="toggleStatus(item.id)" class="px-3 py-1 text-[10px] uppercase tracking-widest font-black rounded-full transition-colors border"
                                 :class="item.is_aktif ? 'bg-emerald-50 text-emerald-600 border-emerald-200 hover:bg-emerald-100' : 'bg-slate-50 text-slate-500 border-slate-200 hover:bg-slate-100'">
                                 {{ item.is_aktif ? 'Aktif' : 'Nonaktif' }}
                             </button>

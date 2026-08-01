@@ -6,13 +6,13 @@
       
       <!-- MOBILE VIEW TABS -->
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 shadow-sm z-20">
-        <button type="button" @click="activeTab = 'form'" :class="activeTab === 'form' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+        <button type="button" @click="activeTab = 'form'" :class="activeTab === 'form' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon name="book" class="text-lg mb-0.5 transition-transform" :class="activeTab === 'form' ? 'scale-110' : ''" />
-          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">Entry Kurikulum</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">Entry Kurikulum</span>
         </button>
-        <button type="button" @click="activeTab = 'table'" :class="activeTab === 'table' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+        <button type="button" @click="activeTab = 'table'" :class="activeTab === 'table' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-md shadow-emerald-500/20 ring-2 ring-emerald-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'" class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon name="clipboard" class="text-lg mb-0.5 transition-transform" :class="activeTab === 'table' ? 'scale-110' : ''" />
-          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">Database</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">Database</span>
         </button>
       </div>
 
@@ -26,7 +26,7 @@
                     <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="book" class="w-5 h-5" /></div>
                     <div class="relative z-10">
                         <h3 class="text-xs font-black uppercase tracking-widest text-white">Data Kurikulum</h3>
-                        <p class="text-[9px] text-emerald-100 font-semibold uppercase mt-0.5">{{ isEditing ? 'Mode Update' : 'Mode Tambah Baru' }}</p>
+                        <p class="text-[10px] text-emerald-100 font-semibold uppercase mt-0.5">{{ isEditing ? 'Mode Update' : 'Mode Tambah Baru' }}</p>
                     </div>
                     <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
                       <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"></path></svg>
@@ -95,7 +95,7 @@
             <!-- Desktop Table -->
             <table v-else class="w-full text-left border-collapse min-w-full">
                 <thead class="hidden sm:table-header-group sticky top-0 z-10 bg-slate-50 border-b border-slate-200 shadow-sm">
-                    <tr class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-500">
+                    <tr class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">
                         <th class="p-4 w-16 text-center">#</th>
                         <th class="p-4">Nama Kurikulum</th>
                         <th class="p-4 text-center w-32">Aksi</th>
@@ -104,11 +104,11 @@
                 <tbody class="text-xs flex flex-col sm:table-row-group">
                     <tr v-for="(k, index) in kurikulumData" :key="k.id" class="border-b border-slate-50 hover:bg-slate-50/50 transition-colors group bg-white flex flex-col sm:table-row p-4 sm:p-0 relative">
                         <td class="px-0 py-1 sm:p-4 text-left sm:text-center text-[10px] font-bold text-slate-400 flex sm:table-cell items-center justify-between">
-                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nomor</span>
+                            <span class="sm:hidden text-[10px] font-black uppercase tracking-widest text-slate-400">Nomor</span>
                             <span>{{ index + 1 }}</span>
                         </td>
                         <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between border-b sm:border-0 border-slate-50/50 pb-3 sm:pb-4 mb-2 sm:mb-0">
-                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Nama Kurikulum</span>
+                            <span class="sm:hidden text-[10px] font-black uppercase tracking-widest text-slate-400">Nama Kurikulum</span>
                             <div class="text-right sm:text-left">
                                 <p class="font-black text-slate-800 text-[13px]">{{ k.nama_kurikulum }}</p>
                                 <p class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mt-0.5">{{ k.singkatan }}</p>

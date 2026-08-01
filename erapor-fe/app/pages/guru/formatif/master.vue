@@ -7,9 +7,9 @@
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 z-20 shadow-sm">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
           :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-sky-500 to-sky-600 text-white shadow-md shadow-sky-500/20 ring-2 ring-sky-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
-          class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+          class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon :name="tab.icon" class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
-          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
         </button>
       </div>
 
@@ -21,7 +21,7 @@
             <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="document-text" class="w-5 h-5" /></div>
             <div class="relative z-10">
               <h3 class="text-xs font-black uppercase tracking-widest text-white">Filter Data</h3>
-              <p class="text-[9px] text-sky-100 font-semibold uppercase mt-0.5">Tujuan Pembelajaran</p>
+              <p class="text-[10px] text-sky-100 font-semibold uppercase mt-0.5">Tujuan Pembelajaran</p>
             </div>
             <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
               <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
@@ -135,7 +135,7 @@
                   <div class="bg-gradient-to-r from-sky-600 to-sky-700 border-b border-sky-600 p-4 sm:p-5 flex items-start gap-4">
                     <div class="mt-1 w-8 h-8 rounded-xl bg-white/20 border border-white/30 flex items-center justify-center text-white font-black text-xs shrink-0 shadow-inner">E{{ eIndex + 1 }}</div>
                     <div class="flex-1 min-w-0">
-                      <label class="text-[9px] font-black text-sky-200 uppercase tracking-widest mb-1.5 block">Nama Elemen Pembelajaran</label>
+                      <label class="text-[10px] font-black text-sky-200 uppercase tracking-widest mb-1.5 block">Nama Elemen Pembelajaran</label>
                       <input type="text" v-model="elemen.nama_elemen" @blur="autoSaveElemen(elemen)" placeholder="Ketik nama elemen (Misal: Bilangan / Menyimak...)" class="w-full text-sm sm:text-base font-black text-white border-0 bg-transparent px-0 py-1 focus:ring-0 placeholder-sky-300">
                     </div>
                     <button @click="hapusElemen(elemen, eIndex)" class="p-2 text-sky-200 hover:text-white hover:bg-rose-500 rounded-xl transition-colors mt-2 opacity-0 group-hover/elemen:opacity-100 shrink-0" title="Hapus Elemen">
@@ -145,7 +145,7 @@
 
                   <!-- List TP -->
                   <div class="p-5 sm:p-6 bg-white relative">
-                    <div class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-4 pl-12">Tujuan Pembelajaran (TP)</div>
+                    <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 pl-12">Tujuan Pembelajaran (TP)</div>
                     
                     <div class="space-y-4">
                       <div v-for="(tp, tIndex) in elemen.tps" :key="tp.ui_id" class="flex items-start gap-4 group pl-12 relative">
