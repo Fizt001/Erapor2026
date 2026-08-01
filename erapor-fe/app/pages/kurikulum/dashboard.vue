@@ -146,7 +146,7 @@
                 </div>
                 <!-- Card 4 -->
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center space-x-4 transition-all hover:-translate-y-1 hover:shadow-md hover:border-indigo-200">
-                    <div class="h-12 w-12 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 text-2xl border border-indigo-100"><AppIcon name="flag" /></div>
+                    <div class="h-12 w-12 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 text-2xl border border-indigo-100"><AppIcon name="star" /></div>
                     <div>
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Ekstrakurikuler</p>
                         <p class="text-2xl font-black text-slate-800 leading-none">{{ stats.totalEkskul || 0 }}</p>

@@ -1,10 +1,19 @@
 <template>
   <div class="h-full flex flex-col min-h-0 bg-slate-50">
     <!-- Layout 2 Panel Dock & Flow -->
-    <div class="flex-1 flex flex-col xl:flex-row xl:overflow-hidden overflow-y-auto relative">
+    <div class="flex-1 flex overflow-hidden relative">
       
+      <!-- MOBILE VIEW TABS -->
+      <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 shadow-sm z-20">
+        <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
+          :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-amber-500 to-amber-600 text-white shadow-md shadow-amber-500/20 ring-2 ring-amber-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
+          class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none mt-1">{{ tab.title }}</span>
+        </button>
+      </div>
+
       <!-- Panel Dock Kiri -->
-      <div class="xl:w-[360px] w-full bg-white border-r border-slate-200 flex-shrink-0 flex flex-col xl:h-full xl:z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] overflow-y-auto custom-scrollbar">
+      <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] overflow-y-auto custom-scrollbar transition-all', activeTabMobile === 'info' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[52px]' : '']">
         <div class="p-6 space-y-6">
           
           <!-- Welcome Widget -->
@@ -48,7 +57,7 @@
       </div>
 
       <!-- Panel Flow Kanan -->
-      <div class="flex-1 bg-slate-50 flex flex-col xl:h-full min-w-0 overflow-y-auto custom-scrollbar">
+      <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative transition-all overflow-y-auto custom-scrollbar', activeTabMobile === 'flow' || isDesktop ? 'flex' : 'hidden', !isDesktop ? 'pt-[52px]' : '']">
         
         <!-- Superadmin Empty State -->
         <div v-if="isSuperadminWithoutImpersonation" class="flex-grow flex flex-col items-center justify-center py-20 text-center bg-white rounded-2xl shadow-sm border border-slate-200 m-8">
@@ -138,7 +147,7 @@
             <!-- Grafik Prestasi Akademik (2 Cards: Per-Siswa & Per-Kelas) -->
             <div v-if="!statsLoading && wStats" class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
                 <!-- Card 1: Tren Nilai Per Siswa -->
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col">
+                <div class="bg-white rounded-none sm:rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col">
                     <div class="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50/50">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-xl bg-sky-50 flex items-center justify-center text-sky-600 text-xl border border-sky-100">👤</div>
@@ -164,7 +173,7 @@
                 </div>
 
                 <!-- Card 2: Tren Rata-rata 1 Kelas Per Periode -->
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col">
+                <div class="bg-white rounded-none sm:rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col">
                     <div class="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50/50">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 text-xl border border-indigo-100">📊</div>
@@ -236,7 +245,7 @@
             <!-- Peringkat & Bintang Kelas -->
             <div v-if="!statsLoading && wStats" class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
                 <!-- Top 10 Besar -->
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-200/60 flex flex-col overflow-hidden">
+                <div class="bg-white rounded-none sm:rounded-2xl shadow-sm border border-slate-200/60 flex flex-col overflow-hidden">
                     <div class="p-5 border-b border-slate-100 flex items-center gap-3 bg-slate-50/50 shrink-0">
                         <div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 text-xl border border-emerald-100">🏆</div>
                         <div>
@@ -392,13 +401,30 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, LineElement, PointElement, LineController, CategoryScale, LinearScale } from 'chart.js'
 import { Doughnut, Line } from 'vue-chartjs'
 
 ChartJS.register(ArcElement, Tooltip, Legend, LineElement, PointElement, LineController, CategoryScale, LinearScale)
 
 definePageMeta({ layout: "walas", middleware: "guru", title: 'Dashboard Wali Kelas' })
+
+// Responsiveness & Mobile Tabs
+const windowWidth = ref(1024)
+const isDesktop = computed(() => windowWidth.value >= 1280)
+const activeTabMobile = ref('info')
+const mobileTabs = [
+  { id: 'info', title: 'Info & Pintasan', icon: 'information-circle' },
+  { id: 'flow', title: 'Statistik Data', icon: 'chart-bar' }
+]
+
+onMounted(() => {
+    windowWidth.value = window.innerWidth
+    window.addEventListener('resize', () => windowWidth.value = window.innerWidth)
+})
+onUnmounted(() => {
+    window.removeEventListener('resize', () => windowWidth.value = window.innerWidth)
+})
 
 const tokenCookie = useCookie('auth_token')
 

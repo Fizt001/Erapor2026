@@ -3,8 +3,17 @@
     <!-- Layout 2 Panel Dock & Flow -->
     <div class="flex-1 flex overflow-hidden relative">
       
+      <!-- MOBILE VIEW TABS -->
+      <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 shadow-sm z-20">
+        <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
+          :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-amber-500 to-amber-600 text-white shadow-md shadow-amber-500/20 ring-2 ring-amber-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
+          class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none mt-1">{{ tab.title }}</span>
+        </button>
+      </div>
+
       <!-- Panel Dock Kiri -->
-      <div class="w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all">
+      <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', activeTabMobile === 'info' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[52px]' : '']">
         <div class="p-4 pb-2 space-y-4 shrink-0">
           <div class="bg-gradient-to-r from-amber-600 to-amber-700 rounded-2xl p-4 border border-amber-500 shadow-sm relative overflow-hidden flex items-center gap-3">
             <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="calendar" class="w-5 h-5" /></div>
@@ -61,9 +70,9 @@
       </div>
 
       <!-- Panel Flow Kanan -->
-      <div class="flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative">
-        <div class="p-6 lg:p-8 max-w-7xl mx-auto w-full h-full flex flex-col relative z-0">
-          <div class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
+      <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative transition-all', activeTabMobile === 'flow' || isDesktop ? 'flex' : 'hidden', !isDesktop ? 'pt-[52px]' : '']">
+        <div class="p-2 sm:pt-3 sm:pb-6 sm:px-6 lg:pt-3 lg:pb-8 lg:px-8 max-w-7xl mx-auto w-full h-full flex flex-col relative z-0">
+          <div class="bg-white rounded-none sm:rounded-[2rem] shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
             <!-- Header Flow -->
             <div class="px-6 py-5 bg-white border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0 z-10 shadow-sm">
                 <div class="flex items-center gap-4">
@@ -148,12 +157,25 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 
-definePageMeta({
-    layout: 'walas',
-    middleware: 'guru',
-    title: 'Kalender Absensi'
+definePageMeta({ layout: "walas", middleware: "guru", title: 'Kalender Absensi' })
+
+// Responsiveness & Mobile Tabs
+const windowWidth = ref(1024)
+const isDesktop = computed(() => windowWidth.value >= 1280)
+const activeTabMobile = ref('info')
+const mobileTabs = [
+  { id: 'info', title: 'Filter', icon: 'funnel' },
+  { id: 'flow', title: 'Kalender', icon: 'calendar' }
+]
+
+onMounted(() => {
+    windowWidth.value = window.innerWidth
+    window.addEventListener('resize', () => windowWidth.value = window.innerWidth)
+})
+onUnmounted(() => {
+    window.removeEventListener('resize', () => windowWidth.value = window.innerWidth)
 })
 
 const token = useCookie('auth_token')
