@@ -60,6 +60,14 @@
                     class="w-full pl-10 pr-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all font-semibold text-xs text-slate-700 outline-none">
               </div>
             </div>
+            
+            <div class="bg-amber-50 p-4 rounded-2xl border border-amber-100 flex flex-col items-center justify-center text-center">
+                <div class="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center mb-2 text-amber-600">
+                    <span class="animate-pulse"><AppIcon name="save" /></span>
+                </div>
+                <h4 class="text-[11px] font-black uppercase tracking-widest text-amber-800">Auto-Save</h4>
+                <p class="text-[10px] font-bold text-amber-600 mt-1">Catatan akan tersimpan otomatis saat Anda selesai mengetik.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -85,17 +93,6 @@
           <!-- Matrix Editor Container -->
           <div v-else-if="pageData" class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
             
-            <!-- Header Card Kanan -->
-            <div class="px-6 py-5 border-b border-slate-200 flex justify-between items-center bg-white shrink-0 z-10">
-              <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center text-lg border border-emerald-100"><AppIcon name="sparkles" /></div>
-                <div>
-                  <h3 class="text-[13px] font-black leading-none uppercase tracking-wide text-slate-800">Catatan Capaian P5</h3>
-                  <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Otomatis tersimpan saat mengetik</p>
-                </div>
-              </div>
-            </div>
-
             <!-- Tabs Periode -->
             <div class="flex border-b border-slate-200 bg-slate-50 overflow-x-auto custom-scrollbar shrink-0">
                 <button 
