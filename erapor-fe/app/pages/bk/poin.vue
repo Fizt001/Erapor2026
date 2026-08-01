@@ -172,10 +172,9 @@
                                 <span>➕</span> Input Poin
                             </button>
                         </div>
-                        
-                        <div v-if="siswa.poin_logs && siswa.poin_logs.length > 0" class="overflow-x-auto rounded-xl border border-slate-200">
-                            <table class="w-full text-left border-collapse">
-                                <thead>
+                          <div v-if="siswa.poin_logs && siswa.poin_logs.length > 0" class="rounded-xl border border-slate-200">
+                            <table class="w-full text-left border-collapse block sm:table">
+                                <thead class="hidden sm:table-header-group">
                                     <tr class="bg-slate-50 text-[10px] font-black uppercase tracking-widest text-slate-400 border-b border-slate-200">
                                         <th class="p-3 pl-4 w-32">Tanggal</th>
                                         <th class="p-3 w-48">Jenis / Kategori</th>
@@ -184,26 +183,36 @@
                                         <th class="p-3 text-right pr-4 w-20">Aksi</th>
                                     </tr>
                                 </thead>
-                                <tbody class="text-xs font-bold text-slate-600">
-                                    <tr v-for="log in siswa.poin_logs" :key="log.id" class="border-b border-slate-50 hover:bg-slate-50/50 group">
-                                        <td class="p-3 pl-4">{{ formatDate(log.tanggal) }}</td>
-                                        <td class="p-3">
-                                            <div v-if="log.pelanggaran_id" class="flex items-center gap-2">
+                                <tbody class="text-xs font-bold text-slate-600 block sm:table-row-group">
+                                    <tr v-for="log in siswa.poin_logs" :key="log.id" class="border-b border-slate-200 sm:border-slate-50 hover:bg-slate-50/50 group block sm:table-row relative p-3 sm:p-0">
+                                        <td class="p-2 sm:p-3 sm:pl-4 block sm:table-cell flex justify-between items-center sm:items-stretch sm:justify-start">
+                                            <span class="sm:hidden text-[10px] uppercase font-black text-slate-400 tracking-widest">Tanggal</span>
+                                            <span class="text-right sm:text-left">{{ formatDate(log.tanggal) }}</span>
+                                        </td>
+                                        <td class="p-2 sm:p-3 block sm:table-cell flex justify-between items-center sm:items-stretch sm:justify-start border-t border-slate-50 sm:border-0">
+                                            <span class="sm:hidden text-[10px] uppercase font-black text-slate-400 tracking-widest">Jenis / Kategori</span>
+                                            <div v-if="log.pelanggaran_id" class="flex items-center gap-2 justify-end sm:justify-start text-right sm:text-left">
                                                 <span class="w-6 h-6 rounded-md bg-rose-50 flex items-center justify-center text-xs">🚨</span>
                                                 <span class="text-rose-700 line-clamp-2" :title="log.pelanggaran?.nama_pelanggaran">{{ log.pelanggaran?.nama_pelanggaran }}</span>
                                             </div>
-                                            <div v-else class="flex items-center gap-2">
+                                            <div v-else class="flex items-center gap-2 justify-end sm:justify-start text-right sm:text-left">
                                                 <span class="w-6 h-6 rounded-md bg-emerald-50 flex items-center justify-center text-xs">🌟</span>
                                                 <span class="text-emerald-700">Penghargaan</span>
                                             </div>
                                         </td>
-                                        <td class="p-3 text-[10px] font-semibold text-slate-500">{{ log.catatan || '-' }}</td>
-                                        <td class="p-3 text-center">
-                                            <span v-if="log.skor_pengurang > 0" class="inline-block text-[10px] font-black text-rose-600 bg-rose-50 border border-rose-200 px-2 py-1 rounded-md">-{{ log.skor_pengurang }}</span>
-                                            <span v-if="log.skor_penambah > 0" class="inline-block text-[10px] font-black text-emerald-600 bg-emerald-50 border border-emerald-200 px-2 py-1 rounded-md">+{{ log.skor_penambah }}</span>
+                                        <td class="p-2 sm:p-3 text-[10px] font-semibold text-slate-500 block sm:table-cell flex flex-col sm:block justify-start items-start sm:items-stretch border-t border-slate-50 sm:border-0">
+                                            <span class="sm:hidden text-[10px] uppercase font-black text-slate-400 tracking-widest mb-1">Keterangan</span>
+                                            <span class="text-left">{{ log.catatan || '-' }}</span>
                                         </td>
-                                        <td class="p-3 pr-4 text-right">
-                                            <button @click.stop="confirmDeletePoin(log.id, siswa.id)" class="w-7 h-7 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-rose-600 hover:border-rose-200 hover:bg-rose-50 flex items-center justify-center transition-all shadow-sm opacity-0 group-hover:opacity-100 mx-auto" title="Hapus">🗑️</button>
+                                        <td class="p-2 sm:p-3 text-right sm:text-center block sm:table-cell flex justify-between items-center sm:items-stretch sm:justify-center border-t border-slate-50 sm:border-0">
+                                            <span class="sm:hidden text-[10px] uppercase font-black text-slate-400 tracking-widest">Poin</span>
+                                            <span v-if="log.skor_pengurang > 0" class="text-rose-600 bg-rose-50 px-2 py-0.5 rounded border border-rose-100 font-black">-{{ log.skor_pengurang }}</span>
+                                            <span v-if="log.skor_penambah > 0" class="text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100 font-black">+{{ log.skor_penambah }}</span>
+                                        </td>
+                                        <td class="p-2 sm:p-3 text-right sm:pr-4 block sm:table-cell flex justify-end items-center sm:items-stretch sm:justify-end border-t border-slate-50 sm:border-0">
+                                            <button @click.stop="confirmDeletePoin(log.id, siswa.id)" class="w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:bg-rose-100 hover:text-rose-600 transition-colors shadow-sm bg-white sm:bg-transparent">
+                                                🗑️
+                                            </button>
                                         </td>
                                     </tr>
                                 </tbody>

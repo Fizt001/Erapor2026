@@ -137,8 +137,8 @@
                 <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-2">Coba sesuaikan filter atau tambah baru</p>
             </div>
 
-            <table v-else class="w-full text-left border-collapse">
-                <thead class="sticky top-0 z-20 bg-slate-100/90 backdrop-blur-md shadow-sm border-b border-slate-200">
+            <table v-else class="w-full text-left border-collapse block sm:table">
+                <thead class="sticky top-0 z-20 bg-slate-100/90 backdrop-blur-md shadow-sm border-b border-slate-200 hidden sm:table-header-group">
                     <tr class="text-[10px] font-black uppercase tracking-widest text-slate-400">
                         <th class="p-4 pl-6 w-16">No</th>
                         <th class="p-4">Nama Pelanggaran</th>
@@ -147,13 +147,18 @@
                         <th class="p-4 text-right pr-6 w-24">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="text-sm">
-                    <tr v-for="(p, index) in pelanggarans" :key="p.id" class="border-b border-slate-200/50 hover:bg-white transition-colors group bg-slate-50/30">
-                        <td class="p-4 pl-6 text-xs font-bold text-slate-400">{{ (currentPage - 1) * 15 + index + 1 }}</td>
-                        <td class="p-4">
+                <tbody class="text-sm block sm:table-row-group">
+                    <tr v-for="(p, index) in pelanggarans" :key="p.id" class="border-b border-slate-200 sm:border-slate-200/50 hover:bg-white transition-colors group bg-slate-50/30 block sm:table-row relative p-4 sm:p-0">
+                        <td class="p-2 sm:p-4 sm:pl-6 text-xs font-bold text-slate-400 block sm:table-cell flex justify-between items-center sm:items-stretch sm:justify-start">
+                            <span class="sm:hidden text-[10px] uppercase font-black tracking-widest text-slate-400">No</span>
+                            {{ (currentPage - 1) * 15 + index + 1 }}
+                        </td>
+                        <td class="p-2 sm:p-4 block sm:table-cell flex flex-col sm:block justify-start items-start sm:items-stretch border-t border-slate-200/50 sm:border-0">
+                            <span class="sm:hidden text-[10px] uppercase font-black tracking-widest text-slate-400 mb-1">Nama Pelanggaran</span>
                             <p class="font-bold text-slate-800 text-[12px] leading-relaxed max-w-lg">{{ p.nama_pelanggaran }}</p>
                         </td>
-                        <td class="p-4">
+                        <td class="p-2 sm:p-4 block sm:table-cell flex justify-between items-center sm:items-stretch sm:justify-start border-t border-slate-200/50 sm:border-0">
+                            <span class="sm:hidden text-[10px] uppercase font-black tracking-widest text-slate-400">Kategori</span>
                             <span class="inline-flex items-center px-2 py-1 rounded-md text-[10px] font-black tracking-widest uppercase border"
                                 :class="{
                                     'bg-amber-50 text-amber-600 border-amber-200': p.jenis === 'Ringan',
@@ -163,13 +168,18 @@
                                 {{ p.jenis }}
                             </span>
                         </td>
-                        <td class="p-4 text-center">
-                            <span class="font-black text-slate-700 text-lg">{{ p.bobot }}</span>
+                        <td class="p-2 sm:p-4 text-right sm:text-center block sm:table-cell flex justify-between items-center sm:items-stretch sm:justify-center border-t border-slate-200/50 sm:border-0">
+                            <span class="sm:hidden text-[10px] uppercase font-black tracking-widest text-slate-400">Poin</span>
+                            <span class="inline-block text-[11px] font-black bg-rose-50 border border-rose-200 text-rose-600 px-2.5 py-1 rounded-lg">{{ p.bobot }}</span>
                         </td>
-                        <td class="p-4 pr-6 text-right">
-                            <div class="flex items-center justify-end gap-1.5 opacity-100 lg:opacity-0 group-hover:opacity-100 transition-opacity">
-                                <button @click="editPelanggaran(p)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:text-amber-500 hover:border-amber-200 hover:bg-amber-50 flex items-center justify-center transition-all shadow-sm" title="Edit">✏️</button>
-                                <button @click="confirmDelete(p)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 text-slate-400 hover:text-rose-600 hover:border-rose-200 hover:bg-rose-50 flex items-center justify-center transition-all shadow-sm" title="Hapus">🗑️</button>
+                        <td class="p-2 sm:p-4 text-right sm:pr-6 block sm:table-cell flex justify-end items-center sm:items-stretch sm:justify-end border-t border-slate-200/50 sm:border-0">
+                            <div class="flex items-center justify-end gap-2">
+                                <button @click="editPelanggaran(p)" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-indigo-600 hover:border-indigo-200 hover:bg-indigo-50 flex items-center justify-center transition-all shadow-sm">
+                                    ✏️
+                                </button>
+                                <button @click="confirmDelete(p)" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-rose-600 hover:border-rose-200 hover:bg-rose-50 flex items-center justify-center transition-all shadow-sm">
+                                    🗑️
+                                </button>
                             </div>
                         </td>
                     </tr>
