@@ -128,7 +128,7 @@
                     <span class="text-xs font-black text-slate-500 uppercase tracking-widest">Memuat...</span>
                 </div>
                 <div v-else-if="pertemuans.length === 0" class="bg-white rounded-2xl p-20 border border-slate-200 text-center h-full flex flex-col items-center justify-center">
-                    <div class="mb-4 text-slate-400 flex justify-center"><AppIcon name="calendar-days" class="w-12 h-12" /></div>
+                    <div class="mb-4 text-slate-400 flex justify-center"><AppIcon name="calendar" class="w-12 h-12" /></div>
                     <h3 class="text-sm font-black text-slate-700 uppercase tracking-widest">Belum ada pertemuan</h3>
                     <p class="text-xs text-slate-500 font-bold mt-2">Klik tombol Tambah Pertemuan di sebelah kiri.</p>
                 </div>

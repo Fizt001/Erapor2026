@@ -83,7 +83,7 @@
           <div v-else-if="jurnalData" class="flex-1 flex flex-col bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden min-h-0 relative">
             <div class="px-6 py-5 border-b border-slate-200 bg-white shrink-0 z-10 flex items-center justify-between">
               <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-sky-50 text-sky-600 rounded-xl flex items-center justify-center text-lg border border-sky-100"><AppIcon name="calendar-days" /></div>
+                <div class="w-10 h-10 bg-sky-50 text-sky-600 rounded-xl flex items-center justify-center border border-sky-100"><AppIcon name="calendar" class="w-5 h-5" /></div>
                 <div>
                   <h3 class="text-[13px] font-black leading-none uppercase tracking-wide text-slate-800">Rincian Bulanan</h3>
                   <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Daftar Pertemuan Per Bulan</p>

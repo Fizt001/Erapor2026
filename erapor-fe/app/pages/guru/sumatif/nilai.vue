@@ -82,7 +82,7 @@
             <!-- Header Card Kanan -->
             <div class="px-4 py-3 border-b border-slate-200 flex justify-between items-center bg-white shrink-0 z-10">
               <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-sky-50 text-sky-600 rounded-xl flex items-center justify-center text-lg border border-sky-100 shrink-0">🏫</div>
+                <div class="w-10 h-10 bg-sky-50 text-sky-600 rounded-xl flex items-center justify-center border border-sky-100 shrink-0"><AppIcon name="clipboard-document-list" class="w-5 h-5" /></div>
                 <div class="min-w-0">
                   <h3 class="text-[13px] font-black leading-none uppercase tracking-wide text-slate-800 truncate">
                     {{ filter.kelas_id && references.kelases.find(k => k.id == filter.kelas_id) ? `${references.kelases.find(k => k.id == filter.kelas_id).tingkat} ${references.kelases.find(k => k.id == filter.kelas_id).nama_kelas}` : 'Matriks Nilai Sumatif' }}
