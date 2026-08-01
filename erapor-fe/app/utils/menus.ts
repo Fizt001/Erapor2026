@@ -43,7 +43,7 @@ export const kurikulumMenus: MenuConfig[] = [
 ]
 
 export const guruMenus: MenuConfig[] = [
-  { name: 'Dashboard', path: '/guru/dashboard', icon: '📊' },
+  { name: 'Home', path: '/guru/dashboard', icon: '📊' },
   { divider: true, dividerLabel: 'Kegiatan KBM' },
   { name: 'Absensi Pertemuan', path: '/guru/absensi', icon: '📆' },
   { name: 'Jurnal Mengajar', path: '/guru/jurnal', icon: '📓' },
@@ -56,7 +56,7 @@ export const guruMenus: MenuConfig[] = [
 ]
 
 export const walasMenus: MenuConfig[] = [
-  { name: 'Dashboard Walas', path: '/guru/walas/dashboard', icon: '📊' },
+  { name: 'Home Walas', path: '/guru/walas/dashboard', icon: '📊' },
   { divider: true, dividerLabel: 'Data & Monitoring' },
   { name: 'Biodata Siswa', path: '/guru/walas/biodata', icon: '🧑‍🎓' },
   { name: 'Kalender Absensi', path: '/guru/walas/absensi', icon: '📅' },

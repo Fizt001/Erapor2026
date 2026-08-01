@@ -96,7 +96,7 @@
       </header>
 
       <!-- Page Content -->
-      <main class="flex-1 overflow-y-auto p-4 sm:p-5 bg-slate-100 relative print:p-0 print:bg-white print:overflow-visible print:block">
+      <main class="flex-1 overflow-y-auto p-0 sm:p-5 bg-slate-100 relative print:p-0 print:bg-white print:overflow-visible print:block pb-20 lg:pb-5">
         <NuxtPage />
         
         <!-- Footer Info -->
@@ -111,7 +111,7 @@
       <div class="flex items-stretch h-16">
         <NuxtLink to="/guru/dashboard" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="route.path === '/guru/dashboard' ? 'text-sky-600' : 'text-slate-400'">
           <span class="flex items-center justify-center" v-html="getSvgIcon('📊')"></span>
-          <span class="text-[9px] font-black uppercase tracking-wider">Dashboard</span>
+          <span class="text-[9px] font-black uppercase tracking-wider">Home</span>
         </NuxtLink>
         <button @click="openDrawer('kbm')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="isGroupActive('kbm') ? 'text-sky-600' : 'text-slate-400'">
           <span class="flex items-center justify-center" v-html="getSvgIcon('📓')"></span>

@@ -107,7 +107,7 @@
       <div class="flex items-stretch h-16">
         <NuxtLink to="/guru/walas/dashboard" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="route.path === '/guru/walas/dashboard' ? 'text-amber-600' : 'text-slate-400'">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" /></svg>
-          <span class="text-[9px] font-black uppercase tracking-wider">Dashboard</span>
+          <span class="text-[9px] font-black uppercase tracking-wider">Home</span>
         </NuxtLink>
         <button @click="openDrawer('siswa')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="isGroupActive('siswa') ? 'text-amber-600' : 'text-slate-400'">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
