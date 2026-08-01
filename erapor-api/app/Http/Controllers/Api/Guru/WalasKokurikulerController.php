@@ -42,9 +42,8 @@ class WalasKokurikulerController extends Controller
         $kelasId = $context['kelas_id'];
         $tahunId = $context['tahun_ajaran']->id;
 
-        // Ambil titimangsa tipe PSAS dan PSAT saja untuk periode kokurikuler (sesuai arahan: "hanya inputan utk PSAS dan PSAT")
+        // Ambil semua titimangsa (sama seperti catatan walas)
         $periodes = Titimangsa::where('tahun_ajaran_id', $tahunId)
-            ->whereIn('nama_periode', ['PSAS', 'PSAT'])
             ->orderBy('id', 'asc')
             ->get();
 

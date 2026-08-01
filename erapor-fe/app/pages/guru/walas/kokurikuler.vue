@@ -142,19 +142,29 @@
                                     <div class="text-[12px] font-black text-slate-700 uppercase tracking-wide">{{ siswa.nama_lengkap }}</div>
                                 </td>
                                 <td class="py-3 px-4 align-top">
-                                    <div class="relative">
+                                    <div class="relative w-full">
                                         <textarea 
                                             v-model="formKo[siswa.id][activeTab]" 
-                                            rows="3"
-                                            placeholder="Ketercapaian projek..." 
                                             :disabled="!activePeriodeData.is_aktif"
                                             @input="handleInput(siswa.id, activeTab)"
-                                            class="w-full rounded-xl text-[12px] font-semibold shadow-sm py-3 px-4 transition-colors outline-none disabled:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed bg-white border border-slate-200 focus:ring-amber-500/20 focus:border-amber-500 resize-y min-h-[80px]"
+                                            :class="[
+                                                'w-full text-xs font-bold text-slate-700 placeholder-slate-300 border-2 focus:ring-4 focus:ring-amber-500/10 rounded-xl p-3 min-h-[80px] transition-all resize-none custom-scrollbar outline-none',
+                                                !activePeriodeData.is_aktif ? 'bg-slate-50 border-slate-200/50 opacity-70 cursor-not-allowed' : 'bg-white border-slate-200/70 focus:border-amber-500'
+                                            ]"
+                                            placeholder="Ketercapaian projek..." 
                                         ></textarea>
-                                        <div class="absolute bottom-3 right-3 text-[10px] font-bold bg-white/90 backdrop-blur-sm rounded-lg px-2 py-1 shadow-[0_0_5px_rgba(0,0,0,0.05)] border border-slate-100 pointer-events-none">
-                                            <span v-if="saveStatus[siswa.id]?.[activeTab] === 'saving'" class="text-slate-400 animate-pulse flex items-center gap-1"><AppIcon name="clock" /> Menyimpan...</span>
-                                            <span v-else-if="saveStatus[siswa.id]?.[activeTab] === 'saved'" class="text-emerald-500 flex items-center gap-1"><AppIcon name="check" /> Tersimpan</span>
-                                            <span v-else class="text-slate-300 opacity-50"><AppIcon name="document-text" /></span>
+                                        <div class="absolute bottom-2 right-3 pointer-events-none transition-opacity duration-300" 
+                                            :class="saveStatus[siswa.id]?.[activeTab] && saveStatus[siswa.id]?.[activeTab] !== 'idle' ? 'opacity-100' : 'opacity-0'">
+                                            <span v-if="saveStatus[siswa.id]?.[activeTab] === 'saving'" class="flex items-center text-[10px] font-bold text-amber-500 bg-white/90 backdrop-blur px-2 py-0.5 rounded shadow-sm">
+                                                <svg class="animate-spin -ml-1 mr-1.5 h-3 w-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                                                Menyimpan...
+                                            </span>
+                                            <span v-else-if="saveStatus[siswa.id]?.[activeTab] === 'saved'" class="flex items-center text-[10px] font-bold text-emerald-500 bg-white/90 backdrop-blur px-2 py-0.5 rounded shadow-sm">
+                                                <AppIcon name="check" /> Tersimpan
+                                            </span>
+                                            <span v-else-if="saveStatus[siswa.id]?.[activeTab] === 'error'" class="flex items-center text-[10px] font-bold text-rose-500 bg-white/90 backdrop-blur px-2 py-0.5 rounded shadow-sm">
+                                                <AppIcon name="exclamation-triangle" /> Gagal
+                                            </span>
                                         </div>
                                     </div>
                                 </td>
