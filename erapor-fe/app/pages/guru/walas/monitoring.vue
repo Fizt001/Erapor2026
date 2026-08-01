@@ -106,63 +106,63 @@
                     </tr>
                   </thead>
                   <tbody class="divide-y divide-slate-100 block sm:table-row-group">
-                    <tr v-for="(item, index) in filteredMapel" :key="item.mapel_id" class="block sm:table-row bg-white sm:bg-transparent border border-slate-200 sm:border-0 rounded-xl sm:rounded-none mb-3 sm:mb-0 p-3 sm:p-0 shadow-sm sm:shadow-none hover:bg-slate-50/80 transition-colors group">
+                    <tr v-for="(item, index) in filteredMapel" :key="item.mapel_id" class="flex flex-wrap sm:table-row bg-white sm:bg-transparent border border-slate-200 sm:border-0 rounded-2xl sm:rounded-none mb-3 sm:mb-0 p-4 sm:p-0 shadow-sm sm:shadow-none hover:bg-slate-50/80 transition-colors group">
                       <td class="hidden sm:table-cell py-3 px-4 text-center text-[11px] font-bold text-slate-400 border-r border-slate-100">{{ index + 1 }}</td>
-                      <td class="block sm:table-cell pb-1 sm:py-3 px-0 sm:px-4 border-none sm:border-solid sm:border-b sm:border-slate-100 sm:border-r sticky left-0 sm:bg-white group-hover:bg-transparent sm:group-hover:bg-slate-50/90 shadow-none sm:shadow-[2px_0_5px_-2px_rgba(0,0,0,0.02)] z-10">
-                        <div class="text-[12px] font-black text-slate-700 uppercase tracking-wide">{{ item.nama_mapel }}</div>
+                      <td class="w-full sm:w-auto block sm:table-cell pb-2 sm:py-3 px-0 sm:px-4 border-none sm:border-solid sm:border-b sm:border-slate-100 sm:border-r sticky left-0 sm:bg-white group-hover:bg-transparent sm:group-hover:bg-slate-50/90 shadow-none sm:shadow-[2px_0_5px_-2px_rgba(0,0,0,0.02)] z-10">
+                        <div class="text-[13px] sm:text-[12px] font-black text-slate-800 uppercase tracking-wide">{{ item.nama_mapel }}</div>
                       </td>
-                      <td class="block sm:table-cell pb-2 sm:py-3 px-0 sm:px-4 border-b border-slate-100 sm:border-b-0 sm:border-r text-slate-600">
+                      <td class="w-full sm:w-auto block sm:table-cell pb-4 sm:py-3 px-0 sm:px-4 border-b border-slate-100 sm:border-b-0 sm:border-r text-slate-600">
                         <div class="flex items-center gap-3">
-                          <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-[9px] sm:text-[10px] font-black uppercase border border-indigo-100 shrink-0">
+                          <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-indigo-50 text-indigo-700 flex items-center justify-center text-[10px] font-black uppercase border border-indigo-100 shrink-0">
                             {{ item.guru_pengampu ? item.guru_pengampu.charAt(0) : '?' }}
                           </div>
-                          <span class="text-[10px] sm:text-[11px] font-bold uppercase">{{ item.guru_pengampu || 'Belum Diplot' }}</span>
+                          <span class="text-[11px] font-bold uppercase text-slate-700">{{ item.guru_pengampu || 'Belum Diplot' }}</span>
                         </div>
                       </td>
                       
                       <!-- Progress Formatif -->
-                      <td class="block sm:table-cell py-2 sm:py-3 px-0 sm:px-4 border-b border-slate-100 sm:border-b-0 sm:border-r">
-                        <div class="flex justify-between items-center mb-1.5">
-                          <div class="flex items-center gap-2">
-                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Formatif</span>
-                            <span class="text-[10px] font-black tracking-widest uppercase" :class="item.status_formatif ? 'text-emerald-600' : 'text-amber-500'">
+                      <td class="w-1/2 sm:w-auto block sm:table-cell pt-3 sm:py-3 pr-3 sm:px-4 border-b-0 sm:border-r border-slate-100 border-r sm:border-r-slate-100 border-slate-100/50">
+                        <div class="flex justify-between items-center mb-2 sm:mb-1.5">
+                          <div class="flex items-center gap-1 sm:gap-2">
+                            <span class="text-[9px] font-black uppercase tracking-widest text-slate-400">Formatif</span>
+                            <span class="text-[9px] sm:text-[10px] font-black tracking-widest uppercase" :class="item.status_formatif ? 'text-emerald-600' : 'text-amber-500'">
                               {{ item.status_formatif ? 'Selesai' : 'Proses' }}
                             </span>
                           </div>
-                          <span class="text-[10px] font-black tracking-widest text-slate-600">{{ item.formatif_terisi }} / {{ item.total_siswa }}</span>
+                          <span class="text-[9px] sm:text-[10px] font-black tracking-widest text-slate-700">{{ item.formatif_terisi }} / {{ item.total_siswa }}</span>
                         </div>
-                        <div class="flex items-center space-x-3 w-full">
+                        <div class="flex items-center space-x-2 sm:space-x-3 w-full">
                             <div class="flex-1 bg-slate-100 rounded-full h-1.5 sm:h-2 overflow-hidden border border-slate-200/50">
                                 <div class="h-full rounded-full transition-all duration-500" 
-                                    :class="item.status_formatif ? 'bg-emerald-500' : (item.formatif_terisi > 0 ? 'bg-amber-400' : 'bg-slate-300')"
+                                    :class="item.status_formatif ? 'bg-emerald-500' : (item.formatif_terisi > 0 ? 'bg-amber-500' : 'bg-slate-200')"
                                     :style="{ width: getPercentage(item.formatif_terisi, item.total_siswa) + '%' }">
                                 </div>
                             </div>
-                            <span class="text-[11px] font-black w-10 text-right tracking-widest" :class="item.status_formatif ? 'text-emerald-600' : (item.formatif_terisi > 0 ? 'text-amber-600' : 'text-slate-400')">
+                            <span class="text-[10px] sm:text-[11px] font-black w-8 sm:w-10 text-right tracking-widest" :class="item.status_formatif ? 'text-emerald-600' : (item.formatif_terisi > 0 ? 'text-amber-600' : 'text-slate-400')">
                                 {{ getPercentage(item.formatif_terisi, item.total_siswa) }}%
                             </span>
                         </div>
                       </td>
 
                       <!-- Progress Sumatif -->
-                      <td class="block sm:table-cell pt-2 sm:py-3 px-0 sm:px-4">
-                        <div class="flex justify-between items-center mb-1.5">
-                          <div class="flex items-center gap-2">
-                            <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Sumatif</span>
-                            <span class="text-[10px] font-black tracking-widest uppercase" :class="item.status_sumatif ? 'text-amber-600' : 'text-amber-500'">
+                      <td class="w-1/2 sm:w-auto block sm:table-cell pt-3 sm:py-3 pl-3 sm:px-4 border-none sm:border-solid sm:border-r border-slate-100">
+                        <div class="flex justify-between items-center mb-2 sm:mb-1.5">
+                          <div class="flex items-center gap-1 sm:gap-2">
+                            <span class="text-[9px] font-black uppercase tracking-widest text-slate-400">Sumatif</span>
+                            <span class="text-[9px] sm:text-[10px] font-black tracking-widest uppercase" :class="item.status_sumatif ? 'text-emerald-600' : 'text-amber-500'">
                               {{ item.status_sumatif ? 'Selesai' : 'Proses' }}
                             </span>
                           </div>
-                          <span class="text-[10px] font-black tracking-widest text-slate-600">{{ item.sumatif_terisi }} / {{ item.total_siswa }}</span>
+                          <span class="text-[9px] sm:text-[10px] font-black tracking-widest text-slate-700">{{ item.sumatif_terisi }} / {{ item.total_siswa }}</span>
                         </div>
-                        <div class="flex items-center space-x-3 w-full">
+                        <div class="flex items-center space-x-2 sm:space-x-3 w-full">
                             <div class="flex-1 bg-slate-100 rounded-full h-1.5 sm:h-2 overflow-hidden border border-slate-200/50">
                                 <div class="h-full rounded-full transition-all duration-500" 
-                                    :class="item.status_sumatif ? 'bg-sky-500' : (item.sumatif_terisi > 0 ? 'bg-amber-400' : 'bg-slate-300')"
+                                    :class="item.status_sumatif ? 'bg-emerald-500' : (item.sumatif_terisi > 0 ? 'bg-amber-500' : 'bg-slate-200')"
                                     :style="{ width: getPercentage(item.sumatif_terisi, item.total_siswa) + '%' }">
                                 </div>
                             </div>
-                            <span class="text-[11px] font-black w-10 text-right tracking-widest" :class="item.status_sumatif ? 'text-amber-600' : (item.sumatif_terisi > 0 ? 'text-amber-600' : 'text-slate-400')">
+                            <span class="text-[10px] sm:text-[11px] font-black w-8 sm:w-10 text-right tracking-widest" :class="item.status_sumatif ? 'text-emerald-600' : (item.sumatif_terisi > 0 ? 'text-amber-600' : 'text-slate-400')">
                                 {{ getPercentage(item.sumatif_terisi, item.total_siswa) }}%
                             </span>
                         </div>
