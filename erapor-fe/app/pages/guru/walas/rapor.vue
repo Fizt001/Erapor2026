@@ -268,10 +268,10 @@
             </div>
 
             <!-- Modal Body (A4/F4 Paper View Container) -->
-            <div class="flex-1 overflow-y-auto p-4 md:p-8 bg-slate-100 print-bg-white print-p-0 print-overflow-visible custom-scrollbar">
-                <!-- Paper Content -->
-                <div id="rapor-print-area" class="bg-white mx-auto shadow-xl border border-slate-200 max-w-[210mm] min-h-[330mm] p-8 md:p-12 print-shadow-none print-w-full print-max-w-none print-min-h-0 text-slate-800 font-serif text-[12px] leading-tight">
-                    
+            <div class="flex-1 overflow-auto bg-slate-100 print-bg-white print-p-0 print-overflow-visible custom-scrollbar">
+                <div class="p-4 md:p-8 min-w-max flex justify-center">
+                    <!-- Paper Content -->
+                    <div id="rapor-print-area" class="bg-white shadow-xl border border-slate-200 w-[794px] min-w-[794px] min-h-[1123px] p-8 md:p-12 print-shadow-none print-w-full print-min-w-0 print-min-h-0 text-slate-800 font-serif text-[12px] leading-tight shrink-0">
                     <!-- KOP SURAT (Hanya di Halaman Pertama) -->
                     <div class="flex items-center justify-between pb-2 mb-1" style="font-family: 'Times New Roman', Times, serif;">
                         <!-- Logo Kiri -->
