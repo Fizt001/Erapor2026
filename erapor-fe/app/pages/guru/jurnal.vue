@@ -1,138 +1,149 @@
 <template>
-  <div class="space-y-6">
-    <div class="flex items-center justify-between mb-4">
-      <div>
-        <h1 class="text-2xl font-black text-slate-800 tracking-tight flex items-center">
-          <AppIcon name="book-open" class="w-8 h-8 mr-3 text-slate-700" /> Jurnal Mengajar
-        </h1>
-        <p class="text-sm text-slate-500 mt-1 font-medium">Rekapitulasi jumlah absensi pertemuan Anda per bulan.</p>
+  <div class="h-full flex flex-col min-h-0 bg-slate-50">
+    <!-- Layout 2 Panel Dock & Flow -->
+    <div class="flex-1 flex flex-col xl:flex-row overflow-hidden relative">
+      
+      <!-- MOBILE VIEW TABS -->
+      <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 z-20 shadow-sm">
+        <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
+          :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-sky-500 to-sky-600 text-white shadow-md shadow-sky-500/20 ring-2 ring-sky-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
+          class="flex-1 rounded-lg flex flex-col items-center justify-center py-1.5 px-0.5 transition-all active:scale-95">
+          <AppIcon :name="tab.icon" class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
+          <span class="text-[8px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
+        </button>
       </div>
-    </div>
 
-    <!-- SEMESTER TABS -->
-    <div class="bg-white p-1 rounded-xl shadow-sm border border-slate-200/60 flex w-full md:inline-flex mb-2">
-      <button 
-        @click="activeSemester = 'ganjil'" 
-        class="flex-1 md:flex-none px-6 py-2 rounded-lg text-sm font-bold transition-all duration-200"
-        :class="activeSemester === 'ganjil' ? 'bg-sky-500 text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'"
-      >
-        Semester Ganjil
-      </button>
-      <button 
-        @click="activeSemester = 'genap'" 
-        class="flex-1 md:flex-none px-6 py-2 rounded-lg text-sm font-bold transition-all duration-200"
-        :class="activeSemester === 'genap' ? 'bg-sky-500 text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'"
-      >
-        Semester Genap
-      </button>
-    </div>
-
-    <div v-if="isLoading" class="flex flex-col items-center justify-center h-64 text-slate-400">
-      <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-sky-500 mb-4"></div>
-      <p class="text-sm font-bold">Memuat Jurnal Mengajar...</p>
-    </div>
-
-    <div v-else-if="!jurnalData" class="bg-white p-10 rounded-2xl border border-slate-200/60 shadow-sm text-center">
-        <p class="text-slate-500 font-bold">Gagal memuat data jurnal mengajar.</p>
-    </div>
-
-    <div v-else class="space-y-6">
-      <!-- LIST BULANAN -->
-      <div class="space-y-4">
-        <!-- Bulan Items -->
-        <div v-for="bulan in activeBulanList" :key="bulan.code" class="bg-white rounded-2xl border border-slate-200/60 shadow-sm overflow-hidden flex flex-col hover:border-sky-300 transition-colors">
-          <div class="bg-slate-50 border-b border-slate-100 px-5 py-4 flex items-center justify-between">
-            <h3 class="font-bold text-slate-700 text-sm flex items-center">
-              <AppIcon name="calendar" class="w-5 h-5 mr-2 text-sky-500" /> {{ bulan.name }}
-            </h3>
-            <span class="bg-white border border-slate-200 text-slate-500 text-[10px] px-3 py-1 rounded-full font-bold shadow-sm">
-              {{ countKeys(activeData.bulanan[bulan.code]) }} Kelas/Mapel
-            </span>
+      <!-- Panel Dock Kiri -->
+      <div class="w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full xl:z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] overflow-y-auto custom-scrollbar transition-all pt-[60px] xl:pt-0" :class="activeTabMobile === 'dock' ? 'block' : 'hidden xl:flex'">
+        
+        <div class="p-4 pb-2 space-y-4">
+          <!-- Widget Title -->
+          <div class="bg-gradient-to-r from-sky-600 to-blue-700 rounded-2xl p-4 border border-sky-500 shadow-sm relative overflow-hidden flex items-center gap-3">
+            <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="book-open" class="w-5 h-5" /></div>
+            <div class="relative z-10">
+                <h3 class="text-xs font-black uppercase tracking-widest text-white">Jurnal Mengajar</h3>
+                <p class="text-[9px] text-sky-100 font-semibold uppercase mt-0.5">Rekapitulasi Absensi</p>
+            </div>
+            <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
+              <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+            </div>
           </div>
           
-          <div class="p-0">
-            <div v-if="Object.keys(activeData.bulanan[bulan.code] || {}).length === 0" class="text-center py-8 text-slate-400 bg-slate-50/50">
-              <div class="flex justify-center mb-2 opacity-50 grayscale text-slate-400"><AppIcon name="moon" class="w-8 h-8" /></div>
-              <p class="text-xs font-bold">Tidak ada pertemuan</p>
-            </div>
-            
-            <div v-else class="overflow-x-auto">
-              <table class="w-full text-left border-collapse">
-                <thead>
-                  <tr class="bg-slate-50/50 text-[10px] font-black uppercase tracking-widest text-slate-400 border-b border-slate-100">
-                    <th class="px-5 py-3">Rombongan Belajar / Mapel</th>
-                    <th class="px-5 py-3 w-32 text-center">Total Pertemuan</th>
-                    <th class="px-5 py-3 w-24 text-center">Aksi</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-100">
-                  <tr v-for="(pertemuans, mapelKelas) in activeData.bulanan[bulan.code]" :key="mapelKelas" class="hover:bg-slate-50 transition-colors">
-                    <td class="px-5 py-3">
-                      <p class="text-xs font-bold text-slate-700">{{ mapelKelas }}</p>
-                    </td>
-                    <td class="px-5 py-3 text-center">
-                      <span class="inline-flex items-center justify-center bg-sky-100 text-sky-700 text-xs font-black px-2.5 py-1 rounded-md min-w-[2.5rem] shadow-sm">
-                        {{ pertemuans.length }}x
-                      </span>
-                    </td>
-                    <td class="px-5 py-3 text-center">
-                      <button @click="showDetail(bulan.name, mapelKelas, pertemuans)" class="text-sky-500 hover:text-sky-600 hover:bg-sky-50 transition-colors p-1.5 rounded-lg border border-transparent hover:border-sky-200" title="Lihat Rincian Tanggal">
-                        <AppIcon name="eye" class="w-4 h-4" />
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+          <!-- Semester Tabs in Dock -->
+          <div>
+              <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Pilih Semester</label>
+              <div class="bg-slate-100 p-1.5 rounded-xl flex shadow-inner">
+                  <button @click="activeSemester = 'ganjil'" class="flex-1 py-2 text-xs font-black uppercase tracking-widest rounded-lg transition-all" :class="activeSemester === 'ganjil' ? 'bg-white text-sky-600 shadow-sm ring-1 ring-slate-200/50' : 'text-slate-400 hover:text-slate-600 hover:bg-slate-200/50'">Ganjil</button>
+                  <button @click="activeSemester = 'genap'" class="flex-1 py-2 text-xs font-black uppercase tracking-widest rounded-lg transition-all" :class="activeSemester === 'genap' ? 'bg-white text-sky-600 shadow-sm ring-1 ring-slate-200/50' : 'text-slate-400 hover:text-slate-600 hover:bg-slate-200/50'">Genap</button>
+              </div>
+          </div>
+        </div>
+
+        <div class="flex-1 p-4 bg-slate-50 border-t border-slate-200 overflow-y-auto custom-scrollbar flex flex-col relative">
+          <!-- TOTAL SEMESTER CARD -->
+          <div class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3 sticky top-0 bg-slate-50 z-10 py-1">Akumulasi {{ activeSemester === 'ganjil' ? 'Ganjil' : 'Genap' }}</div>
+          
+          <div v-if="isLoading" class="flex-1 flex flex-col items-center justify-center text-slate-400 py-10">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-sky-500 mb-3"></div>
+            <span class="text-[10px] font-black uppercase tracking-widest">Memuat...</span>
+          </div>
+          <div v-else-if="!jurnalData" class="flex-1 flex flex-col items-center justify-center py-10 opacity-50">
+             <AppIcon name="exclamation-circle" class="w-10 h-10 text-slate-400 mb-2" />
+             <p class="text-[10px] font-black uppercase tracking-widest text-slate-500">Gagal memuat data</p>
+          </div>
+          <div v-else-if="Object.keys(activeData.total || {}).length === 0" class="flex-1 flex flex-col items-center justify-center py-10 opacity-50">
+            <AppIcon name="folder-open" class="w-10 h-10 text-slate-400 mb-2" />
+            <p class="text-[10px] font-black uppercase tracking-widest text-slate-500">Belum ada rekap</p>
+          </div>
+          <div v-else class="space-y-2">
+            <div v-for="(pertemuans, mapelKelas) in activeData.total" :key="mapelKelas" class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex flex-col hover:border-sky-200 transition-colors">
+              <div class="flex items-start justify-between mb-2">
+                <span class="text-[11px] font-bold text-slate-700 leading-tight pr-2">{{ mapelKelas }}</span>
+                <span class="bg-sky-100 text-sky-700 text-[10px] font-black px-2 py-0.5 rounded shadow-sm shrink-0">
+                  {{ pertemuans.length }}x
+                </span>
+              </div>
+              <button @click="showDetail('Semester ' + (activeSemester === 'ganjil' ? 'Ganjil' : 'Genap'), mapelKelas, pertemuans)" class="w-full py-1.5 bg-slate-50 hover:bg-sky-50 text-slate-500 hover:text-sky-600 rounded-lg text-[9px] font-black uppercase tracking-widest transition-colors flex items-center justify-center">
+                <AppIcon name="eye" class="w-3.5 h-3.5 mr-1" /> Rincian
+              </button>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- TOTAL SEMESTER CARD -->
-      <div class="bg-sky-50 rounded-2xl shadow-sm border border-sky-100 overflow-hidden relative mt-2">
-        <div class="absolute top-0 right-0 p-4 opacity-[0.05]">
-          <svg class="w-24 h-24 text-sky-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-          </svg>
-        </div>
-        <div class="p-4 relative z-10">
-          <div class="flex items-center justify-between mb-3">
-            <div>
-              <h2 class="text-sm font-black text-sky-800 flex items-center uppercase tracking-widest">
-                <AppIcon name="chart-bar" class="w-5 h-5 mr-2 text-sky-500" /> Total Semester {{ activeSemester === 'ganjil' ? 'Ganjil' : 'Genap' }}
-              </h2>
-              <p class="text-sky-600/70 text-[10px] font-bold mt-0.5">Akumulasi seluruh pertemuan selama 1 semester.</p>
-            </div>
-          </div>
+      <!-- Panel Flow Kanan -->
+      <div class="flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative transition-all pt-[60px] xl:pt-0" :class="activeTabMobile === 'flow' ? 'flex' : 'hidden xl:flex'">
+        <div class="p-2 sm:pt-3 sm:pb-6 sm:px-6 lg:pt-3 lg:pb-8 lg:px-8 max-w-7xl mx-auto w-full h-full flex flex-col relative z-0">
           
-          <div v-if="Object.keys(activeData.total || {}).length === 0" class="text-sky-500 text-xs font-bold italic">
-            Belum ada rekapitulasi semester ini.
+          <div v-if="isLoading" class="flex-grow flex flex-col items-center justify-center p-20 opacity-60 bg-white rounded-3xl shadow-sm border border-slate-200/60">
+            <div class="w-10 h-10 border-4 border-sky-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Memuat Data...</span>
           </div>
-          <div v-else class="overflow-x-auto mt-4 bg-white rounded-xl border border-sky-100">
-            <table class="w-full text-left border-collapse">
-              <thead>
-                <tr class="bg-sky-50/50 text-[10px] font-black uppercase tracking-widest text-sky-600 border-b border-sky-100">
-                  <th class="px-4 py-2">Rombongan Belajar / Mapel</th>
-                  <th class="px-4 py-2 w-32 text-center">Total Pertemuan</th>
-                  <th class="px-4 py-2 w-24 text-center">Aksi</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-sky-50">
-                <tr v-for="(pertemuans, mapelKelas) in activeData.total" :key="mapelKelas" class="hover:bg-sky-50 transition-colors">
-                  <td class="px-4 py-2 text-xs font-bold text-slate-700">{{ mapelKelas }}</td>
-                  <td class="px-4 py-2 text-center">
-                    <span class="bg-sky-100 text-sky-700 text-[10px] font-black px-2 py-1 rounded-lg min-w-[2rem] shadow-sm">
-                      {{ pertemuans.length }}x
+
+          <div v-else-if="jurnalData" class="flex-1 flex flex-col bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden min-h-0 relative">
+            <div class="px-6 py-5 border-b border-slate-200 bg-white shrink-0 z-10 flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-sky-50 text-sky-600 rounded-xl flex items-center justify-center text-lg border border-sky-100"><AppIcon name="calendar-days" /></div>
+                <div>
+                  <h3 class="text-[13px] font-black leading-none uppercase tracking-wide text-slate-800">Rincian Bulanan</h3>
+                  <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Daftar Pertemuan Per Bulan</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- List Bulanan -->
+            <div class="flex-1 overflow-y-auto custom-scrollbar p-6 bg-slate-50/50">
+              <div class="space-y-6">
+                <div v-for="bulan in activeBulanList" :key="bulan.code" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+                  <div class="bg-slate-50 border-b border-slate-100 px-5 py-4 flex items-center justify-between">
+                    <h3 class="font-black text-slate-700 text-[11px] uppercase tracking-widest flex items-center">
+                      <AppIcon name="calendar" class="w-4 h-4 mr-2 text-sky-500" /> {{ bulan.name }}
+                    </h3>
+                    <span class="bg-white border border-slate-200 text-slate-500 text-[9px] px-2.5 py-0.5 rounded font-bold shadow-sm uppercase tracking-widest">
+                      {{ countKeys(activeData.bulanan[bulan.code]) }} Kelas/Mapel
                     </span>
-                  </td>
-                  <td class="px-4 py-2 text-center">
-                    <button @click="showDetail('Semester ' + (activeSemester === 'ganjil' ? 'Ganjil' : 'Genap'), mapelKelas, pertemuans)" class="text-sky-500 hover:text-sky-600 hover:bg-sky-100 transition-colors p-1 rounded-lg border border-transparent hover:border-sky-200" title="Lihat Rincian Tanggal">
-                      <AppIcon name="eye" class="w-4 h-4" />
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                  </div>
+                  
+                  <div class="p-0">
+                    <div v-if="Object.keys(activeData.bulanan[bulan.code] || {}).length === 0" class="text-center py-8 text-slate-400 bg-white">
+                      <div class="flex justify-center mb-2 opacity-50 grayscale text-slate-400"><AppIcon name="moon" class="w-6 h-6" /></div>
+                      <p class="text-[10px] font-black uppercase tracking-widest">Tidak ada pertemuan</p>
+                    </div>
+                    
+                    <div v-else class="overflow-x-auto custom-scrollbar">
+                      <table class="w-full text-left border-collapse min-w-[500px]">
+                        <thead>
+                          <tr class="bg-white text-[9px] font-black uppercase tracking-widest text-slate-400 border-b border-slate-100">
+                            <th class="px-5 py-3 w-[60px] text-center border-r border-slate-100">No</th>
+                            <th class="px-5 py-3 border-r border-slate-100">Rombongan Belajar / Mapel</th>
+                            <th class="px-5 py-3 w-[120px] text-center border-r border-slate-100">Total</th>
+                            <th class="px-5 py-3 w-[100px] text-center">Aksi</th>
+                          </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-50">
+                          <tr v-for="(pertemuans, mapelKelas, idx) in activeData.bulanan[bulan.code]" :key="mapelKelas" class="hover:bg-slate-50 transition-colors">
+                            <td class="px-5 py-3 text-center border-r border-slate-100 text-[11px] font-bold text-slate-400">{{ idx + 1 }}</td>
+                            <td class="px-5 py-3 border-r border-slate-100">
+                              <p class="text-[11px] font-bold text-slate-700">{{ mapelKelas }}</p>
+                            </td>
+                            <td class="px-5 py-3 text-center border-r border-slate-100">
+                              <span class="inline-flex items-center justify-center bg-sky-100 text-sky-700 text-[10px] font-black px-2 py-0.5 rounded shadow-sm">
+                                {{ pertemuans.length }}x
+                              </span>
+                            </td>
+                            <td class="px-5 py-3 text-center">
+                              <button @click="showDetail(bulan.name, mapelKelas, pertemuans)" class="text-sky-500 hover:text-sky-600 hover:bg-sky-50 transition-colors px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest" title="Lihat Rincian Tanggal">
+                                Rincian
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -144,8 +155,8 @@
       <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-4xl relative z-10 flex flex-col max-h-[85vh] overflow-hidden transform transition-all">
         <div class="bg-slate-50 border-b border-slate-200 px-5 py-4 flex items-center justify-between">
           <div>
-            <h3 class="font-black text-slate-800 text-base flex items-center"><AppIcon name="magnifying-glass" class="w-5 h-5 mr-2 text-slate-600" /> Rincian Pertemuan</h3>
-            <p class="text-[11px] text-slate-500 font-medium mt-0.5">{{ detailModal.mapelKelas }} • {{ detailModal.bulan }}</p>
+            <h3 class="font-black text-slate-800 text-sm flex items-center uppercase tracking-widest"><AppIcon name="magnifying-glass" class="w-4 h-4 mr-2 text-slate-600" /> Rincian Pertemuan</h3>
+            <p class="text-[10px] text-slate-500 font-bold mt-0.5 uppercase tracking-widest">{{ detailModal.mapelKelas }} • {{ detailModal.bulan }}</p>
           </div>
           <button @click="detailModal.show = false" class="text-slate-400 hover:text-rose-500 transition-colors p-1 bg-white rounded-lg border border-slate-200 hover:border-rose-200">
             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -165,12 +176,12 @@
                     <AppIcon name="clock" class="w-3.5 h-3.5 mr-1.5 opacity-60" /> {{ item.jam }}
                   </div>
                 </div>
-                <div class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-bold border border-slate-200 whitespace-nowrap shrink-0">
-                  Pertemuan #{{ idx + 1 }}
+                <div class="text-[9px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-black border border-slate-200 whitespace-nowrap shrink-0 uppercase tracking-widest">
+                  Pert. #{{ idx + 1 }}
                 </div>
               </div>
-              <div class="mt-2 pt-2 border-t border-slate-100 text-[11px] text-slate-600">
-                <span class="font-bold text-slate-500 mr-1">Materi:</span> {{ item.materi || '-' }}
+              <div class="mt-2 pt-2 border-t border-slate-100 text-[10px] text-slate-600 leading-relaxed font-medium">
+                <span class="font-black text-slate-400 mr-1 uppercase tracking-widest">Materi:</span> <br/> {{ item.materi || '-' }}
               </div>
             </div>
           </div>
@@ -188,6 +199,12 @@ definePageMeta({ layout: "guru", middleware: "guru", title: 'Jurnal Mengajar' })
 const tokenCookie = useCookie('auth_token')
 const activeSemester = ref('ganjil')
 const detailModal = ref({ show: false, bulan: '', mapelKelas: '', pertemuans: [] })
+
+const activeTabMobile = ref('dock')
+const mobileTabs = [
+  { id: 'dock', title: 'Ringkasan', icon: 'document-text' },
+  { id: 'flow', title: 'Data Bulanan', icon: 'table-cells' }
+]
 
 const { data: response, pending: isLoading } = await useFetch(import.meta.env.VITE_API_BASE_URL + '/api/guru/jurnal-mengajar', {
   headers: {
