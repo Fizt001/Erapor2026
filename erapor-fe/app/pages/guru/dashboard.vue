@@ -75,7 +75,7 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <!-- Card 1 -->
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center gap-4 transition-all hover:-translate-y-1 hover:shadow-md hover:border-indigo-200">
-                    <div class="h-12 w-12 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 border border-indigo-100"><AppIcon name="building-office-2" class="w-6 h-6" /></div>
+                    <div class="h-12 w-12 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 border border-indigo-100"><AppIcon name="building" class="w-6 h-6" /></div>
                     <div>
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Kelas Diajar</p>
                         <p class="text-2xl font-black text-slate-800 leading-none">{{ dashboardData?.stats?.total_kelas || 0 }}</p>
@@ -191,7 +191,7 @@
                   <div class="absolute bottom-[-10%] left-[-20%] w-40 h-40 bg-orange-600/30 rounded-full blur-2xl"></div>
                   
                   <div class="relative z-10 text-center animate-bounce-slow">
-                    <div class="flex justify-center text-white drop-shadow-lg"><AppIcon name="face-smile" class="w-20 h-20" /></div>
+                    <div class="flex justify-center text-white drop-shadow-lg"><AppIcon name="sparkles" class="w-20 h-20" /></div>
                   </div>
                 </div>
                 
@@ -242,7 +242,7 @@
                 
                 <div class="p-5 overflow-y-auto custom-scrollbar flex-1">
                     <div v-if="!dashboardData?.detail_mengajar || dashboardData.detail_mengajar.length === 0" class="text-center py-10 opacity-50">
-                        <div class="mb-3 grayscale text-slate-400 flex justify-center"><AppIcon name="folder-open" class="w-10 h-10" /></div>
+                        <div class="mb-3 grayscale text-slate-400 flex justify-center"><AppIcon name="folder" class="w-10 h-10" /></div>
                         <p class="text-xs font-bold text-slate-600">Belum ada kelas yang diampu</p>
                     </div>
                     <div v-else class="space-y-4">
