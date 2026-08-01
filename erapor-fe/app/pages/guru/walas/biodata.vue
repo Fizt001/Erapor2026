@@ -113,16 +113,19 @@
                     </tr>
                   </thead>
                   <tbody class="divide-y divide-slate-100 block sm:table-row-group">
-                    <tr v-for="(siswa, index) in filteredStudents" :key="activeTab + '-' + siswa.id" class="block sm:table-row bg-white sm:bg-transparent border border-slate-200 sm:border-0 rounded-xl sm:rounded-none mb-3 sm:mb-0 p-3 sm:p-0 shadow-sm sm:shadow-none hover:bg-slate-50/80 transition-colors group">
+                    <tr v-for="(siswa, index) in filteredStudents" :key="activeTab + '-' + siswa.id" class="flex flex-wrap sm:table-row bg-white sm:bg-transparent border border-slate-200 sm:border-0 rounded-2xl sm:rounded-none mb-3 sm:mb-0 p-4 sm:p-0 shadow-sm sm:shadow-none hover:bg-slate-50/80 transition-colors group">
                       <td class="hidden sm:table-cell py-3 px-4 text-center text-[11px] font-bold text-slate-400 border-r border-slate-100">{{ index + 1 }}</td>
-                      <td class="block sm:table-cell pb-2 sm:py-3 px-0 sm:px-4 border-b border-slate-100 sm:border-b-0 sm:border-r sticky left-0 sm:bg-white group-hover:bg-transparent sm:group-hover:bg-slate-50/90 shadow-none sm:shadow-[2px_0_5px_-2px_rgba(0,0,0,0.02)] z-10">
+                      
+                      <!-- Nama & NISN (Row 1 on mobile) -->
+                      <td class="w-full sm:w-auto flex sm:table-cell flex-row justify-between items-center sm:items-start sm:flex-col pb-3 sm:py-3 px-0 sm:px-4 border-b border-slate-100 sm:border-b-0 sm:border-r sticky left-0 sm:bg-white group-hover:bg-transparent sm:group-hover:bg-slate-50/90 shadow-none sm:shadow-[2px_0_5px_-2px_rgba(0,0,0,0.02)] z-10">
                         <div class="flex items-center gap-2 flex-wrap">
-                            <div class="text-[12px] font-black uppercase tracking-wide" :class="siswa.tanggal_keluar ? 'text-rose-600 line-through' : 'text-slate-700'">{{ siswa.nama_lengkap }}</div>
+                            <div class="text-[13px] sm:text-[12px] font-black uppercase tracking-wide" :class="siswa.tanggal_keluar ? 'text-rose-600 line-through' : 'text-slate-800'">{{ siswa.nama_lengkap }}</div>
+                            <span class="sm:hidden inline-flex items-center justify-center w-5 h-5 rounded-md text-[10px] font-black shrink-0" :class="siswa.jenis_kelamin === 'L' ? 'bg-blue-100 text-blue-700' : 'bg-pink-100 text-pink-700'">{{ siswa.jenis_kelamin }}</span>
                             <span v-if="siswa.tanggal_keluar" class="px-1.5 py-0.5 bg-rose-100 text-rose-700 text-[10px] font-black uppercase tracking-widest rounded">Keluar: {{ siswa.tanggal_keluar }}</span>
-                            <span class="sm:hidden inline-flex items-center justify-center w-5 h-5 rounded text-[9px] font-black shrink-0" :class="siswa.jenis_kelamin === 'L' ? 'bg-blue-100 text-blue-700' : 'bg-pink-100 text-pink-700'">{{ siswa.jenis_kelamin }}</span>
                         </div>
-                        <div class="text-[10px] text-slate-400 font-bold tracking-widest mt-0.5">{{ siswa.nisn || 'NISN -' }} | {{ siswa.nis || 'NIS -' }}</div>
+                        <div class="text-[10px] text-slate-400 font-bold sm:font-bold tracking-widest mt-0 sm:mt-0.5 text-right sm:text-left">{{ siswa.nisn || 'NISN -' }} | {{ siswa.nis || 'NIS -' }}</div>
                       </td>
+                      
                       <td class="hidden sm:table-cell py-3 px-4 text-center border-r border-slate-100">
                         <span class="inline-flex items-center justify-center w-6 h-6 rounded-md text-[11px] font-black" 
                           :class="siswa.jenis_kelamin === 'L' ? 'bg-blue-100 text-blue-700' : 'bg-pink-100 text-pink-700'">
@@ -130,9 +133,9 @@
                         </span>
                       </td>
                       
-                      <!-- Progress Bar -->
-                      <td class="block sm:table-cell py-2 sm:py-3 px-0 sm:px-4 border-b border-slate-100 sm:border-b-0 sm:border-r">
-                        <div class="flex flex-col sm:flex-row items-start sm:items-center space-y-1 sm:space-y-0 sm:space-x-3 w-full">
+                      <!-- Progress Bar (Row 2 Left on mobile) -->
+                      <td class="flex-1 sm:flex-none block sm:table-cell pt-3 sm:py-3 px-0 sm:px-4 border-b-0 sm:border-r border-slate-100">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 w-full pr-4 sm:pr-0">
                             <span class="sm:hidden text-[9px] font-black uppercase tracking-widest text-slate-400">Kelengkapan</span>
                             <div class="flex items-center space-x-3 w-full">
                                 <div class="flex-1 bg-slate-100 rounded-full h-1.5 sm:h-2 overflow-hidden border border-slate-200/50">
@@ -141,21 +144,21 @@
                                          :style="{ width: `${siswa.persentase_lengkap}%` }">
                                     </div>
                                 </div>
-                                <span class="text-[11px] font-black w-10 text-right tracking-widest" :class="getProgressTextColor(siswa.persentase_lengkap)">
+                                <span class="text-[11px] font-black w-8 text-right tracking-widest" :class="getProgressTextColor(siswa.persentase_lengkap)">
                                     {{ siswa.persentase_lengkap }}%
                                 </span>
                             </div>
                         </div>
                       </td>
 
-                      <!-- Aksi -->
-                      <td class="block sm:table-cell pt-2 sm:py-3 px-0 sm:px-4 text-center bg-transparent sm:bg-slate-50/30">
+                      <!-- Aksi (Row 2 Right on mobile) -->
+                      <td class="w-auto flex-none flex sm:table-cell items-end justify-end pt-3 sm:py-3 px-0 sm:px-4 text-center bg-transparent sm:bg-slate-50/30">
                         <div class="flex items-center justify-center gap-2">
                             <button 
                                 @click="openEditModal(siswa)"
-                                class="flex-1 px-2 py-1.5 sm:py-2 bg-white sm:bg-white border border-indigo-200 text-indigo-600 hover:bg-indigo-50 font-black rounded-lg transition-all text-[10px] uppercase tracking-widest shadow-sm hover:shadow active:scale-95 inline-flex items-center justify-center"
+                                class="px-5 py-2 sm:px-2 sm:py-2 bg-white sm:bg-white border border-indigo-200 text-indigo-700 hover:bg-indigo-50 font-black rounded-lg sm:rounded-lg transition-all text-[10px] uppercase tracking-widest shadow-sm hover:shadow active:scale-95 inline-flex items-center justify-center"
                             >
-                                <AppIcon name="pencil" /> Edit
+                                <AppIcon name="pencil" class="w-3 h-3 mr-1" /> Edit
                             </button>
                         </div>
                       </td>
