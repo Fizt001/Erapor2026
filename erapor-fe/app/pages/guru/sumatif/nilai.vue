@@ -173,12 +173,12 @@
                           <div class="flex-1 flex items-center divide-x divide-slate-200 h-full">
                               <div class="flex-1 flex items-center px-1 group">
                                   <span class="text-[10px] font-bold text-slate-400 mr-1">PRK</span>
-                                  <input type="number" v-model="globalBobot.b_praktek" @input="markAsUnsaved(null, null)" min="0" max="100" :disabled="!references.is_titimangsa_aktif"
+                                  <input type="number" v-model="globalBobot.b_praktek" @input="onBobotPraktekChange" min="0" max="100" :disabled="!references.is_titimangsa_aktif"
                                       class="w-full bg-transparent text-[11px] font-black text-slate-700 text-center outline-none focus:ring-0 group-hover:bg-white transition-colors h-full">
                               </div>
                               <div class="flex-1 flex items-center px-1 group">
                                   <span class="text-[10px] font-bold text-slate-400 mr-1">TEO</span>
-                                  <input type="number" v-model="globalBobot.b_teori" @input="markAsUnsaved(null, null)" min="0" max="100" :disabled="!references.is_titimangsa_aktif"
+                                  <input type="number" v-model="globalBobot.b_teori" @input="onBobotTeoriChange" min="0" max="100" :disabled="!references.is_titimangsa_aktif"
                                       class="w-full bg-transparent text-[11px] font-black text-slate-700 text-center outline-none focus:ring-0 group-hover:bg-white transition-colors h-full">
                               </div>
                           </div>
@@ -522,7 +522,25 @@ const hitungNA = (siswaId) => {
     return na.toFixed(1)
 }
 
-// === AUTO SAVE LOGIC ===
+// === AUTO SAVE & BOBOT LOGIC ===
+const onBobotPraktekChange = () => {
+    let prk = parseInt(globalBobot.value.b_praktek)
+    if (isNaN(prk)) return
+    if (prk > 100) prk = 100
+    if (prk < 0) prk = 0
+    globalBobot.value.b_teori = 100 - prk
+    markAsUnsaved(null, null)
+}
+
+const onBobotTeoriChange = () => {
+    let teo = parseInt(globalBobot.value.b_teori)
+    if (isNaN(teo)) return
+    if (teo > 100) teo = 100
+    if (teo < 0) teo = 0
+    globalBobot.value.b_praktek = 100 - teo
+    markAsUnsaved(null, null)
+}
+
 const markAsUnsaved = (siswaId = null, field = null) => {
     hasUnsavedChanges.value = true
     
