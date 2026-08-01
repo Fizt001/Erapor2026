@@ -342,19 +342,36 @@ class SiswaRaporController extends Controller
             $months = [4, 5, 6]; // ASAT
         }
 
-        $absensiRecords = AbsensiSiswa::where('siswa_id', $siswa->id)
-            ->where('tahun_ajaran', $tahunAktif->tahun)
-            ->whereIn('bulan', $months)
+        $tahunStart = intval(explode('/', $tahunAktif->tahun)[0]);
+        $pertemuans = \App\Models\PertemuanGuru::where('kelas_id', $siswa->kelas_id)
+            ->where(function($q) use ($months) {
+                foreach ($months as $m) $q->orWhereMonth('tanggal', $m);
+            })
+            ->whereYear('tanggal', in_array(min($months), [7,8,9,10,11,12]) ? $tahunStart : $tahunStart + 1)
+            ->orderBy('tanggal')
+            ->orderBy('jam_selesai', 'desc')
             ->get();
-        
+            
+        $absensiRecords = \App\Models\AbsensiPertemuan::where('siswa_id', $siswa->id)
+            ->whereIn('pertemuan_id', $pertemuans->pluck('id'))
+            ->get()->keyBy('pertemuan_id');
+
         $totalS = 0; $totalI = 0; $totalA = 0;
-        foreach ($absensiRecords as $ab) {
-            for ($i = 1; $i <= 31; $i++) {
-                $col = 'tgl_' . $i;
-                if ($ab->$col === 'S') $totalS++;
-                if ($ab->$col === 'I') $totalI++;
-                if ($ab->$col === 'A') $totalA++;
+        $dailyStatus = [];
+        foreach ($pertemuans as $pert) {
+            if (!isset($dailyStatus[$pert->tanggal])) {
+                if (isset($absensiRecords[$pert->id])) {
+                    $status = $absensiRecords[$pert->id]->status;
+                    $dailyStatus[$pert->tanggal] = in_array($status, ['S', 'I', 'A']) ? $status : 'H';
+                } else {
+                    $dailyStatus[$pert->tanggal] = 'H';
+                }
             }
+        }
+        foreach ($dailyStatus as $status) {
+            if ($status === 'S') $totalS++;
+            if ($status === 'I') $totalI++;
+            if ($status === 'A') $totalA++;
         }
         $absensi = ['s' => $totalS, 'i' => $totalI, 'a' => $totalA];
 

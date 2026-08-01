@@ -93,10 +93,17 @@ class WalasKenaikanController extends Controller
             ->first();
         $kkmNilai = $kkms ? floatval($kkms->nilai) : 70; // Default 70 if not set
 
-        // Absensi all
-        $absensiRecords = AbsensiSiswa::whereIn('siswa_id', $siswas->pluck('id'))
-            ->where('tahun_ajaran', $tahunAktif->tahun)
+        // Absensi dinamis dari absen pertemuan (menggantikan AbsensiSiswa)
+        $tahunStart = intval(explode('/', $tahunAktif->tahun)[0]);
+        $pertemuans = \App\Models\PertemuanGuru::where('kelas_id', $kelas->id)
+            ->whereYear('tanggal', '>=', $tahunStart)
+            ->orderBy('tanggal')
+            ->orderBy('jam_selesai', 'desc')
             ->get();
+            
+        $allAbsensi = \App\Models\AbsensiPertemuan::whereIn('pertemuan_id', $pertemuans->pluck('id'))
+            ->get()
+            ->groupBy('siswa_id');
 
         // Sumatif all
         $sumatifRecords = SumatifNilai::with(['mapel', 'titimangsa'])
@@ -113,33 +120,41 @@ class WalasKenaikanController extends Controller
         $dataSiswa = [];
         $no = 1;
         foreach ($siswas as $siswa) {
-            // Absensi calculation
-            $abSiswa = $absensiRecords->where('siswa_id', $siswa->id);
+            // Absensi calculation (Dinamis dari PertemuanGuru)
             $abGanjilH = 0; $abGanjilS = 0; $abGanjilI = 0; $abGanjilA = 0;
             $abGenapH = 0; $abGenapS = 0; $abGenapI = 0; $abGenapA = 0;
 
-            foreach ($abSiswa as $ab) {
-                $isGanjil = ($ab->bulan >= 7 && $ab->bulan <= 12);
-                $isGenap = ($ab->bulan >= 1 && $ab->bulan <= 6);
+            $dailyStatus = [];
+            $siswaAbsensi = isset($allAbsensi[$siswa->id]) ? $allAbsensi[$siswa->id]->keyBy('pertemuan_id') : collect();
+
+            foreach ($pertemuans as $pert) {
+                if (!isset($dailyStatus[$pert->tanggal])) {
+                    if (isset($siswaAbsensi[$pert->id])) {
+                        $status = $siswaAbsensi[$pert->id]->status;
+                        $dailyStatus[$pert->tanggal] = in_array($status, ['S', 'I', 'A']) ? $status : 'H';
+                    } else {
+                        $dailyStatus[$pert->tanggal] = 'H';
+                    }
+                }
+            }
+
+            foreach ($dailyStatus as $tanggal => $status) {
+                $month = intval(date('n', strtotime($tanggal)));
+                $isGanjil = ($month >= 7 && $month <= 12);
+                $isGenap = ($month >= 1 && $month <= 6);
                 
-                for ($i = 1; $i <= 31; $i++) {
-                    $col = 'tgl_' . $i;
-                    if ($ab->$col === 'H') {
-                        if ($isGanjil) $abGanjilH++;
-                        if ($isGenap) $abGenapH++;
-                    }
-                    if ($ab->$col === 'S') {
-                        if ($isGanjil) $abGanjilS++;
-                        if ($isGenap) $abGenapS++;
-                    }
-                    if ($ab->$col === 'I') {
-                        if ($isGanjil) $abGanjilI++;
-                        if ($isGenap) $abGenapI++;
-                    }
-                    if ($ab->$col === 'A') {
-                        if ($isGanjil) $abGanjilA++;
-                        if ($isGenap) $abGenapA++;
-                    }
+                if ($status === 'H') {
+                    if ($isGanjil) $abGanjilH++;
+                    if ($isGenap) $abGenapH++;
+                } elseif ($status === 'S') {
+                    if ($isGanjil) $abGanjilS++;
+                    if ($isGenap) $abGenapS++;
+                } elseif ($status === 'I') {
+                    if ($isGanjil) $abGanjilI++;
+                    if ($isGenap) $abGenapI++;
+                } elseif ($status === 'A') {
+                    if ($isGanjil) $abGanjilA++;
+                    if ($isGenap) $abGenapA++;
                 }
             }
 
