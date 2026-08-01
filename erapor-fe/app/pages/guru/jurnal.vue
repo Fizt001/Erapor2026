@@ -73,7 +73,7 @@
 
       <!-- Panel Flow Kanan -->
       <div class="flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative transition-all pt-[60px] xl:pt-0" :class="activeTabMobile === 'flow' ? 'flex' : 'hidden xl:flex'">
-        <div class="p-2 sm:pt-3 sm:pb-6 sm:px-6 lg:pt-3 lg:pb-8 lg:px-8 max-w-7xl mx-auto w-full h-full flex flex-col relative z-0">
+        <div class="p-2 lg:p-6 max-w-7xl mx-auto w-full h-full flex flex-col relative z-0">
           
           <div v-if="isLoading" class="flex-grow flex flex-col items-center justify-center p-20 opacity-60 bg-white rounded-3xl shadow-sm border border-slate-200/60">
             <div class="w-10 h-10 border-4 border-sky-500 border-t-transparent rounded-full animate-spin mb-4"></div>
