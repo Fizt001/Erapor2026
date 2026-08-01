@@ -111,14 +111,14 @@
                     <span class="text-[10px] font-black text-rose-700 uppercase tracking-widest">Periode ini telah ditutup oleh Kurikulum. Data hanya dapat dilihat (Read-Only).</span>
                 </div>
 
-                <table class="w-full text-left border-collapse sm:min-w-[800px] bg-transparent sm:bg-white block sm:table">
-                    <thead class="sticky top-0 z-20 shadow-sm hidden sm:table-header-group">
+                <table class="w-full text-left border-collapse bg-white table-fixed">
+                    <thead class="sticky top-0 z-20 shadow-sm">
                         <tr>
-                            <th rowspan="2" class="py-3 px-6 border-b border-slate-300 bg-slate-100 sticky left-0 z-30 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.05)] border-r text-[10px] font-black text-slate-500 uppercase tracking-widest min-w-[200px] align-middle">
+                            <th rowspan="2" class="hidden sm:table-cell py-3 px-6 border-b border-slate-300 bg-slate-100 sticky left-0 z-30 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.05)] border-r text-[10px] font-black text-slate-500 uppercase tracking-widest min-w-[200px] align-middle">
                                 Nama Peserta Didik
                             </th>
-                            <th class="py-2 px-2 border-b border-l border-emerald-300 text-center bg-emerald-50 w-24 border-r">
-                                <span class="text-[10px] font-black text-emerald-700 uppercase tracking-widest block">Pramuka (Wajib)</span>
+                            <th class="py-2 px-2 border-b border-l border-emerald-300 text-center bg-emerald-50 w-24 border-r align-middle" rowspan="2">
+                                <span class="text-[10px] font-black text-emerald-700 uppercase tracking-widest block">Pramuka<br>(Wajib)</span>
                             </th>
                             <th class="py-2 px-2 border-b border-l border-indigo-300 text-center bg-indigo-50 border-r" colspan="2">
                                 <span class="text-[10px] font-black text-indigo-700 uppercase tracking-widest block">Ekskul Pilihan 1</span>
@@ -128,16 +128,13 @@
                             </th>
                         </tr>
                         <tr>
-                            <th class="py-1.5 px-2 border-b border-l border-emerald-300 text-center bg-emerald-100/50 w-24 border-r">
-                                <span class="text-[10px] font-bold text-emerald-600 uppercase">Nilai</span>
-                            </th>
-                            <th class="py-1.5 px-2 border-b border-l border-indigo-300 text-center bg-indigo-100/50">
+                            <th class="py-1.5 px-2 border-b border-l border-indigo-300 text-center bg-indigo-100/50 min-w-[120px]">
                                 <span class="text-[10px] font-bold text-indigo-600 uppercase">Nama Ekskul</span>
                             </th>
                             <th class="py-1.5 px-2 border-b border-indigo-300 text-center bg-indigo-100/50 border-r w-20">
                                 <span class="text-[10px] font-bold text-indigo-600 uppercase">Nilai</span>
                             </th>
-                            <th class="py-1.5 px-2 border-b border-l border-amber-300 text-center bg-amber-100/50">
+                            <th class="py-1.5 px-2 border-b border-l border-amber-300 text-center bg-amber-100/50 min-w-[120px]">
                                 <span class="text-[10px] font-bold text-amber-600 uppercase">Nama Ekskul</span>
                             </th>
                             <th class="py-1.5 px-2 border-b border-amber-300 text-center bg-amber-100/50 w-20">
@@ -145,84 +142,84 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-slate-100 block sm:table-row-group">
-                        <tr v-for="siswa in filteredStudents" :key="activeTab + '-' + siswa.id" class="block sm:table-row bg-white sm:bg-transparent border border-slate-200 sm:border-0 rounded-xl sm:rounded-none mb-4 sm:mb-0 p-4 sm:p-0 shadow-sm sm:shadow-none hover:bg-sky-50/30 transition-colors group">
+                    <tbody class="divide-y divide-slate-100">
+                        <template v-for="siswa in filteredStudents" :key="activeTab + '-' + siswa.id">
+                            <!-- Mobile Name Row -->
+                            <tr class="sm:hidden bg-slate-50 border-t-4 border-slate-200">
+                                <td colspan="5" class="py-2 px-3">
+                                    <div class="sticky left-3">
+                                        <h4 class="text-[12px] font-black text-slate-800 uppercase tracking-wide truncate" :title="siswa.nama">{{ siswa.nama }}</h4>
+                                    </div>
+                                </td>
+                            </tr>
                             
-                            <!-- Nama Siswa (Sticky) -->
-                            <td class="block sm:table-cell pb-3 sm:py-3 px-0 sm:px-6 text-[11px] font-black text-slate-700 uppercase bg-transparent sm:bg-white group-hover:bg-transparent sm:group-hover:bg-slate-50 sticky left-0 z-10 shadow-none sm:shadow-[2px_0_5px_-2px_rgba(0,0,0,0.02)] transition-colors border-b sm:border-b-0 border-r-0 sm:border-r border-slate-100">
-                                {{ siswa.nama }}
-                            </td>
-                            
-                            <!-- PRAMUKA -->
-                            <td class="block sm:table-cell py-3 sm:py-2 px-0 sm:px-2 border-b sm:border-b-0 border-r-0 sm:border-r border-slate-100 bg-transparent sm:bg-emerald-50/10">
-                                <div class="flex items-center justify-between sm:justify-center">
-                                    <span class="sm:hidden text-[10px] font-black uppercase tracking-widest text-emerald-600">Pramuka (Wajib)</span>
+                            <!-- Inputs Row -->
+                            <tr class="hover:bg-sky-50/30 transition-colors group border-b-2 border-slate-200 sm:border-b-0 h-12">
+                                <!-- Desktop Name -->
+                                <td class="hidden sm:table-cell py-3 px-6 text-[11px] font-black text-slate-700 uppercase bg-white group-hover:bg-slate-50 sticky left-0 z-10 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.02)] transition-colors border-r border-slate-100 truncate" :title="siswa.nama">
+                                    {{ siswa.nama }}
+                                </td>
+                                
+                                <!-- PRAMUKA -->
+                                <td class="py-2 px-2 border-r border-slate-100 bg-emerald-50/10">
                                     <input 
                                         v-model="formEkskul[siswa.id][activeTab].pramuka_nilai" 
                                         type="number" 
                                         min="0" max="100" 
                                         placeholder="-" 
                                         :disabled="!isTabActive"
-                                        class="w-14 h-8 rounded-lg border-emerald-200 text-xs font-bold text-center block py-0 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 bg-white placeholder-slate-300 transition-all outline-none disabled:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed mx-0 sm:mx-auto"
+                                        class="w-14 h-8 rounded-lg border-emerald-200 text-xs font-bold text-center mx-auto block py-0 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 bg-white placeholder-slate-300 transition-all outline-none disabled:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
                                     >
-                                </div>
-                            </td>
+                                </td>
 
-                            <!-- PILIHAN 1 -->
-                            <td class="block sm:table-cell pt-3 sm:pt-2 pb-2 sm:pb-2 px-0 sm:px-2 bg-transparent sm:bg-indigo-50/10">
-                                <span class="sm:hidden text-[10px] font-black uppercase tracking-widest text-indigo-600 block mb-1.5">Ekskul Pilihan 1</span>
-                                <select 
-                                    v-model="formEkskul[siswa.id][activeTab].pilihan1_id"
-                                    :disabled="!isTabActive"
-                                    class="w-full h-8 rounded-lg border-indigo-200 text-[10px] font-bold py-0 px-2 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 cursor-pointer bg-white transition-all outline-none disabled:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                                >
-                                    <option :value="null">-- Pilih --</option>
-                                    <option v-for="me in pilihanEkskuls" :key="me.id" :value="me.id">{{ me.nama_ekskul }}</option>
-                                </select>
-                            </td>
-                            <td class="block sm:table-cell pb-3 sm:py-2 px-0 sm:px-2 border-b sm:border-b-0 border-r-0 sm:border-r border-slate-100 bg-transparent sm:bg-indigo-50/10">
-                                <div class="flex items-center justify-between sm:justify-center">
-                                    <span class="sm:hidden text-[10px] font-bold text-slate-500">Nilai</span>
+                                <!-- PILIHAN 1 -->
+                                <td class="py-2 px-2 bg-indigo-50/10">
+                                    <select 
+                                        v-model="formEkskul[siswa.id][activeTab].pilihan1_id"
+                                        :disabled="!isTabActive"
+                                        class="w-full min-w-[120px] h-8 rounded-lg border-indigo-200 text-[10px] font-bold py-0 px-2 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 cursor-pointer bg-white transition-all outline-none disabled:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                                    >
+                                        <option :value="null">-- Pilih --</option>
+                                        <option v-for="me in pilihanEkskuls" :key="me.id" :value="me.id">{{ me.nama_ekskul }}</option>
+                                    </select>
+                                </td>
+                                <td class="py-2 px-2 border-r border-slate-100 bg-indigo-50/10">
                                     <input 
                                         v-model="formEkskul[siswa.id][activeTab].pilihan1_nilai" 
                                         type="number" 
                                         min="0" max="100" 
                                         placeholder="-" 
-                                        class="w-14 h-8 rounded-lg border-indigo-200 text-xs font-bold text-center block py-0 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 bg-white placeholder-slate-300 transition-all outline-none disabled:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed mx-0 sm:mx-auto"
+                                        class="w-14 h-8 rounded-lg border-indigo-200 text-xs font-bold text-center mx-auto block py-0 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 bg-white placeholder-slate-300 transition-all outline-none disabled:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
                                         :disabled="(!isTabActive) || !formEkskul[siswa.id][activeTab].pilihan1_id"
                                     >
-                                </div>
-                            </td>
+                                </td>
 
-                            <!-- PILIHAN 2 -->
-                            <td class="block sm:table-cell pt-3 sm:pt-2 pb-2 sm:pb-2 px-0 sm:px-2 bg-transparent sm:bg-amber-50/10">
-                                <span class="sm:hidden text-[10px] font-black uppercase tracking-widest text-amber-600 block mb-1.5">Ekskul Pilihan 2</span>
-                                <select 
-                                    v-model="formEkskul[siswa.id][activeTab].pilihan2_id"
-                                    :disabled="!isTabActive"
-                                    class="w-full h-8 rounded-lg border-amber-200 text-[10px] font-bold py-0 px-2 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 cursor-pointer bg-white transition-all outline-none disabled:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                                >
-                                    <option :value="null">-- Pilih --</option>
-                                    <option v-for="me in pilihanEkskuls" :key="me.id" :value="me.id">{{ me.nama_ekskul }}</option>
-                                </select>
-                            </td>
-                            <td class="block sm:table-cell pb-0 sm:py-2 px-0 sm:px-2 bg-transparent sm:bg-amber-50/10">
-                                <div class="flex items-center justify-between sm:justify-center">
-                                    <span class="sm:hidden text-[10px] font-bold text-slate-500">Nilai</span>
+                                <!-- PILIHAN 2 -->
+                                <td class="py-2 px-2 bg-amber-50/10">
+                                    <select 
+                                        v-model="formEkskul[siswa.id][activeTab].pilihan2_id"
+                                        :disabled="!isTabActive"
+                                        class="w-full min-w-[120px] h-8 rounded-lg border-amber-200 text-[10px] font-bold py-0 px-2 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 cursor-pointer bg-white transition-all outline-none disabled:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                                    >
+                                        <option :value="null">-- Pilih --</option>
+                                        <option v-for="me in pilihanEkskuls" :key="me.id" :value="me.id">{{ me.nama_ekskul }}</option>
+                                    </select>
+                                </td>
+                                <td class="py-2 px-2 bg-amber-50/10">
                                     <input 
                                         v-model="formEkskul[siswa.id][activeTab].pilihan2_nilai" 
                                         type="number" 
                                         min="0" max="100" 
                                         placeholder="-" 
-                                        class="w-14 h-8 rounded-lg border-amber-200 text-xs font-bold text-center block py-0 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 bg-white placeholder-slate-300 transition-all outline-none disabled:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed mx-0 sm:mx-auto"
+                                        class="w-14 h-8 rounded-lg border-amber-200 text-xs font-bold text-center mx-auto block py-0 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 bg-white placeholder-slate-300 transition-all outline-none disabled:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
                                         :disabled="(!isTabActive) || !formEkskul[siswa.id][activeTab].pilihan2_id"
                                     >
-                                </div>
-                            </td>
+                                </td>
 
-                        </tr>
-                        <tr v-if="filteredStudents.length === 0" class="block sm:table-row">
-                            <td colspan="6" class="block sm:table-cell py-12 text-center text-slate-500 bg-slate-50/50">
+                            </tr>
+                        </template>
+                        <tr v-if="filteredStudents.length === 0">
+                            <td colspan="6" class="py-12 text-center text-slate-500 bg-slate-50/50">
                                 <div class="text-3xl mb-2"><AppIcon name="search" /></div>
                                 <div class="text-xs font-bold">Tidak ada siswa yang cocok.</div>
                             </td>
