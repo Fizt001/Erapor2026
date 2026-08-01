@@ -138,28 +138,31 @@
               <table class="w-full text-left border-collapse bg-white">
                 <thead class="sticky top-0 z-20 shadow-sm">
                   <tr class="bg-slate-100 border-b border-slate-200">
-                    <th class="py-3 px-4 text-center text-[10px] font-black uppercase tracking-widest text-slate-500 w-[60px] border-r border-slate-200">No</th>
-                    <th class="py-3 px-4 text-[10px] font-black uppercase tracking-widest text-slate-500 border-r border-slate-200 min-w-[200px] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.05)] sticky left-0 bg-slate-100 z-30">Nama Siswa</th>
-                    <th class="py-3 px-4 text-[10px] font-black uppercase tracking-widest text-slate-500 min-w-[150px] border-r border-slate-200">NISN / NIS</th>
-                    <th class="py-3 px-4 text-center text-[10px] font-black uppercase tracking-widest text-slate-500 w-32 bg-slate-50">Aksi</th>
+                    <th class="py-3 px-2 sm:px-4 text-center text-[10px] font-black uppercase tracking-widest text-slate-500 w-10 sm:w-[60px] border-r border-slate-200">No</th>
+                    <th class="py-3 px-3 sm:px-4 text-[10px] font-black uppercase tracking-widest text-slate-500 border-r border-slate-200 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.05)] sticky left-0 bg-slate-100 z-30">Nama Siswa</th>
+                    <th class="hidden sm:table-cell py-3 px-4 text-[10px] font-black uppercase tracking-widest text-slate-500 min-w-[150px] border-r border-slate-200">NISN / NIS</th>
+                    <th class="py-3 px-2 sm:px-4 text-center text-[10px] font-black uppercase tracking-widest text-slate-500 w-16 sm:w-32 bg-slate-50">Aksi</th>
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100">
                   <tr v-for="(siswa, index) in filteredStudents" :key="activeTab + '-' + siswa.id" class="hover:bg-slate-50/80 transition-colors group">
-                    <td class="py-3 px-4 text-center text-[11px] font-bold text-slate-400 border-r border-slate-100">{{ index + 1 }}</td>
-                    <td class="py-3 px-4 border-r border-slate-100 sticky left-0 bg-white group-hover:bg-slate-50/90 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.02)] z-10">
-                      <div class="text-[12px] font-black text-slate-700 uppercase tracking-wide">{{ siswa.user?.name || siswa.nama_lengkap }}</div>
+                    <td class="py-3 px-2 sm:px-4 text-center text-[11px] font-bold text-slate-400 border-r border-slate-100">{{ index + 1 }}</td>
+                    <td class="py-3 px-3 sm:px-4 border-r border-slate-100 sticky left-0 bg-white group-hover:bg-slate-50/90 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.02)] z-10 overflow-hidden">
+                      <div class="text-[11px] sm:text-[12px] font-black text-slate-700 uppercase tracking-wide truncate max-w-[130px] sm:max-w-none" :title="siswa.user?.name || siswa.nama_lengkap">{{ siswa.user?.name || siswa.nama_lengkap }}</div>
+                      <!-- Tampilkan NIS di bawah nama khusus di HP -->
+                      <div class="sm:hidden text-[9px] font-bold text-slate-400 tracking-widest uppercase mt-0.5">{{ siswa.nis || '-' }}</div>
                     </td>
-                    <td class="py-3 px-4 border-r border-slate-100">
+                    <td class="hidden sm:table-cell py-3 px-4 border-r border-slate-100">
                       <div class="text-[11px] font-bold text-slate-600">{{ siswa.nisn || '-' }}</div>
                       <div class="text-[10px] font-bold text-slate-400 tracking-widest uppercase mt-0.5">{{ siswa.nis || '-' }}</div>
                     </td>
-                    <td class="py-3 px-4 text-center bg-slate-50/30">
+                    <td class="py-3 px-2 sm:px-4 text-center bg-slate-50/30">
                       <button 
                         @click="bukaPreviewRapor(siswa)"
-                        class="px-3 py-1.5 bg-white border border-indigo-200 text-indigo-600 hover:bg-indigo-50 font-black rounded-lg transition-all text-[10px] uppercase tracking-widest shadow-sm hover:shadow active:scale-95 inline-flex items-center justify-center w-full"
+                        class="px-2 sm:px-3 py-1.5 bg-white border border-indigo-200 text-indigo-600 hover:bg-indigo-50 font-black rounded-lg transition-all text-[9px] sm:text-[10px] uppercase tracking-widest shadow-sm hover:shadow active:scale-95 inline-flex items-center justify-center w-full"
+                        title="Preview Rapor"
                       >
-                        <AppIcon name="eye" /> Preview
+                        <AppIcon name="eye" class="sm:mr-1" /> <span class="hidden sm:inline">Preview</span>
                       </button>
                     </td>
                   </tr>
