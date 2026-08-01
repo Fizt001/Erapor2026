@@ -50,7 +50,7 @@
       <!-- Panel Flow Kanan -->
       <div class="flex-1 bg-slate-50 flex flex-col xl:h-full min-w-0 relative">
         <div class="p-6 lg:p-8 max-w-7xl mx-auto w-full h-full flex flex-col relative z-0">
-          <div class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
+          <div class="bg-white rounded-none lg:rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
             <div class="flex-1 overflow-y-auto custom-scrollbar p-6 lg:p-8 space-y-6">
         
         <!-- Superadmin Empty State -->

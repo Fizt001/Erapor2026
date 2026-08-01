@@ -73,9 +73,9 @@
 
       <!-- Panel Flow Kanan -->
       <div class="flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative transition-all pt-[60px] xl:pt-0" :class="activeTabMobile === 'flow' ? 'flex' : 'hidden xl:flex'">
-        <div class="p-2 lg:p-6 max-w-7xl mx-auto w-full h-full flex flex-col relative z-0">
+        <div class="p-0 lg:p-6 max-w-7xl mx-auto w-full h-full flex flex-col relative z-0">
           
-          <div v-if="isLoading" class="flex-grow flex flex-col items-center justify-center p-20 opacity-60 bg-white rounded-3xl shadow-sm border border-slate-200/60">
+          <div v-if="isLoading" class="flex-grow flex flex-col items-center justify-center p-20 opacity-60 bg-white rounded-none lg:rounded-3xl shadow-sm border border-slate-200/60">
             <div class="w-10 h-10 border-4 border-sky-500 border-t-transparent rounded-full animate-spin mb-4"></div>
             <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Memuat Data...</span>
           </div>

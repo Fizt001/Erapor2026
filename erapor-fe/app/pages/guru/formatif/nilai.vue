@@ -76,8 +76,8 @@
 
       <!-- Panel Flow Kanan -->
       <div class="flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative transition-all pt-[60px] xl:pt-0" :class="activeTabMobile === 'flow' ? 'flex' : 'hidden xl:flex'">
-        <div class="p-2 lg:p-6 max-w-7xl mx-auto w-full h-full flex flex-col relative z-0">
-          <div class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
+        <div class="p-0 lg:p-6 max-w-7xl mx-auto w-full h-full flex flex-col relative z-0">
+          <div class="bg-white rounded-none lg:rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0">
             
             <!-- Header Card Kanan -->
             <div class="px-4 py-3 border-b border-slate-200 flex justify-between items-center bg-white shrink-0 z-10">
