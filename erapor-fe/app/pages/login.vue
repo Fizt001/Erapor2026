@@ -80,7 +80,7 @@
                                         <div :key="item.config.title" class="flex flex-col items-center justify-center w-full h-full">
                                             
                                             <template v-if="item.config.isEmpty">
-                                                <div class="relative flex-1 w-full flex flex-col items-center justify-center">
+                                                <div class="relative flex-1 w-full flex flex-col items-center justify-center min-h-[12rem] sm:min-h-[14rem]">
                                                     <AppIcon name="chart-bar" class="text-5xl lg:text-7xl mb-4 opacity-30 text-white" />
                                                     <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Belum Ada Data</span>
                                                 </div>
