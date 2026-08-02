@@ -96,7 +96,7 @@
                                                         </ClientOnly>
                                                         <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center">
                                                             <span class="text-4xl font-black text-white leading-none">{{ item.config.percentageText }}</span>
-                                                            <span class="text-[12px] font-bold text-emerald-500 uppercase tracking-widest mt-1">Tuntas</span>
+                                                            <span class="text-[12px] font-bold text-emerald-500 uppercase tracking-widest mt-1">Di Atas KKM</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -295,7 +295,7 @@ const getChartConfig = (tingkat) => {
         title: displayTitle,
         percentageText: percentage + '%',
         chartData: {
-            labels: ['Tuntas (≥ ' + activeClass.kkm_value + ')', 'Belum Tuntas (< ' + activeClass.kkm_value + ')'],
+            labels: ['Di Atas KKM (≥ ' + activeClass.kkm_value + ')', 'Di Bawah KKM (< ' + activeClass.kkm_value + ')'],
             datasets: [{
                 data: [activeClass.tuntas, activeClass.belum_tuntas],
                 backgroundColor: ['#10b981', '#ef4444'], // Emerald, Rose
