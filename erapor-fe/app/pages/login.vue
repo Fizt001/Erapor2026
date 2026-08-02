@@ -74,7 +74,7 @@
                         
                         <div v-for="item in chartConfigs" :key="item.tingkatStr" class="flex flex-col gap-3 w-full">
                             <h5 class="text-white font-bold text-xl px-1">Kelas {{ item.tingkatStr }}</h5>
-                            <div class="relative rounded-3xl p-[3px] bg-gradient-to-r from-orange-500 to-violet-600 min-h-[240px] shadow-[0_0_30px_-5px_rgba(249,115,22,0.4)] flex flex-col transition-all duration-500">
+                            <div class="relative rounded-3xl p-[3px] bg-gradient-to-r from-orange-500 to-violet-600 min-h-[240px] shadow-[0_0_30px_-5px_rgba(249,115,22,0.4)] flex flex-col flex-1 transition-all duration-500">
                                 <div class="w-full flex-1 bg-[#090C15] rounded-[22px] flex flex-col items-center justify-center text-center p-4 min-h-[220px] relative overflow-hidden">
                                     <Transition name="fade-slide" mode="out-in">
                                         <div :key="item.config.title" class="flex flex-col items-center justify-center w-full h-full">
