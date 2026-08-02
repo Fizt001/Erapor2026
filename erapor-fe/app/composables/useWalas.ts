@@ -1,6 +1,6 @@
-export const useWalasStore = defineStore('walas', () => {
-    const assignedClasses = ref<any[]>([])
-    const activeKelasId = ref<number | null>(null)
+export const useWalasStore = () => {
+    const assignedClasses = useState<any[]>('walas-classes', () => [])
+    const activeKelasId = useCookie<number | null>('walas-active-kelas-id', { default: () => null })
 
     const setAssignedClasses = (classes: any[]) => {
         assignedClasses.value = classes
@@ -19,15 +19,10 @@ export const useWalasStore = defineStore('walas', () => {
         activeKelasId.value = id
     }
 
-    return {
+    return reactive({
         assignedClasses,
         activeKelasId,
         setAssignedClasses,
         setActiveKelas
-    }
-}, {
-    persist: {
-        storage: persistedState.localStorage,
-        paths: ['activeKelasId']
-    }
-})
+    })
+}

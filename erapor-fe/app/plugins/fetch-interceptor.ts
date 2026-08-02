@@ -29,15 +29,12 @@ export default defineNuxtPlugin((nuxtApp) => {
     // Walas Multi-Class Support
     if (typeof request === 'string' && request.includes('/api/guru/walas') && process.client) {
         try {
-            const walasStore = localStorage.getItem('walas')
-            if (walasStore) {
-                const parsed = JSON.parse(walasStore)
-                if (parsed && parsed.activeKelasId) {
-                    const url = new URL(request.startsWith('http') ? request : window.location.origin + request)
-                    if (!url.searchParams.has('kelas_id')) {
-                        url.searchParams.append('kelas_id', parsed.activeKelasId)
-                        request = url.toString()
-                    }
+            const activeKelasCookie = useCookie('walas-active-kelas-id')
+            if (activeKelasCookie.value) {
+                const url = new URL(request.startsWith('http') ? request : window.location.origin + request)
+                if (!url.searchParams.has('kelas_id')) {
+                    url.searchParams.append('kelas_id', activeKelasCookie.value.toString())
+                    request = url.toString()
                 }
             }
         } catch (e) {
