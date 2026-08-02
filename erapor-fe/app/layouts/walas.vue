@@ -39,7 +39,7 @@
     <!-- Main Content -->
     <div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden print:h-auto print:overflow-visible print:block">
       <!-- Navbar -->
-      <header class="h-14 bg-white border-b border-slate-200 flex items-center justify-between px-4 sm:px-6 z-[60] shadow-sm relative print:hidden shrink-0">
+      <header class="min-h-[56px] py-2 lg:py-0 lg:h-14 bg-white border-b border-slate-200 flex flex-wrap lg:flex-nowrap items-center justify-between px-3 sm:px-6 gap-2 z-[60] shadow-sm relative print:hidden shrink-0">
         <div class="flex items-center">
           <div class="lg:hidden flex items-center gap-2 cursor-pointer hover:scale-105 transition-transform" @click="visiMisiDialog?.open()">
             <img v-if="sekolah?.logo" :src="sekolah.logo" alt="Logo" class="h-7 w-7 object-contain" />
@@ -49,7 +49,7 @@
           <h2 class="hidden lg:block text-base font-bold text-slate-800 ml-3 border-l-2 border-amber-500 pl-3 py-1 uppercase tracking-wider">{{ route.meta.title || 'Walas Workspace' }}</h2>
         </div>
         
-        <div class="flex-1 lg:flex-none flex justify-end items-center space-x-4">
+        <div class="flex-1 lg:flex-none flex flex-wrap justify-end items-center gap-2 sm:gap-4">
           <!-- Active Year Siren Indicator -->
           <div v-if="ta_aktif" class="flex items-center gap-2 px-3 py-1.5 bg-slate-50 border border-slate-200/80 rounded-full shadow-inner no-print hover:scale-105 transition-all select-none">
             <span class="relative flex h-2.5 w-2.5">
@@ -59,8 +59,8 @@
             <span class="text-[10px] font-black text-slate-600 uppercase tracking-widest leading-none">TA. {{ ta_aktif.tahun }}</span>
           </div>
 
-          <!-- Pilihan Kelas Walas -->
-          <div v-if="walasStore.assignedClasses.length > 0" class="relative z-50">
+          <!-- Pilihan Kelas Walas (Desktop) -->
+          <div v-if="walasStore.assignedClasses.length > 0" class="relative z-50 hidden lg:block">
             <select v-model="walasStore.activeKelasId" @change="reloadPage" :disabled="walasStore.assignedClasses.length === 1" :class="['appearance-none bg-amber-500 text-white border-none rounded-full px-4 py-1.5 pr-8 text-xs font-bold shadow-md focus:outline-none transition-colors', walasStore.assignedClasses.length > 1 ? 'hover:bg-amber-600 cursor-pointer shadow-amber-500/30 focus:ring-2 focus:ring-amber-500' : 'opacity-90 cursor-default']">
               <option v-for="cls in walasStore.assignedClasses" :key="cls.id" :value="cls.id" class="text-slate-800 bg-white">
                 Walas: Kelas {{ cls.tingkat }} {{ cls.nama_kelas }}
@@ -99,6 +99,18 @@
             
             <!-- Close on click outside -->
             <div v-if="profileDropdownOpen" @click="profileDropdownOpen = false" class="fixed inset-0 z-40 bg-transparent"></div>
+          </div>
+        </div>
+        
+        <!-- Pilihan Kelas Walas (Mobile) -->
+        <div v-if="walasStore.assignedClasses.length > 0" class="relative z-50 w-full lg:hidden order-last mt-2">
+          <select v-model="walasStore.activeKelasId" @change="reloadPage" :disabled="walasStore.assignedClasses.length === 1" :class="['appearance-none w-full bg-amber-500 text-white border-none rounded-md px-4 py-2 pr-8 text-sm font-bold shadow-md focus:outline-none transition-colors', walasStore.assignedClasses.length > 1 ? 'hover:bg-amber-600 cursor-pointer shadow-amber-500/30 focus:ring-2 focus:ring-amber-500' : 'opacity-90 cursor-default']">
+            <option v-for="cls in walasStore.assignedClasses" :key="cls.id" :value="cls.id" class="text-slate-800 bg-white">
+              Walas: Kelas {{ cls.tingkat }} {{ cls.nama_kelas }}
+            </option>
+          </select>
+          <div v-if="walasStore.assignedClasses.length > 1" class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
+            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
           </div>
         </div>
       </header>
