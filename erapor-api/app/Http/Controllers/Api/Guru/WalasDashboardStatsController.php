@@ -28,10 +28,16 @@ class WalasDashboardStatsController extends Controller
             return response()->json(['success' => false, 'message' => 'Tidak ada tahun ajaran aktif']);
         }
 
-        $walas = WaliKelas::where('guru_id', $user->id)
+        $query = WaliKelas::where('guru_id', $user->id)
             ->whereHas('kelas', function($q) use ($tahunAktif) {
                 $q->where('tahun_ajaran_id', $tahunAktif->id);
-            })->first();
+            });
+            
+        if ($request->has('kelas_id') && $request->kelas_id != '') {
+            $query->where('kelas_id', $request->kelas_id);
+        }
+        
+        $walas = $query->first();
 
         if (!$walas) {
             return response()->json(['success' => false, 'message' => 'Anda bukan wali kelas aktif']);

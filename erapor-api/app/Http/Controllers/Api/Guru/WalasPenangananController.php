@@ -20,10 +20,16 @@ class WalasPenangananController extends Controller
             : TahunAjaran::where('is_aktif', true)->first();
         if (!$tahunAktif) return null;
 
-        $walas = WaliKelas::where('guru_id', $user->id)
+        $query = WaliKelas::where('guru_id', $user->id)
             ->whereHas('kelas', function($query) use ($tahunAktif) {
                 $query->where('tahun_ajaran_id', $tahunAktif->id);
-            })->first();
+            });
+            
+        if ($request && $request->has('kelas_id') && $request->kelas_id != '') {
+            $query->where('kelas_id', $request->kelas_id);
+        }
+        
+        $walas = $query->first();
 
         if (!$walas) return null;
 

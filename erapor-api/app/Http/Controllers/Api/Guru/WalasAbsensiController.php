@@ -21,10 +21,16 @@ class WalasAbsensiController extends Controller
             : TahunAjaran::where('is_aktif', true)->first();
         if (!$tahunAktif) return null;
 
-        $walas = WaliKelas::where('guru_id', $user->id)
-            ->whereHas('kelas', function($query) use ($tahunAktif) {
-                $query->where('tahun_ajaran_id', $tahunAktif->id);
-            })->first();
+        $query = WaliKelas::where('guru_id', $user->id)
+            ->whereHas('kelas', function($q) use ($tahunAktif) {
+                $q->where('tahun_ajaran_id', $tahunAktif->id);
+            });
+            
+        if ($request->has('kelas_id') && $request->kelas_id != '') {
+            $query->where('kelas_id', $request->kelas_id);
+        }
+        
+        $walas = $query->first();
 
         if (!$walas) return null;
 

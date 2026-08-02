@@ -18,17 +18,22 @@ class WalasController extends Controller
     /**
      * Get class context (kelas_id, tahun_ajaran_id, titimangsa_id) for the current Walas
      */
-    private function getWalasContext()
+    private function getWalasContext(Request $request = null)
     {
         $user = Auth::user();
         $tahunAktif = TahunAjaran::where('is_aktif', true)->first();
         if (!$tahunAktif) return null;
 
-        $walas = WaliKelas::where('guru_id', $user->id)
+        $query = WaliKelas::where('guru_id', $user->id)
             ->whereHas('kelas', function($query) use ($tahunAktif) {
                 $query->where('tahun_ajaran_id', $tahunAktif->id);
-            })
-            ->first();
+            });
+            
+        if ($request && $request->has('kelas_id') && $request->kelas_id != '') {
+            $query->where('kelas_id', $request->kelas_id);
+        }
+
+        $walas = $query->first();
             
         if (!$walas) {
             return null;
@@ -45,12 +50,41 @@ class WalasController extends Controller
         ];
     }
 
+    public function getAssignedClasses()
+    {
+        $user = Auth::user();
+        $tahunAktif = TahunAjaran::where('is_aktif', true)->first();
+        if (!$tahunAktif) {
+            return response()->json(['success' => true, 'data' => []]);
+        }
+
+        $walasList = WaliKelas::with('kelas')
+            ->where('guru_id', $user->id)
+            ->whereHas('kelas', function($query) use ($tahunAktif) {
+                $query->where('tahun_ajaran_id', $tahunAktif->id);
+            })
+            ->get();
+            
+        $classes = $walasList->map(function ($w) {
+            return [
+                'id' => $w->kelas_id,
+                'nama_kelas' => optional($w->kelas)->nama_kelas,
+                'tingkat' => optional($w->kelas)->tingkat
+            ];
+        });
+
+        return response()->json([
+            'success' => true,
+            'data' => $classes
+        ]);
+    }
+
     /**
      * Get biodata and completion percentage for all students in the class
      */
     public function getBiodataSiswa(Request $request)
     {
-        $context = $this->getWalasContext();
+        $context = $this->getWalasContext($request);
         if (!$context) {
             return response()->json(['success' => false, 'message' => 'Anda bukan wali kelas aktif saat ini.'], 403);
         }
@@ -220,7 +254,7 @@ class WalasController extends Controller
      */
     public function monitoringNilai(Request $request)
     {
-        $context = $this->getWalasContext();
+        $context = $this->getWalasContext($request);
         if (!$context) {
             return response()->json(['success' => false, 'message' => 'Anda bukan wali kelas aktif.'], 403);
         }

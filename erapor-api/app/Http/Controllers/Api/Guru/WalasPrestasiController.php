@@ -14,24 +14,30 @@ use Illuminate\Support\Facades\Validator;
 class WalasPrestasiController extends Controller
 {
     // Cek hak akses dan ambil kelas walas
-    private function getKelasWalas($user)
+    private function getKelasWalas($user, $request = null)
     {
         $tahunAjaranAktif = TahunAjaran::where('is_aktif', true)->first();
         if (!$tahunAjaranAktif) {
             return null;
         }
 
-        $walas = WaliKelas::where('guru_id', $user->id)
+        $query = WaliKelas::where('guru_id', $user->id)
             ->whereHas('kelas', function($query) use ($tahunAjaranAktif) {
                 $query->where('tahun_ajaran_id', $tahunAjaranAktif->id);
-            })->first();
+            });
+            
+        if ($request && $request->has('kelas_id') && $request->kelas_id != '') {
+            $query->where('kelas_id', $request->kelas_id);
+        }
+        
+        $walas = $query->first();
 
         return $walas ? $walas->kelas_id : null;
     }
 
     public function index(Request $request)
     {
-        $kelasId = $this->getKelasWalas($request->user());
+        $kelasId = $this->getKelasWalas($request->user(), $request);
         if (!$kelasId) {
             return response()->json(['success' => false, 'message' => 'Anda bukan wali kelas aktif.'], 403);
         }
@@ -94,7 +100,7 @@ class WalasPrestasiController extends Controller
 
     public function store(Request $request)
     {
-        $kelasId = $this->getKelasWalas($request->user());
+        $kelasId = $this->getKelasWalas($request->user(), $request);
         if (!$kelasId) {
             return response()->json(['success' => false, 'message' => 'Anda bukan wali kelas aktif.'], 403);
         }
@@ -127,7 +133,7 @@ class WalasPrestasiController extends Controller
 
     public function update(Request $request, $id)
     {
-        $kelasId = $this->getKelasWalas($request->user());
+        $kelasId = $this->getKelasWalas($request->user(), $request);
         if (!$kelasId) {
             return response()->json(['success' => false, 'message' => 'Anda bukan wali kelas aktif.'], 403);
         }
@@ -161,7 +167,7 @@ class WalasPrestasiController extends Controller
 
     public function destroy(Request $request, $id)
     {
-        $kelasId = $this->getKelasWalas($request->user());
+        $kelasId = $this->getKelasWalas($request->user(), $request);
         if (!$kelasId) {
             return response()->json(['success' => false, 'message' => 'Anda bukan wali kelas aktif.'], 403);
         }

@@ -12,18 +12,24 @@ use Illuminate\Support\Facades\Validator;
 
 class WalasMutasiController extends Controller
 {
-    private function getActiveKelas($userId)
+    private function getActiveKelas($userId, $request = null)
     {
-        $walas = WaliKelas::where('user_id', $userId)
+        $query = WaliKelas::where('guru_id', $userId)
             ->whereHas('tahunAjaran', function ($q) {
                 $q->where('is_aktif', true);
-            })->first();
+            });
+            
+        if ($request && $request->has('kelas_id') && $request->kelas_id != '') {
+            $query->where('kelas_id', $request->kelas_id);
+        }
+        
+        $walas = $query->first();
         return $walas ? $walas->kelas_id : null;
     }
 
     public function index(Request $request)
     {
-        $kelasId = $this->getActiveKelas($request->user()->id);
+        $kelasId = $this->getActiveKelas($request->user()->id, $request);
         if (!$kelasId) {
             return response()->json(['success' => false, 'message' => 'Anda bukan wali kelas aktif'], 403);
         }
@@ -50,7 +56,7 @@ class WalasMutasiController extends Controller
 
     public function store(Request $request)
     {
-        $kelasId = $this->getActiveKelas($request->user()->id);
+        $kelasId = $this->getActiveKelas($request->user()->id, $request);
         if (!$kelasId) {
             return response()->json(['success' => false, 'message' => 'Anda bukan wali kelas aktif'], 403);
         }

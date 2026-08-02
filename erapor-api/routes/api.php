@@ -209,6 +209,7 @@ Route::middleware('auth:sanctum')->group(function () {
         // WALI KELAS
         // ==========================================
         Route::prefix('walas')->group(function () {
+            Route::get('assigned-classes', [\App\Http\Controllers\Api\Guru\WalasController::class, 'getAssignedClasses']);
             Route::get('dashboard-stats', [\App\Http\Controllers\Api\Guru\WalasDashboardStatsController::class, 'getStats']);
             Route::get('rekap', [\App\Http\Controllers\Api\Guru\WalasRekapController::class, 'index']);
             Route::post('rekap/catatan', [\App\Http\Controllers\Api\Guru\WalasRekapController::class, 'saveCatatan']);

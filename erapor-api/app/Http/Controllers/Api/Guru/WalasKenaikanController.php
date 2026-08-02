@@ -17,19 +17,24 @@ use App\Models\Sekolah;
 
 class WalasKenaikanController extends Controller
 {
-    private function getWalasContext()
+    private function getWalasContext(Request $request = null)
     {
         $user = Auth::user();
         
         $tahunAktif = TahunAjaran::where('is_aktif', true)->first();
         if (!$tahunAktif) return null;
 
-        $walas = WaliKelas::with(['kelas.kurikulum', 'kelas.kejuruan.program.bidang', 'guru.biodata'])
+        $query = WaliKelas::with(['kelas.kurikulum', 'kelas.kejuruan.program.bidang', 'guru.biodata'])
             ->where('guru_id', $user->id)
-            ->whereHas('kelas', function ($query) use ($tahunAktif) {
+            ->whereHas('kelas', function($query) use ($tahunAktif) {
                 $query->where('tahun_ajaran_id', $tahunAktif->id);
-            })
-            ->first();
+            });
+            
+        if ($request && $request->has('kelas_id') && $request->kelas_id != '') {
+            $query->where('kelas_id', $request->kelas_id);
+        }
+        
+        $walas = $query->first();
         if (!$walas) return null;
 
         $titimangsas = Titimangsa::where('tahun_ajaran_id', $tahunAktif->id)->orderBy('id')->get();
@@ -45,7 +50,7 @@ class WalasKenaikanController extends Controller
 
     public function index(Request $request)
     {
-        $context = $this->getWalasContext();
+        $context = $this->getWalasContext($request);
         if (!$context) {
             return response()->json(['success' => false, 'message' => 'Anda bukan wali kelas aktif.'], 403);
         }
