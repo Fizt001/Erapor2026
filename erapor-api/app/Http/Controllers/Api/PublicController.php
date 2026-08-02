@@ -68,6 +68,25 @@ class PublicController extends Controller
                                         ->whereNotNull('na_value')
                                         ->get()
                                         ->groupBy('kelas_id');
+
+            // --- Logika Top 10 Per Kelas ---
+            $top10Query = SumatifNilai::select('kelas_id', 'siswa_id', DB::raw('SUM(na_value) as total_nilai'))
+                ->where('tahun_ajaran_id', $tahunAjaranAktif->id)
+                ->groupBy('kelas_id', 'siswa_id')
+                ->get();
+            
+            $siswaIds = $top10Query->pluck('siswa_id')->unique();
+            $siswasMap = \App\Models\Siswa::whereIn('id', $siswaIds)->get()->keyBy('id');
+            $groupedTop10ByKelas = $top10Query->groupBy('kelas_id');
+            
+            $top10PerKelas = [
+                'X' => [],
+                'XI' => [],
+                'XII' => []
+            ];
+            // -------------------------------
+            
+
             
             foreach ($kelasList as $kelas) {
                 // Cari KKM untuk kelas ini
@@ -106,6 +125,28 @@ class PublicController extends Controller
                         'total' => $totalCount
                     ];
                 }
+
+                // Proses Top 10
+                $top10ForThisKelas = [];
+                if (isset($groupedTop10ByKelas[$kelas->id])) {
+                    $sorted = $groupedTop10ByKelas[$kelas->id]->sortByDesc('total_nilai')->take(10);
+                    foreach ($sorted as $item) {
+                        $s = $siswasMap->get($item->siswa_id);
+                        if ($s) {
+                            $top10ForThisKelas[] = [
+                                'nama' => $s->nama_lengkap,
+                                'total' => round($item->total_nilai, 1)
+                            ];
+                        }
+                    }
+                }
+
+                if (isset($top10PerKelas[$tingkatStr])) {
+                    $top10PerKelas[$tingkatStr][] = [
+                        'nama_kelas' => $kelas->nama_kelas,
+                        'top_10' => $top10ForThisKelas
+                    ];
+                }
             }
         }
 
@@ -117,7 +158,8 @@ class PublicController extends Controller
                 'guru_produktif' => $guruProduktifCount,
                 'walas' => $walasCount,
                 'top_student' => $topStudent,
-                'early_warning' => $earlyWarning
+                'early_warning' => $earlyWarning,
+                'top_10_per_kelas' => $top10PerKelas ?? []
             ]
         ]);
     }
