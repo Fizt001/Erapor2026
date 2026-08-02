@@ -298,7 +298,7 @@ const fetchAssignedClasses = async () => {
     const token = useCookie('auth_token').value
     if (!token) return
     
-    const res = await $fetch(`${config.public.apiBase}/api/walas/assigned-classes`, {
+    const res = await $fetch(`${config.public.apiBase}/api/guru/walas/assigned-classes`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     
