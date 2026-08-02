@@ -112,6 +112,45 @@
 
                     </div>
                 </div>
+
+                <!-- Top 10 Siswa Section -->
+                <div class="mt-8 lg:mt-12 flex flex-col min-h-0">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                        <div v-for="tingkat in ['X', 'XI', 'XII']" :key="'top10-' + tingkat" class="flex flex-col gap-3 w-full">
+                            <h5 class="text-white font-bold text-xl px-1 flex items-center gap-2">
+                                <AppIcon name="trophy" class="text-orange-500" /> Top 10 Kelas {{ tingkat }}
+                            </h5>
+                            
+                            <div class="bg-white/5 backdrop-blur-md rounded-3xl border border-white/10 p-5 shadow-2xl relative overflow-hidden flex-1 flex flex-col min-h-[350px]">
+                                <template v-if="!top10Data[tingkat] || top10Data[tingkat].length === 0">
+                                    <div class="flex-1 flex flex-col items-center justify-center opacity-30 h-full">
+                                        <AppIcon name="users" class="text-4xl mb-3 text-white" />
+                                        <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Belum Ada Data</span>
+                                    </div>
+                                </template>
+                                <template v-else>
+                                    <Transition name="slide-fade" mode="out-in">
+                                        <div :key="activeTop10Index[tingkat]" class="w-full flex-1 flex flex-col">
+                                            <h6 class="text-center text-[13px] font-black text-orange-400 uppercase tracking-widest mb-4 bg-orange-500/10 py-2.5 rounded-xl border border-orange-500/20 shadow-inner">
+                                                {{ top10Data[tingkat][activeTop10Index[tingkat]].nama_kelas }}
+                                            </h6>
+                                            <ul class="space-y-1.5 flex-1 overflow-hidden">
+                                                <li v-for="(siswa, idx) in top10Data[tingkat][activeTop10Index[tingkat]].top_10" :key="idx" class="flex items-center justify-between text-xs py-2 border-b border-white/5 last:border-0 hover:bg-white/5 px-2 rounded-lg transition-colors group">
+                                                    <div class="flex items-center gap-3 overflow-hidden">
+                                                        <span class="font-black text-slate-600 group-hover:text-orange-400 w-5 text-right transition-colors">{{ idx + 1 }}</span>
+                                                        <span class="font-bold text-slate-300 truncate">{{ siswa.nama }}</span>
+                                                    </div>
+                                                    <span class="font-black text-emerald-400 shrink-0 ml-2 bg-emerald-500/10 px-2 py-0.5 rounded shadow-sm">{{ siswa.total }}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </Transition>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 </div>
             </div>
         </div>
@@ -226,6 +265,18 @@ const activeClassIndex = ref({
   'XII': 0
 })
 
+const top10Data = ref({
+  'X': [],
+  'XI': [],
+  'XII': []
+})
+
+const activeTop10Index = ref({
+  'X': 0,
+  'XI': 0,
+  'XII': 0
+})
+
 let intervalId = null;
 
 onMounted(async () => {
@@ -242,6 +293,9 @@ onMounted(async () => {
       if (res.data.early_warning) {
         earlyWarningData.value = res.data.early_warning
       }
+      if (res.data.top_10_per_kelas) {
+        top10Data.value = res.data.top_10_per_kelas
+      }
     }
   } catch (err) {
     console.error('Gagal mengambil data sekolah publik:', err)
@@ -253,6 +307,11 @@ onMounted(async () => {
       const classes = earlyWarningData.value[tingkat]
       if (classes && classes.length > 1) {
         activeClassIndex.value[tingkat] = (activeClassIndex.value[tingkat] + 1) % classes.length
+      }
+
+      const top10Classes = top10Data.value[tingkat]
+      if (top10Classes && top10Classes.length > 1) {
+        activeTop10Index.value[tingkat] = (activeTop10Index.value[tingkat] + 1) % top10Classes.length
       }
     })
   }, 3000)
@@ -407,6 +466,21 @@ const handleLogin = async () => {
   opacity: 0;
   transform: translateY(-10px);
 }
+
+/* Slide Fade for Top 10 */
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+  transition: all 0.5s ease;
+}
+.slide-fade-enter-from {
+  opacity: 0;
+  transform: translateX(30px);
+}
+.slide-fade-leave-to {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
 .custom-scrollbar::-webkit-scrollbar {
   width: 4px;
 }
