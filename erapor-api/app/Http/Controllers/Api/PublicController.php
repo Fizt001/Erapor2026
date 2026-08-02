@@ -76,7 +76,7 @@ class PublicController extends Controller
                 ->get();
             
             $siswaIds = $top10Query->pluck('siswa_id')->unique();
-            $siswasMap = \App\Models\Siswa::whereIn('id', $siswaIds)->get()->keyBy('id');
+            $siswasMap = \App\Models\Siswa::with('user')->whereIn('id', $siswaIds)->get()->keyBy('id');
             $groupedTop10ByKelas = $top10Query->groupBy('kelas_id');
             
             $top10PerKelas = [
@@ -134,7 +134,7 @@ class PublicController extends Controller
                         $s = $siswasMap->get($item->siswa_id);
                         if ($s) {
                             $top10ForThisKelas[] = [
-                                'nama' => $s->nama_lengkap,
+                                'nama' => $s->name,
                                 'total' => round($item->total_nilai, 1)
                             ];
                         }
