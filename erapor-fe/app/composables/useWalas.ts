@@ -1,6 +1,3 @@
-import { defineStore } from 'pinia'
-import { ref } from 'vue'
-
 export const useWalasStore = defineStore('walas', () => {
     const assignedClasses = ref<any[]>([])
     const activeKelasId = ref<number | null>(null)
