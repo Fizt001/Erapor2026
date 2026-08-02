@@ -59,6 +59,21 @@
             <span class="text-[10px] font-black text-slate-600 uppercase tracking-widest leading-none">TA. {{ ta_aktif.tahun }}</span>
           </div>
 
+          <!-- Pilihan Kelas Walas -->
+          <div v-if="walasStore.assignedClasses.length > 0" class="relative z-50">
+            <div v-if="walasStore.assignedClasses.length === 1" class="flex items-center px-3 py-1.5 bg-amber-50 border border-amber-200 text-amber-700 rounded-full shadow-sm text-xs font-bold">
+              Walas: {{ walasStore.assignedClasses[0].nama_kelas }}
+            </div>
+            <select v-else v-model="walasStore.activeKelasId" @change="reloadPage" class="appearance-none bg-amber-500 hover:bg-amber-600 text-white border-none rounded-full px-4 py-1.5 pr-8 text-xs font-bold cursor-pointer shadow-md shadow-amber-500/30 transition-colors focus:ring-2 focus:ring-amber-500 focus:outline-none">
+              <option v-for="cls in walasStore.assignedClasses" :key="cls.id" :value="cls.id" class="text-slate-800 bg-white">
+                Walas: {{ cls.nama_kelas }}
+              </option>
+            </select>
+            <div v-if="walasStore.assignedClasses.length > 1" class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
+              <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+            </div>
+          </div>
+
           <!-- Profile Dropdown in Navbar -->
           <div class="relative">
             <button @click="profileDropdownOpen = !profileDropdownOpen" class="flex items-center space-x-3 text-right focus:outline-none bg-slate-50 hover:bg-slate-100 p-1.5 pl-3 rounded-full border border-slate-200 transition-all">
@@ -176,6 +191,14 @@ const sidebarOpen = ref(false)
 const profileDropdownOpen = ref(false)
 
 const { sekolah, ta_aktif, fetchSekolah } = useSekolah()
+const walasStore = useWalasStore()
+
+const reloadPage = () => {
+    // Memberikan delay sedikit agar store terupdate dulu, baru memuat ulang komponen halaman
+    setTimeout(() => {
+        window.location.reload()
+    }, 100)
+}
 
 const getSvgIcon = (emoji) => {
   const icons = {
@@ -264,9 +287,28 @@ const isGroupActive = (group) => {
 }
 
 
-onMounted(() => {
-  fetchSekolah()
+onMounted(async () => {
+  await fetchSekolah()
+  await fetchAssignedClasses()
 })
+
+const fetchAssignedClasses = async () => {
+  try {
+    const config = useRuntimeConfig()
+    const token = useCookie('auth_token').value
+    if (!token) return
+    
+    const res = await $fetch(`${config.public.apiBase}/api/walas/assigned-classes`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    
+    if (res.success) {
+      walasStore.setAssignedClasses(res.data)
+    }
+  } catch (error) {
+    console.error('Failed to fetch assigned classes:', error)
+  }
+}
 
 const tokenCookie = useCookie('auth_token')
 const { data: dashboardStatus } = await useAsyncData(
