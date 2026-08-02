@@ -61,12 +61,9 @@
 
           <!-- Pilihan Kelas Walas -->
           <div v-if="walasStore.assignedClasses.length > 0" class="relative z-50">
-            <div v-if="walasStore.assignedClasses.length === 1" class="flex items-center px-3 py-1.5 bg-amber-50 border border-amber-200 text-amber-700 rounded-full shadow-sm text-xs font-bold">
-              Walas: {{ walasStore.assignedClasses[0].nama_kelas }}
-            </div>
-            <select v-else v-model="walasStore.activeKelasId" @change="reloadPage" class="appearance-none bg-amber-500 hover:bg-amber-600 text-white border-none rounded-full px-4 py-1.5 pr-8 text-xs font-bold cursor-pointer shadow-md shadow-amber-500/30 transition-colors focus:ring-2 focus:ring-amber-500 focus:outline-none">
+            <select v-model="walasStore.activeKelasId" @change="reloadPage" :disabled="walasStore.assignedClasses.length === 1" :class="['appearance-none bg-amber-500 text-white border-none rounded-full px-4 py-1.5 pr-8 text-xs font-bold shadow-md focus:outline-none transition-colors', walasStore.assignedClasses.length > 1 ? 'hover:bg-amber-600 cursor-pointer shadow-amber-500/30 focus:ring-2 focus:ring-amber-500' : 'opacity-90 cursor-default']">
               <option v-for="cls in walasStore.assignedClasses" :key="cls.id" :value="cls.id" class="text-slate-800 bg-white">
-                Walas: {{ cls.nama_kelas }}
+                Walas: Kelas {{ cls.tingkat }} {{ cls.nama_kelas }}
               </option>
             </select>
             <div v-if="walasStore.assignedClasses.length > 1" class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
