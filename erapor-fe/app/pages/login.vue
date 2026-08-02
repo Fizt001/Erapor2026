@@ -56,7 +56,7 @@
 
             <!-- Scrollable content layer -->
             <div class="absolute inset-0 z-10 flex flex-col overflow-y-auto" style="scroll-padding-bottom: 160px;">
-                <div class="relative flex flex-col w-full px-6 lg:px-12 xl:px-16 pt-8 lg:pt-12 pb-8 lg:pb-12 min-h-full lg:h-full">
+                <div class="relative flex flex-col w-full px-6 lg:px-12 xl:px-16 pt-8 lg:pt-12 pb-8 lg:pb-24 min-h-full">
                 
                 <!-- Watermark Tagline (menggantikan hero) -->
                 <div class="mb-6 lg:mb-8 flex-shrink-0 flex flex-col gap-1">
@@ -69,12 +69,12 @@
                 </div>
 
                 <!-- CARD PENCAPAIAN AKADEMIK -->
-                <div class="w-full lg:flex-1 flex flex-col min-h-0">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 lg:flex-1">
+                <div class="w-full flex flex-col">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
                         
-                        <div v-for="item in chartConfigs" :key="item.tingkatStr" class="flex flex-col gap-3 w-full lg:h-full">
+                        <div v-for="item in chartConfigs" :key="item.tingkatStr" class="flex flex-col gap-3 w-full">
                             <h5 class="text-white font-bold text-xl px-1">Kelas {{ item.tingkatStr }}</h5>
-                            <div class="relative rounded-3xl p-[3px] bg-gradient-to-r from-orange-500 to-violet-600 lg:flex-1 min-h-[240px] shadow-[0_0_30px_-5px_rgba(249,115,22,0.4)] flex flex-col transition-all duration-500">
+                            <div class="relative rounded-3xl p-[3px] bg-gradient-to-r from-orange-500 to-violet-600 min-h-[240px] shadow-[0_0_30px_-5px_rgba(249,115,22,0.4)] flex flex-col transition-all duration-500">
                                 <div class="w-full flex-1 bg-[#090C15] rounded-[22px] flex flex-col items-center justify-center text-center p-4 min-h-[220px] relative overflow-hidden">
                                     <Transition name="fade-slide" mode="out-in">
                                         <div :key="item.config.title" class="flex flex-col items-center justify-center w-full h-full">
