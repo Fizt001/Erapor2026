@@ -1,7 +1,10 @@
 <template>
-  <NuxtLayout :name="layoutName">
-    <NuxtPage />
-  </NuxtLayout>
+  <div>
+    <NuxtLayout :name="layoutName">
+      <NuxtPage />
+    </NuxtLayout>
+    <ProfileModal />
+  </div>
 </template>
 
 <script setup>

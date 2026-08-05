@@ -49,7 +49,7 @@
                 <p class="text-[13px] font-bold text-slate-700 truncate">{{ userProfile?.name || 'Administrator' }}</p>
                 <p class="text-[10px] text-slate-500 truncate">{{ userProfile?.email || 'admin@erapor.com' }}</p>
               </div>
-              <button @click="router.push('/admin/profil'); profileDropdownOpen = false" type="button" class="flex items-center px-4 py-2 text-sm text-slate-700 hover:bg-emerald-50 hover:text-emerald-700 transition-colors w-full text-left">
+              <button @click="openProfileModal(); profileDropdownOpen = false" type="button" class="flex items-center px-4 py-2 text-sm text-slate-700 hover:bg-emerald-50 hover:text-emerald-700 transition-colors w-full text-left">
                 <span class="mr-2">👤</span> Profil Saya
               </button>
               <button @click="handleLogout" type="button" class="flex items-center px-4 py-2 text-sm text-rose-600 hover:bg-rose-50 transition-colors w-full text-left">
@@ -126,11 +126,15 @@
 
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { useCookie, useRoute, useRouter } from '#imports'
+import VisiMisiDialog from '~/components/VisiMisiDialog.vue'
+import { useSwal } from '~/composables/useSwal'
+import { useProfileModal } from '~/composables/useProfileModal'
 import { adminMenus } from '~/utils/menus'
 
-const router = useRouter()
 const route = useRoute()
+const router = useRouter()
+const { openProfileModal } = useProfileModal()
 const visiMisiDialog = ref(null)
 const sidebarOpen = ref(false)
 const profileDropdownOpen = ref(false)
