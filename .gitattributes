@@ -1,0 +1,40 @@
+# Normalkan semua file teks ke LF di repository, checkout sesuai OS
+* text=auto eol=lf
+
+# Source code eksplisit LF
+*.php      text eol=lf diff=php
+*.vue      text eol=lf
+*.ts       text eol=lf
+*.js       text eol=lf
+*.mjs      text eol=lf
+*.cjs      text eol=lf
+*.css      text eol=lf diff=css
+*.html     text eol=lf diff=html
+*.blade.php text eol=lf diff=html
+*.json     text eol=lf
+*.yaml     text eol=lf
+*.yml      text eol=lf
+*.md       text eol=lf diff=markdown
+*.xml      text eol=lf
+*.env      text eol=lf
+*.example  text eol=lf
+*.sh       text eol=lf
+
+# File biner — jangan diproses line endings
+*.png      binary
+*.jpg      binary
+*.jpeg     binary
+*.gif      binary
+*.svg      binary
+*.ico      binary
+*.woff     binary
+*.woff2    binary
+*.ttf      binary
+*.eot      binary
+*.otf      binary
+*.zip      binary
+*.pdf      binary
+
+# Export-ignore untuk GitHub Archive
+/.github       export-ignore
+CHANGELOG.md   export-ignore

@@ -1,0 +1,50 @@
+# ================================
+# FILE SISTEM OPERASI
+# ================================
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# Windows
+Thumbs.db
+Thumbs.db:encdata
+Desktop.ini
+$RECYCLE.BIN/
+
+# ================================
+# EDITOR & IDE
+# ================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+*.code-workspace
+
+# ================================
+# SCRIPT SEMENTARA / UTILITAS
+# ================================
+fix_*.py
+fix_*.cjs
+replace_toast*.py
+update_*.py
+update_*.cjs
+patch*.cjs
+refactor_*.cjs
+rewrite_*.cjs
+apply_*.py
+extract.py
+
+# ================================
+# FILE SEMENTARA LAINNYA
+# ================================
+*.bak
+*.tmp
+*.temp
+scratch/

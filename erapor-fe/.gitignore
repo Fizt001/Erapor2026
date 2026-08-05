@@ -13,10 +13,36 @@ node_modules
 logs
 *.log
 
-# Misc
+# Misc (macOS)
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
 .fleet
 .idea
+
+# Misc (Windows)
+Thumbs.db
+Thumbs.db:encdata
+Desktop.ini
+ehthumbs.db
+
+# Script utilitas sementara
+fix_*.cjs
+fix_*.py
+patch*.cjs
+refactor_*.cjs
+rewrite_*.cjs
+update_*.py
+apply_*.py
+extract.py
+*.bak
+*.tmp
+
+# File HTML hasil ekstrak
+*_extracted*.html
+*_readable.txt
 
 # Local env files
 .env
