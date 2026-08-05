@@ -220,6 +220,7 @@
     <!-- ==============================================
          MODAL KONFIRMASI HAPUS (Overlay)
          ============================================== -->
+    <ClientOnly>
     <Teleport to="body">
         <div v-if="isDeleteModalOpen" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
             <div class="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden animate-slideUpFade text-center">
@@ -244,10 +245,12 @@
             </div>
         </div>
     </Teleport>
+    </ClientOnly>
 
     <!-- ==============================================
          MODAL KONFIRMASI RESET PASSWORD (Overlay)
          ============================================== -->
+    <ClientOnly>
     <Teleport to="body">
         <div v-if="isResetModalOpen" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
             <div class="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden animate-slideUpFade text-center">
@@ -272,10 +275,12 @@
           </div>
         </div>
     </Teleport>
+    </ClientOnly>
 
     <!-- ==============================================
          SLIDE-OVER TAMBAH/IMPORT (Overlay)
          ============================================== -->
+    <ClientOnly>
     <Teleport to="body">
         <div v-if="isSlideoverOpen" class="fixed inset-0 z-[100] flex justify-end bg-slate-900/60 backdrop-blur-sm transition-opacity">
             <!-- Overlay Click to Close -->
@@ -423,6 +428,7 @@
         </div>
         </div>
     </Teleport>
+    </ClientOnly>
   </div>
 </template>
 
