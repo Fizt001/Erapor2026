@@ -70,11 +70,11 @@
                 </div>
 
                 <div class="flex flex-row gap-2 w-full sm:w-auto justify-end relative z-20">
-                    <button type="button" @click.stop.prevent="openSlideover('import')" class="flex-1 sm:flex-none px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 rounded-xl font-bold text-[10px] uppercase tracking-widest transition-colors shadow-sm border border-slate-200 flex items-center justify-center gap-2 cursor-pointer pointer-events-auto">
-                        <AppIcon name="rocket-launch" /> Import
-                    </button>
                     <button type="button" @click.stop.prevent="openSlideover('form')" class="flex-1 sm:flex-none px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-[10px] uppercase tracking-widest transition-colors shadow-sm shadow-emerald-500/30 flex items-center justify-center gap-2 cursor-pointer pointer-events-auto">
                         <AppIcon name="plus" /> Tambah Data
+                    </button>
+                    <button type="button" @click.stop.prevent="openSlideover('import')" class="flex-1 sm:flex-none px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 rounded-xl font-bold text-[10px] uppercase tracking-widest transition-colors shadow-sm border border-slate-200 flex items-center justify-center gap-2 cursor-pointer pointer-events-auto">
+                        <AppIcon name="rocket-launch" /> Import
                     </button>
                 </div>
             </div>
