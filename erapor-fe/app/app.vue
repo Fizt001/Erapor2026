@@ -132,18 +132,14 @@ const layoutName = computed(() => {
   transform: translateY(15px);
 }
 
-/* Admin specific transition: horizontal slide */
+/* Admin specific transition: fade only (no transform - avoids stacking context that traps fixed overlays) */
 .admin-page-enter-active,
 .admin-page-leave-active {
-  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.25s ease;
 }
-.admin-page-enter-from {
-  opacity: 0;
-  transform: translateX(20px);
-}
+.admin-page-enter-from,
 .admin-page-leave-to {
   opacity: 0;
-  transform: translateX(-20px);
 }
 
 /* Kurikulum specific transition: scale (zoom) */
