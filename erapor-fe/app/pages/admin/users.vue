@@ -156,6 +156,8 @@
     <!-- ==============================================
          MODAL EDIT (Overlay)
          ============================================== -->
+    <ClientOnly>
+    <Teleport to="body">
     <div v-if="isEditModalOpen" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
         <div class="relative w-full max-w-md bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden animate-slideUpFade">
             
@@ -216,6 +218,8 @@
             </div>
         </div>
     </div>
+    </Teleport>
+    </ClientOnly>
 
     <!-- ==============================================
          MODAL KONFIRMASI HAPUS (Overlay)

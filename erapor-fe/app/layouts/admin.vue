@@ -60,7 +60,7 @@
           </div>
         </div>
       </header>
-      <main class="flex-1 overflow-y-auto p-0 sm:p-5 bg-slate-50 relative print:p-0 print:bg-white print:overflow-visible print:block pb-20 lg:pb-5">
+      <main class="flex-1 overflow-y-auto p-0 sm:p-5 bg-slate-50 print:p-0 print:bg-white print:overflow-visible print:block pb-20 lg:pb-5">
         <NuxtPage />
         <div ref="footerRef" class="hidden text-center print:hidden transition-all duration-1000" :class="showFooter ? 'mt-10 pt-4 pb-4 border-t border-slate-200 opacity-100' : 'h-0 opacity-0 overflow-hidden'">
           <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Created by <span class="text-emerald-600">SMK-Yatindo</span></p>
