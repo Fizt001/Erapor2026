@@ -421,10 +421,9 @@
             </div>
           </div>
         </div>
+        </div>
     </Teleport>
-    </div>
-      </div>
-    </div>
+  </div>
 </template>
 
 <script setup>
