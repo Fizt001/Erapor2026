@@ -69,11 +69,11 @@
                     </div>
                 </div>
 
-                <div class="flex flex-row gap-2 w-full sm:w-auto justify-end">
-                    <button @click="openSlideover('import')" class="flex-1 sm:flex-none px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 rounded-xl font-bold text-[10px] uppercase tracking-widest transition-colors shadow-sm border border-slate-200 flex items-center justify-center gap-2">
+                <div class="flex flex-row gap-2 w-full sm:w-auto justify-end relative z-20">
+                    <button type="button" @click.stop.prevent="openSlideover('import')" class="flex-1 sm:flex-none px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 rounded-xl font-bold text-[10px] uppercase tracking-widest transition-colors shadow-sm border border-slate-200 flex items-center justify-center gap-2 cursor-pointer pointer-events-auto">
                         <AppIcon name="rocket-launch" /> Import
                     </button>
-                    <button @click="openSlideover('form')" class="flex-1 sm:flex-none px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-[10px] uppercase tracking-widest transition-colors shadow-sm shadow-emerald-500/30 flex items-center justify-center gap-2">
+                    <button type="button" @click.stop.prevent="openSlideover('form')" class="flex-1 sm:flex-none px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-[10px] uppercase tracking-widest transition-colors shadow-sm shadow-emerald-500/30 flex items-center justify-center gap-2 cursor-pointer pointer-events-auto">
                         <AppIcon name="plus" /> Tambah Data
                     </button>
                 </div>
@@ -286,11 +286,11 @@
             </div>
             
             <!-- Tabs inside slideover -->
-            <div class="flex bg-slate-50/50 border-b border-slate-200 p-2 shrink-0 z-10 relative">
-                <button @click="activeSlideoverTab = 'form'" :class="activeSlideoverTab === 'form' ? 'bg-white text-emerald-700 shadow-sm border border-slate-200' : 'text-slate-500 hover:bg-slate-100 border border-transparent'" class="flex-1 py-2.5 rounded-xl font-bold text-[10px] uppercase tracking-widest transition-all relative">
+            <div class="flex bg-slate-50/50 border-b border-slate-200 p-2 shrink-0 z-20 relative">
+                <button type="button" @click.stop.prevent="activeSlideoverTab = 'form'" :class="activeSlideoverTab === 'form' ? 'bg-white text-emerald-700 shadow-sm border border-slate-200' : 'text-slate-500 hover:bg-slate-100 border border-transparent'" class="flex-1 py-2.5 rounded-xl font-bold text-[10px] uppercase tracking-widest transition-all relative cursor-pointer pointer-events-auto">
                     <AppIcon name="user" /> Registrasi Manual
                 </button>
-                <button @click="activeSlideoverTab = 'import'" :class="activeSlideoverTab === 'import' ? 'bg-white text-emerald-700 shadow-sm border border-slate-200' : 'text-slate-500 hover:bg-slate-100 border border-transparent'" class="flex-1 py-2.5 rounded-xl font-bold text-[10px] uppercase tracking-widest transition-all ml-2 relative">
+                <button type="button" @click.stop.prevent="activeSlideoverTab = 'import'" :class="activeSlideoverTab === 'import' ? 'bg-white text-emerald-700 shadow-sm border border-slate-200' : 'text-slate-500 hover:bg-slate-100 border border-transparent'" class="flex-1 py-2.5 rounded-xl font-bold text-[10px] uppercase tracking-widest transition-all ml-2 relative cursor-pointer pointer-events-auto">
                     <AppIcon name="rocket-launch" /> Import CSV
                 </button>
             </div>
