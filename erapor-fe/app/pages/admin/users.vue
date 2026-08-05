@@ -220,201 +220,208 @@
     <!-- ==============================================
          MODAL KONFIRMASI HAPUS (Overlay)
          ============================================== -->
-    <div v-if="isDeleteModalOpen" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
-        <div class="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden animate-slideUpFade text-center">
-            <div class="p-8">
-                <div class="w-20 h-20 bg-rose-50 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-inner border-4 border-white ring-4 ring-rose-50">
-                    <AppIcon name="exclamation-triangle" />️
-                </div>
-                <h3 class="text-xl font-black text-slate-800 tracking-tight">Hapus Pengguna?</h3>
-                <p class="text-xs text-slate-500 mt-3 leading-relaxed">
-                    Anda yakin ingin menghapus akun <span class="font-bold text-rose-600">{{ userToDelete?.name }}</span> secara permanen? Data yang telah dihapus tidak dapat dikembalikan.
-                </p>
-                <div class="flex items-center gap-4 mt-8">
-                    <button @click="isDeleteModalOpen = false" class="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-2xl transition-all text-xs uppercase tracking-widest">
-                        Batal
-                    </button>
-                    <button @click="executeDelete" :disabled="isSaving" class="flex-1 py-3 bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-2xl shadow-lg shadow-rose-500/30 transition-all text-xs uppercase tracking-widest flex items-center justify-center gap-2">
-                        <span v-if="isSaving" class="animate-spin text-base"><AppIcon name="clock" /></span>
-                        <span v-else>Hapus</span>
-                    </button>
+    <Teleport to="body">
+        <div v-if="isDeleteModalOpen" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
+            <div class="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden animate-slideUpFade text-center">
+                <div class="p-8">
+                    <div class="w-20 h-20 bg-rose-50 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-inner border-4 border-white ring-4 ring-rose-50">
+                        <AppIcon name="trash" />
+                    </div>
+                    <h3 class="text-xl font-black text-slate-800 tracking-tight">Hapus Pengguna?</h3>
+                    <p class="text-xs text-slate-500 mt-3 leading-relaxed">
+                        Anda yakin ingin menghapus akun <span class="font-bold text-rose-600">{{ userToDelete?.name }}</span> secara permanen? Data yang telah dihapus tidak dapat dikembalikan.
+                    </p>
+                    <div class="flex items-center gap-4 mt-8">
+                        <button @click="isDeleteModalOpen = false" class="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-2xl transition-all text-xs uppercase tracking-widest">
+                            Batal
+                        </button>
+                        <button @click="executeDelete" :disabled="isSaving" class="flex-1 py-3 bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-2xl shadow-lg shadow-rose-500/30 transition-all text-xs uppercase tracking-widest flex items-center justify-center gap-2">
+                            <span v-if="isSaving" class="animate-spin text-base"><AppIcon name="clock" /></span>
+                            <span v-else>Hapus</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </Teleport>
 
     <!-- ==============================================
          MODAL KONFIRMASI RESET PASSWORD (Overlay)
          ============================================== -->
-    <div v-if="isResetModalOpen" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
-        <div class="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden animate-slideUpFade text-center">
-            <div class="p-8">
-                <div class="w-20 h-20 bg-amber-50 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-inner border-4 border-white ring-4 ring-amber-50">
-                    <AppIcon name="key" />
+    <Teleport to="body">
+        <div v-if="isResetModalOpen" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
+            <div class="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden animate-slideUpFade text-center">
+                <div class="p-8">
+                    <div class="w-20 h-20 bg-amber-50 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-inner border-4 border-white ring-4 ring-amber-50">
+                        <AppIcon name="key" />
+                    </div>
+                    <h3 class="text-xl font-black text-slate-800 tracking-tight">Reset Password?</h3>
+                    <p class="text-xs text-slate-500 mt-3 leading-relaxed">
+                        Password akun <span class="font-bold text-amber-600">{{ userToReset?.name }}</span> akan direset menjadi <span class="font-bold text-slate-800 bg-slate-100 px-1 py-0.5 rounded">12345678</span>.
+                    </p>
+                    <div class="flex items-center gap-4 mt-8">
+                        <button @click="isResetModalOpen = false" class="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-2xl transition-all text-xs uppercase tracking-widest">
+                            Batal
+                        </button>
+                        <button @click="executeReset" :disabled="isSaving" class="flex-1 py-3 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-2xl shadow-lg shadow-amber-500/30 transition-all text-xs uppercase tracking-widest flex items-center justify-center gap-2">
+                            <span v-if="isSaving" class="animate-spin text-base"><AppIcon name="clock" /></span>
+                            <span v-else>Ya, Reset</span>
+                        </button>
+                    </div>
                 </div>
-                <h3 class="text-xl font-black text-slate-800 tracking-tight">Reset Password?</h3>
-                <p class="text-xs text-slate-500 mt-3 leading-relaxed">
-                    Password akun <span class="font-bold text-amber-600">{{ userToReset?.name }}</span> akan direset menjadi <span class="font-bold text-slate-800 bg-slate-100 px-1 py-0.5 rounded">12345678</span>.
-                </p>
-                <div class="flex items-center gap-4 mt-8">
-                    <button @click="isResetModalOpen = false" class="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-2xl transition-all text-xs uppercase tracking-widest">
-                        Batal
-                    </button>
-                    <button @click="executeReset" :disabled="isSaving" class="flex-1 py-3 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-2xl shadow-lg shadow-amber-500/30 transition-all text-xs uppercase tracking-widest flex items-center justify-center gap-2">
-                        <span v-if="isSaving" class="animate-spin text-base"><AppIcon name="clock" /></span>
-                        <span v-else>Ya, Reset</span>
-                    </button>
-                </div>
-            </div>
-      </div>
+          </div>
+        </div>
+    </Teleport>
 
     <!-- ==============================================
          SLIDE-OVER TAMBAH/IMPORT (Overlay)
          ============================================== -->
-    <div v-if="isSlideoverOpen" class="fixed inset-0 z-[100] flex justify-end bg-slate-900/60 backdrop-blur-sm transition-opacity">
-        <!-- Overlay Click to Close -->
-        <div class="absolute inset-0 z-0" @click="isSlideoverOpen = false"></div>
-        
-        <!-- Drawer Panel -->
-        <div class="w-full sm:w-[420px] h-full bg-white shadow-2xl flex flex-col relative z-10 transform transition-transform duration-300 animate-slideLeft">
-            <div class="p-5 bg-slate-50 border-b border-slate-200 flex items-center justify-between shrink-0 z-20">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center"><AppIcon name="plus-circle" class="w-5 h-5"/></div>
-                    <h3 class="font-black text-slate-800 text-sm uppercase tracking-widest">Tambah Pengguna</h3>
-                </div>
-                <button @click="isSlideoverOpen = false" class="w-8 h-8 rounded-full bg-white text-slate-400 hover:text-rose-500 hover:bg-rose-50 flex items-center justify-center transition-colors shadow-sm border border-slate-200 relative z-30"><AppIcon name="x-mark" /></button>
-            </div>
+    <Teleport to="body">
+        <div v-if="isSlideoverOpen" class="fixed inset-0 z-[100] flex justify-end bg-slate-900/60 backdrop-blur-sm transition-opacity">
+            <!-- Overlay Click to Close -->
+            <div class="absolute inset-0 z-0" @click="isSlideoverOpen = false"></div>
             
-            <!-- Tabs inside slideover -->
-            <div class="flex bg-slate-50/50 border-b border-slate-200 p-2 shrink-0 z-20 relative">
-                <button type="button" @click.stop.prevent="activeSlideoverTab = 'form'" :class="activeSlideoverTab === 'form' ? 'bg-white text-emerald-700 shadow-sm border border-slate-200' : 'text-slate-500 hover:bg-slate-100 border border-transparent'" class="flex-1 py-2.5 rounded-xl font-bold text-[10px] uppercase tracking-widest transition-all relative cursor-pointer pointer-events-auto">
-                    <AppIcon name="user" /> Registrasi Manual
-                </button>
-                <button type="button" @click.stop.prevent="activeSlideoverTab = 'import'" :class="activeSlideoverTab === 'import' ? 'bg-white text-emerald-700 shadow-sm border border-slate-200' : 'text-slate-500 hover:bg-slate-100 border border-transparent'" class="flex-1 py-2.5 rounded-xl font-bold text-[10px] uppercase tracking-widest transition-all ml-2 relative cursor-pointer pointer-events-auto">
-                    <AppIcon name="rocket-launch" /> Import CSV
-                </button>
-            </div>
-
-            <!-- Content Container -->
-            <div class="flex-1 overflow-y-auto custom-scrollbar relative z-10 bg-white">
-                <div class="flex-1 flex flex-col min-h-full">
-                    <!-- Panel Form Tambah -->
-                    <div v-show="activeSlideoverTab === 'form'" class="animate-fadeIn">
-                <div class="p-4 pb-2 shrink-0">
-                  <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-4 border border-emerald-500 shadow-sm relative overflow-hidden flex items-center gap-3">
-                    <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="user" class="w-5 h-5" /></div>
-                    <div class="relative z-10">
-                        <h3 class="text-xs font-black uppercase tracking-widest text-white">Akun Baru</h3>
-                        <p class="text-[10px] text-emerald-100 font-semibold uppercase mt-0.5">Tambah Pengguna Manual</p>
+            <!-- Drawer Panel -->
+            <div class="w-full sm:w-[420px] h-full bg-white shadow-2xl flex flex-col relative z-10 transform transition-transform duration-300 animate-slideLeft">
+                <div class="p-5 bg-slate-50 border-b border-slate-200 flex items-center justify-between shrink-0 z-20">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center"><AppIcon name="plus-circle" class="w-5 h-5"/></div>
+                        <h3 class="font-black text-slate-800 text-sm uppercase tracking-widest">Tambah Pengguna</h3>
                     </div>
-                    <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
-                      <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>
-                    </div>
-                  </div>
+                    <button @click="isSlideoverOpen = false" class="w-8 h-8 rounded-full bg-white text-slate-400 hover:text-rose-500 hover:bg-rose-50 flex items-center justify-center transition-colors shadow-sm border border-slate-200 relative z-30"><AppIcon name="x-mark" /></button>
                 </div>
-                <div class="px-6 pb-6">
-                    <form @submit.prevent="saveUser" class="space-y-4">
-                        <div>
-                            <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Nama Lengkap</label>
-                            <input type="text" v-model="form.name" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800" placeholder="Misal: John Doe, S.Pd.">
-                        </div>
-                        <div>
-                            <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Email Login</label>
-                            <input type="email" v-model="form.email" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800" placeholder="guru@erapor.id">
-                        </div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Role Akses</label>
-                                <select v-model="form.role" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-bold text-slate-700 cursor-pointer appearance-none">
-                                    <option value="guru">Guru</option>
-                                    <option value="siswa">Siswa</option>
-                                    <option value="admin">Admin</option>
-                                    <option value="kepsek">Kepsek</option>
-                                    <option value="kurikulum">Kurikulum</option>
-                                    <option value="bk">BK</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Password</label>
-                                <input type="password" v-model="form.password" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800" placeholder="Min. 6 karakter">
-                            </div>
-                        </div>
-
-                        <!-- Opsi Khusus Guru -->
-                        <div v-if="form.role === 'guru'" class="p-4 bg-emerald-50/50 border border-emerald-100 rounded-2xl space-y-3 animate-fadeIn">
-                            <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" v-model="form.is_pengampu_umum" class="rounded border-emerald-300 text-emerald-600 w-5 h-5 focus:ring-emerald-500">
-                                <span class="text-xs font-black text-emerald-800 uppercase tracking-widest">Unit Umum (Normatif)</span>
-                            </label>
-                            <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" v-model="form.is_pengampu_kejuruan" class="rounded border-emerald-300 text-emerald-600 w-5 h-5 focus:ring-emerald-500">
-                                <span class="text-xs font-black text-emerald-800 uppercase tracking-widest">Unit Kejuruan (Produktif)</span>
-                            </label>
-                        </div>
-
-                        <div class="pt-4 border-t border-slate-100">
-                            <button type="submit" :disabled="isSaving" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-2xl shadow-lg shadow-emerald-500/30 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2">
-                                <span v-if="isSaving" class="animate-spin"><AppIcon name="clock" /></span>
-                                <span v-else><AppIcon name="plus" /></span> 
-                                Tambah Pengguna
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <!-- Panel Import -->
-            <div v-show="activeSlideoverTab === 'import'" class="animate-fadeIn">
-                <div class="p-4 pb-2 shrink-0">
-                  <div class="bg-gradient-to-r from-indigo-600 to-blue-700 rounded-2xl p-4 border border-indigo-500 shadow-sm relative overflow-hidden flex items-center gap-3">
-                    <span class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="rocket-launch" class="w-5 h-5" /></span>
-                    <div class="relative z-10">
-                        <h3 class="text-xs font-black uppercase tracking-widest text-white">Import Massal</h3>
-                        <p class="text-[10px] text-indigo-100 font-semibold uppercase mt-0.5">Via File CSV</p>
-                    </div>
-                    <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
-                      <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"></path></svg>
-                    </div>
-                  </div>
-                </div>
-                <div class="px-6 pb-6 text-center space-y-5">
-                    
-                    <p class="text-[11px] text-slate-500 font-medium leading-relaxed bg-slate-50 p-4 rounded-2xl border border-slate-200">
-                        Gunakan template resmi kami agar struktur kolom sesuai dengan database sistem. Format: <span class="font-bold text-slate-700">.csv</span>
-                    </p>
-
-                    <!-- Tombol Download -->
-                    <button @click="downloadTemplate" type="button" class="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl font-bold text-[10px] uppercase tracking-widest transition-colors shadow-inner border border-slate-200">
-                        <AppIcon name="inbox" /> Download Template CSV
+                
+                <!-- Tabs inside slideover -->
+                <div class="flex bg-slate-50/50 border-b border-slate-200 p-2 shrink-0 z-20 relative">
+                    <button type="button" @click.stop.prevent="activeSlideoverTab = 'form'" :class="activeSlideoverTab === 'form' ? 'bg-white text-emerald-700 shadow-sm border border-slate-200' : 'text-slate-500 hover:bg-slate-100 border border-transparent'" class="flex-1 py-2.5 rounded-xl font-bold text-[10px] uppercase tracking-widest transition-all relative cursor-pointer pointer-events-auto">
+                        <AppIcon name="user" /> Registrasi Manual
                     </button>
+                    <button type="button" @click.stop.prevent="activeSlideoverTab = 'import'" :class="activeSlideoverTab === 'import' ? 'bg-white text-emerald-700 shadow-sm border border-slate-200' : 'text-slate-500 hover:bg-slate-100 border border-transparent'" class="flex-1 py-2.5 rounded-xl font-bold text-[10px] uppercase tracking-widest transition-all ml-2 relative cursor-pointer pointer-events-auto">
+                        <AppIcon name="rocket-launch" /> Import CSV
+                    </button>
+                </div>
 
-                    <!-- Area Upload -->
-                    <form @submit.prevent="uploadImportFile" class="space-y-6 relative pt-4 border-t border-slate-100">
-                        <div class="border-2 border-dashed border-emerald-300 bg-emerald-50/50 rounded-2xl p-6 transition-all hover:bg-emerald-50 group relative cursor-pointer min-h-[140px] flex flex-col items-center justify-center">
-                            <input type="file" ref="fileInput" @change="handleFileChange" accept=".csv" required class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
-                            <div class="pointer-events-none text-center">
-                                <span class="text-4xl block mb-2 group-hover:scale-110 transition-transform text-emerald-400"><AppIcon name="document-text" /></span>
-                                <p class="text-xs font-bold text-emerald-700">Pilih file CSV</p>
-                                <p class="text-[10px] font-semibold text-emerald-600/70 mt-1" v-if="!selectedFile">atau drag & drop ke area ini</p>
-                                <div v-else class="mt-2 bg-emerald-200/50 py-1.5 px-3 rounded-lg flex items-center justify-center gap-2">
-                                    <span class="text-[10px] font-black text-emerald-800 truncate max-w-[150px]">{{ selectedFile.name }}</span>
-                                    <span class="text-[10px] text-emerald-600 font-bold shrink-0">({{ (selectedFile.size / 1024).toFixed(1) }} KB)</span>
+                <!-- Content Container -->
+                <div class="flex-1 overflow-y-auto custom-scrollbar relative z-10 bg-white">
+                    <div class="flex-1 flex flex-col min-h-full">
+                        <!-- Panel Form Tambah -->
+                        <div v-show="activeSlideoverTab === 'form'" class="animate-fadeIn">
+                    <div class="p-4 pb-2 shrink-0">
+                      <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-4 border border-emerald-500 shadow-sm relative overflow-hidden flex items-center gap-3">
+                        <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="user" class="w-5 h-5" /></div>
+                        <div class="relative z-10">
+                            <h3 class="text-xs font-black uppercase tracking-widest text-white">Akun Baru</h3>
+                            <p class="text-[10px] text-emerald-100 font-semibold uppercase mt-0.5">Tambah Pengguna Manual</p>
+                        </div>
+                        <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
+                          <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="px-6 pb-6">
+                        <form @submit.prevent="saveUser" class="space-y-4">
+                            <div>
+                                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Nama Lengkap</label>
+                                <input type="text" v-model="form.name" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800" placeholder="Misal: John Doe, S.Pd.">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Email Login</label>
+                                <input type="email" v-model="form.email" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800" placeholder="guru@erapor.id">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Role Akses</label>
+                                    <select v-model="form.role" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-bold text-slate-700 cursor-pointer appearance-none">
+                                        <option value="guru">Guru</option>
+                                        <option value="siswa">Siswa</option>
+                                        <option value="admin">Admin</option>
+                                        <option value="kepsek">Kepsek</option>
+                                        <option value="kurikulum">Kurikulum</option>
+                                        <option value="bk">BK</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Password</label>
+                                    <input type="password" v-model="form.password" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800" placeholder="Min. 6 karakter">
                                 </div>
                             </div>
+
+                            <!-- Opsi Khusus Guru -->
+                            <div v-if="form.role === 'guru'" class="p-4 bg-emerald-50/50 border border-emerald-100 rounded-2xl space-y-3 animate-fadeIn">
+                                <label class="flex items-center gap-3 cursor-pointer group">
+                                    <input type="checkbox" v-model="form.is_pengampu_umum" class="rounded border-emerald-300 text-emerald-600 w-5 h-5 focus:ring-emerald-500">
+                                    <span class="text-xs font-black text-emerald-800 uppercase tracking-widest">Unit Umum (Normatif)</span>
+                                </label>
+                                <label class="flex items-center gap-3 cursor-pointer group">
+                                    <input type="checkbox" v-model="form.is_pengampu_kejuruan" class="rounded border-emerald-300 text-emerald-600 w-5 h-5 focus:ring-emerald-500">
+                                    <span class="text-xs font-black text-emerald-800 uppercase tracking-widest">Unit Kejuruan (Produktif)</span>
+                                </label>
+                            </div>
+
+                            <div class="pt-4 border-t border-slate-100">
+                                <button type="submit" :disabled="isSaving" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-2xl shadow-lg shadow-emerald-500/30 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2">
+                                    <span v-if="isSaving" class="animate-spin"><AppIcon name="clock" /></span>
+                                    <span v-else><AppIcon name="plus" /></span> 
+                                    Tambah Pengguna
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Panel Import -->
+                <div v-show="activeSlideoverTab === 'import'" class="animate-fadeIn">
+                    <div class="p-4 pb-2 shrink-0">
+                      <div class="bg-gradient-to-r from-indigo-600 to-blue-700 rounded-2xl p-4 border border-indigo-500 shadow-sm relative overflow-hidden flex items-center gap-3">
+                        <span class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="rocket-launch" class="w-5 h-5" /></span>
+                        <div class="relative z-10">
+                            <h3 class="text-xs font-black uppercase tracking-widest text-white">Import Massal</h3>
+                            <p class="text-[10px] text-indigo-100 font-semibold uppercase mt-0.5">Via File CSV</p>
                         </div>
+                        <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
+                          <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"></path></svg>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="px-6 pb-6 text-center space-y-5">
+                        
+                        <p class="text-[11px] text-slate-500 font-medium leading-relaxed bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                            Gunakan template resmi kami agar struktur kolom sesuai dengan database sistem. Format: <span class="font-bold text-slate-700">.csv</span>
+                        </p>
 
-                        <button type="submit" :disabled="isSaving || !selectedFile" class="w-full py-4 bg-gradient-to-r from-emerald-500 to-emerald-700 text-white font-bold rounded-2xl shadow-lg shadow-emerald-500/30 hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:transform-none flex items-center justify-center gap-3">
-                            <span v-if="isSaving" class="animate-spin text-lg"><AppIcon name="clock" /></span>
-                            <span v-else class="text-lg"><AppIcon name="rocket-launch" /></span> 
-                            <span class="uppercase tracking-widest text-[11px]">Mulai Import</span>
+                        <!-- Tombol Download -->
+                        <button @click="downloadTemplate" type="button" class="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl font-bold text-[10px] uppercase tracking-widest transition-colors shadow-inner border border-slate-200">
+                            <AppIcon name="inbox" /> Download Template CSV
                         </button>
-                    </form>
 
+                        <!-- Area Upload -->
+                        <form @submit.prevent="uploadImportFile" class="space-y-6 relative pt-4 border-t border-slate-100">
+                            <div class="border-2 border-dashed border-emerald-300 bg-emerald-50/50 rounded-2xl p-6 transition-all hover:bg-emerald-50 group relative cursor-pointer min-h-[140px] flex flex-col items-center justify-center">
+                                <input type="file" ref="fileInput" @change="handleFileChange" accept=".csv" required class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                                <div class="pointer-events-none text-center">
+                                    <span class="text-4xl block mb-2 group-hover:scale-110 transition-transform text-emerald-400"><AppIcon name="document-text" /></span>
+                                    <p class="text-xs font-bold text-emerald-700">Pilih file CSV</p>
+                                    <p class="text-[10px] font-semibold text-emerald-600/70 mt-1" v-if="!selectedFile">atau drag & drop ke area ini</p>
+                                    <div v-else class="mt-2 bg-emerald-200/50 py-1.5 px-3 rounded-lg flex items-center justify-center gap-2">
+                                        <span class="text-[10px] font-black text-emerald-800 truncate max-w-[150px]">{{ selectedFile.name }}</span>
+                                        <span class="text-[10px] text-emerald-600 font-bold shrink-0">({{ (selectedFile.size / 1024).toFixed(1) }} KB)</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" :disabled="isSaving || !selectedFile" class="w-full py-4 bg-gradient-to-r from-emerald-500 to-emerald-700 text-white font-bold rounded-2xl shadow-lg shadow-emerald-500/30 hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:transform-none flex items-center justify-center gap-3">
+                                <span v-if="isSaving" class="animate-spin text-lg"><AppIcon name="clock" /></span>
+                                <span v-else class="text-lg"><AppIcon name="rocket-launch" /></span> 
+                                <span class="uppercase tracking-widest text-[11px]">Mulai Import</span>
+                            </button>
+                        </form>
+
+                    </div>
                 </div>
             </div>
+          </div>
         </div>
-      </div>
-        </div>
+    </Teleport>
     </div>
       </div>
     </div>
