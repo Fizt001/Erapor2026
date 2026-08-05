@@ -273,43 +273,33 @@
          ============================================== -->
     <div v-if="isSlideoverOpen" class="fixed inset-0 z-[100] flex justify-end bg-slate-900/60 backdrop-blur-sm transition-opacity">
         <!-- Overlay Click to Close -->
-        <div class="absolute inset-0" @click="isSlideoverOpen = false"></div>
+        <div class="absolute inset-0 z-0" @click="isSlideoverOpen = false"></div>
         
         <!-- Drawer Panel -->
-        <div class="w-full sm:w-[420px] h-full bg-white shadow-2xl flex flex-col relative transform transition-transform duration-300 animate-slideLeft">
-            <div class="p-5 bg-slate-50 border-b border-slate-200 flex items-center justify-between shrink-0">
+        <div class="w-full sm:w-[420px] h-full bg-white shadow-2xl flex flex-col relative z-10 transform transition-transform duration-300 animate-slideLeft">
+            <div class="p-5 bg-slate-50 border-b border-slate-200 flex items-center justify-between shrink-0 z-20">
                 <div class="flex items-center gap-3">
                     <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center"><AppIcon name="plus-circle" class="w-5 h-5"/></div>
                     <h3 class="font-black text-slate-800 text-sm uppercase tracking-widest">Tambah Pengguna</h3>
                 </div>
-                <button @click="isSlideoverOpen = false" class="w-8 h-8 rounded-full bg-white text-slate-400 hover:text-rose-500 hover:bg-rose-50 flex items-center justify-center transition-colors shadow-sm border border-slate-200"><AppIcon name="x-mark" /></button>
+                <button @click="isSlideoverOpen = false" class="w-8 h-8 rounded-full bg-white text-slate-400 hover:text-rose-500 hover:bg-rose-50 flex items-center justify-center transition-colors shadow-sm border border-slate-200 relative z-30"><AppIcon name="x-mark" /></button>
             </div>
             
             <!-- Tabs inside slideover -->
-            <div class="flex bg-slate-50/50 border-b border-slate-200 p-2 shrink-0">
-                <button @click="activeSlideoverTab = 'form'" :class="activeSlideoverTab === 'form' ? 'bg-white text-emerald-700 shadow-sm border border-slate-200' : 'text-slate-500 hover:bg-slate-100 border border-transparent'" class="flex-1 py-2.5 rounded-xl font-bold text-[10px] uppercase tracking-widest transition-all">
+            <div class="flex bg-slate-50/50 border-b border-slate-200 p-2 shrink-0 z-10 relative">
+                <button @click="activeSlideoverTab = 'form'" :class="activeSlideoverTab === 'form' ? 'bg-white text-emerald-700 shadow-sm border border-slate-200' : 'text-slate-500 hover:bg-slate-100 border border-transparent'" class="flex-1 py-2.5 rounded-xl font-bold text-[10px] uppercase tracking-widest transition-all relative">
                     <AppIcon name="user" /> Registrasi Manual
                 </button>
-                <button @click="activeSlideoverTab = 'import'" :class="activeSlideoverTab === 'import' ? 'bg-white text-emerald-700 shadow-sm border border-slate-200' : 'text-slate-500 hover:bg-slate-100 border border-transparent'" class="flex-1 py-2.5 rounded-xl font-bold text-[10px] uppercase tracking-widest transition-all ml-2">
+                <button @click="activeSlideoverTab = 'import'" :class="activeSlideoverTab === 'import' ? 'bg-white text-emerald-700 shadow-sm border border-slate-200' : 'text-slate-500 hover:bg-slate-100 border border-transparent'" class="flex-1 py-2.5 rounded-xl font-bold text-[10px] uppercase tracking-widest transition-all ml-2 relative">
                     <AppIcon name="rocket-launch" /> Import CSV
                 </button>
             </div>
 
             <!-- Content Container -->
-            <div class="flex-1 overflow-y-auto custom-scrollbar">
-<!-- Desktop Tabs (Toggle Form vs Import) -->
-        <div class="hidden xl:flex bg-slate-50/50 border-b border-slate-200 p-2 shrink-0">
-            <button @click="activeSlideoverTab = 'form'" :class="activeSlideoverTab === 'form' ? 'bg-white text-emerald-700 shadow-sm border border-slate-200' : 'text-slate-500 hover:bg-slate-100 border border-transparent'" class="flex-1 py-2.5 rounded-xl font-bold text-[10px] uppercase tracking-widest transition-all">
-                <AppIcon name="user" /> Registrasi
-            </button>
-            <button @click="activeSlideoverTab = 'import'" :class="activeSlideoverTab === 'import' ? 'bg-white text-emerald-700 shadow-sm border border-slate-200' : 'text-slate-500 hover:bg-slate-100 border border-transparent'" class="flex-1 py-2.5 rounded-xl font-bold text-[10px] uppercase tracking-widest transition-all ml-2">
-                <AppIcon name="rocket-launch" /> Import
-            </button>
-        </div>
-
-        <div class="flex-1 overflow-y-auto custom-scrollbar">
-            <!-- Panel Form Tambah -->
-            <div v-show="activeSlideoverTab === 'form'" class="animate-fadeIn">
+            <div class="flex-1 overflow-y-auto custom-scrollbar relative z-10 bg-white">
+                <div class="flex-1 flex flex-col min-h-full">
+                    <!-- Panel Form Tambah -->
+                    <div v-show="activeSlideoverTab === 'form'" class="animate-fadeIn">
                 <div class="p-4 pb-2 shrink-0">
                   <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-4 border border-emerald-500 shadow-sm relative overflow-hidden flex items-center gap-3">
                     <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="user" class="w-5 h-5" /></div>

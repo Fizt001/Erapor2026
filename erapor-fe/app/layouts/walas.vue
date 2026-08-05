@@ -39,19 +39,34 @@
     <!-- Main Content -->
     <div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden print:h-auto print:overflow-visible print:block">
       <!-- Navbar -->
-      <header class="min-h-[56px] py-2 lg:py-0 lg:h-14 bg-white border-b border-slate-200 flex flex-wrap lg:flex-nowrap items-center justify-between px-3 sm:px-6 gap-2 z-[60] shadow-sm relative print:hidden shrink-0">
-        <div class="flex items-center">
-          <div class="lg:hidden flex items-center gap-2 cursor-pointer hover:scale-105 transition-transform" @click="visiMisiDialog?.open()">
-            <img v-if="sekolah?.logo" :src="sekolah.logo" alt="Logo" class="h-7 w-7 object-contain" />
-            <span v-else class="text-amber-600 font-black text-lg">e</span>
-            <span class="font-black text-slate-700 text-sm">e-Rapor <span class="text-amber-600">Walas</span></span>
-          </div>
-          <h2 class="hidden lg:block text-base font-bold text-slate-800 ml-3 border-l-2 border-amber-500 pl-3 py-1 uppercase tracking-wider">{{ route.meta.title || 'Walas Workspace' }}</h2>
-        </div>
+      <header class="min-h-[56px] py-2 lg:py-0 lg:h-14 bg-white border-b border-slate-200 flex flex-wrap items-center justify-between px-3 sm:px-6 gap-y-2 z-[60] shadow-sm relative print:hidden shrink-0">
         
-        <div class="flex-1 lg:flex-none flex flex-wrap justify-end items-center gap-2 sm:gap-4">
-          <!-- Active Year Siren Indicator -->
-          <div v-if="ta_aktif" class="flex items-center gap-2 px-3 py-1.5 bg-slate-50 border border-slate-200/80 rounded-full shadow-inner no-print hover:scale-105 transition-all select-none">
+        <!-- Top Row (Mobile) / Left Side (Desktop) -->
+        <div class="flex items-center justify-between w-full lg:w-auto">
+          <div class="flex items-center">
+            <div class="lg:hidden flex items-center gap-2 cursor-pointer hover:scale-105 transition-transform" @click="visiMisiDialog?.open()">
+              <img v-if="sekolah?.logo" :src="sekolah.logo" alt="Logo" class="h-7 w-7 object-contain" />
+              <span v-else class="text-amber-600 font-black text-lg">e</span>
+              <span class="font-black text-slate-700 text-sm">e-Rapor <span class="text-amber-600">Walas</span></span>
+            </div>
+            <h2 class="hidden lg:block text-base font-bold text-slate-800 ml-3 border-l-2 border-amber-500 pl-3 py-1 uppercase tracking-wider">{{ route.meta.title || 'Walas Workspace' }}</h2>
+          </div>
+          
+          <!-- Active Year Siren Indicator (Mobile) -->
+          <div v-if="ta_aktif" class="flex lg:hidden items-center gap-2 px-3 py-1.5 bg-slate-50 border border-slate-200/80 rounded-full shadow-inner hover:scale-105 transition-all select-none">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <span class="text-[9px] font-black text-slate-600 uppercase tracking-widest leading-none">TA. {{ ta_aktif.tahun }}</span>
+          </div>
+        </div>
+
+        <!-- Right Side (Desktop) / Bottom Rows (Mobile) -->
+        <div class="flex flex-col lg:flex-row w-full lg:w-auto justify-end items-stretch lg:items-center gap-2 sm:gap-4">
+          
+          <!-- Active Year Siren Indicator (Desktop) -->
+          <div v-if="ta_aktif" class="hidden lg:flex items-center gap-2 px-3 py-1.5 bg-slate-50 border border-slate-200/80 rounded-full shadow-inner hover:scale-105 transition-all select-none">
             <span class="relative flex h-2.5 w-2.5">
               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)]"></span>
@@ -59,24 +74,12 @@
             <span class="text-[10px] font-black text-slate-600 uppercase tracking-widest leading-none">TA. {{ ta_aktif.tahun }}</span>
           </div>
 
-          <!-- Pilihan Kelas Walas (Desktop) -->
-          <div v-if="walasStore.assignedClasses.length > 0" class="relative z-50 hidden lg:block">
-            <select v-model="walasStore.activeKelasId" @change="reloadPage" :disabled="walasStore.assignedClasses.length === 1" :class="['appearance-none bg-amber-500 text-white border-none rounded-full px-4 py-1.5 pr-8 text-xs font-bold shadow-md focus:outline-none transition-colors', walasStore.assignedClasses.length > 1 ? 'hover:bg-amber-600 cursor-pointer shadow-amber-500/30 focus:ring-2 focus:ring-amber-500' : 'opacity-90 cursor-default']">
-              <option v-for="cls in walasStore.assignedClasses" :key="cls.id" :value="cls.id" class="text-slate-800 bg-white">
-                Walas: Kelas {{ cls.tingkat }} {{ cls.nama_kelas }}
-              </option>
-            </select>
-            <div v-if="walasStore.assignedClasses.length > 1" class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
-              <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-            </div>
-          </div>
-
-          <!-- Profile Dropdown in Navbar -->
-          <div class="relative">
-            <button @click="profileDropdownOpen = !profileDropdownOpen" class="flex items-center space-x-3 text-right focus:outline-none bg-slate-50 hover:bg-slate-100 p-1.5 pl-3 rounded-full border border-slate-200 transition-all">
-              <div class="hidden sm:block min-w-0 pr-2">
-                <p class="text-[13px] font-bold text-slate-700 truncate leading-tight">{{ userProfile?.name || 'Guru Pengampu' }}</p>
-                <p class="text-[10px] text-slate-500 truncate uppercase tracking-wider">{{ userProfile?.email || 'guru@erapor.com' }}</p>
+          <!-- Profile Dropdown in Navbar (Walas Atas) -->
+          <div class="relative w-full lg:w-auto order-1 lg:order-none z-[61]">
+            <button @click="profileDropdownOpen = !profileDropdownOpen" class="w-full lg:w-auto flex items-center justify-between lg:justify-end space-x-3 focus:outline-none bg-slate-50 hover:bg-slate-100 p-2 lg:p-1.5 lg:pl-3 rounded-xl lg:rounded-full border border-slate-200 transition-all">
+              <div class="block min-w-0 pr-2 text-left lg:text-right">
+                <p class="text-[12px] lg:text-[13px] font-bold text-slate-700 truncate leading-tight">{{ userProfile?.name || 'Guru Pengampu' }}</p>
+                <p class="text-[10px] text-amber-600 font-bold truncate uppercase tracking-wider">Wali Kelas</p>
               </div>
               <div class="h-9 w-9 rounded-full bg-gradient-to-br from-sky-500 to-indigo-600 flex items-center justify-center text-white font-black shadow-md text-sm border-2 border-white shrink-0">
                 {{ userInitials }}
@@ -84,7 +87,7 @@
             </button>
 
             <!-- Dropdown Menu -->
-            <div v-show="profileDropdownOpen" class="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-xl border border-slate-200 py-2 z-[60] origin-top-right overflow-hidden flex flex-col">
+            <div v-show="profileDropdownOpen" class="absolute right-0 top-full mt-2 w-full lg:w-48 bg-white rounded-xl shadow-xl border border-slate-200 py-2 z-[60] origin-top-right overflow-hidden flex flex-col">
               <div class="px-4 py-2 border-b border-slate-100 mb-1 block">
                 <p class="text-[13px] font-bold text-slate-700 truncate">{{ userProfile?.name || 'Guru Pengampu' }}</p>
                 <p class="text-[10px] text-slate-500 truncate">{{ userProfile?.email || 'guru@erapor.com' }}</p>
@@ -100,18 +103,19 @@
             <!-- Close on click outside -->
             <div v-if="profileDropdownOpen" @click="profileDropdownOpen = false" class="fixed inset-0 z-40 bg-transparent"></div>
           </div>
-        </div>
-        
-        <!-- Pilihan Kelas Walas (Mobile) -->
-        <div v-if="walasStore.assignedClasses.length > 0" class="relative z-50 w-full lg:hidden order-last mt-2">
-          <select v-model="walasStore.activeKelasId" @change="reloadPage" :disabled="walasStore.assignedClasses.length === 1" :class="['appearance-none w-full bg-amber-500 text-white border-none rounded-md px-4 py-2 pr-8 text-sm font-bold shadow-md focus:outline-none transition-colors', walasStore.assignedClasses.length > 1 ? 'hover:bg-amber-600 cursor-pointer shadow-amber-500/30 focus:ring-2 focus:ring-amber-500' : 'opacity-90 cursor-default']">
-            <option v-for="cls in walasStore.assignedClasses" :key="cls.id" :value="cls.id" class="text-slate-800 bg-white">
-              Walas: Kelas {{ cls.tingkat }} {{ cls.nama_kelas }}
-            </option>
-          </select>
-          <div v-if="walasStore.assignedClasses.length > 1" class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
-            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+
+          <!-- Pilihan Kelas Walas (Kelas Bawah) -->
+          <div v-if="walasStore.assignedClasses.length > 0" class="relative z-50 w-full lg:w-auto order-2 lg:order-none">
+            <select v-model="walasStore.activeKelasId" @change="reloadPage" :disabled="walasStore.assignedClasses.length === 1" :class="['appearance-none w-full lg:w-auto bg-amber-500 text-white border-none rounded-xl lg:rounded-full px-4 py-2 lg:py-1.5 pr-8 text-sm lg:text-xs font-bold shadow-md focus:outline-none transition-colors', walasStore.assignedClasses.length > 1 ? 'hover:bg-amber-600 cursor-pointer shadow-amber-500/30 focus:ring-2 focus:ring-amber-500' : 'opacity-90 cursor-default']">
+              <option v-for="cls in walasStore.assignedClasses" :key="cls.id" :value="cls.id" class="text-slate-800 bg-white">
+                Walas: Kelas {{ cls.tingkat }} {{ cls.nama_kelas }}
+              </option>
+            </select>
+            <div v-if="walasStore.assignedClasses.length > 1" class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 lg:px-2 text-white">
+              <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+            </div>
           </div>
+
         </div>
       </header>
 
