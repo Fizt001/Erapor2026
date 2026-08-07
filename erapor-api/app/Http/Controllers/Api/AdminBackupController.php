@@ -78,11 +78,14 @@ class AdminBackupController extends Controller
 
             } elseif ($role === 'kurikulum') {
                 $mainDataTables = [
-                    'struktur_kurikulum' => \App\Models\StrukturKurikulum::class,
-                    'struktur_kejuruan' => \App\Models\StrukturKejuruan::class,
-                    'kkm' => \App\Models\Kkm::class,
-                    'pengampu' => \App\Models\Pengampu::class,
-                    'wali_kelas' => \App\Models\WaliKelas::class
+                    'mapels' => \App\Models\Mapel::class,
+                    'ekskuls' => \App\Models\Ekskul::class,
+                    'struktur_kurikulums' => \App\Models\StrukturKurikulum::class,
+                    'struktur_kejuruans' => \App\Models\StrukturKejuruan::class,
+                    'kkms' => \App\Models\Kkm::class,
+                    'pengampus' => \App\Models\Pengampu::class,
+                    'wali_kelas' => \App\Models\WaliKelas::class,
+                    'deskripsi_templates' => \App\Models\DeskripsiTemplate::class
                 ];
 
                 if (class_exists(\App\Models\Titimangsa::class)) {
@@ -92,7 +95,7 @@ class AdminBackupController extends Controller
                     } else if ($mode === 'psat') {
                         $query->whereMonth('created_at', '>=', 1)->whereMonth('created_at', '<=', 6);
                     }
-                    $growDataQueries['titimangsa'] = $query;
+                    $growDataQueries['titimangsas'] = $query;
                 }
             } elseif ($role === 'bk') {
                 $mainDataTables = [
@@ -120,8 +123,7 @@ class AdminBackupController extends Controller
                 }
             } elseif ($role === 'guru') {
                 $mainDataTables = [
-                    'jadwal_pelajarans' => \App\Models\JadwalPelajaran::class,
-                    'deskripsi_templates' => \App\Models\DeskripsiTemplate::class
+                    'jadwal_pelajarans' => \App\Models\JadwalPelajaran::class
                 ];
 
                 if (class_exists(\App\Models\FormatifMaster::class)) {

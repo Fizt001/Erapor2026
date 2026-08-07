@@ -34,7 +34,7 @@
                     <p class="text-sm font-bold text-slate-500">Bagus! Tidak ada kasus eskalasi yang butuh penanganan saat ini.</p>
                 </div>
 
-                <div v-else class="space-y-4 max-w-5xl mx-auto">
+                <div v-else class="space-y-4 max-w-7xl mx-auto">
                     <!-- Kartu Siswa -->
                     <div v-for="siswa in filteredSiswas" :key="siswa.id" class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden transition-all duration-300">
                         <div class="px-5 py-4 bg-slate-50 flex flex-col sm:flex-row items-center justify-between gap-4 cursor-pointer hover:bg-white transition-colors group" @click="toggleExpanded(siswa.id)">

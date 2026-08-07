@@ -63,7 +63,7 @@
 
       <!-- Panel Flow Kanan (Buku Kasus) -->
       <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative print:block print:bg-white print:h-auto print:overflow-visible', activeTabMobile === 'flow' || isDesktop ? 'flex' : 'hidden', !isDesktop ? 'pt-[60px]' : '']">
-        <div class="p-6 lg:p-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0 print:p-0 print:block">
+        <div class="p-6 lg:p-8 max-w-7xl mx-auto w-full h-full flex flex-col relative z-0 print:p-0 print:block">
           <div class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col flex-1 relative min-h-0 print:border-none print:shadow-none print:rounded-none">
             <!-- Header Flow -->
             <div class="px-6 py-5 bg-white border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0 z-10 shadow-sm print:hidden">

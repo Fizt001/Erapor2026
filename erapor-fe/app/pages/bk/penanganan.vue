@@ -104,7 +104,7 @@
                 <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Memuat Siswa...</span>
             </div>
 
-            <div v-else class="space-y-4 max-w-5xl mx-auto">
+            <div v-else class="space-y-4 max-w-7xl mx-auto">
                 <div v-if="filteredSiswas.length === 0" class="text-center p-10 text-slate-400 text-sm font-bold">
                     Tidak ada data siswa ditemukan.
                 </div>

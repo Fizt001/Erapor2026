@@ -254,7 +254,7 @@
 
     <!-- PREVIEW RAPOR MODAL -->
     <div v-if="showPreview && raporData" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 overflow-hidden">
-        <div class="bg-slate-200 w-full max-w-5xl h-[95vh] rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-scaleIn border border-slate-300/50">
+        <div class="bg-slate-200 w-full max-w-7xl h-[95vh] rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-scaleIn border border-slate-300/50">
             
             <!-- Modal Header -->
             <div class="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between shrink-0">

@@ -139,7 +139,7 @@
             <!-- Action Buttons -->
             <div class="space-y-3 pb-8">
                 <button 
-                    @click="generateBackup('psas')" 
+                    @click="confirmGenerateBackup('psas')" 
                     :disabled="isGenerating || isMaintenance"
                     class="w-full py-3 bg-slate-800 text-white font-bold rounded-2xl shadow-md hover:bg-slate-900 transition-all flex items-center justify-center gap-3 uppercase tracking-widest text-[10px] border border-slate-700 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
@@ -148,7 +148,7 @@
                 </button>
 
                 <button 
-                    @click="generateBackup('psat')" 
+                    @click="confirmGenerateBackup('psat')" 
                     :disabled="isGenerating || isMaintenance"
                     class="w-full py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-2xl shadow-lg hover:-translate-y-0.5 transition-all flex items-center justify-center gap-3 uppercase tracking-widest text-[10px] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
@@ -163,7 +163,7 @@
 
       <!-- Panel Flow Kanan -->
       <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0', activeTab === 'riwayat' || isDesktop ? 'flex' : 'hidden', !isDesktop ? 'pt-[52px]' : '']">
-        <div class="p-0 sm:pt-3 sm:pb-6 sm:px-6 lg:pt-3 lg:pb-8 lg:px-8 max-w-5xl mx-auto w-full h-full flex flex-col relative z-0">
+        <div class="p-0 sm:pt-3 sm:pb-6 sm:px-6 lg:pt-3 lg:pb-8 lg:px-8 max-w-7xl mx-auto w-full h-full flex flex-col relative z-0">
           <div class="bg-white rounded-none sm:rounded-[2rem] shadow-[0_2px_15px_-3px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col flex-1 relative min-h-0">
             
             <div class="p-4 sm:px-6 sm:py-3.5 bg-white border-b border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 shrink-0 z-10">
@@ -384,6 +384,26 @@ const fetchBackups = async () => {
         console.error('Failed to fetch backups:', error)
     } finally {
         isLoading.value = false
+    }
+}
+
+const confirmGenerateBackup = (mode) => {
+    if (activeRole.value !== 'admin') {
+        useSwal().fire({
+            title: 'Konfirmasi Backup',
+            html: `Pastikan seluruh user di role <b class="text-indigo-600 uppercase tracking-widest">${activeRole.value}</b> telah selesai melakukan input data sebelum Anda membuat file arsip ini!`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, Lanjutkan Backup',
+            cancelButtonText: 'Batal',
+            confirmButtonColor: '#10b981'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                generateBackup(mode)
+            }
+        })
+    } else {
+        generateBackup(mode)
     }
 }
 

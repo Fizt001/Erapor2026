@@ -79,7 +79,7 @@
                 </div>
 
                 <!-- Data Grid -->
-                <div v-else class="space-y-4 max-w-5xl mx-auto">
+                <div v-else class="space-y-4 max-w-7xl mx-auto">
                     <div v-for="kur in kkmData" :key="kur.kurikulum_id" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden hover:shadow-md transition-shadow">
                         <div class="px-4 py-3 bg-slate-50/50 border-b border-slate-100 flex items-center justify-between">
                             <h4 class="font-black text-slate-700 text-xs uppercase tracking-widest">{{ kur.nama_kurikulum }}</h4>
