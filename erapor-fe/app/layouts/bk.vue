@@ -16,7 +16,7 @@
           <template v-for="(menu, idx) in bkMenus" :key="idx">
             <div v-if="menu.divider" class="pt-4 pb-1 px-3 text-[10px] font-bold text-rose-500 uppercase tracking-widest whitespace-nowrap opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">{{ menu.dividerLabel }}</div>
             <NuxtLink v-else :to="menu.path" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-rose-600 text-white shadow">
-              <span class="mr-3 text-lg">{{ menu.icon }}</span>
+              <span class="mr-3 text-lg flex items-center justify-center" v-html="getSvgIcon(menu.icon)"></span>
               <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">{{ menu.name }}</span>
             </NuxtLink>
           </template>
@@ -26,14 +26,14 @@
 
     <!-- Main Content -->
     <div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden print:h-auto print:overflow-visible print:block">
-      <header class="relative h-14 bg-white border-b border-slate-200 flex items-center justify-between px-4 sm:px-6 z-[60] shadow-sm flex-shrink-0 print:hidden">
+      <header class="relative h-14 bg-white flex items-center justify-between px-4 sm:px-6 z-[60] shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] flex-shrink-0 print:hidden">
         <div class="flex items-center">
           <div class="lg:hidden flex items-center gap-2 cursor-pointer hover:scale-105 transition-transform" @click="visiMisiDialog?.open()">
             <img v-if="sekolah?.logo" :src="sekolah.logo" alt="Logo" class="h-7 w-7 object-contain" />
             <span v-else class="text-rose-600 font-black text-lg">e</span>
-            <span class="font-black text-slate-700 text-sm">e-Rapor <span class="text-rose-600">Admin</span></span>
+            <span class="font-black text-slate-700 text-sm">e-Rapor <span class="text-rose-600">BK</span></span>
           </div>
-          <h2 class="hidden lg:block text-base font-bold text-slate-800 ml-3 border-l-2 border-rose-500 pl-3 py-1 uppercase tracking-wider">{{ route.meta.title || 'Admin Workspace' }}</h2>
+          <h2 class="hidden lg:block text-base font-bold text-slate-800 ml-3 border-l-2 border-rose-500 pl-3 py-1 uppercase tracking-wider">{{ route.meta.title || 'BK Workspace' }}</h2>
         </div>
         <div class="flex-1 lg:flex-none flex justify-end items-center space-x-4">
           <div class="relative">
@@ -44,7 +44,7 @@
               </div>
               <div class="h-9 w-9 rounded-full bg-gradient-to-br from-rose-500 to-pink-600 flex items-center justify-center text-white font-black shadow-md text-sm border-2 border-white shrink-0">{{ userInitials }}</div>
             </button>
-            <div v-show="profileDropdownOpen" class="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-xl border border-slate-200 py-2 z-[60] origin-top-right overflow-hidden flex flex-col">
+            <div v-show="profileDropdownOpen" class="absolute right-0 top-full mt-2 w-48 bg-white rounded-2xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] py-2 z-[60] origin-top-right overflow-hidden flex flex-col">
               <div class="px-4 py-2 border-b border-slate-100 mb-1">
                 <p class="text-[13px] font-bold text-slate-700 truncate">{{ userProfile?.name || 'Guru BK' }}</p>
                 <p class="text-[10px] text-slate-500 truncate">{{ userProfile?.email || 'bk@erapor.com' }}</p>
@@ -60,7 +60,7 @@
           </div>
         </div>
       </header>
-      <main class="flex-1 overflow-y-auto p-4 sm:p-5 bg-slate-100 relative print:p-0 print:bg-white print:overflow-visible print:block pb-20 lg:pb-5">
+      <main class="flex-1 overflow-y-auto p-0 sm:p-5 bg-slate-50 print:p-0 print:bg-white print:overflow-visible print:block pb-20 lg:pb-5">
         <NuxtPage />
         <div ref="footerRef" class="hidden text-center print:hidden transition-all duration-1000" :class="showFooter ? 'mt-10 pt-4 pb-4 border-t border-slate-200 opacity-100' : 'h-0 opacity-0 overflow-hidden'">
           <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Created by <span class="text-rose-600">SMK-Yatindo</span></p>
@@ -69,27 +69,27 @@
     </div>
 
     <!-- MOBILE BOTTOM NAV BAR -->
-    <nav class="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 shadow-[0_-4px_20px_-4px_rgba(0,0,0,0.1)] print:hidden">
+    <nav class="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-100 shadow-[0_-10px_20px_-10px_rgba(0,0,0,0.05)] print:hidden">
       <div class="flex items-stretch h-16">
-        <NuxtLink to="/bk/dashboard" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="route.path === '/bk/dashboard' ? 'text-rose-600' : 'text-slate-400'">
-          <span class="text-xl leading-none">📊</span>
-          <span class="text-[9px] font-black uppercase tracking-wider">Dashboard</span>
+        <NuxtLink to="/bk/dashboard" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="route.path === '/bk/dashboard' ? 'text-slate-800' : 'text-slate-400'">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-[22px] w-[22px]" :class="route.path === '/bk/dashboard' ? 'stroke-[2.5px] text-rose-500' : 'stroke-[2px]'" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+          <span class="text-[10px] font-bold" :class="route.path === '/bk/dashboard' ? 'text-slate-800' : ''">Home</span>
         </NuxtLink>
-        <button @click="openDrawer('pokok')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="isGroupActive('pokok') ? 'text-rose-600' : 'text-slate-400'">
-          <span class="text-xl leading-none">🗄️</span>
-          <span class="text-[9px] font-black uppercase tracking-wider">Master</span>
+        <button @click="openDrawer('pokok')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="isGroupActive('pokok') ? 'text-slate-800' : 'text-slate-400'">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-[22px] w-[22px]" :class="isGroupActive('pokok') ? 'stroke-[2.5px] text-rose-500' : 'stroke-[2px]'" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" /></svg>
+          <span class="text-[10px] font-bold" :class="isGroupActive('pokok') ? 'text-slate-800' : ''">Master</span>
         </button>
-        <button @click="openDrawer('layanan')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="isGroupActive('layanan') ? 'text-rose-600' : 'text-slate-400'">
-          <span class="text-xl leading-none">⚖️</span>
-          <span class="text-[9px] font-black uppercase tracking-wider">Layanan</span>
+        <button @click="openDrawer('layanan')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="isGroupActive('layanan') ? 'text-slate-800' : 'text-slate-400'">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-[22px] w-[22px]" :class="isGroupActive('layanan') ? 'stroke-[2.5px] text-rose-500' : 'stroke-[2px]'" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" /></svg>
+          <span class="text-[10px] font-bold" :class="isGroupActive('layanan') ? 'text-slate-800' : ''">Layanan</span>
         </button>
-        <button @click="openDrawer('laporan')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="isGroupActive('laporan') ? 'text-rose-600' : 'text-slate-400'">
-          <span class="text-xl leading-none">📖</span>
-          <span class="text-[9px] font-black uppercase tracking-wider">Laporan</span>
+        <button @click="openDrawer('laporan')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="isGroupActive('laporan') ? 'text-slate-800' : 'text-slate-400'">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-[22px] w-[22px]" :class="isGroupActive('laporan') ? 'stroke-[2.5px] text-rose-500' : 'stroke-[2px]'" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+          <span class="text-[10px] font-bold" :class="isGroupActive('laporan') ? 'text-slate-800' : ''">Laporan</span>
         </button>
-        <button @click="openDrawer('all')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="isGroupActive('all') ? 'text-rose-600' : 'text-slate-400'">
-          <span class="text-xl leading-none">☰</span>
-          <span class="text-[9px] font-black uppercase tracking-wider">Menu</span>
+        <button @click="openDrawer('all')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="isGroupActive('all') ? 'text-slate-800' : 'text-slate-400'">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-[22px] w-[22px]" :class="isGroupActive('all') ? 'stroke-[2.5px] text-rose-500' : 'stroke-[2px]'" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>
+          <span class="text-[10px] font-bold" :class="isGroupActive('all') ? 'text-slate-800' : ''">Menu</span>
         </button>
       </div>
     </nav>
@@ -113,7 +113,7 @@
           <div class="grid grid-cols-4 gap-y-5 gap-x-3">
             <template v-for="(menu, idx) in currentDrawerMenus" :key="'g-'+idx">
               <NuxtLink v-if="!menu.divider" :to="menu.path" @click="closeDrawer" class="flex flex-col items-center gap-1.5 active:scale-95 transition-transform">
-                <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl shadow-sm transition-all" :class="(route.path === menu.path || route.path.startsWith(menu.path + '/')) ? 'bg-rose-500 shadow-rose-200 shadow-lg' : 'bg-slate-100'">{{ menu.icon }}</div>
+                <div class="w-14 h-14 rounded-2xl flex items-center justify-center shadow-sm transition-all text-rose-600" :class="(route.path === menu.path || route.path.startsWith(menu.path + '/')) ? 'bg-rose-500 text-white shadow-rose-200 shadow-lg' : 'bg-slate-50 border border-slate-100'" v-html="getSvgIcon(menu.icon)"></div>
                 <span class="text-[9px] font-bold text-center leading-tight w-full" :class="(route.path === menu.path || route.path.startsWith(menu.path + '/')) ? 'text-rose-700' : 'text-slate-500'">{{ menu.name }}</span>
               </NuxtLink>
             </template>
@@ -126,18 +126,33 @@
 
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
-import { bkMenus } from '~/utils/menus'
+import { useCookie, useRoute, useRouter } from '#imports'
+import VisiMisiDialog from '~/components/VisiMisiDialog.vue'
+import { useSwal } from '~/composables/useSwal'
 import { useProfileModal } from '~/composables/useProfileModal'
+import { bkMenus } from '~/utils/menus'
 
-const router = useRouter()
 const route = useRoute()
+const router = useRouter()
 const { openProfileModal } = useProfileModal()
 const visiMisiDialog = ref(null)
 const sidebarOpen = ref(false)
 const profileDropdownOpen = ref(false)
 const drawerOpen = ref(false)
 const activeDrawer = ref(null)
+
+const getSvgIcon = (emoji) => {
+  const icons = {
+    '📊': '<svg xmlns="http://www.w3.org/2000/svg" class="h-[22px] w-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" /><path stroke-linecap="round" stroke-linejoin="round" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" /></svg>',
+    '🗄️': '<svg xmlns="http://www.w3.org/2000/svg" class="h-[22px] w-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" /></svg>',
+    '📋': '<svg xmlns="http://www.w3.org/2000/svg" class="h-[22px] w-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>',
+    '✍️': '<svg xmlns="http://www.w3.org/2000/svg" class="h-[22px] w-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>',
+    '⚖️': '<svg xmlns="http://www.w3.org/2000/svg" class="h-[22px] w-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" /></svg>',
+    '📖': '<svg xmlns="http://www.w3.org/2000/svg" class="h-[22px] w-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>',
+    '📈': '<svg xmlns="http://www.w3.org/2000/svg" class="h-[22px] w-[22px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>',
+  }
+  return icons[emoji] || `<span class="text-xl">${emoji}</span>`
+}
 
 const footerRef = ref(null)
 const showFooter = ref(false)
@@ -146,9 +161,7 @@ onMounted(() => {
   if (footerRef.value) {
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting && showFooter.value) {
-        setTimeout(() => {
-          showFooter.value = false
-        }, 1000)
+        setTimeout(() => { showFooter.value = false }, 1000)
       }
     }, { threshold: 0.1 })
     observer.observe(footerRef.value)
@@ -197,9 +210,9 @@ const closeDrawer = () => {
 }
 
 const isGroupActive = (group) => {
-  if (activeDrawer.value === group && drawerOpen.value) return true;
-  const groupMenus = drawerMenuGroups[group]?.menus || [];
-  return groupMenus.some(menu => route.path === menu.path || route.path.startsWith(menu.path + '/'));
+  if (activeDrawer.value === group && drawerOpen.value) return true
+  const groupMenus = drawerMenuGroups[group]?.menus || []
+  return groupMenus.some(menu => route.path === menu.path || route.path.startsWith(menu.path + '/'))
 }
 
 watch(() => route.path, () => { closeDrawer() })

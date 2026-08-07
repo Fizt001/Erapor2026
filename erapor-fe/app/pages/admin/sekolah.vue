@@ -192,7 +192,7 @@
                         <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Situs Web Resmi</label>
                         <div class="relative">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400"><AppIcon name="globe-alt" /></span>
-                        <input type="url" v-model="form.website" class="w-full pl-11 pr-5 py-2.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="https://www.sekolahanda.sch.id">
+                        <input type="text" v-model="form.website" class="w-full pl-11 pr-5 py-2.5 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800 placeholder-slate-400" placeholder="www.sekolahanda.sch.id">
                         </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -530,6 +530,14 @@ onMounted(() => {
 const saveData = async () => {
   if (isSaving.value) return
   isSaving.value = true
+
+  // Normalisasi URL website: tambahkan https:// jika user tidak mengetiknya
+  if (form.value.website) {
+    const w = form.value.website.trim()
+    if (w && !w.startsWith('http://') && !w.startsWith('https://')) {
+      form.value.website = 'https://' + w
+    }
+  }
   
   const tokenCookie = useCookie('auth_token')
   try {
