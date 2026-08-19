@@ -23,16 +23,12 @@
             </NuxtLink>
           </template>
           
-          <!-- PINTU DORAEMON WALAS (Desktop) -->
+          <!-- GANTI PERAN (Desktop) -->
           <div class="pt-6 pb-2 px-3">
-             <NuxtLink v-if="isWalas" to="/guru/walas/dashboard" class="flex flex-col items-center justify-center p-3 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-white shadow-lg shadow-amber-500/20 transition-all hover:-translate-y-1 group/door overflow-hidden w-full">
-                 <span class="text-2xl mb-1 group-hover/door:scale-110 transition-transform">🚪</span>
-                 <span class="text-[10px] font-black uppercase tracking-widest text-center opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity whitespace-nowrap">Masuk Role Walas</span>
+             <NuxtLink v-if="isWalas" to="/role-select" class="flex flex-col items-center justify-center p-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white shadow-lg transition-all hover:-translate-y-1 group/door overflow-hidden w-full border border-slate-700/50">
+                 <span class="text-xl mb-1 group-hover/door:-rotate-180 transition-transform duration-500 flex items-center justify-center" v-html="getSvgIcon('arrow-path-rounded-square') || '🔄'"></span>
+                 <span class="text-[10px] font-black uppercase tracking-widest text-center opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity whitespace-nowrap mt-1">Ganti Peran</span>
              </NuxtLink>
-             <div v-else class="flex flex-col items-center justify-center p-3 rounded-xl bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700/50 overflow-hidden w-full">
-                 <span class="text-2xl mb-1 grayscale opacity-50">🔒</span>
-                 <span class="text-[10px] font-black uppercase tracking-widest text-center opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity whitespace-nowrap">Bukan Walas</span>
-             </div>
           </div>
         </nav>
       </div>
@@ -126,18 +122,11 @@
           <span class="text-[9px] font-black uppercase tracking-wider">Sumatif</span>
         </button>
         
-        <NuxtLink v-if="isWalas" to="/guru/walas/dashboard" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors text-amber-500 hover:text-amber-600 relative">
-          <span class="absolute -top-2 right-2 flex h-3 w-3">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-3 w-3 bg-amber-500 border border-white"></span>
-          </span>
-          <span class="flex items-center justify-center" v-html="getSvgIcon('🚪')"></span>
-          <span class="text-[9px] font-black uppercase tracking-wider">Walas</span>
+        <NuxtLink v-if="isWalas" to="/role-select" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors text-slate-400 hover:text-slate-600 relative">
+          <span class="flex items-center justify-center" v-html="getSvgIcon('arrow-path-rounded-square') || '🔄'"></span>
+          <span class="text-[9px] font-black uppercase tracking-wider">Peran</span>
         </NuxtLink>
-        <div v-else class="flex-1 flex flex-col items-center justify-center gap-1 text-slate-300 cursor-not-allowed">
-          <span class="flex items-center justify-center grayscale opacity-50" v-html="getSvgIcon('🔒')"></span>
-          <span class="text-[9px] font-black uppercase tracking-wider">Walas</span>
-        </div>
+        <div v-else class="flex-1 flex flex-col items-center justify-center gap-1 text-slate-300 cursor-not-allowed opacity-0 w-0 hidden"></div>
       </div>
     </nav>
 

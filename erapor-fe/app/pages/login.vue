@@ -417,7 +417,11 @@ const handleLogin = async () => {
       useSwal().toast('Berhasil login!', 'success')
       
       const role = res.data.user.role
-      if (role === 'superadmin' || role === 'admin') {
+      const isWalas = res.data.user.is_walas
+
+      if (role === 'guru' && isWalas) {
+        router.push('/role-select')
+      } else if (role === 'superadmin' || role === 'admin') {
         router.push('/admin/dashboard')
       } else {
         router.push(`/${role}/dashboard`)
