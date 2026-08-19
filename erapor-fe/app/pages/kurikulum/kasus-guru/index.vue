@@ -1,226 +1,319 @@
 <template>
-  <div class="space-y-6">
-    <div class="flex justify-between items-center">
-      <h1 class="text-2xl font-bold text-slate-800">Daftar Kasus Guru</h1>
-      <button @click="openForm(null)" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2">
-        <AppIcon name="plus" class="w-5 h-5" />
-        Tambah Kasus
-      </button>
-    </div>
-
-    <!-- Loading State -->
-    <div v-if="pending" class="flex justify-center py-12">
-      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-    </div>
-
-    <!-- Error State -->
-    <div v-else-if="error" class="bg-red-50 text-red-600 p-4 rounded-xl border border-red-100">
-      Gagal memuat data kasus guru.
-    </div>
-
-    <!-- Data Table -->
-    <div v-else class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-      <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse">
-          <thead>
-            <tr class="bg-slate-50 border-b border-slate-200 text-sm text-slate-600">
-              <th class="p-4 font-semibold">No</th>
-              <th class="p-4 font-semibold">Tanggal</th>
-              <th class="p-4 font-semibold">Nama Guru</th>
-              <th class="p-4 font-semibold">Kasus/Pelanggaran</th>
-              <th class="p-4 font-semibold">Tindak Lanjut</th>
-              <th class="p-4 font-semibold">Status</th>
-              <th class="p-4 font-semibold text-right">Aksi</th>
-            </tr>
-          </thead>
-          <tbody class="text-sm">
-            <tr v-for="(item, index) in data?.data || []" :key="item.id" class="border-b border-slate-100 hover:bg-slate-50">
-              <td class="p-4 text-slate-500">{{ index + 1 }}</td>
-              <td class="p-4 text-slate-700">{{ formatDate(item.tanggal) }}</td>
-              <td class="p-4 font-medium text-slate-800">{{ item.guru?.name }}</td>
-              <td class="p-4 text-slate-600">{{ item.kasus }}</td>
-              <td class="p-4 text-slate-600">{{ item.tindak_lanjut || '-' }}</td>
-              <td class="p-4">
-                <span :class="{
-                  'px-2 py-1 text-xs font-medium rounded-full': true,
-                  'bg-red-100 text-red-700': item.status === 'Terbuka',
-                  'bg-yellow-100 text-yellow-700': item.status === 'Ditangani',
-                  'bg-green-100 text-green-700': item.status === 'Selesai'
-                }">
-                  {{ item.status }}
-                </span>
-              </td>
-              <td class="p-4 text-right space-x-2">
-                <button @click="openForm(item)" class="text-blue-600 hover:text-blue-800 p-1">
-                  Edit
-                </button>
-                <button @click="deleteItem(item.id)" class="text-red-600 hover:text-red-800 p-1">
-                  Hapus
-                </button>
-              </td>
-            </tr>
-            <tr v-if="!data?.data || data.data.length === 0">
-              <td colspan="7" class="p-8 text-center text-slate-500">Belum ada data kasus guru</td>
-            </tr>
-          </tbody>
-        </table>
+  <div class="h-full flex flex-col min-h-0 bg-slate-50">
+    <!-- Layout 2 Panel Dock & Flow -->
+    <div class="flex-1 flex overflow-hidden relative">
+      
+      <!-- MOBILE VIEW TABS -->
+      <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 shadow-sm z-20">
+        <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
+          :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-md shadow-blue-500/20 ring-2 ring-blue-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
+          class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
+          <AppIcon :name="tab.icon" class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
+        </button>
       </div>
-    </div>
 
-    <!-- Modal Form -->
-    <div v-if="showModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-hidden">
-        <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center">
-          <h3 class="text-lg font-semibold text-slate-800">{{ isEdit ? 'Edit Kasus Guru' : 'Tambah Kasus Guru' }}</h3>
-          <button @click="closeForm" class="text-slate-400 hover:text-slate-600">
-            <AppIcon name="x-mark" class="w-5 h-5" />
-          </button>
+      <!-- Panel Dock Kiri (Form) -->
+      <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', activeTabMobile === 'form' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[52px]' : '']">
+        
+        <div class="p-4 pb-2 shrink-0 z-10 relative">
+          <div class="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-4 border border-blue-500 shadow-sm relative overflow-hidden flex items-center gap-3">
+            <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="user-plus" class="w-5 h-5" /></div>
+            <div class="relative z-10">
+                <h3 class="text-xs font-black uppercase tracking-widest text-white">{{ isEditing ? 'Edit Kasus' : 'Kasus Baru' }}</h3>
+                <p class="text-[10px] text-blue-100 font-semibold uppercase mt-0.5">{{ isEditing ? 'Perbarui Data' : 'Catat Pelanggaran' }}</p>
+            </div>
+            <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
+              <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v2h-2v-2zm0-10h2v8h-2V7z"></path></svg>
+            </div>
+          </div>
         </div>
-        <form @submit.prevent="saveForm" class="p-6 space-y-4">
-          <div v-if="!isEdit">
-            <label class="block text-sm font-medium text-slate-700 mb-1">Pilih Guru</label>
-            <select v-model="form.guru_id" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all" required>
-              <option value="">-- Pilih Guru --</option>
-              <option v-for="g in gurus?.data || []" :key="g.id" :value="g.id">{{ g.name }}</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1">Tanggal</label>
-            <input type="date" v-model="form.tanggal" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all" required />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1">Deskripsi Kasus / Pelanggaran</label>
-            <textarea v-model="form.kasus" rows="3" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all" required></textarea>
-          </div>
-          <div v-if="isEdit">
-            <label class="block text-sm font-medium text-slate-700 mb-1">Tindak Lanjut</label>
-            <textarea v-model="form.tindak_lanjut" rows="2" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"></textarea>
-          </div>
-          <div v-if="isEdit">
-            <label class="block text-sm font-medium text-slate-700 mb-1">Status</label>
-            <select v-model="form.status" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all">
-              <option value="Terbuka">Terbuka</option>
-              <option value="Ditangani">Ditangani</option>
-              <option value="Selesai">Selesai</option>
-            </select>
-          </div>
+        
+        <div class="flex-1 overflow-y-auto custom-scrollbar p-4 pb-6">
+            <form @submit.prevent="saveData" class="space-y-4">
+                
+                <div v-if="!isEditing">
+                    <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Pilih Guru</label>
+                    <select v-model="formData.guru_id" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all text-sm font-bold text-slate-800 outline-none">
+                        <option value="">-- Pilih Guru --</option>
+                        <option v-for="g in gurus?.data || []" :key="g.id" :value="g.id">{{ g.name }}</option>
+                    </select>
+                </div>
 
-          <div class="pt-4 flex justify-end gap-3">
-            <button type="button" @click="closeForm" class="px-4 py-2 text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors">
-              Batal
-            </button>
-            <button type="submit" :disabled="isSaving" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50">
-              {{ isSaving ? 'Menyimpan...' : 'Simpan' }}
-            </button>
-          </div>
-        </form>
+                <div>
+                    <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Tanggal</label>
+                    <input type="date" v-model="formData.tanggal" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all text-sm font-bold text-slate-800 outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Deskripsi Kasus / Pelanggaran</label>
+                    <textarea v-model="formData.kasus" rows="3" required placeholder="Jelaskan kronologi kejadian..." class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all text-sm font-bold text-slate-800 placeholder:text-slate-400 outline-none resize-none"></textarea>
+                </div>
+                
+                <div v-if="isEditing">
+                    <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Tindak Lanjut</label>
+                    <textarea v-model="formData.tindak_lanjut" rows="2" placeholder="Catatan tindak lanjut..." class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all text-sm font-bold text-slate-800 placeholder:text-slate-400 outline-none resize-none"></textarea>
+                </div>
+
+                <div v-if="isEditing">
+                    <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Status Penanganan</label>
+                    <select v-model="formData.status" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all text-sm font-bold text-slate-800 outline-none">
+                        <option value="Terbuka">Terbuka</option>
+                        <option value="Ditangani">Ditangani</option>
+                        <option value="Selesai">Selesai</option>
+                    </select>
+                </div>
+
+                <div class="pt-4 border-t border-slate-100 flex gap-3">
+                    <button v-if="isEditing" type="button" @click="resetForm" class="flex-1 py-3 bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold rounded-2xl transition-all text-xs uppercase tracking-widest border border-rose-200">
+                        Batal
+                    </button>
+                    <button type="submit" :disabled="isSaving" class="flex-[2] py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold rounded-2xl shadow-lg shadow-blue-500/30 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 text-xs uppercase tracking-widest">
+                        <span v-if="isSaving" class="animate-spin"><AppIcon name="clock" class="w-6 h-6" /></span>
+                        <span v-else>{{ isEditing ? '💾' : '➕' }}</span> 
+                        {{ isEditing ? 'Simpan' : 'Tambah' }}
+                    </button>
+                </div>
+            </form>
+        </div>
       </div>
+
+      <!-- Panel Flow Kanan (Tabel) -->
+      <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative', activeTabMobile === 'table' || isDesktop ? 'flex' : 'hidden', !isDesktop ? 'pt-[52px]' : '']">
+        <div class="p-0 sm:pt-3 sm:pb-6 sm:px-6 lg:pt-3 lg:pb-8 lg:px-8 max-w-7xl mx-auto w-full h-full flex flex-col relative z-0">
+          <div class="bg-white rounded-none sm:rounded-[2rem] shadow-[0_2px_15px_-3px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col flex-1 relative min-h-0 border-0 sm:border sm:border-slate-200/60">
+        <div class="px-6 py-5 border-b border-slate-100 flex flex-row justify-between items-center gap-2 shrink-0 z-10 bg-white">
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-2xl bg-blue-50 shadow-sm border border-blue-100 flex items-center justify-center text-xl hidden sm:flex text-blue-500"><AppIcon name="user-group" class="w-6 h-6" /></div>
+                <div>
+                    <h3 class="text-[11px] sm:text-sm font-black uppercase tracking-widest text-blue-700">Database Kasus Guru</h3>
+                    <p class="text-[10px] sm:text-[10px] font-bold text-slate-400 uppercase mt-0.5">Semua data pelanggaran & kasus</p>
+                </div>
+            </div>
+            <button @click="fetchData" class="w-10 h-10 rounded-xl bg-slate-100 text-slate-500 flex items-center justify-center hover:bg-slate-200 hover:text-slate-700 font-bold transition-colors shrink-0" title="Refresh">
+                <AppIcon name="arrow-path" class="w-5 h-5" />
+            </button>
+        </div>
+
+        <!-- Table Container -->
+        <div class="flex-1 overflow-y-auto custom-scrollbar relative bg-white">
+            <!-- Loading State -->
+            <div v-if="isLoading" class="flex-grow flex items-center justify-center flex-col p-10 opacity-60">
+                <div class="w-8 h-8 border-4 border-blue-400 border-t-transparent rounded-full animate-spin mb-4"></div>
+                <span class="text-xs font-black text-blue-500 uppercase tracking-widest">Memuat Data...</span>
+            </div>
+
+            <!-- Table Content -->
+            <table v-else class="w-full text-left border-collapse min-w-full">
+                <thead class="hidden sm:table-header-group sticky top-0 z-10 bg-slate-50 border-b border-slate-200 shadow-sm">
+                    <tr class="text-[10px] uppercase tracking-widest font-black text-slate-500">
+                        <th class="py-3 px-4 w-16 text-center">No</th>
+                        <th class="py-3 px-4">Informasi Kasus</th>
+                        <th class="py-3 px-4 text-center w-24">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="flex flex-col sm:table-row-group text-sm font-medium text-slate-700 divide-y divide-slate-100">
+                    <tr v-if="!kasusList || kasusList.length === 0">
+                        <td colspan="3" class="p-16 text-center text-slate-400 font-bold bg-white">
+                            <span class="text-4xl block mb-2 opacity-30"><AppIcon name="shield-check" class="w-6 h-6" /></span>
+                            Belum ada data kasus guru.
+                        </td>
+                    </tr>
+                     <tr v-for="(item, index) in kasusList" :key="item.id" class="border-b border-slate-100 hover:bg-slate-50/80 transition-colors bg-white group flex flex-col sm:table-row p-4 sm:p-0 relative">
+                        <td class="px-0 py-1 sm:p-4 text-left sm:text-center text-[11px] font-bold text-slate-400 flex sm:table-cell items-center justify-between mb-2 sm:mb-0">
+                            <span class="sm:hidden text-[10px] font-black uppercase tracking-widest text-slate-400">Nomor</span>
+                            <span>{{ index + 1 }}</span>
+                        </td>
+                        <td class="px-0 py-1 sm:p-4 flex flex-col sm:table-cell mb-2 sm:mb-0 w-full gap-2">
+                            <div class="flex items-start justify-between w-full">
+                                <div>
+                                    <h4 class="font-black text-slate-800 text-xs sm:text-sm">{{ item.guru?.name }}</h4>
+                                    <p class="text-[10px] font-bold text-slate-500 uppercase mt-0.5">{{ formatDate(item.tanggal) }}</p>
+                                </div>
+                                <span class="px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest border"
+                                  :class="{
+                                      'bg-rose-100 text-rose-700 border-rose-200': item.status === 'Terbuka',
+                                      'bg-amber-100 text-amber-700 border-amber-200': item.status === 'Ditangani',
+                                      'bg-emerald-100 text-emerald-700 border-emerald-200': item.status === 'Selesai'
+                                  }">
+                                  {{ item.status }}
+                                </span>
+                            </div>
+                            <div class="mt-2 text-xs text-slate-600 bg-slate-50 p-2 rounded-lg border border-slate-100">
+                                <strong>Kasus:</strong> {{ item.kasus }}
+                            </div>
+                            <div v-if="item.tindak_lanjut" class="mt-1 text-[10px] text-slate-500 border-l-2 border-blue-200 pl-2">
+                                <strong>Tindak Lanjut:</strong> {{ item.tindak_lanjut }}
+                            </div>
+                        </td>
+                        <td class="px-0 pt-2 sm:p-4 text-center border-t sm:border-0 border-slate-50 mt-2 sm:mt-0 flex sm:table-cell justify-end sm:justify-center w-full sm:w-24">
+                            <div class="flex items-center justify-end sm:justify-center gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity w-full">
+                                <button @click="editData(item)" class="w-8 h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-blue-200 hover:bg-blue-50 hover:text-blue-600 flex items-center justify-center transition-all shadow-sm" title="Edit"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg></button>
+                                <button @click="confirmDelete(item)" class="w-8 h-8 rounded-xl sm:rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-center transition-all shadow-sm" title="Hapus"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg></button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+     <!-- Delete Modal -->
+    <div v-if="isDeleteModalOpen" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
+        <div class="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden animate-slideUpFade text-center">
+            <div class="p-8">
+                <div class="w-20 h-20 bg-rose-50 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl shadow-inner border-4 border-white ring-4 ring-rose-50"><AppIcon name="exclamation-triangle" class="w-6 h-6" /></div>
+                <h3 class="text-xl font-black text-slate-800 tracking-tight">Hapus Kasus?</h3>
+                <p class="text-xs text-slate-500 mt-3 leading-relaxed">
+                    Anda yakin ingin menghapus data kasus guru:<br>
+                    <span class="font-bold text-rose-600">{{ deleteTarget?.guru?.name }}</span>?
+                </p>
+                <div class="flex items-center gap-4 mt-8">
+                    <button @click="isDeleteModalOpen = false" class="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-2xl transition-all text-xs uppercase tracking-widest">Batal</button>
+                    <button @click="executeDelete" class="flex-1 py-3 bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-2xl shadow-lg shadow-rose-500/30 transition-all text-xs uppercase tracking-widest flex items-center justify-center gap-2">
+                        <span>Hapus</span>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 
 definePageMeta({
+  layout: 'kurikulum',
   middleware: 'kurikulum',
-  layout: 'kurikulum'
+  title: 'Penanganan Kasus Guru'
 })
 
-const { data, pending, error, refresh } = await useFetch('/api/kurikulum/kasus-guru', {
-  headers: {
-    Authorization: `Bearer ${useCookie('auth_token').value}`
-  }
-})
+// Responsiveness detector
+const windowWidth = ref(1024) 
+const isDesktop = computed(() => windowWidth.value >= 1280) // xl breakpoint
 
-const { data: gurus } = await useFetch('/api/kurikulum/kasus-guru/gurus', {
-  headers: {
-    Authorization: `Bearer ${useCookie('auth_token').value}`
-  }
-})
+// Tabs for Mobile
+const activeTabMobile = ref('table')
+const mobileTabs = [
+  { id: 'form', title: 'Form Kasus', icon: 'document-text' },
+  { id: 'table', title: 'Database', icon: 'clipboard' }
+]
 
-const showModal = ref(false)
-const isEdit = ref(false)
+const kasusList = ref([])
+const gurus = ref({ data: [] })
+const isLoading = ref(true)
 const isSaving = ref(false)
 
-const form = ref({
-  id: null,
-  guru_id: '',
-  tanggal: new Date().toISOString().split('T')[0],
-  kasus: '',
-  tindak_lanjut: '',
-  status: 'Terbuka'
+const isEditing = ref(false)
+const formData = ref({
+    id: null,
+    guru_id: '',
+    tanggal: new Date().toISOString().split('T')[0],
+    kasus: '',
+    tindak_lanjut: '',
+    status: 'Terbuka'
 })
 
-const openForm = (item) => {
-  if (item) {
-    isEdit.value = true
-    form.value = {
-      id: item.id,
-      guru_id: item.guru_id,
-      tanggal: item.tanggal,
-      kasus: item.kasus,
-      tindak_lanjut: item.tindak_lanjut || '',
-      status: item.status
-    }
-  } else {
-    isEdit.value = false
-    form.value = {
-      id: null,
-      guru_id: '',
-      tanggal: new Date().toISOString().split('T')[0],
-      kasus: '',
-      tindak_lanjut: '',
-      status: 'Terbuka'
-    }
-  }
-  showModal.value = true
-}
+const isDeleteModalOpen = ref(false)
+const deleteTarget = ref(null)
 
-const closeForm = () => {
-  showModal.value = false
-}
-
-const saveForm = async () => {
-  isSaving.value = true
-  try {
-    const url = isEdit.value 
-      ? `/api/kurikulum/kasus-guru/${form.value.id}`
-      : `/api/kurikulum/kasus-guru`
-      
-    const method = isEdit.value ? 'PUT' : 'POST'
-
-    await $fetch(url, {
-      method,
-      headers: {
-        Authorization: `Bearer ${useCookie('auth_token').value}`
-      },
-      body: form.value
-    })
-    
-    closeForm()
-    refresh()
-  } catch (err) {
-    alert('Terjadi kesalahan saat menyimpan data')
-  } finally {
-    isSaving.value = false
-  }
-}
-
-const deleteItem = async (id) => {
-  if (confirm('Yakin ingin menghapus data kasus ini?')) {
+const fetchData = async () => {
+    isLoading.value = true
+    const token = useCookie('auth_token').value
     try {
-      await $fetch(`/api/kurikulum/kasus-guru/${id}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${useCookie('auth_token').value}`
-        }
-      })
-      refresh()
-    } catch (err) {
-      alert('Gagal menghapus data')
+        const [kasusRes, gurusRes] = await Promise.all([
+            $fetch('/api/kurikulum/kasus-guru', { headers: { Authorization: `Bearer ${token}` } }),
+            $fetch('/api/kurikulum/kasus-guru/gurus', { headers: { Authorization: `Bearer ${token}` } })
+        ])
+        
+        kasusList.value = kasusRes?.data || []
+        gurus.value = gurusRes || { data: [] }
+    } catch (error) {
+        console.error('Failed to fetch data:', error)
+    } finally {
+        isLoading.value = false
     }
-  }
+}
+
+const saveData = async () => {
+    isSaving.value = true
+    const token = useCookie('auth_token').value
+    const url = isEditing.value 
+        ? `/api/kurikulum/kasus-guru/${formData.value.id}` 
+        : `/api/kurikulum/kasus-guru`
+    const method = isEditing.value ? 'PUT' : 'POST'
+
+    try {
+        await $fetch(url, {
+            method: method,
+            headers: { Authorization: `Bearer ${token}` },
+            body: formData.value
+        })
+        
+        useSwal().toast('Data kasus berhasil disimpan!', 'success')
+        resetForm()
+        fetchData()
+        if (!isDesktop.value) activeTabMobile.value = 'table'
+    } catch (error) {
+        console.error('Save error:', error)
+        useSwal().toast(error.response?._data?.message || 'Gagal menyimpan data.', 'error')
+    } finally {
+        isSaving.value = false
+    }
+}
+
+const editData = (item) => {
+    isEditing.value = true
+    formData.value = {
+        id: item.id,
+        guru_id: item.guru_id,
+        tanggal: item.tanggal,
+        kasus: item.kasus,
+        tindak_lanjut: item.tindak_lanjut || '',
+        status: item.status
+    }
+    if (!isDesktop.value) activeTabMobile.value = 'form'
+}
+
+const resetForm = () => {
+    isEditing.value = false
+    formData.value = {
+        id: null,
+        guru_id: '',
+        tanggal: new Date().toISOString().split('T')[0],
+        kasus: '',
+        tindak_lanjut: '',
+        status: 'Terbuka'
+    }
+}
+
+const confirmDelete = (item) => {
+    deleteTarget.value = item
+    isDeleteModalOpen.value = true
+}
+
+const executeDelete = async () => {
+    if(!deleteTarget.value) return
+    isSaving.value = true
+    const token = useCookie('auth_token').value
+    try {
+        await $fetch(`/api/kurikulum/kasus-guru/${deleteTarget.value.id}`, {
+            method: 'DELETE',
+            headers: { Authorization: `Bearer ${token}` }
+        })
+        isDeleteModalOpen.value = false
+        useSwal().toast('Kasus berhasil dihapus!', 'success')
+        fetchData()
+    } catch (error) {
+        console.error('Delete failed:', error)
+        useSwal().toast('Gagal menghapus data.', 'error')
+    } finally {
+        isSaving.value = false
+    }
 }
 
 const formatDate = (dateString) => {
@@ -228,4 +321,49 @@ const formatDate = (dateString) => {
   const d = new Date(dateString)
   return d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })
 }
+
+onMounted(() => {
+    windowWidth.value = window.innerWidth
+    window.addEventListener('resize', () => { windowWidth.value = window.innerWidth })
+    
+    if (isDesktop.value) {
+        activeTabMobile.value = 'form'
+    } else {
+        activeTabMobile.value = 'table'
+    }
+
+    fetchData()
+})
+
+onUnmounted(() => {
+    window.removeEventListener('resize', () => {})
+})
 </script>
+
+<style scoped>
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #94a3b8;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-fadeIn { animation: fadeIn 0.3s ease-out forwards; }
+
+@keyframes slideUpFade {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-slideUpFade { animation: slideUpFade 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+</style>
