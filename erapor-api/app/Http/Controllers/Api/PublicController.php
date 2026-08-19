@@ -26,13 +26,18 @@ class PublicController extends Controller
         // 3. Count Wali Kelas
         $walasCount = WaliKelas::count();
 
+        // --- Tentukan Tahun Ajaran untuk Data Nilai ---
+        // Mencari tahun ajaran terakhir yang sudah memiliki nilai sumatif
+        $latestTahunAjaranId = SumatifNilai::max('tahun_ajaran_id');
+        $tahunAjaranData = $latestTahunAjaranId ? TahunAjaran::find($latestTahunAjaranId) : $tahunAjaranAktif;
+
         // 4. Top Student (Peringkat 1 Umum)
         $topStudent = null;
-        if ($tahunAjaranAktif) {
-            $topQuery = SumatifNilai::select('siswa_id', DB::raw('SUM(na_value) as total_nilai'))
-                ->where('tahun_ajaran_id', $tahunAjaranAktif->id)
+        if ($tahunAjaranData) {
+            $topQuery = SumatifNilai::select('siswa_id', DB::raw('AVG(na_value) as rata_rata_nilai'))
+                ->where('tahun_ajaran_id', $tahunAjaranData->id)
                 ->groupBy('siswa_id')
-                ->orderByDesc('total_nilai')
+                ->orderByDesc('rata_rata_nilai')
                 ->first();
 
             if ($topQuery) {
@@ -41,7 +46,7 @@ class PublicController extends Controller
                     $topStudent = [
                         'nama' => $siswa->nama_lengkap,
                         'kelas' => $siswa->kelas ? $siswa->kelas->nama_kelas : '-',
-                        'total_nilai' => $topQuery->total_nilai
+                        'total_nilai' => round($topQuery->rata_rata_nilai, 2)
                     ];
                 }
             }
@@ -50,43 +55,40 @@ class PublicController extends Controller
         // 5. Data Sekolah
         $sekolah = Sekolah::first();
 
-        // 6. Early Warning System (Akumulasi Nilai per Kelas)
+        // 6. Early Warning System & Top 10
         $earlyWarning = [
             'X' => [],
             'XI' => [],
             'XII' => []
         ];
+        
+        $top10PerKelas = [
+            'X' => [],
+            'XI' => [],
+            'XII' => []
+        ];
 
-        if ($tahunAjaranAktif) {
-            $kelasList = \App\Models\Kelas::where('tahun_ajaran_id', $tahunAjaranAktif->id)->get();
+        if ($tahunAjaranData) {
+            $kelasList = \App\Models\Kelas::where('tahun_ajaran_id', $tahunAjaranData->id)->get();
             
             // Ambil semua KKM
             $kkmList = \App\Models\Kkm::all();
             
-            // Ambil semua SumatifNilai untuk tahun ajaran aktif, dikelompokkan berdasarkan kelas
-            $sumatifQuery = SumatifNilai::where('tahun_ajaran_id', $tahunAjaranAktif->id)
+            // Ambil semua SumatifNilai untuk tahun ajaran data, dikelompokkan berdasarkan kelas
+            $sumatifQuery = SumatifNilai::where('tahun_ajaran_id', $tahunAjaranData->id)
                                         ->whereNotNull('na_value')
                                         ->get()
                                         ->groupBy('kelas_id');
 
             // --- Logika Top 10 Per Kelas ---
-            $top10Query = SumatifNilai::select('kelas_id', 'siswa_id', DB::raw('SUM(na_value) as total_nilai'))
-                ->where('tahun_ajaran_id', $tahunAjaranAktif->id)
+            $top10Query = SumatifNilai::select('kelas_id', 'siswa_id', DB::raw('AVG(na_value) as rata_rata_nilai'))
+                ->where('tahun_ajaran_id', $tahunAjaranData->id)
                 ->groupBy('kelas_id', 'siswa_id')
                 ->get();
             
             $siswaIds = $top10Query->pluck('siswa_id')->unique();
             $siswasMap = \App\Models\Siswa::with('user')->whereIn('id', $siswaIds)->get()->keyBy('id');
             $groupedTop10ByKelas = $top10Query->groupBy('kelas_id');
-            
-            $top10PerKelas = [
-                'X' => [],
-                'XI' => [],
-                'XII' => []
-            ];
-            // -------------------------------
-            
-
             
             foreach ($kelasList as $kelas) {
                 // Cari KKM untuk kelas ini
@@ -129,13 +131,13 @@ class PublicController extends Controller
                 // Proses Top 10
                 $top10ForThisKelas = [];
                 if (isset($groupedTop10ByKelas[$kelas->id])) {
-                    $sorted = $groupedTop10ByKelas[$kelas->id]->sortByDesc('total_nilai')->take(10);
+                    $sorted = $groupedTop10ByKelas[$kelas->id]->sortByDesc('rata_rata_nilai')->take(10);
                     foreach ($sorted as $item) {
                         $s = $siswasMap->get($item->siswa_id);
                         if ($s) {
                             $top10ForThisKelas[] = [
                                 'nama' => $s->name,
-                                'total' => round($item->total_nilai)
+                                'total' => round($item->rata_rata_nilai, 2)
                             ];
                         }
                     }
