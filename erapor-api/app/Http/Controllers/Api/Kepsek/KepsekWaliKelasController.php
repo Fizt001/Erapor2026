@@ -60,7 +60,7 @@ class KepsekWaliKelasController extends Controller
         $siswaIds = $siswaRaw->pluck('id')->toArray();
         $namaSiswaMap = [];
         foreach ($siswaRaw as $s) {
-            $namaSiswaMap[$s->id] = $s->user ? $s->user->name : $s->name;
+            $namaSiswaMap[$s->id] = $s->user ? $s->user->name : $s->nama_lengkap;
         }
 
         // 2. Rata-rata Kelas dan Top 10 Siswa
@@ -87,7 +87,7 @@ class KepsekWaliKelasController extends Controller
         $top10 = array_slice($siswaRataRata, 0, 10);
 
         // 3. Siswa Butuh Penanganan
-        $poinRaw = PoinSiswa::select('siswa_id', DB::raw('SUM(poin_pengurang) as total_pengurang'))
+        $poinRaw = PoinSiswa::select('siswa_id', DB::raw('SUM(skor_pengurang) as total_pengurang'))
             ->whereIn('siswa_id', $siswaIds)
             ->where('tahun_ajaran_id', $tahunAktif->id)
             ->groupBy('siswa_id')
@@ -173,7 +173,7 @@ class KepsekWaliKelasController extends Controller
         foreach ($siswaRaw as $s) {
             $grafikSiswa[$s->id] = [
                 'id' => $s->id,
-                'nama' => $namaSiswaMap[$s->id] ?? $s->name,
+                'nama' => $namaSiswaMap[$s->id] ?? $s->nama_lengkap,
                 'series' => []
             ];
             foreach ($titimangsas as $t) {
