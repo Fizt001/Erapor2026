@@ -276,7 +276,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('dashboard', [\App\Http\Controllers\Api\Kurikulum\DashboardController::class, 'index']);
         Route::get('titimangsa', [\App\Http\Controllers\Api\Kurikulum\TitimangsaController::class, 'index']);
         Route::get('wali-kelas', [\App\Http\Controllers\Api\Kurikulum\WaliKelasController::class, 'index']);
-        Route::get('wali-kelas/{kelas_id}/dashboard', [\App\Http\Controllers\Api\Kepsek\KepsekWaliKelasController::class, 'getDashboardStats']);        Route::get('kasus-siswa', [\App\Http\Controllers\Api\Kurikulum\KurikulumPenangananController::class, 'index']);
+        Route::get('wali-kelas/{kelas_id}/dashboard', [\App\Http\Controllers\Api\Kepsek\KepsekWaliKelasController::class, 'getDashboardStats']);
+        Route::get('kasus-siswa', [\App\Http\Controllers\Api\Kurikulum\KurikulumPenangananController::class, 'index']);
         Route::post('kasus-siswa/{id}/acc', [\App\Http\Controllers\Api\Kurikulum\KurikulumPenangananController::class, 'accPenanganan']);
         
         Route::get('kasus-guru', [\App\Http\Controllers\Api\Kepsek\KepsekKasusGuruController::class, 'index']);
@@ -284,9 +285,6 @@ Route::middleware('auth:sanctum')->group(function () {
         
         Route::get('supervisi', [\App\Http\Controllers\Api\Kepsek\KepsekSupervisiController::class, 'index']);
         Route::get('supervisi/gurus', [\App\Http\Controllers\Api\Kepsek\KepsekSupervisiController::class, 'getGuruList']);
-        Route::post('supervisi', [\App\Http\Controllers\Api\Kepsek\KepsekSupervisiController::class, 'store']);
-        Route::put('supervisi/{id}', [\App\Http\Controllers\Api\Kepsek\KepsekSupervisiController::class, 'update']);
-        Route::delete('supervisi/{id}', [\App\Http\Controllers\Api\Kepsek\KepsekSupervisiController::class, 'destroy']);        Route::get('supervisi/gurus', [\App\Http\Controllers\Api\Kepsek\KepsekSupervisiController::class, 'getGuruList']);
         Route::post('supervisi', [\App\Http\Controllers\Api\Kepsek\KepsekSupervisiController::class, 'store']);
         Route::put('supervisi/{id}', [\App\Http\Controllers\Api\Kepsek\KepsekSupervisiController::class, 'update']);
         Route::delete('supervisi/{id}', [\App\Http\Controllers\Api\Kepsek\KepsekSupervisiController::class, 'destroy']);
