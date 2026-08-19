@@ -263,7 +263,7 @@ const fetchData = async () => {
     const token = useCookie('auth_token').value
     try {
         const [supervisiRes, gurusRes] = await Promise.all([
-            $fetch(import.meta.env.VITE_API_BASE_URL + import.meta.env.VITE_API_BASE_URL + '/api/kepsek/supervisi', { headers: { Authorization: `Bearer ${token}` } }),
+            $fetch(import.meta.env.VITE_API_BASE_URL + '/api/kepsek/supervisi', { headers: { Authorization: `Bearer ${token}` } }),
             $fetch(import.meta.env.VITE_API_BASE_URL + '/api/kepsek/supervisi/gurus', { headers: { Authorization: `Bearer ${token}` } })
         ])
         
