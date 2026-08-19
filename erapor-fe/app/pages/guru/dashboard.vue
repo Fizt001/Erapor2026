@@ -92,7 +92,7 @@
                 <!-- Notifikasi Supervisi -->
                 <div v-if="dashboardData.notifikasi.supervisi" class="bg-blue-50 border border-blue-200 rounded-2xl p-5 shadow-sm flex items-start gap-4">
                     <div class="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 shrink-0">
-                        <AppIcon name="clipboard-document-check" class="w-6 h-6" />
+                        <AppIcon name="calendar" class="w-6 h-6" />
                     </div>
                     <div class="w-full">
                         <div class="flex justify-between items-center mb-1">
