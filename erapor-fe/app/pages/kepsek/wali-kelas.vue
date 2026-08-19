@@ -43,19 +43,26 @@
               </tr>
             </thead>
             <tbody class="text-sm divide-y divide-slate-100">
-              <tr v-for="item in kelass" :key="item.id" class="hover:bg-purple-50 transition-colors group cursor-pointer" :class="selectedKelasId === item.id ? 'bg-purple-50 border-l-4 border-purple-500' : 'border-l-4 border-transparent'" @click="selectKelas(item)">
-                <td class="p-3">
-                  <p class="font-black text-slate-800 text-xs">{{ item.nama_kelas }}</p>
-                </td>
-                <td class="p-3">
-                  <p class="font-medium text-slate-600 text-xs truncate max-w-[120px]">{{ item.wali_kelas?.guru?.name || 'Belum Ditugaskan' }}</p>
-                </td>
-                <td class="p-3 text-center">
-                  <button type="button" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-purple-200 hover:bg-purple-50 hover:text-purple-600 flex items-center justify-center transition-all shadow-sm mx-auto" :class="selectedKelasId === item.id ? 'text-purple-600 border-purple-300 bg-purple-50' : ''">
-                    <AppIcon name="eye" class="w-4 h-4" />
-                  </button>
-                </td>
-              </tr>
+              <template v-for="group in groupedKelas" :key="group.tingkat">
+                <tr>
+                  <td colspan="3" class="bg-slate-100/50 py-1.5 px-3 text-[10px] font-black uppercase text-slate-500 tracking-widest border-y border-slate-200">
+                    Tingkat {{ group.tingkat }}
+                  </td>
+                </tr>
+                <tr v-for="item in group.items" :key="item.id" class="hover:bg-purple-50 transition-colors group cursor-pointer" :class="selectedKelasId === item.id ? 'bg-purple-50 border-l-4 border-purple-500' : 'border-l-4 border-transparent'" @click="selectKelas(item)">
+                  <td class="p-3 pl-4">
+                    <p class="font-black text-slate-800 text-xs">{{ item.tingkat }} {{ item.nama_kelas }}</p>
+                  </td>
+                  <td class="p-3">
+                    <p class="font-medium text-slate-600 text-xs truncate max-w-[120px]">{{ item.wali_kelas?.guru?.name || 'Belum Ditugaskan' }}</p>
+                  </td>
+                  <td class="p-3 text-center">
+                    <button type="button" class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-purple-200 hover:bg-purple-50 hover:text-purple-600 flex items-center justify-center transition-all shadow-sm mx-auto" :class="selectedKelasId === item.id ? 'text-purple-600 border-purple-300 bg-purple-50' : ''">
+                      <AppIcon name="eye" class="w-4 h-4" />
+                    </button>
+                  </td>
+                </tr>
+              </template>
             </tbody>
           </table>
         </div>
@@ -425,6 +432,20 @@ const fetchDaftarKelas = async () => {
 }
 
 // DASHBOARD STATE
+const groupedKelas = computed(() => {
+    const groups = {}
+    kelass.value.forEach(item => {
+        if (!groups[item.tingkat]) {
+            groups[item.tingkat] = []
+        }
+        groups[item.tingkat].push(item)
+    })
+    return Object.keys(groups).sort().map(tingkat => ({
+        tingkat: tingkat,
+        items: groups[tingkat]
+    }))
+})
+
 const selectedKelasId = ref(null)
 const selectedKelas = computed(() => kelass.value.find(k => k.id === selectedKelasId.value))
 const wStats = ref(null)
