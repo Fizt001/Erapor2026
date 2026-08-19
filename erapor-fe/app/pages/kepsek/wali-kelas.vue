@@ -413,7 +413,7 @@ const isLoadingKelas = ref(true)
 const fetchDaftarKelas = async () => {
     isLoadingKelas.value = true
     try {
-        const response = await $fetch('/api/kepsek/wali-kelas', {
+        const response = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/kepsek/wali-kelas', {
             headers: { Authorization: `Bearer ${tokenCookie.value}` }
         })
         kelass.value = response?.data || []
@@ -443,7 +443,7 @@ const fetchDashboard = async (kelasId) => {
     dashboardError.value = null
     wStats.value = null
     try {
-        const response = await $fetch(`/api/kepsek/wali-kelas/${kelasId}/dashboard`, {
+        const response = await $fetch(import.meta.env.VITE_API_BASE_URL + `/api/kepsek/wali-kelas/${kelasId}/dashboard`, {
             headers: { Authorization: `Bearer ${tokenCookie.value}` }
         })
         if(response.success) {
