@@ -44,7 +44,7 @@ export const kurikulumMenus: MenuConfig[] = [
 ]
 
 export const guruMenus: MenuConfig[] = [
-  { name: 'Home', path: '/guru/dashboard', icon: '📊' },
+  { name: 'Home Guru', path: '/guru/dashboard', icon: '📊' },
   { divider: true, dividerLabel: 'Kegiatan KBM' },
   { name: 'Absensi Pertemuan', path: '/guru/absensi', icon: '📆' },
   { name: 'Jurnal Mengajar', path: '/guru/jurnal', icon: '📓' },
