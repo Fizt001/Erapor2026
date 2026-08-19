@@ -135,7 +135,7 @@ class PublicController extends Controller
                         if ($s) {
                             $top10ForThisKelas[] = [
                                 'nama' => $s->name,
-                                'total' => round($item->total_nilai, 1)
+                                'total' => round($item->total_nilai)
                             ];
                         }
                     }
