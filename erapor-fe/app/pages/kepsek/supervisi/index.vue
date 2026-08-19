@@ -261,19 +261,22 @@ const deleteTarget = ref(null)
 const fetchData = async () => {
     isLoading.value = true
     const token = useCookie('auth_token').value
+    
     try {
-        const [supervisiRes, gurusRes] = await Promise.all([
-            $fetch(import.meta.env.VITE_API_BASE_URL + '/api/kepsek/supervisi', { headers: { Authorization: `Bearer ${token}` } }),
-            $fetch(import.meta.env.VITE_API_BASE_URL + '/api/kepsek/supervisi/gurus', { headers: { Authorization: `Bearer ${token}` } })
-        ])
-        
+        const supervisiRes = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/kepsek/supervisi', { headers: { Authorization: `Bearer ${token}` } })
         supervisiList.value = supervisiRes?.data || []
+    } catch (error) {
+        console.error('Failed to fetch supervisi:', error)
+    }
+
+    try {
+        const gurusRes = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/kepsek/supervisi/gurus', { headers: { Authorization: `Bearer ${token}` } })
         gurus.value = gurusRes || { data: [] }
     } catch (error) {
-        console.error('Failed to fetch data:', error)
-    } finally {
-        isLoading.value = false
+        console.error('Failed to fetch gurus:', error)
     }
+    
+    isLoading.value = false
 }
 
 const saveData = async () => {
