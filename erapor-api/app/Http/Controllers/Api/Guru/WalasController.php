@@ -180,7 +180,7 @@ class WalasController extends Controller
      */
     public function updateBiodataSiswa(Request $request, $id)
     {
-        $context = $this->getWalasContext();
+        $context = $this->getWalasContext($request);
         if (!$context) {
             return response()->json(['success' => false, 'message' => 'Anda bukan wali kelas aktif.'], 403);
         }
@@ -222,7 +222,7 @@ class WalasController extends Controller
      */
     public function lockAllBiodata(Request $request)
     {
-        $context = $this->getWalasContext();
+        $context = $this->getWalasContext($request);
         if (!$context) {
             return response()->json(['success' => false, 'message' => 'Anda bukan wali kelas aktif saat ini.'], 403);
         }

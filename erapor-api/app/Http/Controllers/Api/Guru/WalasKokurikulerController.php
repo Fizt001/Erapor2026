@@ -13,7 +13,7 @@ use App\Models\Kokurikuler;
 
 class WalasKokurikulerController extends Controller
 {
-    private function getWalasContext()
+    private function getWalasContext(Request $request = null)
     {
         $user = Auth::user();
 
@@ -40,7 +40,7 @@ class WalasKokurikulerController extends Controller
 
     public function index(Request $request)
     {
-        $context = $this->getWalasContext();
+        $context = $this->getWalasContext($request);
         if (!$context) {
             return response()->json(['success' => false, 'message' => 'Anda bukan wali kelas aktif.'], 403);
         }
@@ -108,7 +108,7 @@ class WalasKokurikulerController extends Controller
             'keterangan' => 'nullable|string'
         ]);
 
-        $context = $this->getWalasContext();
+        $context = $this->getWalasContext($request);
         if (!$context) {
             return response()->json(['success' => false, 'message' => 'Anda bukan wali kelas.'], 403);
         }
@@ -149,7 +149,7 @@ class WalasKokurikulerController extends Controller
             'kurikulum_id' => 'required|exists:kurikulums,id'
         ]);
 
-        $context = $this->getWalasContext();
+        $context = $this->getWalasContext($request);
         if (!$context) {
             return response()->json(['success' => false, 'message' => 'Anda bukan wali kelas.'], 403);
         }

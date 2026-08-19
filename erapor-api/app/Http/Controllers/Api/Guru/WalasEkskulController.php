@@ -15,7 +15,7 @@ use App\Models\EkskulSiswa;
 
 class WalasEkskulController extends Controller
 {
-    private function getWalasContext()
+    private function getWalasContext(Request $request = null)
     {
         $user = Auth::user();
 
@@ -48,7 +48,7 @@ class WalasEkskulController extends Controller
 
     public function index(Request $request)
     {
-        $context = $this->getWalasContext();
+        $context = $this->getWalasContext($request);
         if (!$context) {
             return response()->json(['success' => false, 'message' => 'Anda bukan wali kelas aktif saat ini atau pengaturan periode belum lengkap.'], 403);
         }
@@ -157,7 +157,7 @@ class WalasEkskulController extends Controller
 
     public function store(Request $request)
     {
-        $context = $this->getWalasContext();
+        $context = $this->getWalasContext($request);
         if (!$context) {
             return response()->json(['success' => false, 'message' => 'Akses ditolak.'], 403);
         }
