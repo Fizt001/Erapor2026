@@ -195,7 +195,7 @@ const fetchData = async () => {
     isLoading.value = true
     const token = useCookie('auth_token').value
     try {
-        const res = await $fetch('/api/kepsek/kasus-guru', { headers: { Authorization: `Bearer ${token}` } })
+        const res = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/kepsek/kasus-guru', { headers: { Authorization: `Bearer ${token}` } })
         data.value = res || { data: [] }
     } catch (error) {
         console.error('Failed to fetch data:', error)
@@ -223,7 +223,7 @@ const panggilGuru = async (guruId, guruName) => {
   if (isConfirmed) {
     isCalling.value = guruId
     try {
-      await $fetch(`/api/kepsek/kasus-guru/${guruId}/panggil`, {
+      await $fetch(import.meta.env.VITE_API_BASE_URL + `/api/kepsek/kasus-guru/${guruId}/panggil`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${useCookie('auth_token').value}`

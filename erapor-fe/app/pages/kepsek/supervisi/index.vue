@@ -263,8 +263,8 @@ const fetchData = async () => {
     const token = useCookie('auth_token').value
     try {
         const [supervisiRes, gurusRes] = await Promise.all([
-            $fetch('/api/kepsek/supervisi', { headers: { Authorization: `Bearer ${token}` } }),
-            $fetch('/api/kepsek/supervisi/gurus', { headers: { Authorization: `Bearer ${token}` } })
+            $fetch(import.meta.env.VITE_API_BASE_URL + import.meta.env.VITE_API_BASE_URL + '/api/kepsek/supervisi', { headers: { Authorization: `Bearer ${token}` } }),
+            $fetch(import.meta.env.VITE_API_BASE_URL + '/api/kepsek/supervisi/gurus', { headers: { Authorization: `Bearer ${token}` } })
         ])
         
         supervisiList.value = supervisiRes?.data || []
@@ -280,8 +280,8 @@ const saveData = async () => {
     isSaving.value = true
     const token = useCookie('auth_token').value
     const url = isEditing.value 
-        ? `/api/kepsek/supervisi/${formData.value.id}` 
-        : `/api/kepsek/supervisi`
+        ? import.meta.env.VITE_API_BASE_URL + `/api/kepsek/supervisi/${formData.value.id}` 
+        : import.meta.env.VITE_API_BASE_URL + `/api/kepsek/supervisi`
     const method = isEditing.value ? 'PUT' : 'POST'
 
     try {
@@ -342,7 +342,7 @@ const executeDelete = async () => {
     isSaving.value = true
     const token = useCookie('auth_token').value
     try {
-        await $fetch(`/api/kepsek/supervisi/${deleteTarget.value.id}`, {
+        await $fetch(import.meta.env.VITE_API_BASE_URL + `/api/kepsek/supervisi/${deleteTarget.value.id}`, {
             method: 'DELETE',
             headers: { Authorization: `Bearer ${token}` }
         })
