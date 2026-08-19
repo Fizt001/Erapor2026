@@ -204,7 +204,8 @@ const drawerMenuGroups = {
     menus: [
       { name: 'Standar Nilai (KKM)', path: '/kurikulum/kkm', icon: '🎯' },
       { name: 'Master Deskripsi', path: '/kurikulum/deskripsi', icon: '📝' },
-      { name: 'Penanganan Kasus', path: '/kurikulum/penanganan', icon: '⚖️' },
+      { name: 'Kasus Siswa', path: '/kurikulum/penanganan', icon: '⚖️' },
+      { name: 'Kasus Guru', path: '/kurikulum/kasus-guru', icon: '👨‍🏫' },
     ]
   },
   all: {
