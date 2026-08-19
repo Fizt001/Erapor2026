@@ -70,6 +70,7 @@ class AuthController extends Controller
                     'role' => $user->role,
                     'is_pengampu_umum' => $user->is_pengampu_umum,
                     'is_pengampu_kejuruan' => $user->is_pengampu_kejuruan,
+                    // Pengecekan role ganda Guru & Walas
                     'is_walas' => $user->isWalas(),
                     'nis' => $nis
                 ]
