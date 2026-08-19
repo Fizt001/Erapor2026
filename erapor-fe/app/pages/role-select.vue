@@ -55,7 +55,8 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
-import { useCookie, onMounted } from '#app'
+import { useCookie } from '#app'
+import { onMounted } from 'vue'
 
 definePageMeta({
   layout: false
