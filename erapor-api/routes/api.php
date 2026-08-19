@@ -97,6 +97,13 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/deskripsi-template', [App\Http\Controllers\Api\Kurikulum\DeskripsiTemplateController::class, 'index']);
         Route::post('/deskripsi-template', [App\Http\Controllers\Api\Kurikulum\DeskripsiTemplateController::class, 'store']);
         
+                // Kasus Guru
+        Route::get('kasus-guru', [\App\Http\Controllers\Api\Kurikulum\KurikulumKasusGuruController::class, 'index']);
+        Route::get('kasus-guru/gurus', [\App\Http\Controllers\Api\Kurikulum\KurikulumKasusGuruController::class, 'getGuruList']);
+        Route::post('kasus-guru', [\App\Http\Controllers\Api\Kurikulum\KurikulumKasusGuruController::class, 'store']);
+        Route::put('kasus-guru/{id}', [\App\Http\Controllers\Api\Kurikulum\KurikulumKasusGuruController::class, 'update']);
+        Route::delete('kasus-guru/{id}', [\App\Http\Controllers\Api\Kurikulum\KurikulumKasusGuruController::class, 'destroy']);
+        
         // Penanganan Kasus (SP2 & SP3)
         Route::get('/penanganan', [App\Http\Controllers\Api\Kurikulum\KurikulumPenangananController::class, 'index']);
         Route::put('/penanganan/{id}/acc', [App\Http\Controllers\Api\Kurikulum\KurikulumPenangananController::class, 'accSp3']);
@@ -206,6 +213,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('jurnal-mengajar', [\App\Http\Controllers\Api\Guru\JurnalMengajarController::class, 'getJurnal']);
         
         // ==========================================
+                // SUPERVISI GURU
+        Route::get('supervisi', [\App\Http\Controllers\Api\Guru\GuruSupervisiController::class, 'index']);
+
         // WALI KELAS
         // ==========================================
         Route::prefix('walas')->group(function () {
@@ -257,6 +267,24 @@ Route::middleware('auth:sanctum')->group(function () {
             // CATATAN KENAIKAN KELAS
             Route::get('kenaikan-kelas', [\App\Http\Controllers\Api\Guru\WalasKenaikanController::class, 'index']);
         });
+    });
+
+        // ==========================================
+    // MODULE KEPSEK
+    // ==========================================
+    Route::prefix('kepsek')->middleware('role:kepsek,admin')->group(function () {
+        Route::get('dashboard', [\App\Http\Controllers\Api\Kurikulum\DashboardController::class, 'index']);
+        Route::get('wali-kelas', [\App\Http\Controllers\Api\Kurikulum\WaliKelasController::class, 'index']);
+        Route::get('kasus-siswa', [\App\Http\Controllers\Api\Kurikulum\KurikulumPenangananController::class, 'index']);
+        
+        Route::get('kasus-guru', [\App\Http\Controllers\Api\Kepsek\KepsekKasusGuruController::class, 'index']);
+        Route::post('kasus-guru/{id}/panggil', [\App\Http\Controllers\Api\Kepsek\KepsekKasusGuruController::class, 'panggil']);
+        
+        Route::get('supervisi', [\App\Http\Controllers\Api\Kepsek\KepsekSupervisiController::class, 'index']);
+        Route::get('supervisi/gurus', [\App\Http\Controllers\Api\Kepsek\KepsekSupervisiController::class, 'getGuruList']);
+        Route::post('supervisi', [\App\Http\Controllers\Api\Kepsek\KepsekSupervisiController::class, 'store']);
+        Route::put('supervisi/{id}', [\App\Http\Controllers\Api\Kepsek\KepsekSupervisiController::class, 'update']);
+        Route::delete('supervisi/{id}', [\App\Http\Controllers\Api\Kepsek\KepsekSupervisiController::class, 'destroy']);
     });
 
     // ROUTES SISWA

@@ -168,9 +168,34 @@ class DashboardController extends Controller
             }
         }
 
+        // Notifikasi Kasus Guru
+        $kasusGuru = \App\Models\KasusGuru::where('guru_id', $user->id)
+            ->where('status', '!=', 'Selesai')
+            ->orderBy('created_at', 'desc')
+            ->get();
+        $totalKasus = $kasusGuru->count();
+        $notifKasus = null;
+        if ($totalKasus > 0) {
+            $notifKasus = [
+                'count' => $totalKasus,
+                'latest' => $kasusGuru->first()->kasus,
+                'is_panggilan' => strpos($kasusGuru->first()->tindak_lanjut ?? '', '[SISTEM] Kepsek telah melakukan Panggilan Resmi') !== false
+            ];
+        }
+
+        // Notifikasi Supervisi
+        $jadwalSupervisi = \App\Models\SupervisiGuru::where('guru_id', $user->id)
+            ->where('status', 'Terjadwal')
+            ->orderBy('tanggal', 'asc')
+            ->first();
+
         return response()->json([
             'success' => true,
             'data' => [
+                'notifikasi' => [
+                    'kasus' => $notifKasus,
+                    'supervisi' => $jadwalSupervisi
+                ],
                 'user' => [
                     'name' => $user->name,
                     'email' => $user->email,
