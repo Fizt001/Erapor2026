@@ -1,0 +1,285 @@
+<template>
+  <div class="h-full flex flex-col min-h-0 bg-slate-50">
+    <!-- Layout 2 Panel Dock & Flow -->
+    <div class="flex-1 flex overflow-hidden relative">
+      
+      <!-- MOBILE VIEW TABS -->
+      <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 shadow-sm z-20">
+        <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
+          :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-amber-500 to-amber-600 text-white shadow-md shadow-amber-500/20 ring-2 ring-amber-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
+          class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
+          <AppIcon :name="tab.icon" class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
+          <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
+        </button>
+      </div>
+
+      <!-- Panel Dock Kiri (Filter) -->
+      <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', activeTabMobile === 'filter' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[52px]' : '']">
+        
+        <div class="p-4 pb-2 shrink-0 z-10 relative">
+          <div class="bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl p-4 border border-amber-500 shadow-sm relative overflow-hidden flex items-center gap-3">
+            <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="users" class="w-5 h-5" /></div>
+            <div class="relative z-10">
+                <h3 class="text-xs font-black uppercase tracking-widest text-white">Filter Plotting</h3>
+                <p class="text-[10px] text-amber-100 font-semibold uppercase mt-0.5">Pilih Kriteria Kelas</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto px-4 pb-4 space-y-4">
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Pilih Kurikulum</label>
+                    <select v-model="filterKurikulum" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-700 outline-none">
+                        <option value="">Semua Kurikulum</option>
+                        <option v-for="kur in listKurikulum" :key="kur.id" :value="kur.id">{{ kur.nama_kurikulum }}</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Pilih Tingkat</label>
+                    <select v-model="filterTingkat" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-700 outline-none">
+                        <option value="">Semua Tingkat</option>
+                        <option v-for="tk in refTingkat" :key="tk.kode" :value="tk.kode">{{ tk.nama }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <button @click="fetchData" class="w-full py-2.5 bg-amber-600 hover:bg-amber-700 active:scale-[0.98] rounded-xl text-white shadow-lg shadow-amber-200/50 transition-all flex items-center justify-center gap-2 group">
+                <span class="text-xs font-black uppercase tracking-widest group-hover:tracking-wider transition-all">Refresh Data</span>
+                <span class="group-hover:rotate-180 transition-transform duration-500"><AppIcon name="arrow-path" class="w-5 h-5" /></span>
+            </button>
+        </div>
+      </div>
+
+      <!-- Main Content Flow -->
+      <div :class="['flex-1 bg-slate-50 flex flex-col h-full min-w-0 relative', activeTabMobile === 'flow' || isDesktop ? 'flex' : 'hidden', !isDesktop ? 'pt-[52px]' : '']">
+<!-- Header Flow -->
+            <div class="p-4 bg-white border-b border-slate-200 flex justify-between items-center gap-4 shrink-0 z-10 shadow-sm">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-2xl bg-amber-50 shadow-sm border border-amber-100 flex items-center justify-center text-xl hidden sm:flex text-amber-500"><AppIcon name="users" class="w-6 h-6" /></div>
+                    <div>
+                        <h3 class="text-sm font-black uppercase tracking-widest text-amber-700">Wali Kelas</h3>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Kelola penugasan wali kelas</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="flex-1 overflow-y-auto custom-scrollbar p-4 md:p-6 lg:p-8">
+                
+                <!-- Loading State -->
+                <div v-if="isLoading" class="flex flex-col items-center justify-center h-full">
+                    <div class="w-10 h-10 border-4 border-amber-400 border-t-transparent rounded-full animate-spin mb-4"></div>
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Memuat Data...</span>
+                </div>
+
+                <!-- Empty State (No Data) -->
+                <div v-else-if="filteredKelas.length === 0" class="flex flex-col items-center justify-center h-full opacity-60">
+                    <span class="text-6xl mb-4 grayscale opacity-50"><AppIcon name="inbox" class="w-6 h-6" /></span>
+                    <h3 class="text-sm font-black text-slate-500 uppercase tracking-widest">Tidak ada kelas yang ditemukan</h3>
+                </div>
+
+                <!-- Data List (Table) -->
+                <div v-else class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="overflow-x-auto custom-scrollbar">
+                        <table class="w-full text-left border-collapse min-w-[800px]">
+                            <thead class="bg-slate-50 border-b border-slate-200">
+                                <tr>
+                                    <th class="py-3 px-4 text-[10px] font-black uppercase tracking-widest text-slate-500 w-[60px] text-center border-r border-slate-200">No</th>
+                                    <th class="py-3 px-4 text-[10px] font-black uppercase tracking-widest text-slate-500 border-r border-slate-200 w-[180px]">Kelas</th>
+                                    <th class="py-3 px-4 text-[10px] font-black uppercase tracking-widest text-slate-500 border-r border-slate-200 w-[200px]">Kurikulum</th>
+                                    <th class="py-3 px-4 text-[10px] font-black uppercase tracking-widest text-slate-500 border-r border-slate-200">Wali Kelas</th>
+                                    <th class="py-3 px-4 text-[10px] font-black uppercase tracking-widest text-slate-500 w-[120px] text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                <tr v-for="(k, idx) in filteredKelas" :key="k.id" class="hover:bg-slate-50/50 transition-colors">
+                                    <td class="py-3 px-4 text-center text-[11px] font-bold text-slate-400 border-r border-slate-100">
+                                        {{ idx + 1 }}
+                                    </td>
+                                    <td class="py-3 px-4 border-r border-slate-100">
+                                        <div class="text-[12px] font-black text-slate-700 uppercase tracking-wide">
+                                            {{ k.tingkat }} {{ k.nama_kelas }}
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4 border-r border-slate-100">
+                                        <div class="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-1.5">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                                            {{ k.kurikulum?.nama_kurikulum || 'Belum Diatur' }}
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4 border-r border-slate-100">
+                                        <div class="relative group/select">
+                                            <select v-model="form[k.id]" class="w-full px-3 py-2 text-[11px] font-bold text-slate-700 rounded-lg border-2 border-slate-200/70 bg-slate-50 hover:bg-white focus:bg-white focus:border-amber-500 focus:ring-4 focus:ring-amber-500/10 outline-none appearance-none cursor-pointer transition-all pr-8">
+                                                <option value="" disabled>-- Pilih Guru --</option>
+                                                <option v-for="g in listGuru" :key="g.id" :value="g.id">{{ g.name }}</option>
+                                            </select>
+                                            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-[10px] group-hover/select:text-amber-500 transition-colors">▼</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4 text-center">
+                                        <button @click="saveWaliKelas(k.id)" class="w-full py-2 bg-slate-800 hover:bg-amber-600 active:bg-amber-700 text-white text-[10px] font-black uppercase tracking-widest rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-amber-500/20 flex items-center justify-center gap-1.5 group/btn" :disabled="isSaving[k.id]">
+                                            <span v-if="isSaving[k.id]" class="animate-spin"><AppIcon name="clock" class="w-3.5 h-3.5" /></span>
+                                            <span v-else class="group-hover/btn:-translate-y-0.5 transition-transform"><AppIcon name="document-check" class="w-3.5 h-3.5" /></span>
+                                            <span>{{ isSaving[k.id] ? 'Menyimpan' : 'Simpan' }}</span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, computed, onMounted } from 'vue'
+
+definePageMeta({
+  layout: 'kepsek',
+  title: 'Wali Kelas'
+})
+
+const isLoading = ref(false)
+const listKelas = ref([])
+const listGuru = ref([])
+const refTingkat = ref([])
+const filterTingkat = ref('')
+const filterKurikulum = ref('')
+const listKurikulum = ref([])
+const activeTahunAjaran = ref(null)
+const isSaving = ref({})
+const form = ref({})
+
+// Responsiveness
+const windowWidth = ref(1024)
+const isDesktop = computed(() => windowWidth.value >= 1280)
+const activeTabMobile = ref('filter')
+const mobileTabs = [
+  { id: 'filter', title: 'Filter', icon: 'funnel' },
+  { id: 'flow', title: 'Daftar Kelas', icon: 'users' }
+]
+
+const { fetchReferensi } = useReferensi()
+
+const filteredKelas = computed(() => {
+    return listKelas.value.filter(k => {
+        const matchTingkat = !filterTingkat.value || k.tingkat === filterTingkat.value
+        const matchKurikulum = !filterKurikulum.value || k.kurikulum_id === filterKurikulum.value
+        return matchTingkat && matchKurikulum
+    })
+})
+
+const fetchData = async () => {
+    isLoading.value = true
+    const token = useCookie('auth_token').value
+    try {
+        const [resTingkat, resKurikulum, resWaliKelas] = await Promise.all([
+            fetchReferensi('TINGKAT_KELAS'),
+            $fetch(import.meta.env.VITE_API_BASE_URL + '/api/kepsek/titimangsa', {
+                headers: { Authorization: `Bearer ${token}` }
+            }),
+            $fetch(import.meta.env.VITE_API_BASE_URL + '/api/kepsek/wali-kelas', {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+        ])
+
+        refTingkat.value = resTingkat || []
+        listKurikulum.value = resKurikulum.data?.kurikulums || []
+        
+        listKelas.value = resWaliKelas.data || []
+        listGuru.value = resWaliKelas.gurus || []
+
+        if (resWaliKelas.tahun_ajaran && resWaliKelas.active_tahun_ajaran_id) {
+            activeTahunAjaran.value = resWaliKelas.tahun_ajaran.find(t => t.id === resWaliKelas.active_tahun_ajaran_id)
+        }
+        
+        listKelas.value.forEach(k => {
+            form.value[k.id] = k.wali_kelas?.guru_id || ''
+        })
+        
+        if (!isDesktop.value) activeTabMobile.value = 'flow'
+    } catch (error) {
+        console.error('Failed to fetch data:', error)
+    } finally {
+        isLoading.value = false
+    }
+}
+
+const saveWaliKelas = async (kelasId) => {
+    const guruId = form.value[kelasId]
+    if (!guruId) {
+        useSwal().toast('Pilih guru terlebih dahulu', 'error')
+        return
+    }
+
+    isSaving.value[kelasId] = true
+    const token = useCookie('auth_token').value
+    
+    try {
+        const response = await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/kepsek/wali-kelas', {
+            method: 'POST',
+            headers: { Authorization: `Bearer ${token}` },
+            body: {
+                kelas_id: kelasId,
+                guru_id: guruId
+            }
+        })
+
+        if (response.success) {
+            useSwal().toast('Wali kelas berhasil disimpan', 'success')
+            const kIdx = listKelas.value.findIndex(k => k.id === kelasId)
+            if (kIdx !== -1) {
+                if (!listKelas.value[kIdx].wali_kelas) {
+                    listKelas.value[kIdx].wali_kelas = {}
+                }
+                listKelas.value[kIdx].wali_kelas.guru_id = guruId
+            }
+        }
+    } catch (error) {
+        console.error('Failed to save:', error)
+        useSwal().toast('Gagal menyimpan wali kelas', 'error')
+    } finally {
+        isSaving.value[kelasId] = false
+    }
+}
+
+onMounted(() => {
+    windowWidth.value = window.innerWidth
+    window.addEventListener('resize', () => { windowWidth.value = window.innerWidth })
+    
+    if (isDesktop.value) {
+        activeTabMobile.value = 'filter'
+    }
+    
+    fetchData()
+})
+</script>
+
+<style scoped>
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 20px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #94a3b8;
+}
+
+@keyframes slideUp {
+    from { transform: translate(-50%, 100%); opacity: 0; }
+    to { transform: translate(-50%, 0); opacity: 1; }
+}
+.animate-slideUp {
+    animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+</style>
