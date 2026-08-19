@@ -6,7 +6,7 @@
       <!-- MOBILE VIEW TABS -->
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 shadow-sm z-20">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
-          :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-amber-500 to-amber-600 text-white shadow-md shadow-amber-500/20 ring-2 ring-amber-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
+          :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-purple-500 to-purple-600 text-white shadow-md shadow-purple-500/20 ring-2 ring-purple-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
           class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon :name="tab.icon" class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
           <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
@@ -17,11 +17,11 @@
       <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', activeTabMobile === 'filter' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[52px]' : '']">
         
         <div class="p-4 pb-2 shrink-0 z-10 relative">
-          <div class="bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl p-4 border border-amber-500 shadow-sm relative overflow-hidden flex items-center gap-3">
+          <div class="bg-gradient-to-r from-purple-600 to-fuchsia-600 rounded-2xl p-4 border border-purple-500 shadow-sm relative overflow-hidden flex items-center gap-3">
             <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="users" class="w-5 h-5" /></div>
             <div class="relative z-10">
                 <h3 class="text-xs font-black uppercase tracking-widest text-white">Filter Plotting</h3>
-                <p class="text-[10px] text-amber-100 font-semibold uppercase mt-0.5">Pilih Kriteria Kelas</p>
+                <p class="text-[10px] text-purple-100 font-semibold uppercase mt-0.5">Pilih Kriteria Kelas</p>
             </div>
           </div>
         </div>
@@ -30,7 +30,7 @@
             <div class="space-y-4">
                 <div>
                     <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Pilih Kurikulum</label>
-                    <select v-model="filterKurikulum" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-700 outline-none">
+                    <select v-model="filterKurikulum" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all text-sm font-bold text-slate-700 outline-none">
                         <option value="">Semua Kurikulum</option>
                         <option v-for="kur in listKurikulum" :key="kur.id" :value="kur.id">{{ kur.nama_kurikulum }}</option>
                     </select>
@@ -38,14 +38,14 @@
 
                 <div>
                     <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Pilih Tingkat</label>
-                    <select v-model="filterTingkat" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-700 outline-none">
+                    <select v-model="filterTingkat" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all text-sm font-bold text-slate-700 outline-none">
                         <option value="">Semua Tingkat</option>
                         <option v-for="tk in refTingkat" :key="tk.kode" :value="tk.kode">{{ tk.nama }}</option>
                     </select>
                 </div>
             </div>
 
-            <button @click="fetchData" class="w-full py-2.5 bg-amber-600 hover:bg-amber-700 active:scale-[0.98] rounded-xl text-white shadow-lg shadow-amber-200/50 transition-all flex items-center justify-center gap-2 group">
+            <button @click="fetchData" class="w-full py-2.5 bg-purple-600 hover:bg-purple-700 active:scale-[0.98] rounded-xl text-white shadow-lg shadow-purple-200/50 transition-all flex items-center justify-center gap-2 group">
                 <span class="text-xs font-black uppercase tracking-widest group-hover:tracking-wider transition-all">Refresh Data</span>
                 <span class="group-hover:rotate-180 transition-transform duration-500"><AppIcon name="arrow-path" class="w-5 h-5" /></span>
             </button>
@@ -57,9 +57,9 @@
 <!-- Header Flow -->
             <div class="p-4 bg-white border-b border-slate-200 flex justify-between items-center gap-4 shrink-0 z-10 shadow-sm">
                 <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-2xl bg-amber-50 shadow-sm border border-amber-100 flex items-center justify-center text-xl hidden sm:flex text-amber-500"><AppIcon name="users" class="w-6 h-6" /></div>
+                    <div class="w-10 h-10 rounded-2xl bg-purple-50 shadow-sm border border-purple-100 flex items-center justify-center text-xl hidden sm:flex text-purple-500"><AppIcon name="users" class="w-6 h-6" /></div>
                     <div>
-                        <h3 class="text-sm font-black uppercase tracking-widest text-amber-700">Wali Kelas</h3>
+                        <h3 class="text-sm font-black uppercase tracking-widest text-purple-700">Wali Kelas</h3>
                         <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Kelola penugasan wali kelas</p>
                     </div>
                 </div>
@@ -70,7 +70,7 @@
                 
                 <!-- Loading State -->
                 <div v-if="isLoading" class="flex flex-col items-center justify-center h-full">
-                    <div class="w-10 h-10 border-4 border-amber-400 border-t-transparent rounded-full animate-spin mb-4"></div>
+                    <div class="w-10 h-10 border-4 border-purple-400 border-t-transparent rounded-full animate-spin mb-4"></div>
                     <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Memuat Data...</span>
                 </div>
 
@@ -105,21 +105,21 @@
                                     </td>
                                     <td class="py-3 px-4 border-r border-slate-100">
                                         <div class="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-1.5">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                                            <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
                                             {{ k.kurikulum?.nama_kurikulum || 'Belum Diatur' }}
                                         </div>
                                     </td>
                                     <td class="py-3 px-4 border-r border-slate-100">
                                         <div class="relative group/select">
-                                            <select v-model="form[k.id]" class="w-full px-3 py-2 text-[11px] font-bold text-slate-700 rounded-lg border-2 border-slate-200/70 bg-slate-50 hover:bg-white focus:bg-white focus:border-amber-500 focus:ring-4 focus:ring-amber-500/10 outline-none appearance-none cursor-pointer transition-all pr-8">
+                                            <select v-model="form[k.id]" class="w-full px-3 py-2 text-[11px] font-bold text-slate-700 rounded-lg border-2 border-slate-200/70 bg-slate-50 hover:bg-white focus:bg-white focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 outline-none appearance-none cursor-pointer transition-all pr-8">
                                                 <option value="" disabled>-- Pilih Guru --</option>
                                                 <option v-for="g in listGuru" :key="g.id" :value="g.id">{{ g.name }}</option>
                                             </select>
-                                            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-[10px] group-hover/select:text-amber-500 transition-colors">▼</span>
+                                            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-[10px] group-hover/select:text-purple-500 transition-colors">▼</span>
                                         </div>
                                     </td>
                                     <td class="py-3 px-4 text-center">
-                                        <button @click="saveWaliKelas(k.id)" class="w-full py-2 bg-slate-800 hover:bg-amber-600 active:bg-amber-700 text-white text-[10px] font-black uppercase tracking-widest rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-amber-500/20 flex items-center justify-center gap-1.5 group/btn" :disabled="isSaving[k.id]">
+                                        <button @click="saveWaliKelas(k.id)" class="w-full py-2 bg-slate-800 hover:bg-purple-600 active:bg-purple-700 text-white text-[10px] font-black uppercase tracking-widest rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-purple-500/20 flex items-center justify-center gap-1.5 group/btn" :disabled="isSaving[k.id]">
                                             <span v-if="isSaving[k.id]" class="animate-spin"><AppIcon name="clock" class="w-3.5 h-3.5" /></span>
                                             <span v-else class="group-hover/btn:-translate-y-0.5 transition-transform"><AppIcon name="document-check" class="w-3.5 h-3.5" /></span>
                                             <span>{{ isSaving[k.id] ? 'Menyimpan' : 'Simpan' }}</span>

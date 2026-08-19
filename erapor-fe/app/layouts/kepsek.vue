@@ -5,7 +5,7 @@
     <aside class="group bg-slate-900 text-white flex-shrink-0 min-h-screen hidden lg:flex flex-col fixed lg:static z-50 transition-all duration-300 ease-in-out overflow-x-hidden print:hidden" :class="[sidebarOpen ? 'w-64' : 'lg:w-[72px] lg:hover:w-64']">
       <div class="h-14 flex items-center pl-5 pr-4 bg-slate-950 font-bold text-base tracking-wider border-b border-slate-800 whitespace-nowrap overflow-hidden">
         <img v-if="sekolah?.logo" :src="sekolah.logo" alt="Logo" class="h-8 w-8 object-contain lg:mr-3 shrink-0 cursor-pointer hover:scale-110 transition-transform" @click="visiMisiDialog?.open()" />
-        <span v-else class="text-amber-500 mr-1 text-xl shrink-0 cursor-pointer hover:scale-110 transition-transform" @click="visiMisiDialog?.open()">e</span>
+        <span v-else class="text-purple-500 mr-1 text-xl shrink-0 cursor-pointer hover:scale-110 transition-transform" @click="visiMisiDialog?.open()">e</span>
         <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300 cursor-pointer" @click="visiMisiDialog?.open()">
           <span v-if="sekolah?.logo" class="ml-1">e-Rapor</span>
           <span v-else>-Rapor</span>
@@ -14,8 +14,8 @@
       <div class="p-3">
         <nav class="space-y-1 h-[calc(100vh-140px)] overflow-y-auto custom-scrollbar pr-2">
           <template v-for="(menu, idx) in kepsekMenus" :key="idx">
-            <div v-if="menu.divider" class="pt-4 pb-1 px-3 text-[10px] font-bold text-amber-500 uppercase tracking-widest whitespace-nowrap opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">{{ menu.dividerLabel }}</div>
-            <NuxtLink v-else :to="menu.path" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-amber-600 text-white shadow">
+            <div v-if="menu.divider" class="pt-4 pb-1 px-3 text-[10px] font-bold text-purple-500 uppercase tracking-widest whitespace-nowrap opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">{{ menu.dividerLabel }}</div>
+            <NuxtLink v-else :to="menu.path" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap" active-class="bg-purple-600 text-white shadow">
               <span class="mr-3 text-lg flex items-center justify-center" v-html="getSvgIcon(menu.icon)"></span>
               <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">{{ menu.name }}</span>
             </NuxtLink>
@@ -30,10 +30,10 @@
         <div class="flex items-center">
           <div class="lg:hidden flex items-center gap-2 cursor-pointer hover:scale-105 transition-transform" @click="visiMisiDialog?.open()">
             <img v-if="sekolah?.logo" :src="sekolah.logo" alt="Logo" class="h-7 w-7 object-contain" />
-            <span v-else class="text-amber-600 font-black text-lg">e</span>
-            <span class="font-black text-slate-700 text-sm">e-Rapor <span class="text-amber-600">Kepsek</span></span>
+            <span v-else class="text-purple-600 font-black text-lg">e</span>
+            <span class="font-black text-slate-700 text-sm">e-Rapor <span class="text-purple-600">Kepsek</span></span>
           </div>
-          <h2 class="hidden lg:block text-base font-bold text-slate-800 ml-3 border-l-2 border-amber-500 pl-3 py-1 uppercase tracking-wider">{{ route.meta.title || 'Kepala Sekolah Workspace' }}</h2>
+          <h2 class="hidden lg:block text-base font-bold text-slate-800 ml-3 border-l-2 border-purple-500 pl-3 py-1 uppercase tracking-wider">{{ route.meta.title || 'Kepala Sekolah Workspace' }}</h2>
         </div>
         <div class="flex-1 lg:flex-none flex justify-end items-center space-x-4">
           <!-- Active Year Siren Indicator -->
@@ -51,14 +51,14 @@
                 <p class="text-[13px] font-bold text-slate-700 truncate leading-tight">{{ userProfile?.name || 'Kepala Sekolah' }}</p>
                 <p class="text-[10px] text-slate-500 truncate uppercase tracking-wider">{{ userProfile?.email || 'kepsek@erapor.com' }}</p>
               </div>
-              <div class="h-9 w-9 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white font-black shadow-md text-sm border-2 border-white shrink-0">{{ userInitials }}</div>
+              <div class="h-9 w-9 rounded-full bg-gradient-to-br from-purple-500 to-fuchsia-600 flex items-center justify-center text-white font-black shadow-md text-sm border-2 border-white shrink-0">{{ userInitials }}</div>
             </button>
             <div v-show="profileDropdownOpen" class="absolute right-0 top-full mt-2 w-48 bg-white rounded-2xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] py-2 z-[60] origin-top-right overflow-hidden flex flex-col">
               <div class="px-4 py-2 border-b border-slate-100 mb-1">
                 <p class="text-[13px] font-bold text-slate-700 truncate">{{ userProfile?.name || 'Kepala Sekolah' }}</p>
                 <p class="text-[10px] text-slate-500 truncate">{{ userProfile?.email || 'kepsek@erapor.com' }}</p>
               </div>
-              <button @click="openProfileModal(); profileDropdownOpen = false" type="button" class="flex items-center px-4 py-2 text-sm text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition-colors w-full text-left">
+              <button @click="openProfileModal(); profileDropdownOpen = false" type="button" class="flex items-center px-4 py-2 text-sm text-slate-700 hover:bg-purple-50 hover:text-purple-700 transition-colors w-full text-left">
                 <span class="mr-2">👤</span> Profil Saya
               </button>
               <button @click="handleLogout" type="button" class="flex items-center px-4 py-2 text-sm text-rose-600 hover:bg-rose-50 transition-colors w-full text-left">
@@ -72,7 +72,7 @@
       <main class="flex-1 overflow-y-auto p-0 sm:p-5 bg-slate-50 relative print:p-0 print:bg-white print:overflow-visible print:block pb-20 lg:pb-5">
         <NuxtPage />
         <div ref="footerRef" class="hidden text-center print:hidden transition-all duration-1000" :class="showFooter ? 'mt-10 pt-4 pb-4 border-t border-slate-200 opacity-100' : 'h-0 opacity-0 overflow-hidden'">
-          <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Created by <span class="text-amber-600">SMK-Yatindo</span></p>
+          <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Created by <span class="text-purple-600">SMK-Yatindo</span></p>
         </div>
       </main>
     </div>
@@ -81,11 +81,11 @@
     <nav class="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-100 shadow-[0_-10px_20px_-10px_rgba(0,0,0,0.05)] print:hidden">
       <div class="flex items-stretch h-16">
         <NuxtLink to="/kepsek/dashboard" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="route.path === '/kepsek/dashboard' ? 'text-slate-800' : 'text-slate-400'">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-[22px] w-[22px]" :class="route.path === '/kepsek/dashboard' ? 'stroke-[2.5px] text-amber-500' : 'stroke-[2px]'" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-[22px] w-[22px]" :class="route.path === '/kepsek/dashboard' ? 'stroke-[2.5px] text-purple-500' : 'stroke-[2px]'" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
           <span class="text-[10px] font-bold" :class="route.path === '/kepsek/dashboard' ? 'text-slate-800' : ''">Home</span>
         </NuxtLink>
         <button @click="openDrawer('all')" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors" :class="isGroupActive('all') ? 'text-slate-800' : 'text-slate-400'">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-[22px] w-[22px]" :class="isGroupActive('all') ? 'stroke-[2.5px] text-amber-500' : 'stroke-[2px]'" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-[22px] w-[22px]" :class="isGroupActive('all') ? 'stroke-[2.5px] text-purple-500' : 'stroke-[2px]'" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>
           <span class="text-[10px] font-bold" :class="isGroupActive('all') ? 'text-slate-800' : ''">Menu</span>
         </button>
       </div>
@@ -110,8 +110,8 @@
           <div class="grid grid-cols-4 gap-y-5 gap-x-3">
             <template v-for="(menu, idx) in currentDrawerMenus" :key="'g-'+idx">
               <NuxtLink v-if="!menu.divider" :to="menu.path" @click="closeDrawer" class="flex flex-col items-center gap-1.5 active:scale-95 transition-transform">
-                <div class="w-14 h-14 rounded-2xl flex items-center justify-center shadow-sm transition-all text-amber-600" :class="(route.path === menu.path || route.path.startsWith(menu.path + '/')) ? 'bg-amber-500 text-white shadow-amber-200 shadow-lg' : 'bg-slate-50 border border-slate-100'" v-html="getSvgIcon(menu.icon)"></div>
-                <span class="text-[9px] font-bold text-center leading-tight w-full" :class="(route.path === menu.path || route.path.startsWith(menu.path + '/')) ? 'text-amber-700' : 'text-slate-500'">{{ menu.name }}</span>
+                <div class="w-14 h-14 rounded-2xl flex items-center justify-center shadow-sm transition-all text-purple-600" :class="(route.path === menu.path || route.path.startsWith(menu.path + '/')) ? 'bg-purple-500 text-white shadow-purple-200 shadow-lg' : 'bg-slate-50 border border-slate-100'" v-html="getSvgIcon(menu.icon)"></div>
+                <span class="text-[9px] font-bold text-center leading-tight w-full" :class="(route.path === menu.path || route.path.startsWith(menu.path + '/')) ? 'text-purple-700' : 'text-slate-500'">{{ menu.name }}</span>
               </NuxtLink>
             </template>
           </div>

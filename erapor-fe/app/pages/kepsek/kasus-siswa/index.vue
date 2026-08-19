@@ -4,7 +4,7 @@
       <!-- MOBILE VIEW TABS -->
       <div class="xl:hidden absolute top-0 left-0 w-full bg-white border-b border-slate-200 flex-shrink-0 p-1.5 flex gap-1.5 shadow-sm z-20">
         <button v-for="tab in mobileTabs" :key="'mob-'+tab.id" type="button" @click="activeTabMobile = tab.id"
-          :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-rose-500 to-rose-600 text-white shadow-md shadow-rose-500/20 ring-2 ring-rose-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
+          :class="activeTabMobile === tab.id ? 'bg-gradient-to-br from-purple-500 to-purple-600 text-white shadow-md shadow-purple-500/20 ring-2 ring-purple-500 ring-offset-1' : 'bg-white text-slate-500 shadow-sm border border-slate-100'"
           class="flex-1 rounded-lg flex flex-col items-center justify-center py-2 px-1 transition-all active:scale-95">
           <AppIcon :name="tab.icon" class="text-lg mb-0.5 transition-transform" :class="activeTabMobile === tab.id ? 'scale-110' : ''" />
           <span class="text-[10px] font-black uppercase tracking-wider text-center leading-none">{{ tab.title }}</span>
@@ -15,22 +15,22 @@
       <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full xl:z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] overflow-y-auto custom-scrollbar transition-all', activeTabMobile === 'info' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[52px]' : '']">
         <div class="p-4 space-y-4">
           <div class="shrink-0 z-10 relative">
-            <div class="bg-gradient-to-r from-rose-500 to-rose-700 rounded-2xl p-4 border border-rose-400 shadow-sm relative overflow-hidden flex items-center gap-3">
+            <div class="bg-gradient-to-r from-purple-500 to-purple-700 rounded-2xl p-4 border border-purple-400 shadow-sm relative overflow-hidden flex items-center gap-3">
               <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="shield-check" class="w-5 h-5" /></div>
               <div class="relative z-10">
                   <h3 class="text-xs font-black uppercase tracking-widest text-white">Penanganan Kasus</h3>
-                  <p class="text-[10px] text-rose-100 font-semibold uppercase mt-0.5">Evaluasi Akhir Tingkat Kurikulum</p>
+                  <p class="text-[10px] text-purple-100 font-semibold uppercase mt-0.5">Evaluasi Akhir Tingkat Kurikulum</p>
               </div>
               <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
                 <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
               </div>
             </div>
           </div>
-          <div class="bg-rose-50 p-3 rounded-xl border border-rose-100">
-            <h3 class="text-[10px] font-black text-rose-800 uppercase tracking-widest mb-1.5 flex items-center gap-2">
+          <div class="bg-purple-50 p-3 rounded-xl border border-purple-100">
+            <h3 class="text-[10px] font-black text-purple-800 uppercase tracking-widest mb-1.5 flex items-center gap-2">
               <span><AppIcon name="pin" class="w-4 h-4" /></span> Informasi Eskalasi
             </h3>
-            <p class="text-[10px] text-rose-700 leading-relaxed font-medium">
+            <p class="text-[10px] text-purple-700 leading-relaxed font-medium">
               Halaman ini menampilkan eskalasi sistem untuk pelanggaran berat akademik (Alpa beruntun). 
               <br><br>
               <strong>SP2 (10x Alpa):</strong> Sekadar mengetahui (ditangani BK).<br>
@@ -46,7 +46,7 @@
           <div class="bg-white rounded-none sm:rounded-[2rem] shadow-[0_2px_15px_-3px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col flex-1 relative min-h-0 border-0 sm:border sm:border-slate-200/60">
             <div class="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-white z-20">
                 <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-2xl bg-rose-100 shadow-inner flex items-center justify-center text-xl border border-rose-200 text-rose-600"><AppIcon name="shield-check" class="w-6 h-6" /></div>
+                    <div class="w-10 h-10 rounded-2xl bg-purple-100 shadow-inner flex items-center justify-center text-xl border border-purple-200 text-purple-600"><AppIcon name="shield-check" class="w-6 h-6" /></div>
                     <div>
                         <h3 class="text-sm font-black uppercase tracking-widest text-slate-800">Daftar Eskalasi Akademik</h3>
                         <p class="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Menampilkan kasus SP2 dan SP3</p>
@@ -55,7 +55,7 @@
             </div>
             <div class="flex-1 overflow-y-auto custom-scrollbar p-6">
                 <div v-if="isLoading" class="flex justify-center py-12">
-                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-rose-600"></div>
+                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
                 </div>
                 <div v-else-if="kasusList.length === 0" class="text-center py-12 border-2 border-dashed border-slate-200 rounded-2xl bg-slate-50">
                     <div class="text-4xl mb-3 opacity-50"><AppIcon name="sparkles" class="w-5 h-5 inline-block mr-1" /></div>
@@ -66,7 +66,7 @@
                     <div v-for="kasus in kasusList" :key="kasus.id" class="border border-slate-200 rounded-2xl overflow-hidden bg-white hover:border-slate-300 transition-colors shadow-sm">
                         <div class="px-5 py-4 border-b border-slate-100 bg-slate-50/50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                             <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-full bg-rose-100 text-rose-600 font-bold flex items-center justify-center border border-rose-200 uppercase text-xs">
+                                <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-600 font-bold flex items-center justify-center border border-purple-200 uppercase text-xs">
                                     {{ kasus.siswa.nama.substring(0, 2) }}
                                 </div>
                                 <div>
@@ -76,7 +76,7 @@
                             </div>
                             <div class="flex items-center gap-2">
                                 <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border"
-                                      :class="kasus.kategori === 'SP3' ? 'bg-rose-100 text-rose-700 border-rose-200' : 'bg-orange-100 text-orange-700 border-orange-200'">
+                                      :class="kasus.kategori === 'SP3' ? 'bg-purple-100 text-purple-700 border-purple-200' : 'bg-orange-100 text-orange-700 border-orange-200'">
                                     {{ kasus.kategori }}
                                 </span>
                                 <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border"
@@ -97,10 +97,10 @@
                             <div class="flex justify-end pt-4 border-t border-slate-100">
                                 <button v-if="kasus.kategori === 'SP3' && (!kasus.tindakan_penyelesaian || !kasus.tindakan_penyelesaian.includes('ACC Kurikulum'))" 
                                         @click="openModal(kasus)"
-                                        class="px-5 py-2.5 bg-rose-600 text-white text-[11px] font-black uppercase tracking-widest rounded-xl hover:bg-rose-700 transition-colors shadow-sm flex items-center gap-2">
+                                        class="px-5 py-2.5 bg-purple-600 text-white text-[11px] font-black uppercase tracking-widest rounded-xl hover:bg-purple-700 transition-colors shadow-sm flex items-center gap-2">
                                     <span><AppIcon name="scale" class="w-5 h-5 inline-block mr-1" /></span> Berikan ACC Kurikulum
                                 </button>
-                                <div v-else-if="kasus.kategori === 'SP2' && kasus.status === 'Proses'" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest italic flex items-center gap-1.5">
+                                <div v-else-if="kasus.kategori === 'SP2' && kasus.status === 'Ppurples'" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest italic flex items-center gap-1.5">
                                     <span class="w-1.5 h-1.5 rounded-full bg-slate-400 animate-pulse"></span>
                                     Sedang ditangani oleh BK
                                 </div>
@@ -118,25 +118,25 @@
     <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" @click="closeModal"></div>
       <div class="bg-white rounded-3xl shadow-xl w-full max-w-lg overflow-hidden relative z-10 flex flex-col max-h-[90vh]">
-        <div class="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-rose-50/50">
+        <div class="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-purple-50/50">
           <div>
-            <h3 class="text-sm font-black text-rose-800 uppercase tracking-widest">Eksekusi SP3</h3>
-            <p class="text-[10px] font-bold text-rose-600 uppercase mt-1">Persetujuan Akhir Kurikulum</p>
+            <h3 class="text-sm font-black text-purple-800 uppercase tracking-widest">Eksekusi SP3</h3>
+            <p class="text-[10px] font-bold text-purple-600 uppercase mt-1">Persetujuan Akhir Kurikulum</p>
           </div>
-          <button @click="closeModal" class="w-8 h-8 flex items-center justify-center rounded-xl bg-white text-slate-400 hover:bg-rose-100 hover:text-rose-600 transition-colors border border-slate-200">
+          <button @click="closeModal" class="w-8 h-8 flex items-center justify-center rounded-xl bg-white text-slate-400 hover:bg-purple-100 hover:text-purple-600 transition-colors border border-slate-200">
             ✕
           </button>
         </div>
         <div class="p-6 overflow-y-auto custom-scrollbar">
           <form @submit.prevent="submitAcc" class="space-y-5">
             <div>
-              <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Keputusan Akhir Waka Kurikulum <span class="text-rose-500">*</span></label>
+              <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Keputusan Akhir Waka Kurikulum <span class="text-purple-500">*</span></label>
               <div class="grid grid-cols-2 gap-3">
                 <label class="cursor-pointer">
                     <input type="radio" v-model="form.keputusan" value="Keluarkan" class="peer sr-only" required>
-                    <div class="p-4 rounded-xl border-2 border-slate-100 peer-checked:border-rose-500 peer-checked:bg-rose-50 text-center transition-all">
+                    <div class="p-4 rounded-xl border-2 border-slate-100 peer-checked:border-purple-500 peer-checked:bg-purple-50 text-center transition-all">
                         <span class="block text-xl mb-1"><AppIcon name="no-symbol" class="w-5 h-5 inline-block mr-1" /></span>
-                        <span class="block text-[11px] font-black text-slate-700 peer-checked:text-rose-700 uppercase">Keluarkan</span>
+                        <span class="block text-[11px] font-black text-slate-700 peer-checked:text-purple-700 uppercase">Keluarkan</span>
                     </div>
                 </label>
                 <label class="cursor-pointer">
@@ -150,9 +150,9 @@
             </div>
             
             <div>
-              <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Catatan Tambahan <span class="text-rose-500">*</span></label>
+              <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Catatan Tambahan <span class="text-purple-500">*</span></label>
               <textarea v-model="form.catatan_kurikulum" rows="4" 
-                        class="w-full text-sm p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all resize-none"
+                        class="w-full text-sm p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all resize-none"
                         placeholder="Misal: Siswa telah diberikan pembinaan terakhir dengan orang tua..." required></textarea>
             </div>
           </form>
@@ -161,7 +161,7 @@
           <button type="button" @click="closeModal" class="px-5 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-200 bg-slate-100 rounded-xl transition-colors">Batal</button>
           <button @click="submitAcc" :disabled="isSubmitting || !form.keputusan || !form.catatan_kurikulum" 
                   class="px-6 py-2.5 text-xs font-black uppercase tracking-widest text-white rounded-xl transition-all shadow-sm flex items-center justify-center min-w-[120px]"
-                  :class="(isSubmitting || !form.keputusan || !form.catatan_kurikulum) ? 'bg-rose-400 cursor-not-allowed' : 'bg-rose-600 hover:bg-rose-700 shadow-rose-500/30'">
+                  :class="(isSubmitting || !form.keputusan || !form.catatan_kurikulum) ? 'bg-purple-400 cursor-not-allowed' : 'bg-purple-600 hover:bg-purple-700 shadow-purple-500/30'">
             <span v-if="isSubmitting" class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
             <span v-else>Simpan Eksekusi</span>
           </button>

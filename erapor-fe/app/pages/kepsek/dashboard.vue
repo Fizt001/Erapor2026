@@ -9,11 +9,11 @@
         <div class="p-6 space-y-6">
           
           <!-- Welcome Widget -->
-          <div class="bg-gradient-to-br from-amber-500 to-amber-700 rounded-2xl p-5 shadow-sm text-white relative overflow-hidden">
+          <div class="bg-gradient-to-br from-purple-500 to-purple-700 rounded-2xl p-5 shadow-sm text-white relative overflow-hidden">
             <div class="relative z-10">
               <h2 class="text-lg font-extrabold mb-1">Halo, {{ userProfile?.name?.split(' ')[0] || 'Waka Kurikulum' }} <AppIcon name="hand-raised" class="inline-block w-5 h-5" /></h2>
-              <p class="text-amber-100 text-xs leading-relaxed">
-                Tahun Ajaran <span class="font-bold text-white bg-amber-900/50 px-1.5 py-0.5 rounded">{{ ta_aktif?.tahun || 'Memuat...' }}</span>
+              <p class="text-purple-100 text-xs leading-relaxed">
+                Tahun Ajaran <span class="font-bold text-white bg-purple-900/50 px-1.5 py-0.5 rounded">{{ ta_aktif?.tahun || 'Memuat...' }}</span>
               </p>
             </div>
             <div class="absolute right-0 bottom-0 opacity-10">
@@ -38,15 +38,15 @@
              <div class="relative z-10">
                 <h3 class="text-xs font-bold uppercase tracking-widest mb-3 text-slate-300 flex items-center"><AppIcon name="bolt" /> Akses Cepat</h3>
                 <div class="space-y-2">
-                    <NuxtLink to="/kurikulum/mapel" class="block bg-slate-800 hover:bg-amber-600 transition-colors p-3 rounded-xl text-xs font-semibold flex justify-between items-center group">
+                    <NuxtLink to="/kurikulum/mapel" class="block bg-slate-800 hover:bg-purple-600 transition-colors p-3 rounded-xl text-xs font-semibold flex justify-between items-center group">
                         Master Mata Pelajaran
                         <span class="opacity-0 group-hover:opacity-100 transition-opacity">→</span>
                     </NuxtLink>
-                    <NuxtLink to="/kurikulum/pengampu" class="block bg-slate-800 hover:bg-amber-600 transition-colors p-3 rounded-xl text-xs font-semibold flex justify-between items-center group">
+                    <NuxtLink to="/kurikulum/pengampu" class="block bg-slate-800 hover:bg-purple-600 transition-colors p-3 rounded-xl text-xs font-semibold flex justify-between items-center group">
                         Plot Guru Pengampu
                         <span class="opacity-0 group-hover:opacity-100 transition-opacity">→</span>
                     </NuxtLink>
-                    <NuxtLink to="/kurikulum/wali-kelas" class="block bg-slate-800 hover:bg-amber-600 transition-colors p-3 rounded-xl text-xs font-semibold flex justify-between items-center group">
+                    <NuxtLink to="/kurikulum/wali-kelas" class="block bg-slate-800 hover:bg-purple-600 transition-colors p-3 rounded-xl text-xs font-semibold flex justify-between items-center group">
                         Penugasan Wali Kelas
                         <span class="opacity-0 group-hover:opacity-100 transition-opacity">→</span>
                     </NuxtLink>
@@ -60,7 +60,7 @@
           <!-- Readiness Balance (dari kurikulum sebelumnya) -->
           <div class="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden flex flex-col">
               <div class="p-5 border-b border-slate-100 flex items-center gap-3 bg-slate-50/50">
-                  <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-400 to-indigo-600 shadow-sm flex items-center justify-center text-white text-xl shrink-0"><AppIcon name="scale" class="w-5 h-5 inline-block mr-1" /></div>
+                  <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-fuchsia-400 to-fuchsia-600 shadow-sm flex items-center justify-center text-white text-xl shrink-0"><AppIcon name="scale" class="w-5 h-5 inline-block mr-1" /></div>
                   <div>
                       <h3 class="text-sm font-black text-slate-800">Neraca Kesiapan</h3>
                       <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Progress Persiapan</p>
@@ -78,7 +78,7 @@
                       </div>
                       <div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
                           <div class="h-full rounded-full transition-all duration-1000 ease-out" 
-                                :class="readinessWalas === 100 ? 'bg-emerald-500' : (readinessWalas > 50 ? 'bg-amber-400' : 'bg-rose-500')"
+                                :class="readinessWalas === 100 ? 'bg-emerald-500' : (readinessWalas > 50 ? 'bg-purple-400' : 'bg-rose-500')"
                                 :style="{ width: `${readinessWalas}%` }"></div>
                       </div>
                   </div>
@@ -86,19 +86,19 @@
                       <div class="flex justify-between items-end mb-2">
                           <div>
                               <h4 class="text-[11px] font-bold text-slate-700 uppercase tracking-widest">Guru Pengampu</h4>
-                              <p class="text-[10px] text-slate-500 mt-0.5" v-if="stats.alerts?.mapelTanpaGuru > 0"><b class="text-amber-500">{{ stats.alerts?.mapelTanpaGuru }} mapel</b> kosong</p>
+                              <p class="text-[10px] text-slate-500 mt-0.5" v-if="stats.alerts?.mapelTanpaGuru > 0"><b class="text-purple-500">{{ stats.alerts?.mapelTanpaGuru }} mapel</b> kosong</p>
                               <p class="text-[10px] text-emerald-600 font-bold mt-0.5" v-else>Terisi Penuh <AppIcon name="check-circle" class="w-4 h-4 inline-block align-text-bottom" /></p>
                           </div>
                           <span class="text-lg font-black" :class="readinessMapel === 100 ? 'text-emerald-500' : 'text-slate-700'">{{ readinessMapel }}%</span>
                       </div>
                       <div class="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
                           <div class="h-full rounded-full transition-all duration-1000 ease-out" 
-                                :class="readinessMapel === 100 ? 'bg-emerald-500' : (readinessMapel > 50 ? 'bg-amber-400' : 'bg-rose-500')"
+                                :class="readinessMapel === 100 ? 'bg-emerald-500' : (readinessMapel > 50 ? 'bg-purple-400' : 'bg-rose-500')"
                                 :style="{ width: `${readinessMapel}%` }"></div>
                       </div>
                   </div>
                   <div class="pt-4 border-t border-slate-100 mt-auto">
-                      <NuxtLink to="/kurikulum/struktur-umum" class="w-full block text-center py-2.5 bg-slate-50 hover:bg-amber-50 border border-slate-200 hover:border-amber-200 text-slate-700 hover:text-amber-700 font-bold text-[10px] uppercase tracking-widest rounded-xl transition-colors">
+                      <NuxtLink to="/kurikulum/struktur-umum" class="w-full block text-center py-2.5 bg-slate-50 hover:bg-purple-50 border border-slate-200 hover:border-purple-200 text-slate-700 hover:text-purple-700 font-bold text-[10px] uppercase tracking-widest rounded-xl transition-colors">
                           Buka Pengaturan
                       </NuxtLink>
                   </div>
@@ -113,7 +113,7 @@
         
         <!-- Loading State -->
         <div v-if="isLoading" class="flex-grow flex items-center justify-center py-12">
-          <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-amber-600"></div>
+          <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-purple-600"></div>
         </div>
 
         <div v-else class="p-6 lg:p-8 space-y-6 max-w-7xl mx-auto w-full">
@@ -121,16 +121,16 @@
             <!-- STATISTIK UTAMA (4 COLUMNS) -->
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
                 <!-- Card 1 -->
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center space-x-4 transition-all hover:-translate-y-1 hover:shadow-md hover:border-amber-200">
-                    <div class="h-12 w-12 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 text-2xl border border-amber-100"><AppIcon name="book-open" /></div>
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center space-x-4 transition-all hover:-translate-y-1 hover:shadow-md hover:border-purple-200">
+                    <div class="h-12 w-12 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600 text-2xl border border-purple-100"><AppIcon name="book-open" /></div>
                     <div>
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Mata Pelajaran</p>
                         <p class="text-2xl font-black text-slate-800 leading-none">{{ stats.totalMapel || 0 }}</p>
                     </div>
                 </div>
                 <!-- Card 2 -->
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center space-x-4 transition-all hover:-translate-y-1 hover:shadow-md hover:border-orange-200">
-                    <div class="h-12 w-12 rounded-xl bg-orange-50 flex items-center justify-center text-orange-600 text-2xl border border-orange-100"><AppIcon name="academic-cap" /></div>
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center space-x-4 transition-all hover:-translate-y-1 hover:shadow-md hover:border-fuchsia-200">
+                    <div class="h-12 w-12 rounded-xl bg-fuchsia-50 flex items-center justify-center text-fuchsia-600 text-2xl border border-fuchsia-100"><AppIcon name="academic-cap" /></div>
                     <div>
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Guru Pengampu</p>
                         <p class="text-2xl font-black text-slate-800 leading-none">{{ stats.totalGuru || 0 }}</p>
@@ -145,8 +145,8 @@
                     </div>
                 </div>
                 <!-- Card 4 -->
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center space-x-4 transition-all hover:-translate-y-1 hover:shadow-md hover:border-indigo-200">
-                    <div class="h-12 w-12 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 text-2xl border border-indigo-100"><AppIcon name="star" /></div>
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center space-x-4 transition-all hover:-translate-y-1 hover:shadow-md hover:border-fuchsia-200">
+                    <div class="h-12 w-12 rounded-xl bg-fuchsia-50 flex items-center justify-center text-fuchsia-600 text-2xl border border-fuchsia-100"><AppIcon name="star" /></div>
                     <div>
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">Ekstrakurikuler</p>
                         <p class="text-2xl font-black text-slate-800 leading-none">{{ stats.totalEkskul || 0 }}</p>
@@ -159,7 +159,7 @@
                 <!-- Chart Distribusi JP -->
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/60">
                     <div class="mb-6 flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 text-xl border border-indigo-100"><AppIcon name="chart-bar" /></div>
+                        <div class="w-10 h-10 rounded-xl bg-fuchsia-50 flex items-center justify-center text-fuchsia-600 text-xl border border-fuchsia-100"><AppIcon name="chart-bar" /></div>
                         <div>
                             <h3 class="text-sm font-bold text-slate-800">Distribusi Jam Pelajaran</h3>
                             <p class="text-[10px] font-medium text-slate-500 uppercase tracking-widest">Berdasarkan Tingkat Kelas</p>
@@ -178,7 +178,7 @@
                 <!-- Chart Komposisi Mapel -->
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/60">
                     <div class="mb-6 flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 text-xl border border-amber-100"><AppIcon name="chart-pie" /></div>
+                        <div class="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600 text-xl border border-purple-100"><AppIcon name="chart-pie" /></div>
                         <div>
                             <h3 class="text-sm font-bold text-slate-800">Komposisi Mata Pelajaran</h3>
                             <p class="text-[10px] font-medium text-slate-500 uppercase tracking-widest">Struktur Kurikulum</p>
