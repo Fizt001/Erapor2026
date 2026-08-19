@@ -286,6 +286,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('supervisi/gurus', [\App\Http\Controllers\Api\Kepsek\KepsekSupervisiController::class, 'getGuruList']);
         Route::post('supervisi', [\App\Http\Controllers\Api\Kepsek\KepsekSupervisiController::class, 'store']);
         Route::put('supervisi/{id}', [\App\Http\Controllers\Api\Kepsek\KepsekSupervisiController::class, 'update']);
+        Route::delete('supervisi/{id}', [\App\Http\Controllers\Api\Kepsek\KepsekSupervisiController::class, 'destroy']);        Route::get('supervisi/gurus', [\App\Http\Controllers\Api\Kepsek\KepsekSupervisiController::class, 'getGuruList']);
+        Route::post('supervisi', [\App\Http\Controllers\Api\Kepsek\KepsekSupervisiController::class, 'store']);
+        Route::put('supervisi/{id}', [\App\Http\Controllers\Api\Kepsek\KepsekSupervisiController::class, 'update']);
         Route::delete('supervisi/{id}', [\App\Http\Controllers\Api\Kepsek\KepsekSupervisiController::class, 'destroy']);
     });
 
