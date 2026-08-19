@@ -274,8 +274,10 @@ Route::middleware('auth:sanctum')->group(function () {
     // ==========================================
     Route::prefix('kepsek')->middleware('role:kepsek,admin')->group(function () {
         Route::get('dashboard', [\App\Http\Controllers\Api\Kurikulum\DashboardController::class, 'index']);
+        Route::get('titimangsa', [\App\Http\Controllers\Api\Kurikulum\TitimangsaController::class, 'index']);
         Route::get('wali-kelas', [\App\Http\Controllers\Api\Kurikulum\WaliKelasController::class, 'index']);
         Route::get('kasus-siswa', [\App\Http\Controllers\Api\Kurikulum\KurikulumPenangananController::class, 'index']);
+        Route::post('kasus-siswa/{id}/acc', [\App\Http\Controllers\Api\Kurikulum\KurikulumPenangananController::class, 'accPenanganan']);
         
         Route::get('kasus-guru', [\App\Http\Controllers\Api\Kepsek\KepsekKasusGuruController::class, 'index']);
         Route::post('kasus-guru/{id}/panggil', [\App\Http\Controllers\Api\Kepsek\KepsekKasusGuruController::class, 'panggil']);
