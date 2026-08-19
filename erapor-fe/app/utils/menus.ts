@@ -93,3 +93,13 @@ export const siswaMenus: MenuConfig[] = [
   { name: 'Laporan Absensi', path: '/siswa/absensi', icon: '📅' },
   { name: 'Catatan Kedisiplinan', path: '/siswa/kedisiplinan', icon: '⚖️' },
 ]
+
+export const kepsekMenus: MenuConfig[] = [
+  { name: 'Dashboard Kepsek', path: '/kepsek/dashboard', icon: '📊' },
+  { divider: true, dividerLabel: 'Pemantauan' },
+  { name: 'Wali Kelas', path: '/kepsek/wali-kelas', icon: '👨‍👩‍👧‍👦' },
+  { name: 'Kasus Siswa', path: '/kepsek/kasus-siswa', icon: '⚖️' },
+  { name: 'Kasus Guru', path: '/kepsek/kasus-guru', icon: '👨‍🏫' },
+  { divider: true, dividerLabel: 'Evaluasi Kinerja' },
+  { name: 'Supervisi Guru', path: '/kepsek/supervisi', icon: '📋' },
+]
