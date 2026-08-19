@@ -71,6 +71,43 @@
 
         <div v-else class="p-6 lg:p-8 space-y-6 max-w-7xl mx-auto w-full">
             
+            <!-- NOTIFIKASI KASUS & SUPERVISI -->
+            <div v-if="dashboardData?.notifikasi?.kasus || dashboardData?.notifikasi?.supervisi" class="space-y-4 mb-6">
+                <!-- Panggilan Kepsek / Peringatan Kasus -->
+                <div v-if="dashboardData.notifikasi.kasus" class="bg-red-50 border border-red-200 rounded-2xl p-5 shadow-sm flex items-start gap-4 animate-pulse">
+                    <div class="h-12 w-12 rounded-full bg-red-100 flex items-center justify-center text-red-600 shrink-0">
+                        <AppIcon name="exclamation-triangle" class="w-6 h-6" />
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-black text-red-800 uppercase tracking-widest mb-1">
+                            {{ dashboardData.notifikasi.kasus.is_panggilan ? 'PANGGILAN KEPALA SEKOLAH' : 'PERINGATAN KINERJA' }}
+                        </h3>
+                        <p class="text-sm font-medium text-red-700">
+                            Terdapat {{ dashboardData.notifikasi.kasus.count }} catatan pelanggaran/kasus untuk Anda. 
+                        </p>
+                        <p class="text-xs text-red-600 mt-1 mt-2">Kasus terakhir: "{{ dashboardData.notifikasi.kasus.latest }}"</p>
+                    </div>
+                </div>
+
+                <!-- Notifikasi Supervisi -->
+                <div v-if="dashboardData.notifikasi.supervisi" class="bg-blue-50 border border-blue-200 rounded-2xl p-5 shadow-sm flex items-start gap-4">
+                    <div class="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 shrink-0">
+                        <AppIcon name="clipboard-document-check" class="w-6 h-6" />
+                    </div>
+                    <div class="w-full">
+                        <div class="flex justify-between items-center mb-1">
+                            <h3 class="text-sm font-black text-blue-800 uppercase tracking-widest">
+                                JADWAL SUPERVISI MENDATANG
+                            </h3>
+                            <NuxtLink to="/guru/supervisi" class="text-xs font-bold text-blue-600 hover:text-blue-800 underline">Lihat Detail</NuxtLink>
+                        </div>
+                        <p class="text-sm font-medium text-blue-700">
+                            Kepala Sekolah telah menjadwalkan supervisi pada tanggal <strong>{{ new Date(dashboardData.notifikasi.supervisi.tanggal).toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'}) }}</strong> jam <strong>{{ dashboardData.notifikasi.supervisi.waktu }}</strong>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
             <!-- STATISTIK UTAMA (4 COLUMNS) -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <!-- Card 1 -->

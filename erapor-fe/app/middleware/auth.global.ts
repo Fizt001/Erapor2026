@@ -41,6 +41,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
           if (user.role === 'guru') return navigateTo('/guru/dashboard')
           if (user.role === 'kurikulum') return navigateTo('/kurikulum/dashboard')
           if (user.role === 'bk') return navigateTo('/bk/dashboard')
+          if (user.role === 'kepsek') return navigateTo('/kepsek/dashboard')
           return navigateTo('/dashboard')
         }
       }
