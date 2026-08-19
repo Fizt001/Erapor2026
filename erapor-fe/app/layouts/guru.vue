@@ -24,10 +24,11 @@
           </template>
           
           <!-- GANTI PERAN (Desktop) -->
-          <div class="pt-6 pb-2 px-3">
-             <NuxtLink v-if="isWalas" to="/role-select" class="flex flex-col items-center justify-center p-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white shadow-lg transition-all hover:-translate-y-1 group/door overflow-hidden w-full border border-slate-700/50">
-                 <span class="text-xl mb-1 group-hover/door:-rotate-180 transition-transform duration-500 flex items-center justify-center" v-html="getSvgIcon('arrow-path-rounded-square') || '🔄'"></span>
-                 <span class="text-[10px] font-black uppercase tracking-widest text-center opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity whitespace-nowrap mt-1">Ganti Peran</span>
+          <div class="mt-4">
+            <div class="pt-4 pb-1 px-3 text-[10px] font-bold text-sky-500 uppercase tracking-widest whitespace-nowrap opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">AKSES GANDA</div>
+             <NuxtLink v-if="isWalas" to="/role-select" class="group flex items-center px-3 py-1.5 text-[13px] font-medium rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-colors whitespace-nowrap">
+                 <span class="mr-3 text-lg flex items-center justify-center">🔄</span>
+                 <span class="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Ganti Peran</span>
              </NuxtLink>
           </div>
         </nav>
@@ -123,7 +124,7 @@
         </button>
         
         <NuxtLink v-if="isWalas" to="/role-select" class="flex-1 flex flex-col items-center justify-center gap-1 transition-colors text-slate-400 hover:text-slate-600 relative">
-          <span class="flex items-center justify-center" v-html="getSvgIcon('arrow-path-rounded-square') || '🔄'"></span>
+          <span class="flex items-center justify-center text-lg">🔄</span>
           <span class="text-[9px] font-black uppercase tracking-wider">Peran</span>
         </NuxtLink>
         <div v-else class="flex-1 flex flex-col items-center justify-center gap-1 text-slate-300 cursor-not-allowed opacity-0 w-0 hidden"></div>
