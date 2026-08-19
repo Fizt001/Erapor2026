@@ -123,7 +123,8 @@
 import { ref } from 'vue'
 
 definePageMeta({
-  middleware: 'kurikulum'
+  middleware: 'kurikulum',
+  layout: 'kurikulum'
 })
 
 const { data, pending, error, refresh } = await useFetch('/api/kurikulum/kasus-guru', {
