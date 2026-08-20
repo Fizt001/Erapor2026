@@ -287,7 +287,7 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted, watch } from 'vue'
+import { computed, ref, onMounted, watch, onUnmounted } from 'vue'
 
 definePageMeta({
   layout: 'kepsek',
@@ -368,6 +368,24 @@ const slideKelas = (tingkat, direction) => {
 const topRankingX = computed(() => stats.value.topRankingAll[selectedKelasX.value] || [])
 const topRankingXI = computed(() => stats.value.topRankingAll[selectedKelasXI.value] || [])
 const topRankingXII = computed(() => stats.value.topRankingAll[selectedKelasXII.value] || [])
+
+// Auto-slide logic
+let autoSlideInterval = null
+
+onMounted(() => {
+    // Jalankan auto-slide tiap 5 detik
+    autoSlideInterval = setInterval(() => {
+        slideKelas('X', 1)
+        slideKelas('XI', 1)
+        slideKelas('XII', 1)
+    }, 5000)
+})
+
+onUnmounted(() => {
+    if (autoSlideInterval) {
+        clearInterval(autoSlideInterval)
+    }
+})
 
 </script>
 
