@@ -76,7 +76,7 @@
         </div>
 
         <!-- Right Side (Desktop) / Bottom Rows (Mobile) -->
-        <div class="flex flex-col lg:flex-row w-full lg:w-auto justify-end items-stretch lg:items-center gap-2 sm:gap-4">
+        <div class="flex flex-row lg:flex-row w-full lg:w-auto justify-end items-stretch lg:items-center gap-2 sm:gap-4">
           
           <!-- Active Year Siren Indicator (Desktop) -->
           <div v-if="ta_aktif" class="hidden lg:flex items-center gap-2 px-3 py-1.5 bg-slate-50 border border-slate-200/80 rounded-full shadow-inner hover:scale-105 transition-all select-none">
@@ -88,7 +88,7 @@
           </div>
 
           <!-- Profile Dropdown in Navbar (Walas Atas) -->
-          <div class="relative w-full lg:w-auto order-1 lg:order-none z-[61]">
+          <div class="relative flex-1 lg:flex-none lg:w-auto order-1 lg:order-none z-[61]">
             <button @click="profileDropdownOpen = !profileDropdownOpen" class="w-full lg:w-auto flex items-center justify-between lg:justify-end space-x-3 focus:outline-none bg-slate-50 hover:bg-slate-100 p-2 lg:p-1.5 lg:pl-3 rounded-xl lg:rounded-full border border-slate-200 transition-all">
               <div class="block min-w-0 pr-2 text-left lg:text-right">
                 <p class="text-[12px] lg:text-[13px] font-bold text-slate-700 truncate leading-tight">{{ userProfile?.name || 'Guru Pengampu' }}</p>
@@ -100,7 +100,7 @@
             </button>
 
             <!-- Dropdown Menu -->
-            <div v-show="profileDropdownOpen" class="absolute right-0 top-full mt-2 w-full lg:w-48 bg-white rounded-xl shadow-xl border border-slate-200 py-2 z-[60] origin-top-right overflow-hidden flex flex-col">
+            <div v-show="profileDropdownOpen" class="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-xl border border-slate-200 py-2 z-[60] origin-top-right overflow-hidden flex flex-col">
               <div class="px-4 py-2 border-b border-slate-100 mb-1 block">
                 <p class="text-[13px] font-bold text-slate-700 truncate">{{ userProfile?.name || 'Guru Pengampu' }}</p>
                 <p class="text-[10px] text-slate-500 truncate">{{ userProfile?.email || 'guru@erapor.com' }}</p>
@@ -117,8 +117,8 @@
             <div v-if="profileDropdownOpen" @click="profileDropdownOpen = false" class="fixed inset-0 z-40 bg-transparent"></div>
           </div>
 
-          <!-- Pilihan Kelas Walas (Mobile only - kept in right section) -->
-          <div v-if="walasStore.assignedClasses.length > 0" class="relative z-50 w-full lg:hidden order-2">
+          <!-- Pilihan Kelas Walas (Mobile: 50%, Desktop: hidden here) -->
+          <div v-if="walasStore.assignedClasses.length > 0" class="relative z-50 flex-1 lg:hidden order-2">
             <select v-model="walasStore.activeKelasId" @change="reloadPage" :disabled="walasStore.assignedClasses.length === 1" :class="['appearance-none w-full bg-amber-500 text-white border-none rounded-xl px-4 py-2 pr-8 text-sm font-bold shadow-md focus:outline-none transition-colors', walasStore.assignedClasses.length > 1 ? 'hover:bg-amber-600 cursor-pointer shadow-amber-500/30 focus:ring-2 focus:ring-amber-500' : 'opacity-90 cursor-default']">
               <option v-for="cls in walasStore.assignedClasses" :key="cls.id" :value="cls.id" class="text-slate-800 bg-white">
                 Walas: Kelas {{ cls.tingkat }} {{ cls.nama_kelas }}
