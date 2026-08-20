@@ -113,11 +113,16 @@
                           <span class="px-3 py-1 bg-indigo-50 text-indigo-700 text-xs font-black rounded-lg border border-indigo-100 uppercase tracking-widest">Tingkat X</span>
                       </div>
                       
-                      <!-- Dropdown Kelas X -->
-                      <select v-model="selectedKelasX" class="w-full bg-slate-50 border border-slate-200 text-slate-700 text-xs font-bold rounded-xl px-3 py-2.5 outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all mb-5">
-                          <option value="">Pilih Kelas X...</option>
-                          <option v-for="cls in kelasPerTingkat['X']" :key="cls.id" :value="cls.id">Kelas {{ cls.nama_kelas }}</option>
-                      </select>
+                      <!-- Slider Kelas X -->
+                      <div class="flex items-center justify-between bg-slate-50 rounded-xl px-2 py-1.5 border border-slate-200 mb-5">
+                          <button @click="slideKelas('X', -1)" class="p-1 hover:bg-slate-200 rounded-lg text-slate-500 transition-colors">
+                              <span class="text-xs font-black">◀</span>
+                          </button>
+                          <span class="text-[11px] font-black text-slate-700 text-center flex-1 truncate px-2">Kelas {{ currentKelasName('X') }}</span>
+                          <button @click="slideKelas('X', 1)" class="p-1 hover:bg-slate-200 rounded-lg text-slate-500 transition-colors">
+                              <span class="text-xs font-black">▶</span>
+                          </button>
+                      </div>
                       
                       <!-- Podium Container -->
                       <div class="flex-1 flex flex-col justify-end min-h-[220px]">
@@ -172,11 +177,16 @@
                           <span class="px-3 py-1 bg-emerald-50 text-emerald-700 text-xs font-black rounded-lg border border-emerald-100 uppercase tracking-widest">Tingkat XI</span>
                       </div>
                       
-                      <!-- Dropdown Kelas XI -->
-                      <select v-model="selectedKelasXI" class="w-full bg-slate-50 border border-slate-200 text-slate-700 text-xs font-bold rounded-xl px-3 py-2.5 outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 transition-all mb-5">
-                          <option value="">Pilih Kelas XI...</option>
-                          <option v-for="cls in kelasPerTingkat['XI']" :key="cls.id" :value="cls.id">Kelas {{ cls.nama_kelas }}</option>
-                      </select>
+                      <!-- Slider Kelas XI -->
+                      <div class="flex items-center justify-between bg-slate-50 rounded-xl px-2 py-1.5 border border-slate-200 mb-5">
+                          <button @click="slideKelas('XI', -1)" class="p-1 hover:bg-slate-200 rounded-lg text-slate-500 transition-colors">
+                              <span class="text-xs font-black">◀</span>
+                          </button>
+                          <span class="text-[11px] font-black text-slate-700 text-center flex-1 truncate px-2">Kelas {{ currentKelasName('XI') }}</span>
+                          <button @click="slideKelas('XI', 1)" class="p-1 hover:bg-slate-200 rounded-lg text-slate-500 transition-colors">
+                              <span class="text-xs font-black">▶</span>
+                          </button>
+                      </div>
                       
                       <!-- Podium Container -->
                       <div class="flex-1 flex flex-col justify-end min-h-[220px]">
@@ -220,11 +230,16 @@
                           <span class="px-3 py-1 bg-amber-50 text-amber-700 text-xs font-black rounded-lg border border-amber-100 uppercase tracking-widest">Tingkat XII</span>
                       </div>
                       
-                      <!-- Dropdown Kelas XII -->
-                      <select v-model="selectedKelasXII" class="w-full bg-slate-50 border border-slate-200 text-slate-700 text-xs font-bold rounded-xl px-3 py-2.5 outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-100 transition-all mb-5">
-                          <option value="">Pilih Kelas XII...</option>
-                          <option v-for="cls in kelasPerTingkat['XII']" :key="cls.id" :value="cls.id">Kelas {{ cls.nama_kelas }}</option>
-                      </select>
+                      <!-- Slider Kelas XII -->
+                      <div class="flex items-center justify-between bg-slate-50 rounded-xl px-2 py-1.5 border border-slate-200 mb-5">
+                          <button @click="slideKelas('XII', -1)" class="p-1 hover:bg-slate-200 rounded-lg text-slate-500 transition-colors">
+                              <span class="text-xs font-black">◀</span>
+                          </button>
+                          <span class="text-[11px] font-black text-slate-700 text-center flex-1 truncate px-2">Kelas {{ currentKelasName('XII') }}</span>
+                          <button @click="slideKelas('XII', 1)" class="p-1 hover:bg-slate-200 rounded-lg text-slate-500 transition-colors">
+                              <span class="text-xs font-black">▶</span>
+                          </button>
+                      </div>
                       
                       <!-- Podium Container -->
                       <div class="flex-1 flex flex-col justify-end min-h-[220px]">
@@ -320,6 +335,34 @@ watch(() => kelasPerTingkat.value, (newVal) => {
     if (newVal['XI']?.length > 0) selectedKelasXI.value = newVal['XI'][0].id
     if (newVal['XII']?.length > 0) selectedKelasXII.value = newVal['XII'][0].id
 }, { immediate: true })
+
+const currentKelasName = (tingkat) => {
+    const classes = kelasPerTingkat.value[tingkat] || []
+    if (classes.length === 0) return 'Kosong'
+    const currentId = tingkat === 'X' ? selectedKelasX.value : tingkat === 'XI' ? selectedKelasXI.value : selectedKelasXII.value
+    const cls = classes.find(c => c.id === currentId)
+    return cls ? cls.nama_kelas : 'Kosong'
+}
+
+const slideKelas = (tingkat, direction) => {
+    const classes = kelasPerTingkat.value[tingkat] || []
+    if (classes.length === 0) return
+
+    const currentId = tingkat === 'X' ? selectedKelasX.value : tingkat === 'XI' ? selectedKelasXI.value : selectedKelasXII.value
+    let currentIndex = classes.findIndex(c => c.id === currentId)
+    
+    if (currentIndex === -1) currentIndex = 0
+    
+    let nextIndex = currentIndex + direction
+    if (nextIndex >= classes.length) nextIndex = 0
+    if (nextIndex < 0) nextIndex = classes.length - 1
+    
+    const nextId = classes[nextIndex].id
+    
+    if (tingkat === 'X') selectedKelasX.value = nextId
+    else if (tingkat === 'XI') selectedKelasXI.value = nextId
+    else if (tingkat === 'XII') selectedKelasXII.value = nextId
+}
 
 // Computed properties untuk memotong ranking berdasarkan kelas terpilih
 const topRankingX = computed(() => stats.value.topRankingAll[selectedKelasX.value] || [])
