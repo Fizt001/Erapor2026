@@ -179,7 +179,7 @@
                                 </div>
                                 <div class="w-full sm:w-48 shrink-0">
                                     <select v-model="selectedChartSiswa" class="w-full px-3 py-2 rounded-xl border-2 border-slate-200/70 bg-white focus:bg-white focus:ring-4 focus:ring-sky-500/10 focus:border-sky-500 transition-all font-semibold text-xs text-slate-700 outline-none">
-                                        <option v-for="s in wStats.grafik_siswa" :key="s.id" :value="s.id">{{ s.nama }}</option>
+                                        <option v-for="s in wStats.grafik_siswa" :key="s.id" :value="Number(s.id)">{{ s.nama }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -513,11 +513,11 @@ const selectedSiswaData = computed(() => {
     if (!wStats.value?.grafik_siswa) return null;
     
     // Auto select first student if empty
-    if ((!selectedChartSiswa.value || !wStats.value.grafik_siswa.find(s => s.id === selectedChartSiswa.value)) && wStats.value.grafik_siswa.length > 0) {
-        selectedChartSiswa.value = wStats.value.grafik_siswa[0].id;
+    if ((!selectedChartSiswa.value || !wStats.value.grafik_siswa.find(s => Number(s.id) === Number(selectedChartSiswa.value))) && wStats.value.grafik_siswa.length > 0) {
+        selectedChartSiswa.value = Number(wStats.value.grafik_siswa[0].id);
     }
     
-    return wStats.value.grafik_siswa.find(s => s.id === selectedChartSiswa.value);
+    return wStats.value.grafik_siswa.find(s => Number(s.id) === Number(selectedChartSiswa.value));
 })
 
 const chartProgressData = computed(() => {
