@@ -273,7 +273,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // MODULE KEPSEK
     // ==========================================
     Route::prefix('kepsek')->middleware('role:kepsek,admin')->group(function () {
-        Route::get('dashboard', [\App\Http\Controllers\Api\Kurikulum\DashboardController::class, 'index']);
+        Route::get('dashboard', [\App\Http\Controllers\Api\Kepsek\KepsekDashboardController::class, 'index']);
         Route::get('titimangsa', [\App\Http\Controllers\Api\Kurikulum\TitimangsaController::class, 'index']);
         Route::get('wali-kelas', [\App\Http\Controllers\Api\Kurikulum\WaliKelasController::class, 'index']);
         Route::get('wali-kelas/{kelas_id}/dashboard', [\App\Http\Controllers\Api\Kepsek\KepsekWaliKelasController::class, 'getDashboardStats']);
