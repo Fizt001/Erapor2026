@@ -9,6 +9,9 @@ use App\Models\Siswa;
 use App\Models\Kelas;
 use App\Models\TahunAjaran;
 use App\Models\SumatifNilai;
+use App\Models\PenangananPelanggaran;
+use App\Models\KasusGuru;
+use App\Models\SupervisiGuru;
 use Illuminate\Support\Facades\DB;
 
 class KepsekDashboardController extends Controller
@@ -69,6 +72,41 @@ class KepsekDashboardController extends Controller
             $topRankingAll[$kelasId] = $top3;
         }
 
+        // 4. Data untuk Grafik Analitik
+        
+        // 4a. Tren Kedisiplinan Siswa (Line Chart) - Jumlah Kasus per Bulan
+        $trenPelanggaranSiswa = PenangananPelanggaran::select(
+            DB::raw('MONTH(created_at) as bulan'),
+            DB::raw('COUNT(*) as total')
+        )
+        ->whereYear('created_at', date('Y'))
+        ->groupBy('bulan')
+        ->orderBy('bulan')
+        ->get();
+        // Format ke bulan nama
+        $bulanNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+        $trenPelanggaranSiswaFormatted = $trenPelanggaranSiswa->map(function($item) use ($bulanNames) {
+            return [
+                'bulan' => $bulanNames[$item->bulan - 1] ?? 'Unknown',
+                'total' => $item->total
+            ];
+        });
+
+        // 4b. Status Supervisi Guru (Doughnut Chart)
+        $statusSupervisiGuru = SupervisiGuru::select('status', DB::raw('COUNT(*) as total'))
+            ->groupBy('status')
+            ->get();
+
+        // 4c. Profil Kasus Guru (Bar Chart)
+        $profilKasusGuru = KasusGuru::select('status', DB::raw('COUNT(*) as total'))
+            ->groupBy('status')
+            ->get();
+
+        // 4d. Kategori Pelanggaran Siswa (Doughnut Chart)
+        $kategoriPelanggaranSiswa = PenangananPelanggaran::select('kategori', DB::raw('COUNT(*) as total'))
+            ->groupBy('kategori')
+            ->get();
+
         return response()->json([
             'success' => true,
             'data' => [
@@ -78,6 +116,12 @@ class KepsekDashboardController extends Controller
                 'totalKelas' => $totalKelas,
                 'kelasPerTingkat' => $kelasPerTingkat,
                 'topRankingAll' => $topRankingAll,
+                'analytics' => [
+                    'trenPelanggaranSiswa' => $trenPelanggaranSiswaFormatted,
+                    'statusSupervisiGuru' => $statusSupervisiGuru,
+                    'profilKasusGuru' => $profilKasusGuru,
+                    'kategoriPelanggaranSiswa' => $kategoriPelanggaranSiswa,
+                ]
             ]
         ]);
     }
