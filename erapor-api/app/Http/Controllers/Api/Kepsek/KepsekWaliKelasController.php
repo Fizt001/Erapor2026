@@ -60,7 +60,7 @@ class KepsekWaliKelasController extends Controller
         $siswaIds = $siswaRaw->pluck('id')->toArray();
         $namaSiswaMap = [];
         foreach ($siswaRaw as $s) {
-            $namaSiswaMap[$s->id] = $s->user ? $s->user->name : $s->nama_lengkap;
+            $namaSiswaMap[$s->id] = $s->user ? $s->user->name : '-';
         }
 
         // 2. Rata-rata Kelas dan Top 10 Siswa
@@ -173,7 +173,7 @@ class KepsekWaliKelasController extends Controller
         foreach ($siswaRaw as $s) {
             $grafikSiswa[$s->id] = [
                 'id' => $s->id,
-                'nama' => $namaSiswaMap[$s->id] ?? $s->nama_lengkap,
+                'nama' => $namaSiswaMap[$s->id] ?? '-',
                 'series' => []
             ];
             foreach ($titimangsas as $t) {

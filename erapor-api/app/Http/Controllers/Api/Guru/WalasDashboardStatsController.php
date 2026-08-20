@@ -103,7 +103,7 @@ class WalasDashboardStatsController extends Controller
             if ($score > 0) {
                 $penanganan[] = [
                     'id'                => $s->id,
-                    'nama'              => $s->user ? $s->user->name : $s->nama_lengkap,
+                    'nama'              => $namaSiswaMap[$s->id] ?? '-',
                     'poin_pelanggaran'  => (int) $poin,
                     'alpha'             => (int) $alpha,
                     'skor_risiko'       => $score
@@ -171,7 +171,7 @@ class WalasDashboardStatsController extends Controller
         foreach ($siswaRaw as $s) {
             $grafikSiswa[$s->id] = [
                 'id' => $s->id,
-                'nama' => $s->nama_lengkap,
+                'nama' => $namaSiswaMap[$s->id] ?? '-',
                 'series' => []
             ];
             foreach ($titimangsas as $t) {
