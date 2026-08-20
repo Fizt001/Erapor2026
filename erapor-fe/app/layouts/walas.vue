@@ -52,6 +52,18 @@
             </div>
             <h2 class="hidden lg:block text-base font-bold text-slate-800 ml-3 border-l-2 border-amber-500 pl-3 py-1 uppercase tracking-wider">{{ route.meta.title || 'Walas Workspace' }}</h2>
           </div>
+
+          <!-- Pilihan Kelas Walas (Di bawah judul, desktop) -->
+          <div v-if="walasStore.assignedClasses.length > 0" class="hidden lg:flex relative z-50 ml-3">
+            <select v-model="walasStore.activeKelasId" @change="reloadPage" :disabled="walasStore.assignedClasses.length === 1" :class="['appearance-none bg-amber-500 text-white border-none rounded-full px-4 py-1.5 pr-8 text-xs font-bold shadow-md focus:outline-none transition-colors', walasStore.assignedClasses.length > 1 ? 'hover:bg-amber-600 cursor-pointer shadow-amber-500/30 focus:ring-2 focus:ring-amber-500' : 'opacity-90 cursor-default']">
+              <option v-for="cls in walasStore.assignedClasses" :key="cls.id" :value="cls.id" class="text-slate-800 bg-white">
+                Walas: Kelas {{ cls.tingkat }} {{ cls.nama_kelas }}
+              </option>
+            </select>
+            <div v-if="walasStore.assignedClasses.length > 1" class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
+              <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+            </div>
+          </div>
           
           <!-- Active Year Siren Indicator (Mobile) -->
           <div v-if="ta_aktif" class="flex lg:hidden items-center gap-2 px-3 py-1.5 bg-slate-50 border border-slate-200/80 rounded-full shadow-inner hover:scale-105 transition-all select-none">
@@ -105,14 +117,14 @@
             <div v-if="profileDropdownOpen" @click="profileDropdownOpen = false" class="fixed inset-0 z-40 bg-transparent"></div>
           </div>
 
-          <!-- Pilihan Kelas Walas (Kelas Bawah) -->
-          <div v-if="walasStore.assignedClasses.length > 0" class="relative z-50 w-full lg:w-auto order-2 lg:order-none">
-            <select v-model="walasStore.activeKelasId" @change="reloadPage" :disabled="walasStore.assignedClasses.length === 1" :class="['appearance-none w-full lg:w-auto bg-amber-500 text-white border-none rounded-xl lg:rounded-full px-4 py-2 lg:py-1.5 pr-8 text-sm lg:text-xs font-bold shadow-md focus:outline-none transition-colors', walasStore.assignedClasses.length > 1 ? 'hover:bg-amber-600 cursor-pointer shadow-amber-500/30 focus:ring-2 focus:ring-amber-500' : 'opacity-90 cursor-default']">
+          <!-- Pilihan Kelas Walas (Mobile only - kept in right section) -->
+          <div v-if="walasStore.assignedClasses.length > 0" class="relative z-50 w-full lg:hidden order-2">
+            <select v-model="walasStore.activeKelasId" @change="reloadPage" :disabled="walasStore.assignedClasses.length === 1" :class="['appearance-none w-full bg-amber-500 text-white border-none rounded-xl px-4 py-2 pr-8 text-sm font-bold shadow-md focus:outline-none transition-colors', walasStore.assignedClasses.length > 1 ? 'hover:bg-amber-600 cursor-pointer shadow-amber-500/30 focus:ring-2 focus:ring-amber-500' : 'opacity-90 cursor-default']">
               <option v-for="cls in walasStore.assignedClasses" :key="cls.id" :value="cls.id" class="text-slate-800 bg-white">
                 Walas: Kelas {{ cls.tingkat }} {{ cls.nama_kelas }}
               </option>
             </select>
-            <div v-if="walasStore.assignedClasses.length > 1" class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 lg:px-2 text-white">
+            <div v-if="walasStore.assignedClasses.length > 1" class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-white">
               <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
             </div>
           </div>
