@@ -280,6 +280,69 @@
               </div>
             </div>
 
+            <!-- SECTION 3: 4 GRAPHICS ANALYTICS -->
+            <div class="pt-4 border-t border-slate-200/60 mt-8">
+              <div class="flex items-center gap-2 mb-4 px-1">
+                  <div class="h-8 w-1.5 bg-rose-500 rounded-full"></div>
+                  <div>
+                      <h3 class="text-sm font-black text-slate-800">Tinjauan Kasus & Supervisi</h3>
+                      <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Statistik Utama Sekolah</p>
+                  </div>
+              </div>
+              
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+                
+                <!-- Chart 1: Tren Pelanggaran Siswa -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5">
+                    <h4 class="text-xs font-black text-slate-700 uppercase tracking-widest mb-4">Tren Pelanggaran Siswa</h4>
+                    <div v-if="!analytics.trenPelanggaranSiswa || analytics.trenPelanggaranSiswa.length === 0" class="h-[200px] flex flex-col items-center justify-center text-slate-400 bg-slate-50 rounded-xl border border-dashed border-slate-200">
+                        <span class="text-3xl mb-2">📉</span>
+                        <span class="text-[10px] font-black uppercase tracking-widest">Belum ada data kasus</span>
+                    </div>
+                    <div v-else class="h-[200px]">
+                        <Line :data="chartDataTrenPelanggaran" :options="chartOptionsLine" />
+                    </div>
+                </div>
+
+                <!-- Chart 2: Status Supervisi Guru -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5">
+                    <h4 class="text-xs font-black text-slate-700 uppercase tracking-widest mb-4">Status Supervisi Guru</h4>
+                    <div v-if="!analytics.statusSupervisiGuru || analytics.statusSupervisiGuru.length === 0" class="h-[200px] flex flex-col items-center justify-center text-slate-400 bg-slate-50 rounded-xl border border-dashed border-slate-200">
+                        <span class="text-3xl mb-2">📋</span>
+                        <span class="text-[10px] font-black uppercase tracking-widest">Belum ada jadwal supervisi</span>
+                    </div>
+                    <div v-else class="h-[200px] flex justify-center">
+                        <Doughnut :data="chartDataStatusSupervisi" :options="chartOptionsDoughnut" />
+                    </div>
+                </div>
+
+                <!-- Chart 3: Profil Kasus Guru -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5">
+                    <h4 class="text-xs font-black text-slate-700 uppercase tracking-widest mb-4">Profil Kasus Guru</h4>
+                    <div v-if="!analytics.profilKasusGuru || analytics.profilKasusGuru.length === 0" class="h-[200px] flex flex-col items-center justify-center text-slate-400 bg-slate-50 rounded-xl border border-dashed border-slate-200">
+                        <span class="text-3xl mb-2">👨‍🏫</span>
+                        <span class="text-[10px] font-black uppercase tracking-widest">Belum ada kasus guru terdata</span>
+                    </div>
+                    <div v-else class="h-[200px]">
+                        <Bar :data="chartDataProfilKasusGuru" :options="chartOptionsBar" />
+                    </div>
+                </div>
+
+                <!-- Chart 4: Kategori Pelanggaran Siswa -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5">
+                    <h4 class="text-xs font-black text-slate-700 uppercase tracking-widest mb-4">Kategori Pelanggaran Siswa</h4>
+                    <div v-if="!analytics.kategoriPelanggaranSiswa || analytics.kategoriPelanggaranSiswa.length === 0" class="h-[200px] flex flex-col items-center justify-center text-slate-400 bg-slate-50 rounded-xl border border-dashed border-slate-200">
+                        <span class="text-3xl mb-2">⚖️</span>
+                        <span class="text-[10px] font-black uppercase tracking-widest">Belum ada data kategori</span>
+                    </div>
+                    <div v-else class="h-[200px] flex justify-center">
+                        <Doughnut :data="chartDataKategoriPelanggaran" :options="chartOptionsDoughnut" />
+                    </div>
+                </div>
+
+              </div>
+            </div>
+
         </div>
       </div>
     </div>
@@ -288,6 +351,10 @@
 
 <script setup>
 import { computed, ref, onMounted, watch, onUnmounted } from 'vue'
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend, ArcElement, Filler } from 'chart.js'
+import { Line, Doughnut, Bar } from 'vue-chartjs'
+
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend, ArcElement, Filler)
 
 definePageMeta({
   layout: 'kepsek',
@@ -318,11 +385,18 @@ const defaultStats = {
   totalSiswa: 0,
   totalKelas: 0,
   kelasPerTingkat: { X: [], XI: [], XII: [] },
-  topRankingAll: {}
+  topRankingAll: {},
+  analytics: {
+    trenPelanggaranSiswa: [],
+    statusSupervisiGuru: [],
+    profilKasusGuru: [],
+    kategoriPelanggaranSiswa: []
+  }
 }
 
 const stats = computed(() => response.value?.data || defaultStats)
 const kelasPerTingkat = computed(() => stats.value.kelasPerTingkat)
+const analytics = computed(() => stats.value.analytics || defaultStats.analytics)
 
 // State untuk dropdown pilihan kelas di setiap tingkat
 const selectedKelasX = ref('')
@@ -384,6 +458,90 @@ onMounted(() => {
 onUnmounted(() => {
     if (autoSlideInterval) {
         clearInterval(autoSlideInterval)
+    }
+})
+
+// ---------------- CHART LOGIC ---------------- //
+const chartOptionsLine = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+        y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { stepSize: 1, precision: 0 } },
+        x: { grid: { display: false } }
+    },
+    tension: 0.4
+}
+
+const chartOptionsBar = {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+        x: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { stepSize: 1, precision: 0 } },
+        y: { grid: { display: false } }
+    },
+    barThickness: 24
+}
+
+const chartOptionsDoughnut = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+        legend: { position: 'right', labels: { boxWidth: 12, usePointStyle: true, font: { size: 10 } } }
+    },
+    cutout: '70%'
+}
+
+const chartDataTrenPelanggaran = computed(() => {
+    const data = analytics.value.trenPelanggaranSiswa || []
+    return {
+        labels: data.map(d => d.bulan),
+        datasets: [{
+            label: 'Jumlah Kasus',
+            data: data.map(d => d.total),
+            borderColor: '#6366f1',
+            backgroundColor: 'rgba(99, 102, 241, 0.1)',
+            fill: true
+        }]
+    }
+})
+
+const chartDataStatusSupervisi = computed(() => {
+    const data = analytics.value.statusSupervisiGuru || []
+    return {
+        labels: data.map(d => d.status || 'Unknown'),
+        datasets: [{
+            data: data.map(d => d.total),
+            backgroundColor: ['#10b981', '#f59e0b', '#6366f1', '#ef4444', '#8b5cf6'],
+            borderWidth: 0
+        }]
+    }
+})
+
+const chartDataProfilKasusGuru = computed(() => {
+    const data = analytics.value.profilKasusGuru || []
+    return {
+        labels: data.map(d => d.status || 'Unknown'),
+        datasets: [{
+            label: 'Jumlah Kasus',
+            data: data.map(d => d.total),
+            backgroundColor: '#8b5cf6',
+            borderRadius: 4
+        }]
+    }
+})
+
+const chartDataKategoriPelanggaran = computed(() => {
+    const data = analytics.value.kategoriPelanggaranSiswa || []
+    return {
+        labels: data.map(d => d.kategori || 'Unknown'),
+        datasets: [{
+            data: data.map(d => d.total),
+            backgroundColor: ['#ef4444', '#f59e0b', '#3b82f6', '#10b981', '#64748b'],
+            borderWidth: 0
+        }]
     }
 })
 
