@@ -188,6 +188,32 @@
               </div>
             </div>
             
+            <!-- NOTIFIKASI JADWAL MENGAJAR (1 MINGGU) -->
+            <div v-if="!isLoadingJadwal && jadwalMingguan" class="mt-8">
+              <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center"><AppIcon name="calendar" class="w-4 h-4 mr-2" /> Jadwal Mengajar Anda (1 Minggu)</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                <div v-for="day in ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat']" :key="day" class="bg-white rounded-2xl border border-slate-200/60 shadow-sm overflow-hidden flex flex-col">
+                  <div class="bg-slate-50 py-2 px-4 border-b border-slate-100 flex items-center justify-between shrink-0">
+                    <span class="text-sm font-black text-slate-700 uppercase tracking-wider">{{ day }}</span>
+                    <span class="text-[10px] font-bold text-slate-400 px-2 py-0.5 rounded-full border border-slate-200 bg-white">{{ jadwalMingguan[day]?.length || 0 }} Kelas</span>
+                  </div>
+                  <div class="p-4 space-y-3 flex-1 overflow-y-auto max-h-60 custom-scrollbar">
+                    <div v-if="!jadwalMingguan[day] || jadwalMingguan[day].length === 0" class="text-center py-6">
+                       <p class="text-[11px] font-bold text-slate-400">Libur / Kosong</p>
+                    </div>
+                    <div v-else v-for="(j, idx) in jadwalMingguan[day]" :key="idx" class="flex flex-col border border-slate-100 rounded-xl p-3 bg-white shadow-sm hover:border-blue-200 transition-colors">
+                      <div class="flex items-center justify-between mb-2">
+                        <span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-blue-50 text-blue-600 border border-blue-100">JP {{ j.jam_ke }}</span>
+                        <span class="text-[10px] font-bold text-slate-400">{{ j.waktu }}</span>
+                      </div>
+                      <div class="font-black text-sm text-slate-800 mb-0.5">{{ j.kelas }}</div>
+                      <div class="text-[11px] font-bold text-slate-500 truncate">{{ j.mapel }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <!-- GRAFIK NILAI SISWA -->
             <div v-if="dashboardData && dashboardData.grafik_nilai" class="mt-8">
               <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center"><AppIcon name="chart-bar" class="w-4 h-4 mr-2" /> Rata-Rata Nilai Akhir Siswa (Per Kelas/Mapel)</h3>
@@ -350,6 +376,16 @@ const { data: response, pending: isLoading, error } = await useFetch(import.meta
     'Accept': 'application/json'
   }
 })
+
+const { data: resJadwal, pending: isLoadingJadwal } = await useFetch(import.meta.env.VITE_API_BASE_URL + '/api/guru/jadwal-mingguan', {
+  headers: {
+    'Authorization': `Bearer ${tokenCookie.value}`,
+    'Accept': 'application/json'
+  }
+})
+
+const jadwalMingguan = computed(() => resJadwal.value?.data || null)
+
 
 const errorMessage = computed(() => error.value?.message || (!response.value?.success && response.value?.message ? response.value?.message : ''))
 const userProfile = useCookie('user_profile')

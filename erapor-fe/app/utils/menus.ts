@@ -45,10 +45,9 @@ export const kurikulumMenus: MenuConfig[] = [
 ]
 
 export const guruMenus: MenuConfig[] = [
-  { name: 'Home Guru', path: '/guru/dashboard', icon: '📊' },
-  { divider: true, dividerLabel: 'Kegiatan KBM' },
-  { name: 'Absensi Pertemuan', path: '/guru/absensi', icon: '📆' },
-  { name: 'Jurnal Mengajar', path: '/guru/jurnal', icon: '📓' },
+  { name: 'Dashboard Guru', path: '/guru/dashboard', icon: '📊' },
+  { divider: true, dividerLabel: 'Kegiatan Mengajar' },
+  { name: 'Jadwal Mengajar', path: '/guru/jadwal', icon: '📅' },
   { divider: true, dividerLabel: 'Penilaian Formatif' },
   { name: 'Data TP Formatif', path: '/guru/formatif/master', icon: '📝' },
   { name: 'Input Asessmen Formatif', path: '/guru/formatif/nilai', icon: '✏️' },
