@@ -1,84 +1,104 @@
 <template>
-  <div class="p-6 max-w-[1600px] mx-auto">
-    <!-- Header -->
-    <div class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-      <div>
-        <h1 class="text-2xl font-black text-slate-800">Jadwal Mengajar</h1>
-        <p class="text-slate-500 text-sm mt-1">Kelola jadwal pelajaran kelas secara massal (grid view).</p>
+  <div class="h-full flex flex-col min-h-0 bg-slate-50">
+    <div class="flex-1 flex overflow-hidden relative">
+      
+      <!-- Panel Dock Kiri (Pilih Hari) -->
+      <div class="w-[280px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)]">
+        <div class="p-6 pb-4 border-b border-slate-100 shrink-0">
+            <h1 class="text-xl font-black text-slate-800 leading-tight">Jadwal Mengajar</h1>
+            <p class="text-[10px] uppercase tracking-widest text-slate-400 font-bold mt-1">Konfigurasi Matriks</p>
+        </div>
+        <div class="p-4 flex-1 overflow-y-auto custom-scrollbar">
+            <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 px-2">Pilih Hari</h3>
+            <div class="space-y-2">
+                <button v-for="hari in days" :key="hari" @click="changeDay(hari)"
+                    :class="activeDay === hari ? 'bg-indigo-50 border-indigo-200 text-indigo-700 shadow-sm ring-1 ring-indigo-500/20' : 'bg-white border-transparent text-slate-600 hover:bg-slate-50'"
+                    class="w-full text-left px-4 py-3 rounded-xl border font-bold text-sm flex items-center justify-between transition-all">
+                    <div class="flex items-center gap-3">
+                        <AppIcon name="calendar-event" class="w-5 h-5" :class="activeDay === hari ? 'text-indigo-500' : 'text-slate-400'"/>
+                        {{ hari }}
+                    </div>
+                    <span v-if="activeDay === hari" class="w-2 h-2 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.6)]"></span>
+                </button>
+            </div>
+        </div>
       </div>
-      <button 
-        @click="saveJadwal"
-        :disabled="isSaving"
-        class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl font-bold text-sm shadow-sm transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
-        <span v-if="isSaving">Menyimpan...</span>
-        <template v-else>
-          <AppIcon name="device-floppy" class="w-5 h-5" />
-          Simpan Jadwal {{ activeDay }}
-        </template>
-      </button>
-    </div>
 
-    <!-- Tabs Hari -->
-    <div class="flex overflow-x-auto custom-scrollbar gap-2 mb-6 border-b border-slate-200/60 pb-1">
-      <button 
-        v-for="hari in days" 
-        :key="hari"
-        @click="changeDay(hari)"
-        :class="activeDay === hari 
-          ? 'bg-indigo-600 text-white shadow-md' 
-          : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'"
-        class="px-6 py-2.5 rounded-t-xl font-bold text-sm transition-all whitespace-nowrap">
-        {{ hari }}
-      </button>
-    </div>
+      <!-- Panel Flow Kanan (Matrix Table) -->
+      <div class="flex-1 flex-shrink-0 bg-slate-50 flex flex-col h-full min-w-0 overflow-hidden relative">
+        
+        <!-- Header Actions -->
+        <div class="p-4 lg:px-8 lg:py-5 bg-white border-b border-slate-200 flex items-center justify-between shrink-0 shadow-sm z-10 relative">
+            <div>
+                <h2 class="text-lg font-black text-slate-800">Jadwal Hari {{ activeDay }}</h2>
+                <p class="text-xs text-slate-500 mt-0.5">Isi jadwal per jam pelajaran (JP) untuk setiap kelas.</p>
+            </div>
+            <button 
+                @click="saveJadwal"
+                :disabled="isSaving"
+                class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl font-bold text-sm shadow-sm transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                <span v-if="isSaving">Menyimpan...</span>
+                <template v-else>
+                <AppIcon name="device-floppy" class="w-5 h-5" />
+                Simpan Jadwal
+                </template>
+            </button>
+        </div>
 
-    <!-- Loading State -->
-    <div v-if="isLoadingOptions || isLoadingJadwal" class="flex justify-center items-center py-20 bg-white rounded-2xl border border-slate-200">
-      <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600"></div>
-    </div>
+        <!-- Scrollable Area -->
+        <div class="flex-1 overflow-auto custom-scrollbar p-4 lg:p-8">
+            
+            <!-- Loading State -->
+            <div v-if="isLoadingOptions || isLoadingJadwal" class="flex justify-center items-center py-20 bg-white rounded-2xl border border-slate-200 shadow-sm">
+                <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600"></div>
+            </div>
 
-    <!-- Matrix Table (Excel style) -->
-    <div v-else class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col relative">
-      <div class="overflow-x-auto custom-scrollbar flex-1 relative max-h-[70vh]">
-        <table class="w-full text-xs text-left whitespace-nowrap border-collapse">
-          <thead class="bg-slate-50 text-slate-700 font-black sticky top-0 z-20 shadow-sm">
-            <!-- Row Header 1: Tingkat -->
-            <tr>
-              <th rowspan="2" class="p-3 text-center border-r border-b border-slate-200 bg-slate-100 sticky left-0 z-30 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)] w-12">JP</th>
-              <th v-for="(classes, tingkat) in kelasPerTingkat" :key="tingkat" :colspan="classes.length" class="p-2 text-center border-r border-b border-slate-200 uppercase tracking-widest text-indigo-700 bg-indigo-50/50">
-                Tingkat {{ tingkat }}
-              </th>
-            </tr>
-            <!-- Row Header 2: Kelas -->
-            <tr>
-              <template v-for="(classes, tingkat) in kelasPerTingkat" :key="'sub-'+tingkat">
-                <th v-for="cls in classes" :key="cls.id" class="p-2 text-center border-r border-b border-slate-200 min-w-[220px]">
-                  Kelas {{ cls.nama_kelas }}
-                </th>
-              </template>
-            </tr>
-          </thead>
-          
-          <tbody class="text-slate-600">
-            <tr v-for="jp in 12" :key="jp" class="hover:bg-indigo-50/30 transition-colors">
-              <td class="p-3 text-center font-black border-r border-b border-slate-200 bg-slate-50 sticky left-0 z-10 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.05)] text-slate-400">
-                {{ jp }}
-              </td>
-              <template v-for="(classes, tingkat) in kelasPerTingkat" :key="'col-'+tingkat">
-                <td v-for="cls in classes" :key="cls.id" class="p-1 border-r border-b border-slate-200">
-                  <select 
-                    v-model="formJadwal[`${jp}_${cls.id}`]" 
-                    class="w-full text-[11px] p-1.5 border border-transparent rounded bg-transparent hover:bg-white hover:border-slate-300 hover:shadow-sm focus:bg-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition-all cursor-pointer">
-                    <option value="">- Kosong -</option>
-                    <option v-for="opt in mapelOptions" :key="opt.value" :value="opt.value" :title="opt.label">
-                      {{ opt.label }}
-                    </option>
-                  </select>
-                </td>
-              </template>
-            </tr>
-          </tbody>
-        </table>
+            <!-- Matrix Table -->
+            <div v-else class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="overflow-x-auto custom-scrollbar max-h-[calc(100vh-180px)]">
+                    <table class="w-full text-xs text-left whitespace-nowrap border-collapse">
+                        <thead class="bg-slate-50 text-slate-700 font-black sticky top-0 z-20 shadow-sm">
+                            <!-- Row Header 1: Tingkat -->
+                            <tr>
+                                <th rowspan="2" class="p-3 text-center border-r border-b border-slate-200 bg-slate-100 sticky left-0 z-30 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)] w-12">JP</th>
+                                <th v-for="(classes, tingkat) in kelasPerTingkat" :key="tingkat" :colspan="classes.length" class="p-2 text-center border-r border-b border-slate-200 uppercase tracking-widest text-indigo-700 bg-indigo-50/50">
+                                    Tingkat {{ tingkat }}
+                                </th>
+                            </tr>
+                            <!-- Row Header 2: Kelas -->
+                            <tr>
+                                <template v-for="(classes, tingkat) in kelasPerTingkat" :key="'sub-'+tingkat">
+                                    <th v-for="cls in classes" :key="cls.id" class="p-2 text-center border-r border-b border-slate-200 min-w-[220px]">
+                                        Kelas {{ cls.nama_kelas }}
+                                    </th>
+                                </template>
+                            </tr>
+                        </thead>
+                        
+                        <tbody class="text-slate-600">
+                            <tr v-for="jp in 12" :key="jp" class="hover:bg-indigo-50/30 transition-colors">
+                                <td class="p-3 text-center font-black border-r border-b border-slate-200 bg-slate-50 sticky left-0 z-10 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.05)] text-slate-400">
+                                    {{ jp }}
+                                </td>
+                                <template v-for="(classes, tingkat) in kelasPerTingkat" :key="'col-'+tingkat">
+                                    <td v-for="cls in classes" :key="cls.id" class="p-1 border-r border-b border-slate-200">
+                                        <select 
+                                            v-model="formJadwal[`${jp}_${cls.id}`]" 
+                                            class="w-full text-[11px] p-1.5 border border-transparent rounded bg-transparent hover:bg-white hover:border-slate-300 hover:shadow-sm focus:bg-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition-all cursor-pointer">
+                                            <option value="">- Kosong -</option>
+                                            <option v-for="opt in mapelOptions" :key="opt.value" :value="opt.value" :title="opt.label">
+                                                {{ opt.label }}
+                                            </option>
+                                        </select>
+                                    </td>
+                                </template>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
       </div>
     </div>
   </div>
@@ -127,7 +147,6 @@ const fetchOptions = async () => {
 
 const fetchJadwal = async (hari) => {
   isLoadingJadwal.value = true
-  // Reset form
   formJadwal.value = {}
   
   try {
@@ -135,7 +154,7 @@ const fetchJadwal = async (hari) => {
       headers: { Authorization: `Bearer ${tokenCookie.value}` }
     })
     if (res.success) {
-      formJadwal.value = res.data // { "1_2": "14_null", "2_2": "15_3", ... }
+      formJadwal.value = res.data
     }
   } catch (error) {
     console.error('Failed to load schedule', error)
@@ -153,16 +172,12 @@ const changeDay = (hari) => {
 const saveJadwal = async () => {
   isSaving.value = true
   
-  // Convert formJadwal object back to array payload
   const payloadJadwals = []
   
   for (const [key, val] of Object.entries(formJadwal.value)) {
-    if (!val) continue // Skip empty selections
+    if (!val) continue
     
-    // key is "jamKe_kelasId"
     const [jamKe, kelasId] = key.split('_')
-    
-    // val is "mapelId_guruId"
     const [mapelId, guruId] = val.split('_')
     
     payloadJadwals.push({
@@ -207,8 +222,7 @@ onMounted(() => {
   width: 8px;
 }
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: #f1f5f9; 
-  border-radius: 10px;
+  background: transparent;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background: #cbd5e1; 
