@@ -173,6 +173,8 @@ class KurikulumJadwalMengajarController extends Controller
                         'jam_ke' => $j['jam_ke'],
                         'mapel_id' => $j['mapel_id'],
                         'guru_id' => !empty($j['guru_id']) ? $j['guru_id'] : null,
+                        'waktu_mulai' => '00:00:00',
+                        'waktu_selesai' => '00:00:00',
                         'created_at' => $now,
                         'updated_at' => $now
                     ];
