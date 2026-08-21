@@ -203,19 +203,10 @@ Route::middleware('auth:sanctum')->group(function () {
         
         // REKAP SUMATIF
         Route::get('sumatif/rekap', [\App\Http\Controllers\Api\Guru\SumatifRekapController::class, 'index']);
-
-        // ABSENSI PERTEMUAN (GURU MAPEL)
-        Route::get('absensi/referensi', [\App\Http\Controllers\Api\Guru\AbsensiController::class, 'getReferensi']);
-        Route::get('absensi/pertemuan', [\App\Http\Controllers\Api\Guru\AbsensiController::class, 'getPertemuan']);
-        Route::get('absensi/last-jam', [\App\Http\Controllers\Api\Guru\AbsensiController::class, 'getLastJam']);
-        Route::post('absensi/pertemuan', [\App\Http\Controllers\Api\Guru\AbsensiController::class, 'createPertemuan']);
-        Route::put('absensi/pertemuan/{id}', [\App\Http\Controllers\Api\Guru\AbsensiController::class, 'updatePertemuan']);
-        Route::delete('absensi/pertemuan/{id}', [\App\Http\Controllers\Api\Guru\AbsensiController::class, 'deletePertemuan']);
-        Route::get('absensi/pertemuan/{id}/siswa', [\App\Http\Controllers\Api\Guru\AbsensiController::class, 'getAbsensiSiswa']);
-        Route::post('absensi/pertemuan/{id}/simpan', [\App\Http\Controllers\Api\Guru\AbsensiController::class, 'simpanAbsensi']);
-
-        // JURNAL MENGAJAR (REKAP PERTEMUAN)
-        Route::get('jurnal-mengajar', [\App\Http\Controllers\Api\Guru\JurnalMengajarController::class, 'getJurnal']);
+        // JADWAL MENGAJAR GURU (Integrasi Absensi & Jurnal)
+        Route::get('jadwal-mingguan', [\App\Http\Controllers\Api\Guru\GuruJadwalMengajarController::class, 'getJadwalMingguan']);
+        Route::get('jadwal-harian', [\App\Http\Controllers\Api\Guru\GuruJadwalMengajarController::class, 'getJadwalByHari']);
+        Route::post('jadwal-simpan', [\App\Http\Controllers\Api\Guru\GuruJadwalMengajarController::class, 'simpanJurnalAbsensi']);
         
         // ==========================================
                 // SUPERVISI GURU
