@@ -95,7 +95,7 @@
                                             v-model="formJadwal[`${jp}_${cls.id}`]" 
                                             class="w-full text-[11px] p-1.5 border border-transparent rounded bg-transparent hover:bg-white hover:border-slate-300 hover:shadow-sm focus:bg-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition-all cursor-pointer">
                                             <option value="">- Kosong -</option>
-                                            <option v-for="opt in mapelOptions" :key="opt.value" :value="opt.value" :title="opt.label">
+                                            <option v-for="opt in getAvailableOptions(jp, cls.id)" :key="opt.value" :value="opt.value" :title="opt.label">
                                                 {{ opt.label }}
                                             </option>
                                         </select>
@@ -150,6 +150,30 @@ const filteredKelasPerTingkat = computed(() => {
 const hasAnyKelas = computed(() => {
   return Object.keys(filteredKelasPerTingkat.value).length > 0
 })
+
+const getAvailableOptions = (jp, kelasId) => {
+  // Cari ID guru yang sudah dipakai di Jam Pelajaran ini (selain di kelas ini sendiri)
+  const selectedGuruIdsInRow = new Set()
+  
+  for (const [key, val] of Object.entries(formJadwal.value)) {
+    if (!val) continue
+    const [k_jp, k_kelasId] = key.split('_')
+    
+    if (k_jp === jp.toString() && k_kelasId !== kelasId.toString()) {
+      const [mapelId, guruId] = val.split('_')
+      // Jika ada guru pengampu, tandai sebagai terpakai
+      if (guruId && guruId !== 'null') {
+        selectedGuruIdsInRow.add(guruId)
+      }
+    }
+  }
+
+  // Filter mapelOptions: buang yang gurunya sudah mengajar di kelas lain pada JP ini
+  return mapelOptions.value.filter(opt => {
+    if (!opt.guru_id) return true // Mapel tanpa guru bebas dipilih (misal untuk placeholder)
+    return !selectedGuruIdsInRow.has(opt.guru_id.toString())
+  })
+}
 
 const fetchOptions = async () => {
   isLoadingOptions.value = true
