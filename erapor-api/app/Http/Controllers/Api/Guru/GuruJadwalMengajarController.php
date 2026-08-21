@@ -70,7 +70,7 @@ class GuruJadwalMengajarController extends Controller
 
         $jadwals = JadwalPelajaran::with(['kelas', 'mapel'])
             ->where('guru_id', $guruId)
-            ->where('hari', $hari)
+            ->where('hari', 'LIKE', '%' . trim($hari) . '%')
             ->whereHas('kelas', function($q) use ($taAktif) {
                 $q->where('tahun_ajaran_id', $taAktif->id);
             })
