@@ -10,17 +10,32 @@ const selectedDay = ref('Senin')
 const isLoading = ref(false)
 const jadwals = ref<any[]>([])
 
+const currentDate = ref('')
+const tanggalMulai = ref('')
+const maxDate = ref('')
+
 const fetchJadwal = async () => {
   isLoading.value = true
   try {
-    const tokenCookie = useCookie('token')
-    const response: any = await $fetch(import.meta.env.VITE_API_BASE_URL + `/api/guru/jadwal-harian?hari=${selectedDay.value}`, {
+    const tokenCookie = useCookie('auth_token')
+    let url = import.meta.env.VITE_API_BASE_URL + `/api/guru/jadwal-harian?hari=${selectedDay.value}`
+    if (currentDate.value) {
+        url += `&tanggal=${currentDate.value}`
+    }
+    
+    const response: any = await $fetch(url, {
       headers: {
         'Authorization': `Bearer ${tokenCookie.value}`,
         'Accept': 'application/json'
       }
     })
     
+    tanggalMulai.value = response.tanggal_mulai || ''
+    currentDate.value = response.target_tanggal || ''
+    if (!maxDate.value) {
+        maxDate.value = response.target_tanggal || ''
+    }
+
     // Inisialisasi form data untuk tiap kelas
     const data = response.data.map((j: any) => {
       // Jika belum diisi, array absensi kita wrap ke reaktif
@@ -44,8 +59,41 @@ onMounted(() => {
 
 const selectDay = (day: string) => {
   selectedDay.value = day
+  currentDate.value = ''
+  maxDate.value = ''
   fetchJadwal()
 }
+
+const canGoPrev = computed(() => {
+    if (!currentDate.value || !tanggalMulai.value) return false
+    const curr = new Date(currentDate.value)
+    const min = new Date(tanggalMulai.value)
+    const prev = new Date(curr)
+    prev.setDate(prev.getDate() - 7)
+    return prev >= min
+})
+
+const canGoNext = computed(() => {
+    if (!currentDate.value || !maxDate.value) return false
+    return currentDate.value < maxDate.value
+})
+
+const prevWeek = () => {
+    if (!canGoPrev.value || !currentDate.value) return
+    const d = new Date(currentDate.value)
+    d.setDate(d.getDate() - 7)
+    currentDate.value = d.toISOString().split('T')[0]
+    fetchJadwal()
+}
+
+const nextWeek = () => {
+    if (!canGoNext.value || !currentDate.value) return
+    const d = new Date(currentDate.value)
+    d.setDate(d.getDate() + 7)
+    currentDate.value = d.toISOString().split('T')[0]
+    fetchJadwal()
+}
+
 
 const simpanJurnal = async (jadwal: any) => {
   try {
@@ -138,6 +186,20 @@ const getStatusBadgeColor = (status: string) => {
       <!-- Right Card: Class List -->
       <div class="lg:col-span-3 space-y-6">
         
+        <!-- Date Navigation Header -->
+        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-4 flex items-center justify-between">
+            <button @click="prevWeek" :disabled="!canGoPrev || isLoading" class="p-2 rounded-xl transition-all" :class="canGoPrev ? 'text-slate-600 hover:bg-slate-100 active:scale-95' : 'text-slate-300 cursor-not-allowed'">
+                <AppIcon name="arrow-left" class="w-5 h-5" />
+            </button>
+            <div class="text-center">
+                <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-0.5">Tanggal Mengajar</p>
+                <h3 class="text-sm font-bold text-slate-800">{{ currentDate ? new Date(currentDate).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : '-' }}</h3>
+            </div>
+            <button @click="nextWeek" :disabled="!canGoNext || isLoading" class="p-2 rounded-xl transition-all" :class="canGoNext ? 'text-slate-600 hover:bg-slate-100 active:scale-95' : 'text-slate-300 cursor-not-allowed'">
+                <AppIcon name="arrow-right" class="w-5 h-5" />
+            </button>
+        </div>
+
         <div v-if="isLoading" class="flex justify-center py-12 bg-white rounded-2xl border border-slate-100">
           <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
         </div>

@@ -42,6 +42,11 @@
                             <input type="text" v-model="form.tahun" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-bold text-slate-800" placeholder="Misal: 2023/2024">
                         </div>
 
+                        <div>
+                            <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Tanggal Mulai Semester</label>
+                            <input type="date" v-model="form.tanggal_mulai" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-bold text-slate-800">
+                        </div>
+
                         <div class="flex items-center gap-3 bg-slate-50 p-4 rounded-2xl border border-slate-200 cursor-pointer hover:bg-white transition-colors" @click="form.is_aktif = !form.is_aktif">
                             <input type="checkbox" id="is_aktif" v-model="form.is_aktif" class="w-5 h-5 rounded border-slate-300 text-emerald-500 focus:ring-emerald-500 cursor-pointer" @click.stop>
                             <label for="is_aktif" class="text-xs font-bold text-slate-700 cursor-pointer">Set sebagai Tahun Ajaran Aktif saat ini</label>
@@ -99,6 +104,7 @@
                     <tr class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">
                         <th class="p-4 w-16 text-center">#</th>
                         <th class="p-4">Tahun Ajaran</th>
+                        <th class="p-4">Tanggal Mulai</th>
                         <th class="p-4">Status</th>
                         <th class="p-4 text-center w-32">Aksi</th>
                     </tr>
@@ -112,6 +118,10 @@
                         <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between">
                             <span class="sm:hidden text-[10px] font-black uppercase tracking-widest text-slate-400">Tahun Ajaran</span>
                             <p class="font-black text-slate-800 text-[13px]">{{ ta.tahun }}</p>
+                        </td>
+                        <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between">
+                            <span class="sm:hidden text-[10px] font-black uppercase tracking-widest text-slate-400">Tanggal Mulai</span>
+                            <p class="font-bold text-slate-600 text-[12px]">{{ ta.tanggal_mulai ? new Date(ta.tanggal_mulai).toLocaleDateString('id-ID') : '-' }}</p>
                         </td>
                         <td class="px-0 py-1 sm:p-4 flex sm:table-cell items-center justify-between">
                             <span class="sm:hidden text-[10px] font-black uppercase tracking-widest text-slate-400">Status</span>
@@ -217,6 +227,7 @@ const isEditing = ref(false)
 const form = ref({
     id: null,
     tahun: '',
+    tanggal_mulai: '',
     is_aktif: false
 })
 
@@ -281,13 +292,14 @@ const editTahunAjaran = (ta) => {
     form.value = {
         id: ta.id,
         tahun: ta.tahun,
+        tanggal_mulai: ta.tanggal_mulai || '',
         is_aktif: Boolean(ta.is_aktif)
     }
     activeTab.value = 'form'
 }
 
 const setAktif = (ta) => {
-    activateTarget.value = { id: ta.id, tahun: ta.tahun }
+    activateTarget.value = { id: ta.id, tahun: ta.tahun, tanggal_mulai: ta.tanggal_mulai }
     isActivateModalOpen.value = true
 }
 
@@ -302,6 +314,7 @@ const executeActivate = async () => {
             headers: { Authorization: `Bearer ${token}` },
             body: { 
                 tahun: activateTarget.value.tahun,
+                tanggal_mulai: activateTarget.value.tanggal_mulai,
                 is_aktif: true 
             }
         })
@@ -323,6 +336,7 @@ const resetForm = () => {
     form.value = {
         id: null,
         tahun: '',
+        tanggal_mulai: '',
         is_aktif: false
     }
 }
