@@ -53,6 +53,13 @@
                 <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600"></div>
             </div>
 
+            <!-- Empty State for No Classes -->
+            <div v-if="!hasAnyKelas" class="flex flex-col items-center justify-center py-20 bg-white rounded-2xl border border-dashed border-slate-300">
+                <span class="text-4xl mb-4">🏫</span>
+                <h3 class="text-lg font-black text-slate-700">Belum Ada Kelas Aktif</h3>
+                <p class="text-sm text-slate-500 mt-1 max-w-md text-center">Silakan buat dan aktifkan kelas di menu Master Kelas terlebih dahulu agar matriks jadwal dapat ditampilkan.</p>
+            </div>
+
             <!-- Matrix Table -->
             <div v-else class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                 <div class="overflow-x-auto custom-scrollbar max-h-[calc(100vh-180px)]">
@@ -61,13 +68,15 @@
                             <!-- Row Header 1: Tingkat -->
                             <tr>
                                 <th rowspan="2" class="p-3 text-center border-r border-b border-slate-200 bg-slate-100 sticky left-0 z-30 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)] w-12">JP</th>
-                                <th v-for="(classes, tingkat) in kelasPerTingkat" :key="tingkat" :colspan="classes.length" class="p-2 text-center border-r border-b border-slate-200 uppercase tracking-widest text-indigo-700 bg-indigo-50/50">
-                                    Tingkat {{ tingkat }}
-                                </th>
+                                <template v-for="(classes, tingkat) in filteredKelasPerTingkat" :key="tingkat">
+                                    <th :colspan="classes.length" class="p-2 text-center border-r border-b border-slate-200 uppercase tracking-widest text-indigo-700 bg-indigo-50/50">
+                                        Tingkat {{ tingkat }}
+                                    </th>
+                                </template>
                             </tr>
                             <!-- Row Header 2: Kelas -->
                             <tr>
-                                <template v-for="(classes, tingkat) in kelasPerTingkat" :key="'sub-'+tingkat">
+                                <template v-for="(classes, tingkat) in filteredKelasPerTingkat" :key="'sub-'+tingkat">
                                     <th v-for="cls in classes" :key="cls.id" class="p-2 text-center border-r border-b border-slate-200 min-w-[220px]">
                                         Kelas {{ cls.nama_kelas }}
                                     </th>
@@ -80,7 +89,7 @@
                                 <td class="p-3 text-center font-black border-r border-b border-slate-200 bg-slate-50 sticky left-0 z-10 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.05)] text-slate-400">
                                     {{ jp }}
                                 </td>
-                                <template v-for="(classes, tingkat) in kelasPerTingkat" :key="'col-'+tingkat">
+                                <template v-for="(classes, tingkat) in filteredKelasPerTingkat" :key="'col-'+tingkat">
                                     <td v-for="cls in classes" :key="cls.id" class="p-1 border-r border-b border-slate-200">
                                         <select 
                                             v-model="formJadwal[`${jp}_${cls.id}`]" 
@@ -105,7 +114,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 
 definePageMeta({
   layout: 'kurikulum',
@@ -126,6 +135,21 @@ const isSaving = ref(false)
 const kelasPerTingkat = ref({ '10': [], '11': [], '12': [] })
 const mapelOptions = ref([])
 const formJadwal = ref({})
+
+// Computed properties to handle empty levels safely
+const filteredKelasPerTingkat = computed(() => {
+  const result = {}
+  for (const [tingkat, classes] of Object.entries(kelasPerTingkat.value)) {
+    if (classes && classes.length > 0) {
+      result[tingkat] = classes
+    }
+  }
+  return result
+})
+
+const hasAnyKelas = computed(() => {
+  return Object.keys(filteredKelasPerTingkat.value).length > 0
+})
 
 const fetchOptions = async () => {
   isLoadingOptions.value = true
