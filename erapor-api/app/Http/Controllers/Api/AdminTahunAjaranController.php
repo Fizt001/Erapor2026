@@ -22,6 +22,7 @@ class AdminTahunAjaranController extends Controller
     {
         $request->validate([
             'tahun' => 'required|string|max:20',
+            'tanggal_mulai' => 'nullable|date',
             'is_aktif' => 'boolean'
         ]);
 
@@ -34,6 +35,7 @@ class AdminTahunAjaranController extends Controller
 
             $tahunAjaran = TahunAjaran::create([
                 'tahun' => $request->tahun,
+                'tanggal_mulai' => $request->tanggal_mulai,
                 'is_aktif' => $request->is_aktif ?? false
             ]);
 
@@ -57,6 +59,7 @@ class AdminTahunAjaranController extends Controller
     {
         $request->validate([
             'tahun' => 'required|string|max:20',
+            'tanggal_mulai' => 'nullable|date',
             'is_aktif' => 'boolean'
         ]);
 
@@ -71,6 +74,7 @@ class AdminTahunAjaranController extends Controller
 
             $tahunAjaran->update([
                 'tahun' => $request->tahun,
+                'tanggal_mulai' => $request->tanggal_mulai,
                 'is_aktif' => $request->is_aktif ?? false
             ]);
 

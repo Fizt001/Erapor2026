@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class TahunAjaran extends Model
 {
-    protected $fillable = ['tahun', 'is_aktif'];
+    protected $fillable = ['tahun', 'tanggal_mulai', 'is_aktif'];
 
     protected $casts = [
         'is_aktif' => 'boolean'

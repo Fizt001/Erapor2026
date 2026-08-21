@@ -161,20 +161,28 @@ class KurikulumJadwalMengajarController extends Controller
                            ->where('hari', $hari)
                            ->delete();
 
+            // Get Master Jam Pelajaran
+            $kategoriHari = ($hari === 'Jumat') ? 'Jumat' : 'Senin-Kamis';
+            $masterJam = \App\Models\JamPelajaran::where('kategori_hari', $kategoriHari)
+                            ->get()
+                            ->keyBy('jam_ke');
+
             // Insert jadwal baru
             $insertData = [];
             $now = now();
             foreach ($jadwalsData as $j) {
                 // Jangan insert jika mapel_id kosong (artinya dihapus/clear)
                 if (!empty($j['mapel_id'])) {
+                    $jamData = $masterJam->get($j['jam_ke']);
+                    
                     $insertData[] = [
                         'kelas_id' => $j['kelas_id'],
                         'hari' => $hari,
                         'jam_ke' => $j['jam_ke'],
                         'mapel_id' => $j['mapel_id'],
                         'guru_id' => !empty($j['guru_id']) ? $j['guru_id'] : null,
-                        'waktu_mulai' => '00:00:00',
-                        'waktu_selesai' => '00:00:00',
+                        'waktu_mulai' => $jamData ? $jamData->waktu_mulai : '00:00:00',
+                        'waktu_selesai' => $jamData ? $jamData->waktu_selesai : '00:00:00',
                         'created_at' => $now,
                         'updated_at' => $now
                     ];

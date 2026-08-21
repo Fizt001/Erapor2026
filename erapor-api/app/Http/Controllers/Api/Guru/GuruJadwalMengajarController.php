@@ -78,9 +78,15 @@ class GuruJadwalMengajarController extends Controller
             ->get();
 
         $now = Carbon::now('Asia/Jakarta');
-        $currentDayIndex = $now->dayOfWeekIso; // 1-7
         $targetDayIndex = $this->hariMap[$hari] ?? 1;
-        $targetDate = $now->copy()->startOfWeek()->addDays($targetDayIndex - 1);
+
+        $requestedDate = $request->query('tanggal');
+        if ($requestedDate) {
+            $targetDate = Carbon::parse($requestedDate, 'Asia/Jakarta');
+        } else {
+            $targetDate = $now->copy()->startOfWeek()->addDays($targetDayIndex - 1);
+        }
+
         $titimangsa = Titimangsa::where('is_aktif', true)->first();
 
         // Gabungkan jadwal berurutan dengan kelas dan mapel yang sama
@@ -120,14 +126,17 @@ class GuruJadwalMengajarController extends Controller
 
         $result = [];
         foreach ($groupedJadwals as $g) {
-            // Tentukan status kunci waktu
+            // Tentukan status kunci waktu berdasarkan targetDate
             $statusWaktu = 'belum_waktunya';
-            if ($currentDayIndex > $targetDayIndex) {
+            $today = $now->copy()->startOfDay();
+            $targetDay = $targetDate->copy()->startOfDay();
+
+            if ($targetDay->lt($today)) {
                 $statusWaktu = 'sudah_lewat';
-            } elseif ($currentDayIndex < $targetDayIndex) {
+            } elseif ($targetDay->gt($today)) {
                 $statusWaktu = 'belum_waktunya';
             } else {
-                // Hari yang sama, cek jam
+                // Hari yang sama (hari ini), cek jam
                 $currentTime = $now->format('H:i:s');
                 if ($currentTime < $g['waktu_mulai']) {
                     $statusWaktu = 'belum_waktunya';
@@ -219,7 +228,9 @@ class GuruJadwalMengajarController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $result
+            'data' => $result,
+            'tanggal_mulai' => $taAktif->tanggal_mulai,
+            'target_tanggal' => $targetDate->format('Y-m-d')
         ]);
     }
 
