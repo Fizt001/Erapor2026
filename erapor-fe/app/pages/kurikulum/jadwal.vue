@@ -15,7 +15,7 @@
                     :class="activeDay === hari ? 'bg-indigo-50 border-indigo-200 text-indigo-700 shadow-sm ring-1 ring-indigo-500/20' : 'bg-white border-transparent text-slate-600 hover:bg-slate-50'"
                     class="w-full text-left px-4 py-3 rounded-xl border font-bold text-sm flex items-center justify-between transition-all">
                     <div class="flex items-center gap-3">
-                        <AppIcon name="calendar-event" class="w-5 h-5" :class="activeDay === hari ? 'text-indigo-500' : 'text-slate-400'"/>
+                        <AppIcon name="calendar" class="w-5 h-5" :class="activeDay === hari ? 'text-indigo-500' : 'text-slate-400'"/>
                         {{ hari }}
                     </div>
                     <span v-if="activeDay === hari" class="w-2 h-2 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.6)]"></span>
