@@ -32,6 +32,35 @@
             </div>
           </div>
 
+          <!-- Peringatan Jadwal Hari Ini (Dock Left) -->
+          <div v-if="!isLoadingJadwal && jadwalHariIni && jadwalHariIni.length > 0" class="bg-gradient-to-b from-orange-50 to-orange-100/50 p-5 rounded-2xl border border-orange-200 shadow-sm relative overflow-hidden">
+             <div class="absolute -right-4 -top-4 opacity-10 text-orange-600"><AppIcon name="calendar" class="w-24 h-24" /></div>
+             <div class="relative z-10">
+                <h3 class="text-xs font-black text-orange-800 uppercase tracking-widest mb-3 flex items-center">
+                   <AppIcon name="bell-alert" class="w-4 h-4 mr-1.5 animate-pulse" /> Jadwal Anda Hari Ini
+                </h3>
+                <div class="space-y-2">
+                   <div v-for="(j, idx) in jadwalHariIni" :key="idx" class="bg-white/80 backdrop-blur-sm p-3 rounded-xl border border-orange-200/60 shadow-sm hover:shadow-md transition-all">
+                      <div class="flex items-center justify-between mb-1">
+                         <span class="text-[10px] font-bold bg-orange-100 text-orange-700 px-2 py-0.5 rounded-md">JP {{ j.jam_ke }}</span>
+                         <span class="text-[10px] font-bold text-orange-600">{{ j.waktu }}</span>
+                      </div>
+                      <div class="font-black text-sm text-slate-800">{{ j.kelas }}</div>
+                      <div class="text-xs font-medium text-slate-500 truncate">{{ j.mapel }}</div>
+                   </div>
+                </div>
+                <NuxtLink to="/guru/jadwal" class="mt-4 w-full flex items-center justify-center py-2 bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold rounded-xl transition-colors shadow-sm shadow-orange-200">
+                   Buka Kelas Sekarang
+                </NuxtLink>
+             </div>
+          </div>
+          <div v-else-if="!isLoadingJadwal" class="bg-slate-50 p-5 rounded-2xl border border-slate-100 flex items-center justify-center text-center">
+             <div>
+                <AppIcon name="face-smile" class="w-8 h-8 mx-auto text-slate-300 mb-2" />
+                <p class="text-xs font-bold text-slate-500">Tidak ada jadwal mengajar hari ini. Selamat beristirahat!</p>
+             </div>
+          </div>
+
           <!-- Peran Status Widget -->
           <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100">
             <h3 class="text-xs font-bold text-slate-700 uppercase tracking-widest mb-4 flex items-center"><AppIcon name="shield-check" class="w-4 h-4 mr-2" /> Hak Akses Aktif</h3>
@@ -386,6 +415,12 @@ const { data: resJadwal, pending: isLoadingJadwal } = await useFetch(import.meta
 
 const jadwalMingguan = computed(() => resJadwal.value?.data || null)
 
+const jadwalHariIni = computed(() => {
+  if (!jadwalMingguan.value) return [];
+  const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+  const today = days[new Date().getDay()];
+  return jadwalMingguan.value[today] || [];
+})
 
 const errorMessage = computed(() => error.value?.message || (!response.value?.success && response.value?.message ? response.value?.message : ''))
 const userProfile = useCookie('user_profile')
