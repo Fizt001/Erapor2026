@@ -87,6 +87,11 @@ Route::middleware('auth:sanctum')->group(function () {
         // Plot Guru Mapel (Pengampu)
         Route::apiResource('pengampu', App\Http\Controllers\Api\Kurikulum\PengampuController::class)->only(['index', 'store', 'destroy']);
         
+        // Jadwal Mengajar
+        Route::get('jadwal-mengajar/options', [App\Http\Controllers\Api\Kurikulum\KurikulumJadwalMengajarController::class, 'getOptions']);
+        Route::get('jadwal-mengajar', [App\Http\Controllers\Api\Kurikulum\KurikulumJadwalMengajarController::class, 'getByHari']);
+        Route::post('jadwal-mengajar', [App\Http\Controllers\Api\Kurikulum\KurikulumJadwalMengajarController::class, 'saveJadwal']);
+        
         // Wali Kelas
         Route::apiResource('wali-kelas', App\Http\Controllers\Api\Kurikulum\WaliKelasController::class)->only(['index', 'store', 'destroy']);
         
