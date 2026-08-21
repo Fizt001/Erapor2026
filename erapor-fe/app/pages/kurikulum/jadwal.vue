@@ -39,7 +39,7 @@
                 class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl font-bold text-sm shadow-sm transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
                 <span v-if="isSaving">Menyimpan...</span>
                 <template v-else>
-                <AppIcon name="device-floppy" class="w-5 h-5" />
+                <AppIcon name="save" class="w-5 h-5" />
                 Simpan Jadwal
                 </template>
             </button>
