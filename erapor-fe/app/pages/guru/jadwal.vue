@@ -13,11 +13,16 @@ const jadwals = ref<any[]>([])
 const fetchJadwal = async () => {
   isLoading.value = true
   try {
-    const { $api } = useNuxtApp()
-    const response = await $api.get(`/guru/jadwal-harian?hari=${selectedDay.value}`)
+    const tokenCookie = useCookie('token')
+    const response: any = await $fetch(import.meta.env.VITE_API_BASE_URL + `/api/guru/jadwal-harian?hari=${selectedDay.value}`, {
+      headers: {
+        'Authorization': `Bearer ${tokenCookie.value}`,
+        'Accept': 'application/json'
+      }
+    })
     
     // Inisialisasi form data untuk tiap kelas
-    const data = response.data.data.map((j: any) => {
+    const data = response.data.map((j: any) => {
       // Jika belum diisi, array absensi kita wrap ke reaktif
       if (!j.jurnal) j.jurnal = ''
       return j
@@ -44,7 +49,8 @@ const selectDay = (day: string) => {
 
 const simpanJurnal = async (jadwal: any) => {
   try {
-    const { $api, $toast } = useNuxtApp()
+    const tokenCookie = useCookie('token')
+    const { $toast } = useNuxtApp()
     
     const payload = {
       kelas_id: jadwal.kelas_id,
@@ -57,7 +63,16 @@ const simpanJurnal = async (jadwal: any) => {
       absensi: jadwal.absensi
     }
     
-    await $api.post('/guru/jadwal-simpan', payload)
+    await $fetch(import.meta.env.VITE_API_BASE_URL + '/api/guru/jadwal-simpan', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${tokenCookie.value}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: payload
+    })
+    
     $toast.success('Jurnal dan Absensi berhasil disimpan!')
     
     // Refresh to get updated pertemuan_ke if it was the first time
