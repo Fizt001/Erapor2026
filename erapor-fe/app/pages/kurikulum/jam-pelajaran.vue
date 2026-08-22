@@ -99,8 +99,8 @@ import { useNuxtApp } from '#app'
 
 definePageMeta({
   layout: 'kurikulum',
-  middleware: ['auth', 'role'],
-  allowedRoles: ['kurikulum', 'admin']
+  middleware: 'kurikulum',
+  title: 'Master Jam Pelajaran'
 })
 
 const { $toast } = useNuxtApp()
