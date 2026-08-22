@@ -17,6 +17,14 @@ Route::get('/run-migration-live', function () {
     }
 });
 
+Route::get('/debug-save-log', function () {
+    $path = storage_path("logs/debug_save.txt");
+    if (file_exists($path)) {
+        return response(file_get_contents($path), 200)->header('Content-Type', 'text/plain');
+    }
+    return response('Tidak ada error yang tersadap / file tidak ditemukan.', 200)->header('Content-Type', 'text/plain');
+});
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'user']);
