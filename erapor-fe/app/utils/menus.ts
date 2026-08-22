@@ -38,6 +38,7 @@ export const kurikulumMenus: MenuConfig[] = [
   { name: 'Wali Kelas', path: '/kurikulum/wali-kelas', icon: '👨‍👩‍👧‍👦' },
   { name: 'Jam Pelajaran', path: '/kurikulum/jam-pelajaran', icon: '⏰' },
   { name: 'Jadwal Mengajar', path: '/kurikulum/jadwal', icon: '📅' },
+  { name: 'Pantau Jurnal', path: '/kurikulum/jurnal', icon: '📝' },
   { divider: true, dividerLabel: 'Standar & Referensi' },
   { name: 'Standar Nilai (KKM)', path: '/kurikulum/kkm', icon: '🎯' },
   { name: 'Master Deskripsi', path: '/kurikulum/deskripsi', icon: '📝' },

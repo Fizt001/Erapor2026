@@ -201,6 +201,7 @@ const drawerMenuGroups = {
       { name: 'Wali Kelas', path: '/kurikulum/wali-kelas', icon: '👨‍👩‍👧‍👦' },
       { name: 'Jam Pelajaran', path: '/kurikulum/jam-pelajaran', icon: '⏰' },
       { name: 'Jadwal Mengajar', path: '/kurikulum/jadwal', icon: '📅' },
+      { name: 'Pantau Jurnal', path: '/kurikulum/jurnal', icon: '📝' },
     ]
   },
   standar: {
