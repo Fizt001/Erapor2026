@@ -12,6 +12,7 @@ use App\Models\Siswa;
 use App\Models\Titimangsa;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class GuruJadwalMengajarController extends Controller
 {
@@ -266,8 +267,8 @@ class GuruJadwalMengajarController extends Controller
         ]);
 
         if ($validator->fails()) {
-            file_put_contents(public_path("debug_save.txt"), "Validation Error: " . json_encode($validator->errors()));
-            return response()->json(['success' => false, 'message' => 'Validation error', 'errors' => $validator->errors()], 422);
+            file_put_contents(storage_path("logs/debug_save.txt"), "Validation Error: " . json_encode($validator->errors()));
+            return response()->json(['success' => false, 'message' => 'Validation error', 'errors' => $validator->errors()], 200);
         }
 
         DB::beginTransaction();
@@ -316,11 +317,12 @@ class GuruJadwalMengajarController extends Controller
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
-            file_put_contents(public_path("debug_save.txt"), "Save Error: " . $e->getMessage() . " at " . $e->getFile() . ":" . $e->getLine());
+            file_put_contents(storage_path("logs/debug_save.txt"), "Save Error: " . $e->getMessage() . " at " . $e->getFile() . ":" . $e->getLine());
+            // Return 200 so Nuxt $fetch doesn't throw and crash
             return response()->json([
                 'success' => false,
                 'message' => 'Terjadi kesalahan: ' . $e->getMessage()
-            ], 500);
+            ], 200);
         }
     }
 }
