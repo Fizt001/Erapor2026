@@ -75,7 +75,7 @@ class KurikulumJurnalController extends Controller
                 'id' => $jurnal->id,
                 'tanggal' => $jurnal->tanggal,
                 'waktu' => substr($jurnal->jam_mulai, 0, 5) . ' - ' . substr($jurnal->jam_selesai, 0, 5),
-                'kelas' => $jurnal->kelas ? $jurnal->kelas->nama_kelas : '-',
+                'kelas' => $jurnal->kelas ? $jurnal->kelas->tingkat . ' ' . $jurnal->kelas->nama_kelas : '-',
                 'mapel' => $jurnal->mapel ? $jurnal->mapel->nama_mapel : '-',
                 'materi' => $jurnal->materi,
                 'kehadiran' => [
