@@ -320,6 +320,83 @@ class GuruJadwalMengajarController extends Controller
                 if (!empty($insertAbsensi)) {
                     AbsensiPertemuan::insert($insertAbsensi);
                 }
+
+                // ESCALATION LOGIC (Persis Kodingan Lama - Hitungan per Mapel)
+                $tahunAktif = TahunAjaran::where('is_aktif', true)->first();
+                if ($tahunAktif) {
+                    $mapel = Mapel::find($request->mapel_id);
+                    $nama_mapel = $mapel ? $mapel->nama_mapel : 'Unknown Mapel';
+
+                    // Cari semua pertemuan untuk mapel dan kelas ini
+                    $pertemuanIdsForMapel = PertemuanGuru::where('mapel_id', $request->mapel_id)
+                        ->where('kelas_id', $request->kelas_id)
+                        ->where('titimangsa_id', $titimangsa->id) // Sesuai periode aktif
+                        ->pluck('id');
+
+                    // Hitung total S/I/A per siswa_id di mapel ini
+                    $allSiswaIds = collect($request->absensi)->pluck('siswa_id')->toArray();
+                    $countsRaw = AbsensiPertemuan::whereIn('siswa_id', $allSiswaIds)
+                        ->whereIn('pertemuan_id', $pertemuanIdsForMapel)
+                        ->whereIn('status', ['S', 'I', 'A'])
+                        ->selectRaw('siswa_id, status, COUNT(*) as total')
+                        ->groupBy('siswa_id', 'status')
+                        ->get();
+
+                    $counts = [];
+                    foreach ($countsRaw as $row) {
+                        $counts[$row->siswa_id][$row->status] = $row->total;
+                    }
+
+                    foreach ($request->absensi as $absen) {
+                        $status = $absen['status'];
+                        if (in_array($status, ['S', 'I', 'A'])) {
+                            $countS = $counts[$absen['siswa_id']]['S'] ?? 0;
+                            $countI = $counts[$absen['siswa_id']]['I'] ?? 0;
+                            $countA = $counts[$absen['siswa_id']]['A'] ?? 0;
+
+                            $kategori = null;
+                            $deskripsi = null;
+
+                            if ($status == 'S' && $countS >= 3) {
+                                $kategori = 'Bimbingan Walas';
+                                $deskripsi = "Siswa mencapai {$countS}x Sakit pada mapel $nama_mapel.";
+                            } elseif ($status == 'I' && $countI >= 3) {
+                                $kategori = 'Bimbingan Walas';
+                                $deskripsi = "Siswa mencapai {$countI}x Izin pada mapel $nama_mapel.";
+                            } elseif ($status == 'A') {
+                                if ($countA == 3) {
+                                    $kategori = 'Bimbingan Walas';
+                                    $deskripsi = "Siswa mencapai 3x Alpa pada mapel $nama_mapel.";
+                                } elseif ($countA == 5) {
+                                    $kategori = 'SP1';
+                                    $deskripsi = "Siswa mencapai 5x Alpa pada mapel $nama_mapel. Proses SP1.";
+                                } elseif ($countA == 10) {
+                                    $kategori = 'SP2';
+                                    $deskripsi = "Siswa mencapai 10x Alpa pada mapel $nama_mapel. Proses SP2.";
+                                } elseif ($countA == 15) {
+                                    $kategori = 'SP3';
+                                    $deskripsi = "Siswa mencapai 15x Alpa pada mapel $nama_mapel. Proses SP3/Pengeluaran.";
+                                }
+                            }
+
+                            if ($kategori) {
+                                \App\Models\PenangananPelanggaran::firstOrCreate(
+                                    [
+                                        'siswa_id'          => $absen['siswa_id'],
+                                        'tahun_ajaran_id'   => $tahunAktif->id,
+                                        'kategori'          => $kategori,
+                                        'deskripsi_masalah' => $deskripsi,
+                                    ],
+                                    [
+                                        'guru_id'              => $guruId,
+                                        'tindakan_penyelesaian' => '',
+                                        'status'               => 'Proses'
+                                    ]
+                                );
+                            }
+                        }
+                    }
+                }
             }
 
             DB::commit();
