@@ -5,9 +5,11 @@ definePageMeta({
   layout: 'guru'
 })
 
+
 const days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat']
 const selectedDay = ref('Senin')
 const isLoading = ref(false)
+const { $toast } = useNuxtApp()
 const jadwals = ref<any[]>([])
 
 const currentDate = ref('')
@@ -37,7 +39,7 @@ const fetchJadwal = async () => {
     }
 
     if (response.success === false && response.message) {
-        const { $toast } = useNuxtApp()
+        
         $toast.error('API Error: ' + response.message, { duration: 10000 })
     }
 
@@ -51,7 +53,7 @@ const fetchJadwal = async () => {
     jadwals.value = data
   } catch (error) {
     console.error('Failed to fetch jadwal harian', error)
-    const { $toast } = useNuxtApp()
+    
     $toast.error('Gagal mengambil data jadwal mengajar')
   } finally {
     isLoading.value = false
@@ -122,7 +124,7 @@ const onDatePicked = (event: any) => {
 const simpanJurnal = async (jadwal: any) => {
   try {
     const tokenCookie = useCookie('token')
-    const { $toast } = useNuxtApp()
+    
     
     const payload = {
       kelas_id: jadwal.kelas_id,
@@ -150,7 +152,7 @@ const simpanJurnal = async (jadwal: any) => {
     // Refresh to get updated pertemuan_ke if it was the first time
     fetchJadwal()
   } catch (error) {
-    const { $toast } = useNuxtApp()
+    
     $toast.error('Gagal menyimpan jurnal & absensi')
     console.error(error)
   }
