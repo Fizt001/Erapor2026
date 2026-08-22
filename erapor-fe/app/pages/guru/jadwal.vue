@@ -36,6 +36,11 @@ const fetchJadwal = async () => {
         maxDate.value = response.target_tanggal || ''
     }
 
+    if (response.success === false && response.message) {
+        const { $toast } = useNuxtApp()
+        $toast.error('API Error: ' + response.message, { duration: 10000 })
+    }
+
     // Inisialisasi form data untuk tiap kelas
     const data = response.data.map((j: any) => {
       // Jika belum diisi, array absensi kita wrap ke reaktif
