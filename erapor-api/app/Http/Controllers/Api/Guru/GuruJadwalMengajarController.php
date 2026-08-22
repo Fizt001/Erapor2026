@@ -155,9 +155,8 @@ class GuruJadwalMengajarController extends Controller
                 $pertemuanKe = 1;
 
                 if ($statusWaktu !== 'belum_waktunya' && $titimangsa) {
-                    // Cari pertemuan guru pada tanggal tersebut
+                    // Cari pertemuan guru pada tanggal tersebut (Hapus filter titimangsa_id agar riwayat lintas periode tetap terbaca)
                     $pertemuan = PertemuanGuru::where('guru_id', $guruId)
-                        ->where('titimangsa_id', $titimangsa->id)
                         ->where('kelas_id', $g['kelas_id'])
                         ->where('mapel_id', $g['mapel_id'])
                         ->where('tanggal', $targetDate->format('Y-m-d'))
@@ -193,18 +192,31 @@ class GuruJadwalMengajarController extends Controller
                             ];
                         }
                     } else {
-                        // Siapkan default list siswa (Hadir semua)
+                        // ESTAFET ABSENSI: Cari pertemuan sebelumnya di kelas dan hari yang sama
+                        $previousPertemuan = PertemuanGuru::where('kelas_id', $g['kelas_id'])
+                            ->where('tanggal', $targetDate->format('Y-m-d'))
+                            ->where('jam_selesai', '<=', $g['waktu_mulai'] ?? '23:59:59')
+                            ->orderBy('jam_selesai', 'desc')
+                            ->first();
+
+                        $estafetAbsensi = [];
+                        if ($previousPertemuan) {
+                            $estafetAbsensi = AbsensiPertemuan::where('pertemuan_id', $previousPertemuan->id)->get()->keyBy('siswa_id');
+                        }
+
+                        // Siapkan list siswa dengan status estafet atau H
                         $siswas = Siswa::join('users', 'siswa.user_id', '=', 'users.id')
                                        ->where('siswa.kelas_id', $g['kelas_id'])
                                        ->orderBy('users.name')
                                        ->select('siswa.*', 'users.name as nama_lengkap')
                                        ->get();
+                                       
                         foreach ($siswas as $siswa) {
                             $siswaAbsensi[] = [
                                 'siswa_id' => $siswa->id,
                                 'nama_lengkap' => $siswa->nama_lengkap,
                                 'nisn' => $siswa->nisn,
-                                'status' => 'H'
+                                'status' => isset($estafetAbsensi[$siswa->id]) ? $estafetAbsensi[$siswa->id]->status : 'H'
                             ];
                         }
                     }
