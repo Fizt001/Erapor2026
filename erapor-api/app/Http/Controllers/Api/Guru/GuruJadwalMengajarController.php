@@ -177,8 +177,10 @@ class GuruJadwalMengajarController extends Controller
                         $absensis = AbsensiPertemuan::where('pertemuan_id', $pertemuan->id)->get()->keyBy('siswa_id');
                         
                         // Ambil list siswa kelas
-                        $siswas = Siswa::where('kelas_id', $g['kelas_id'])
-                                       ->orderBy('nama_lengkap')
+                        $siswas = Siswa::join('users', 'siswa.user_id', '=', 'users.id')
+                                       ->where('siswa.kelas_id', $g['kelas_id'])
+                                       ->orderBy('users.name')
+                                       ->select('siswa.*', 'users.name as nama_lengkap')
                                        ->get();
                                        
                         foreach ($siswas as $siswa) {
@@ -191,8 +193,10 @@ class GuruJadwalMengajarController extends Controller
                         }
                     } else {
                         // Siapkan default list siswa (Hadir semua)
-                        $siswas = Siswa::where('kelas_id', $g['kelas_id'])
-                                       ->orderBy('nama_lengkap')
+                        $siswas = Siswa::join('users', 'siswa.user_id', '=', 'users.id')
+                                       ->where('siswa.kelas_id', $g['kelas_id'])
+                                       ->orderBy('users.name')
+                                       ->select('siswa.*', 'users.name as nama_lengkap')
                                        ->get();
                         foreach ($siswas as $siswa) {
                             $siswaAbsensi[] = [
