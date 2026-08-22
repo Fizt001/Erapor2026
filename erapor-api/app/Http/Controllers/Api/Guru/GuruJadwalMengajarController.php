@@ -108,10 +108,10 @@ class GuruJadwalMengajarController extends Controller
                 }
                 $currentGroup = [
                     'kelas_id' => $j->kelas_id,
-                    'kelas_nama' => $j->kelas->nama_kelas,
+                    'kelas_nama' => $j->kelas ? $j->kelas->nama_kelas : 'Unknown',
                     'mapel_id' => $j->mapel_id,
-                    'mapel_nama' => $j->mapel->nama_mapel,
-                    'mapel_kode' => $j->mapel->kode_mapel,
+                    'mapel_nama' => $j->mapel ? $j->mapel->nama_mapel : 'Unknown',
+                    'mapel_kode' => $j->mapel ? $j->mapel->kode_mapel : 'Unknown',
                     'first_jam_ke' => $j->jam_ke,
                     'last_jam_ke' => $j->jam_ke,
                     'jam_ke_array' => [$j->jam_ke],
@@ -138,9 +138,9 @@ class GuruJadwalMengajarController extends Controller
             } else {
                 // Hari yang sama (hari ini), cek jam
                 $currentTime = $now->format('H:i:s');
-                if ($currentTime < $g['waktu_mulai']) {
+                if ($currentTime < ($g['waktu_mulai'] ?? '00:00:00')) {
                     $statusWaktu = 'belum_waktunya';
-                } elseif ($currentTime > $g['waktu_selesai']) {
+                } elseif ($currentTime > ($g['waktu_selesai'] ?? '23:59:59')) {
                     $statusWaktu = 'sudah_lewat';
                 } else {
                     $statusWaktu = 'sekarang';
@@ -217,7 +217,7 @@ class GuruJadwalMengajarController extends Controller
                 'jam_ke_string' => $jamString,
                 'waktu_mulai' => $g['waktu_mulai'],
                 'waktu_selesai' => $g['waktu_selesai'],
-                'waktu' => substr($g['waktu_mulai'], 0, 5) . ' - ' . substr($g['waktu_selesai'], 0, 5),
+                'waktu' => substr($g['waktu_mulai'] ?? '', 0, 5) . ' - ' . substr($g['waktu_selesai'] ?? '', 0, 5),
                 'status_waktu' => $statusWaktu,
                 'jurnal' => $jurnal,
                 'pertemuan_ke' => $pertemuanKe,
