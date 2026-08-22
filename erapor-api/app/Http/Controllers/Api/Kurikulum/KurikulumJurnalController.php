@@ -14,7 +14,14 @@ class KurikulumJurnalController extends Controller
 {
     public function getKelasList()
     {
-        $kelas = Kelas::orderBy('tingkat')->orderBy('nama_kelas')->get(['id', 'tingkat', 'nama_kelas']);
+        $taAktif = \App\Models\TahunAjaran::where('is_aktif', true)->first();
+        $query = Kelas::orderBy('tingkat')->orderBy('nama_kelas');
+        
+        if ($taAktif) {
+            $query->where('tahun_ajaran_id', $taAktif->id);
+        }
+
+        $kelas = $query->get(['id', 'tingkat', 'nama_kelas']);
         $formatted = $kelas->map(function($k) {
             return [
                 'id' => $k->id,
