@@ -259,8 +259,8 @@ class GuruJadwalMengajarController extends Controller
             'kelas_id' => 'required|exists:kelas,id',
             'mapel_id' => 'required|exists:mapels,id',
             'tanggal' => 'required|date',
-            'waktu_mulai' => 'required|string',
-            'waktu_selesai' => 'required|string',
+            'waktu_mulai' => 'nullable|string',
+            'waktu_selesai' => 'nullable|string',
             'materi' => 'nullable|string',
             'absensi' => 'array'
         ]);
@@ -277,8 +277,8 @@ class GuruJadwalMengajarController extends Controller
                     'tanggal' => $request->tanggal,
                 ],
                 [
-                    'jam_mulai' => $request->waktu_mulai,
-                    'jam_selesai' => $request->waktu_selesai,
+                    'jam_mulai' => $request->waktu_mulai ?? '0',
+                    'jam_selesai' => $request->waktu_selesai ?? '0',
                     'materi' => $request->materi ?? '-',
                 ]
             );
