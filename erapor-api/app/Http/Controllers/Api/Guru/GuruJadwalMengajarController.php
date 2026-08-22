@@ -62,176 +62,201 @@ class GuruJadwalMengajarController extends Controller
 
     public function getJadwalByHari(Request $request)
     {
-        $guruId = $request->user()->id;
-        $hari = $request->query('hari', 'Senin');
-        $taAktif = TahunAjaran::where('is_aktif', true)->first();
-        
-        if (!$taAktif) return response()->json(['success' => false, 'message' => 'Tahun Ajaran Aktif tidak ditemukan'], 404);
+        try {
+            $guruId = $request->user()->id;
+            $hari = $request->query('hari', 'Senin');
+            $taAktif = TahunAjaran::where('is_aktif', true)->first();
+            
+            if (!$taAktif) return response()->json(['success' => false, 'message' => 'Tahun Ajaran Aktif tidak ditemukan'], 404);
 
-        $jadwals = JadwalPelajaran::with(['kelas', 'mapel'])
-            ->where('guru_id', $guruId)
-            ->where('hari', 'LIKE', '%' . trim($hari) . '%')
-            ->whereHas('kelas', function($q) use ($taAktif) {
-                $q->where('tahun_ajaran_id', $taAktif->id);
-            })
-            ->orderBy('jam_ke')
-            ->get();
+            $jadwals = JadwalPelajaran::with(['kelas', 'mapel'])
+                ->where('guru_id', $guruId)
+                ->where('hari', 'LIKE', '%' . trim($hari) . '%')
+                ->whereHas('kelas', function($q) use ($taAktif) {
+                    $q->where('tahun_ajaran_id', $taAktif->id);
+                })
+                ->orderBy('jam_ke')
+                ->get();
 
-        $now = Carbon::now('Asia/Jakarta');
-        $targetDayIndex = $this->hariMap[$hari] ?? 1;
+            $now = Carbon::now('Asia/Jakarta');
+            $targetDayIndex = $this->hariMap[$hari] ?? 1;
 
-        $requestedDate = $request->query('tanggal');
-        if ($requestedDate) {
-            $targetDate = Carbon::parse($requestedDate, 'Asia/Jakarta');
-        } else {
-            $targetDate = $now->copy()->startOfWeek()->addDays($targetDayIndex - 1);
-        }
-
-        $titimangsa = Titimangsa::where('is_aktif', true)->first();
-
-        // Gabungkan jadwal berurutan dengan kelas dan mapel yang sama
-        $groupedJadwals = [];
-        $currentGroup = null;
-
-        foreach ($jadwals as $j) {
-            if ($currentGroup && 
-                $currentGroup['kelas_id'] == $j->kelas_id && 
-                $currentGroup['mapel_id'] == $j->mapel_id &&
-                $currentGroup['last_jam_ke'] == ($j->jam_ke - 1)) {
-                
-                $currentGroup['last_jam_ke'] = $j->jam_ke;
-                $currentGroup['waktu_selesai'] = $j->waktu_selesai;
-                $currentGroup['jam_ke_array'][] = $j->jam_ke;
+            $requestedDate = $request->query('tanggal');
+            if ($requestedDate) {
+                $targetDate = Carbon::parse($requestedDate, 'Asia/Jakarta');
             } else {
-                if ($currentGroup) {
-                    $groupedJadwals[] = $currentGroup;
+                $targetDate = $now->copy()->startOfWeek()->addDays($targetDayIndex - 1);
+            }
+
+            $titimangsa = Titimangsa::where('is_aktif', true)->first();
+
+            // Gabungkan jadwal berurutan dengan kelas dan mapel yang sama
+            $groupedJadwals = [];
+            $currentGroup = null;
+
+            foreach ($jadwals as $j) {
+                if ($currentGroup && 
+                    $currentGroup['kelas_id'] == $j->kelas_id && 
+                    $currentGroup['mapel_id'] == $j->mapel_id &&
+                    $currentGroup['last_jam_ke'] == ($j->jam_ke - 1)) {
+                    
+                    $currentGroup['last_jam_ke'] = $j->jam_ke;
+                    $currentGroup['waktu_selesai'] = $j->waktu_selesai;
+                    $currentGroup['jam_ke_array'][] = $j->jam_ke;
+                } else {
+                    if ($currentGroup) {
+                        $groupedJadwals[] = $currentGroup;
+                    }
+                    $currentGroup = [
+                        'kelas_id' => $j->kelas_id,
+                        'kelas_nama' => $j->kelas ? $j->kelas->nama_kelas : 'Unknown',
+                        'mapel_id' => $j->mapel_id,
+                        'mapel_nama' => $j->mapel ? $j->mapel->nama_mapel : 'Unknown',
+                        'mapel_kode' => $j->mapel ? $j->mapel->kode_mapel : 'Unknown',
+                        'first_jam_ke' => $j->jam_ke,
+                        'last_jam_ke' => $j->jam_ke,
+                        'jam_ke_array' => [$j->jam_ke],
+                        'waktu_mulai' => $j->waktu_mulai,
+                        'waktu_selesai' => $j->waktu_selesai,
+                    ];
                 }
-                $currentGroup = [
-                    'kelas_id' => $j->kelas_id,
-                    'kelas_nama' => $j->kelas ? $j->kelas->nama_kelas : 'Unknown',
-                    'mapel_id' => $j->mapel_id,
-                    'mapel_nama' => $j->mapel ? $j->mapel->nama_mapel : 'Unknown',
-                    'mapel_kode' => $j->mapel ? $j->mapel->kode_mapel : 'Unknown',
-                    'first_jam_ke' => $j->jam_ke,
-                    'last_jam_ke' => $j->jam_ke,
-                    'jam_ke_array' => [$j->jam_ke],
-                    'waktu_mulai' => $j->waktu_mulai,
-                    'waktu_selesai' => $j->waktu_selesai,
+            }
+            if ($currentGroup) {
+                $groupedJadwals[] = $currentGroup;
+            }
+
+            $result = [];
+            foreach ($groupedJadwals as $g) {
+                // Tentukan status kunci waktu berdasarkan targetDate
+                $statusWaktu = 'belum_waktunya';
+                $today = $now->copy()->startOfDay();
+                $targetDay = $targetDate->copy()->startOfDay();
+
+                if ($targetDay->lt($today)) {
+                    $statusWaktu = 'sudah_lewat';
+                } elseif ($targetDay->gt($today)) {
+                    $statusWaktu = 'belum_waktunya';
+                } else {
+                    // Hari yang sama (hari ini), cek jam
+                    $currentTime = $now->format('H:i:s');
+                    if ($currentTime < ($g['waktu_mulai'] ?? '00:00:00')) {
+                        $statusWaktu = 'belum_waktunya';
+                    } elseif ($currentTime > ($g['waktu_selesai'] ?? '23:59:59')) {
+                        $statusWaktu = 'sudah_lewat';
+                    } else {
+                        $statusWaktu = 'sekarang';
+                    }
+                }
+
+                // Jika status != belum_waktunya, ambil data jurnal/absensi dari database
+                $jurnal = null;
+                $siswaAbsensi = [];
+                $pertemuanKe = 1;
+
+                if ($statusWaktu !== 'belum_waktunya' && $titimangsa) {
+                    // Cari pertemuan guru pada tanggal tersebut
+                    $pertemuan = PertemuanGuru::where('guru_id', $guruId)
+                        ->where('titimangsa_id', $titimangsa->id)
+                        ->where('kelas_id', $g['kelas_id'])
+                        ->where('mapel_id', $g['mapel_id'])
+                        ->where('tanggal', $targetDate->format('Y-m-d'))
+                        ->first();
+
+                    // Hitung pertemuan ke berapa
+                    $pertemuanKe = PertemuanGuru::where('guru_id', $guruId)
+                        ->where('titimangsa_id', $titimangsa->id)
+                        ->where('kelas_id', $g['kelas_id'])
+                        ->where('mapel_id', $g['mapel_id'])
+                        ->where('tanggal', '<', $targetDate->format('Y-m-d'))
+                        ->count() + 1;
+
+                    if ($pertemuan) {
+                        $jurnal = $pertemuan->materi;
+                        
+                        // Ambil absensi
+                        $absensis = AbsensiPertemuan::where('pertemuan_id', $pertemuan->id)->get()->keyBy('siswa_id');
+                        
+                        // Ambil list siswa kelas
+                        $siswas = Siswa::where('kelas_id', $g['kelas_id'])
+                                       ->orderBy('nama_lengkap')
+                                       ->get();
+                                       
+                        foreach ($siswas as $siswa) {
+                            $siswaAbsensi[] = [
+                                'siswa_id' => $siswa->id,
+                                'nama_lengkap' => $siswa->nama_lengkap,
+                                'nisn' => $siswa->nisn,
+                                'status' => isset($absensis[$siswa->id]) ? $absensis[$siswa->id]->status : 'H'
+                            ];
+                        }
+                    } else {
+                        // Siapkan default list siswa (Hadir semua)
+                        $siswas = Siswa::where('kelas_id', $g['kelas_id'])
+                                       ->orderBy('nama_lengkap')
+                                       ->get();
+                        foreach ($siswas as $siswa) {
+                            $siswaAbsensi[] = [
+                                'siswa_id' => $siswa->id,
+                                'nama_lengkap' => $siswa->nama_lengkap,
+                                'nisn' => $siswa->nisn,
+                                'status' => 'H'
+                            ];
+                        }
+                    }
+                }
+
+                $jamString = count($g['jam_ke_array']) > 1 
+                    ? "{$g['first_jam_ke']} - {$g['last_jam_ke']}" 
+                    : "{$g['first_jam_ke']}";
+
+                $result[] = [
+                    'kelas_id' => $g['kelas_id'],
+                    'kelas_nama' => $g['kelas_nama'],
+                    'mapel_id' => $g['mapel_id'],
+                    'mapel_nama' => $g['mapel_nama'],
+                    'mapel_kode' => $g['mapel_kode'],
+                    'jam_ke_string' => $jamString,
+                    'waktu_mulai' => $g['waktu_mulai'],
+                    'waktu_selesai' => $g['waktu_selesai'],
+                    'waktu' => substr($g['waktu_mulai'] ?? '', 0, 5) . ' - ' . substr($g['waktu_selesai'] ?? '', 0, 5),
+                    'status_waktu' => $statusWaktu,
+                    'jurnal' => $jurnal,
+                    'pertemuan_ke' => $pertemuanKe,
+                    'absensi' => $siswaAbsensi,
+                    'tanggal' => $targetDate->format('Y-m-d')
                 ];
             }
+
+            return response()->json([
+                'success' => true,
+                'data' => $result,
+                'tanggal_mulai' => $taAktif->tanggal_mulai,
+                'target_tanggal' => $targetDate->format('Y-m-d')
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    [
+                        'kelas_id' => 1,
+                        'kelas_nama' => 'ERROR SERVER',
+                        'mapel_id' => 1,
+                        'mapel_nama' => 'Pesan Error: ' . substr($e->getMessage(), 0, 100),
+                        'mapel_kode' => 'ERR',
+                        'jam_ke_string' => '1',
+                        'waktu_mulai' => '00:00:00',
+                        'waktu_selesai' => '00:00:00',
+                        'waktu' => 'Baris: ' . $e->getLine(),
+                        'status_waktu' => 'sekarang',
+                        'jurnal' => $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine(),
+                        'pertemuan_ke' => 1,
+                        'absensi' => [],
+                        'tanggal' => date('Y-m-d')
+                    ]
+                ],
+                'target_tanggal' => date('Y-m-d')
+            ]);
         }
-        if ($currentGroup) {
-            $groupedJadwals[] = $currentGroup;
-        }
-
-        $result = [];
-        foreach ($groupedJadwals as $g) {
-            // Tentukan status kunci waktu berdasarkan targetDate
-            $statusWaktu = 'belum_waktunya';
-            $today = $now->copy()->startOfDay();
-            $targetDay = $targetDate->copy()->startOfDay();
-
-            if ($targetDay->lt($today)) {
-                $statusWaktu = 'sudah_lewat';
-            } elseif ($targetDay->gt($today)) {
-                $statusWaktu = 'belum_waktunya';
-            } else {
-                // Hari yang sama (hari ini), cek jam
-                $currentTime = $now->format('H:i:s');
-                if ($currentTime < ($g['waktu_mulai'] ?? '00:00:00')) {
-                    $statusWaktu = 'belum_waktunya';
-                } elseif ($currentTime > ($g['waktu_selesai'] ?? '23:59:59')) {
-                    $statusWaktu = 'sudah_lewat';
-                } else {
-                    $statusWaktu = 'sekarang';
-                }
-            }
-
-            // Jika status != belum_waktunya, ambil data jurnal/absensi dari database
-            $jurnal = null;
-            $siswaAbsensi = [];
-            $pertemuanKe = 1;
-
-            if ($statusWaktu !== 'belum_waktunya' && $titimangsa) {
-                // Cari pertemuan guru pada tanggal tersebut
-                $pertemuan = PertemuanGuru::where('guru_id', $guruId)
-                    ->where('titimangsa_id', $titimangsa->id)
-                    ->where('kelas_id', $g['kelas_id'])
-                    ->where('mapel_id', $g['mapel_id'])
-                    ->where('tanggal', $targetDate->format('Y-m-d'))
-                    ->first();
-
-                // Hitung pertemuan ke berapa
-                $pertemuanKe = PertemuanGuru::where('guru_id', $guruId)
-                    ->where('titimangsa_id', $titimangsa->id)
-                    ->where('kelas_id', $g['kelas_id'])
-                    ->where('mapel_id', $g['mapel_id'])
-                    ->where('tanggal', '<', $targetDate->format('Y-m-d'))
-                    ->count() + 1;
-
-                if ($pertemuan) {
-                    $jurnal = $pertemuan->materi;
-                    
-                    // Ambil absensi
-                    $absensis = AbsensiPertemuan::where('pertemuan_id', $pertemuan->id)->get()->keyBy('siswa_id');
-                    
-                    // Ambil list siswa kelas
-                    $siswas = Siswa::where('kelas_id', $g['kelas_id'])
-                                   ->orderBy('nama_lengkap')
-                                   ->get();
-                                   
-                    foreach ($siswas as $siswa) {
-                        $siswaAbsensi[] = [
-                            'siswa_id' => $siswa->id,
-                            'nama_lengkap' => $siswa->nama_lengkap,
-                            'nisn' => $siswa->nisn,
-                            'status' => isset($absensis[$siswa->id]) ? $absensis[$siswa->id]->status : 'H'
-                        ];
-                    }
-                } else {
-                    // Siapkan default list siswa (Hadir semua)
-                    $siswas = Siswa::where('kelas_id', $g['kelas_id'])
-                                   ->orderBy('nama_lengkap')
-                                   ->get();
-                    foreach ($siswas as $siswa) {
-                        $siswaAbsensi[] = [
-                            'siswa_id' => $siswa->id,
-                            'nama_lengkap' => $siswa->nama_lengkap,
-                            'nisn' => $siswa->nisn,
-                            'status' => 'H'
-                        ];
-                    }
-                }
-            }
-
-            $jamString = count($g['jam_ke_array']) > 1 
-                ? "{$g['first_jam_ke']} - {$g['last_jam_ke']}" 
-                : "{$g['first_jam_ke']}";
-
-            $result[] = [
-                'kelas_id' => $g['kelas_id'],
-                'kelas_nama' => $g['kelas_nama'],
-                'mapel_id' => $g['mapel_id'],
-                'mapel_nama' => $g['mapel_nama'],
-                'mapel_kode' => $g['mapel_kode'],
-                'jam_ke_string' => $jamString,
-                'waktu_mulai' => $g['waktu_mulai'],
-                'waktu_selesai' => $g['waktu_selesai'],
-                'waktu' => substr($g['waktu_mulai'] ?? '', 0, 5) . ' - ' . substr($g['waktu_selesai'] ?? '', 0, 5),
-                'status_waktu' => $statusWaktu,
-                'jurnal' => $jurnal,
-                'pertemuan_ke' => $pertemuanKe,
-                'absensi' => $siswaAbsensi,
-                'tanggal' => $targetDate->format('Y-m-d')
-            ];
-        }
-
-        return response()->json([
-            'success' => true,
-            'data' => $result,
-            'tanggal_mulai' => $taAktif->tanggal_mulai,
-            'target_tanggal' => $targetDate->format('Y-m-d')
-        ]);
     }
 
     public function simpanJurnalAbsensi(Request $request)
