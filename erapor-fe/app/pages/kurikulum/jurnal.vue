@@ -112,7 +112,8 @@ import { ref, onMounted } from 'vue'
 
 definePageMeta({
   layout: 'kurikulum',
-  middleware: 'auth'
+  middleware: 'kurikulum',
+  title: 'Pantau Jurnal'
 })
 
 const guruList = ref([])
