@@ -326,5 +326,3 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/siswas', [\App\Http\Controllers\Api\SuperadminController::class, 'getSiswas']);
     });
 });
-    }
-});
