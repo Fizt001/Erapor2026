@@ -112,6 +112,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('jadwal-mengajar/options', [App\Http\Controllers\Api\Kurikulum\KurikulumJadwalMengajarController::class, 'getOptions']);
         Route::get('jadwal-mengajar', [App\Http\Controllers\Api\Kurikulum\KurikulumJadwalMengajarController::class, 'getByHari']);
         Route::post('jadwal-mengajar', [App\Http\Controllers\Api\Kurikulum\KurikulumJadwalMengajarController::class, 'saveJadwal']);
+        Route::get('jurnal/guru', [App\Http\Controllers\Api\Kurikulum\KurikulumJurnalController::class, 'getGuruList']);
+        Route::get('jurnal', [App\Http\Controllers\Api\Kurikulum\KurikulumJurnalController::class, 'index']);
         
         // Jam Pelajaran
         Route::get('jam-pelajaran', [App\Http\Controllers\Api\Kurikulum\KurikulumJamPelajaranController::class, 'index']);
