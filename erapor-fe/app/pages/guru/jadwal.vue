@@ -151,9 +151,15 @@ const simpanJurnal = async (jadwal: any) => {
     
     // Refresh to get updated pertemuan_ke if it was the first time
     fetchJadwal()
-  } catch (error) {
+  } catch (error: any) {
+    let errorMsg = 'Gagal menyimpan jurnal & absensi'
+    if (error.response && error.response._data && error.response._data.message) {
+      errorMsg = error.response._data.message
+    } else if (error.data && error.data.message) {
+      errorMsg = error.data.message
+    }
     
-    $toast.error('Gagal menyimpan jurnal & absensi')
+    $toast.error(errorMsg)
     console.error(error)
   }
 }
