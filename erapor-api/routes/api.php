@@ -230,6 +230,10 @@ Route::middleware('auth:sanctum')->group(function () {
         
         // REKAP SUMATIF
         Route::get('sumatif/rekap', [\App\Http\Controllers\Api\Guru\SumatifRekapController::class, 'index']);
+        
+        // REFERENSI (Dipakai oleh frontend absensi walas)
+        Route::get('absensi/referensi', [\App\Http\Controllers\Api\Guru\AbsensiController::class, 'getReferensi']);
+
         // JADWAL MENGAJAR GURU (Integrasi Absensi & Jurnal)
         Route::get('jadwal-mingguan', [\App\Http\Controllers\Api\Guru\GuruJadwalMengajarController::class, 'getJadwalMingguan']);
         Route::get('jadwal-harian', [\App\Http\Controllers\Api\Guru\GuruJadwalMengajarController::class, 'getJadwalByHari']);
