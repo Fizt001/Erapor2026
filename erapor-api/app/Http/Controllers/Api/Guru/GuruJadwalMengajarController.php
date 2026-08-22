@@ -29,7 +29,7 @@ class GuruJadwalMengajarController extends Controller
     {
         $guruId = $request->user()->id;
         $taAktif = TahunAjaran::where('is_aktif', true)->first();
-        if (!$taAktif) file_put_contents(public_path("debug_save.txt"), $e->getMessage() . " at " . $e->getFile() . ":" . $e->getLine()); return response()->json(['data' => []]);
+        if (!$taAktif) return response()->json(['data' => []]);
 
         $jadwals = JadwalPelajaran::with(['kelas', 'mapel'])
             ->where('guru_id', $guruId)
@@ -54,7 +54,7 @@ class GuruJadwalMengajarController extends Controller
             }
         }
 
-        file_put_contents(public_path("debug_save.txt"), $e->getMessage() . " at " . $e->getFile() . ":" . $e->getLine()); return response()->json([
+        return response()->json([
             'success' => true,
             'data' => $rekap
         ]);
@@ -67,7 +67,7 @@ class GuruJadwalMengajarController extends Controller
             $hari = $request->query('hari', 'Senin');
             $taAktif = TahunAjaran::where('is_aktif', true)->first();
             
-            if (!$taAktif) file_put_contents(public_path("debug_save.txt"), $e->getMessage() . " at " . $e->getFile() . ":" . $e->getLine()); return response()->json(['success' => false, 'message' => 'Tahun Ajaran Aktif tidak ditemukan'], 404);
+            if (!$taAktif) return response()->json(['success' => false, 'message' => 'Tahun Ajaran Aktif tidak ditemukan'], 404);
 
             $jadwals = JadwalPelajaran::with(['kelas', 'mapel'])
                 ->where('guru_id', $guruId)
@@ -231,14 +231,14 @@ class GuruJadwalMengajarController extends Controller
                 ];
             }
 
-            file_put_contents(public_path("debug_save.txt"), $e->getMessage() . " at " . $e->getFile() . ":" . $e->getLine()); return response()->json([
+            return response()->json([
                 'success' => true,
                 'data' => $result,
                 'tanggal_mulai' => $taAktif->tanggal_mulai,
                 'target_tanggal' => $targetDate->format('Y-m-d')
             ]);
         } catch (\Exception $e) {
-            file_put_contents(public_path("debug_save.txt"), $e->getMessage() . " at " . $e->getFile() . ":" . $e->getLine()); return response()->json([
+            return response()->json([
                 'success' => false,
                 'message' => 'Error: ' . $e->getMessage() . ' at line ' . $e->getLine(),
                 'target_tanggal' => date('Y-m-d'),
@@ -252,7 +252,7 @@ class GuruJadwalMengajarController extends Controller
         $guruId = $request->user()->id;
         $titimangsa = Titimangsa::where('is_aktif', true)->first();
         if (!$titimangsa) {
-            file_put_contents(public_path("debug_save.txt"), $e->getMessage() . " at " . $e->getFile() . ":" . $e->getLine()); return response()->json(['success' => false, 'message' => 'Titimangsa aktif tidak ditemukan'], 404);
+            return response()->json(['success' => false, 'message' => 'Titimangsa aktif tidak ditemukan'], 404);
         }
 
         $request->validate([
@@ -277,10 +277,8 @@ class GuruJadwalMengajarController extends Controller
                     'tanggal' => $request->tanggal,
                 ],
                 [
-                    // MySQL strict mode throws error if we pass "08:20:00" to an integer column. 
-                    // So we cast it to integer (it will take the hour part, e.g., 8), or default to 0.
-                    'jam_mulai' => (int)($request->waktu_mulai ?? 0),
-                    'jam_selesai' => (int)($request->waktu_selesai ?? 0),
+                    'jam_mulai' => $request->waktu_mulai ?? '0',
+                    'jam_selesai' => $request->waktu_selesai ?? '0',
                     'materi' => $request->materi ?? '-',
                 ]
             );
@@ -307,13 +305,13 @@ class GuruJadwalMengajarController extends Controller
             }
 
             DB::commit();
-            file_put_contents(public_path("debug_save.txt"), $e->getMessage() . " at " . $e->getFile() . ":" . $e->getLine()); return response()->json([
+            return response()->json([
                 'success' => true,
                 'message' => 'Jurnal & Absensi berhasil disimpan'
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
-            file_put_contents(public_path("debug_save.txt"), $e->getMessage() . " at " . $e->getFile() . ":" . $e->getLine()); return response()->json([
+            return response()->json([
                 'success' => false,
                 'message' => 'Terjadi kesalahan: ' . $e->getMessage()
             ], 500);
