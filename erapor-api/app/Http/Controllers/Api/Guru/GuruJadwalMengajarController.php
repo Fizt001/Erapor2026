@@ -277,8 +277,8 @@ class GuruJadwalMengajarController extends Controller
                     'tanggal' => $request->tanggal,
                 ],
                 [
-                    'jam_mulai' => $request->waktu_mulai ?? '0',
-                    'jam_selesai' => $request->waktu_selesai ?? '0',
+                    'jam_mulai' => (int)($request->waktu_mulai ?? 0),
+                    'jam_selesai' => (int)($request->waktu_selesai ?? 0),
                     'materi' => $request->materi ?? '-',
                 ]
             );
