@@ -239,27 +239,11 @@ class GuruJadwalMengajarController extends Controller
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                'success' => true,
-                'data' => [
-                    [
-                        'kelas_id' => 1,
-                        'kelas_nama' => 'ERROR SERVER',
-                        'mapel_id' => 1,
-                        'mapel_nama' => 'Pesan Error: ' . substr($e->getMessage(), 0, 100),
-                        'mapel_kode' => 'ERR',
-                        'jam_ke_string' => '1',
-                        'waktu_mulai' => '00:00:00',
-                        'waktu_selesai' => '00:00:00',
-                        'waktu' => 'Baris: ' . $e->getLine(),
-                        'status_waktu' => 'sekarang',
-                        'jurnal' => $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine(),
-                        'pertemuan_ke' => 1,
-                        'absensi' => [],
-                        'tanggal' => date('Y-m-d')
-                    ]
-                ],
-                'target_tanggal' => date('Y-m-d')
-            ]);
+                'success' => false,
+                'message' => 'Error: ' . $e->getMessage() . ' at line ' . $e->getLine(),
+                'target_tanggal' => date('Y-m-d'),
+                'data' => []
+            ], 200); // return 200 so Nuxt catches it and displays it via toast!
         }
     }
 
