@@ -326,8 +326,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/siswas', [\App\Http\Controllers\Api\SuperadminController::class, 'getSiswas']);
     });
 });
-<?php
-use Illuminate\Support\Facades\Route;
 use App\Models\PertemuanGuru;
 use Illuminate\Http\Request;
 
