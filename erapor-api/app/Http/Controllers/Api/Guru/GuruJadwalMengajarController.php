@@ -255,7 +255,7 @@ class GuruJadwalMengajarController extends Controller
             return response()->json(['success' => false, 'message' => 'Titimangsa aktif tidak ditemukan'], 404);
         }
 
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'kelas_id' => 'required|exists:kelas,id',
             'mapel_id' => 'required|exists:mapels,id',
             'tanggal' => 'required|date',
@@ -264,6 +264,11 @@ class GuruJadwalMengajarController extends Controller
             'materi' => 'nullable|string',
             'absensi' => 'array'
         ]);
+
+        if ($validator->fails()) {
+            file_put_contents(public_path("debug_save.txt"), "Validation Error: " . json_encode($validator->errors()));
+            return response()->json(['success' => false, 'message' => 'Validation error', 'errors' => $validator->errors()], 422);
+        }
 
         DB::beginTransaction();
         try {
@@ -311,6 +316,7 @@ class GuruJadwalMengajarController extends Controller
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
+            file_put_contents(public_path("debug_save.txt"), "Save Error: " . $e->getMessage() . " at " . $e->getFile() . ":" . $e->getLine());
             return response()->json([
                 'success' => false,
                 'message' => 'Terjadi kesalahan: ' . $e->getMessage()
