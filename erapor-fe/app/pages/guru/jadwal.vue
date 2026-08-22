@@ -65,7 +65,8 @@ const selectDay = (day: string) => {
 }
 
 const canGoPrev = computed(() => {
-    if (!currentDate.value || !tanggalMulai.value) return false
+    if (!currentDate.value) return false
+    if (!tanggalMulai.value) return true // Allow going back indefinitely if no start date is set
     const curr = new Date(currentDate.value)
     const min = new Date(tanggalMulai.value)
     const prev = new Date(curr)
