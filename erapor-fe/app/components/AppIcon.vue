@@ -94,6 +94,7 @@ const icons = {
 
 // Map alias icons
 icons['search'] = icons['magnifying-glass']
+icons['history'] = icons['clock']
 
 const svgContent = computed(() => {
   return icons[props.name] || `<span class="text-xs font-bold text-slate-400">[?]</span>`
