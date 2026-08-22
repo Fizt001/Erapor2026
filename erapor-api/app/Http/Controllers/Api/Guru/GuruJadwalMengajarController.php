@@ -10,6 +10,7 @@ use App\Models\PertemuanGuru;
 use App\Models\AbsensiPertemuan;
 use App\Models\Siswa;
 use App\Models\Titimangsa;
+use App\Models\Mapel;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
