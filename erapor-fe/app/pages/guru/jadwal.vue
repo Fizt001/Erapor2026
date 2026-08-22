@@ -94,6 +94,24 @@ const nextWeek = () => {
     fetchJadwal()
 }
 
+const onDatePicked = (event: any) => {
+    const d = event.target.value;
+    if (!d) return;
+    
+    const pickedDate = new Date(d);
+    currentDate.value = pickedDate.toISOString().split('T')[0];
+    
+    const daysIndo = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+    const pickedDayIndo = daysIndo[pickedDate.getDay()];
+    
+    if (days.includes(pickedDayIndo)) {
+        selectedDay.value = pickedDayIndo;
+    } else {
+        selectedDay.value = 'Senin';
+    }
+    
+    fetchJadwal();
+}
 
 const simpanJurnal = async (jadwal: any) => {
   try {
@@ -191,9 +209,21 @@ const getStatusBadgeColor = (status: string) => {
             <button @click="prevWeek" :disabled="!canGoPrev || isLoading" class="p-2 rounded-xl transition-all" :class="canGoPrev ? 'text-slate-600 hover:bg-slate-100 active:scale-95' : 'text-slate-300 cursor-not-allowed'">
                 <AppIcon name="arrow-left" class="w-5 h-5" />
             </button>
-            <div class="text-center">
-                <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-0.5">Tanggal Mengajar</p>
-                <h3 class="text-sm font-bold text-slate-800">{{ currentDate ? new Date(currentDate).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : '-' }}</h3>
+            <div class="text-center relative group cursor-pointer px-4 py-1 rounded-xl hover:bg-slate-50 transition-colors">
+                <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-0.5 group-hover:text-blue-500 transition-colors">Tanggal Mengajar</p>
+                <div class="flex items-center justify-center gap-1.5">
+                    <h3 class="text-sm font-bold text-slate-800 group-hover:text-blue-600 transition-colors">{{ currentDate ? new Date(currentDate).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : '-' }}</h3>
+                    <AppIcon name="calendar" class="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-500 transition-colors" />
+                </div>
+                <input 
+                    type="date" 
+                    :value="currentDate"
+                    :min="tanggalMulai"
+                    :max="maxDate"
+                    @change="onDatePicked"
+                    class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    title="Pilih tanggal"
+                >
             </div>
             <button @click="nextWeek" :disabled="!canGoNext || isLoading" class="p-2 rounded-xl transition-all" :class="canGoNext ? 'text-slate-600 hover:bg-slate-100 active:scale-95' : 'text-slate-300 cursor-not-allowed'">
                 <AppIcon name="arrow-right" class="w-5 h-5" />
