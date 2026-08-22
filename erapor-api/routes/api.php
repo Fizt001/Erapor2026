@@ -25,6 +25,19 @@ Route::get('/debug-save-log', function () {
     return response('Tidak ada error yang tersadap / file tidak ditemukan.', 200)->header('Content-Type', 'text/plain');
 });
 
+Route::get('/debug-laravel-log', function () {
+    $path = storage_path("logs/laravel.log");
+    if (file_exists($path)) {
+        // Return only the last 50000 bytes so it doesn't crash
+        $content = file_get_contents($path);
+        if (strlen($content) > 50000) {
+            $content = substr($content, -50000);
+        }
+        return response($content, 200)->header('Content-Type', 'text/plain');
+    }
+    return response('laravel.log tidak ditemukan.', 200)->header('Content-Type', 'text/plain');
+});
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'user']);
