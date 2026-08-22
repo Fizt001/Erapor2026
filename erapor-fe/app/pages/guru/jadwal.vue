@@ -123,7 +123,7 @@ const onDatePicked = (event: any) => {
 
 const simpanJurnal = async (jadwal: any) => {
   try {
-    const tokenCookie = useCookie('token')
+    const tokenCookie = useCookie('auth_token')
     
     
     const payload = {
