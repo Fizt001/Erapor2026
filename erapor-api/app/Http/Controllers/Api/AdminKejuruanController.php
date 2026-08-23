@@ -102,7 +102,7 @@ class AdminKejuruanController extends Controller
     public function getKejuruanList()
     {
         $kejuruans = Kejuruan::with('program.bidang')
-            ->whereRaw('kode_konsentrasi REGEXP \'^\'[0-9]{3}\'\'')  // only 3-digit numeric codes
+            ->whereRaw("kode_konsentrasi REGEXP '^[0-9]{3}$'")  // only 3-digit numeric codes
             ->orderBy('kode_konsentrasi')
             ->get()
             ->map(function ($k) {
