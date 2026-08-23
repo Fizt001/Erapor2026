@@ -97,6 +97,16 @@
               </div>
             </div>
 
+            <form @submit.prevent="saveProduktif" class="space-y-4 mt-4">
+              <!-- Pilih Kurikulum -->
+              <div>
+                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Pilih Kurikulum</label>
+                <select v-model="formProduktif.kurikulum_id" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all text-sm font-bold text-slate-700 outline-none cursor-pointer">
+                  <option value="" disabled>-- Pilih Kurikulum --</option>
+                  <option v-for="kur in kurikulums" :key="kur.id" :value="kur.id">{{ kur.nama_kurikulum }}</option>
+                </select>
+              </div>
+
               <!-- 3 Areas -->
               <div class="flex gap-3 items-stretch">
                 <!-- Dropdown 1: Kode Kejuruan -->
