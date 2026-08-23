@@ -51,10 +51,13 @@
                             <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Nama Bidang</label>
                             <input type="text" v-model="bidangForm.nama_bidang" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800" placeholder="Misal: Teknologi Informasi">
                         </div>
-                        <div class="pt-4 border-t border-slate-100">
-                            <button type="submit" :disabled="isSaving" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-2xl shadow-lg hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 uppercase tracking-widest text-xs">
+                        <div class="pt-4 border-t border-slate-100 flex gap-3">
+                            <button v-if="bidangForm.id" type="button" @click="resetBidangForm" class="flex-1 py-3 bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold rounded-2xl transition-all text-xs uppercase tracking-widest border border-rose-200">
+                                Batal
+                            </button>
+                            <button type="submit" :disabled="isSaving" class="flex-[2] py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-2xl shadow-lg hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 uppercase tracking-widest text-xs">
                                 <span v-if="isSaving" class="animate-spin text-lg"><AppIcon name="clock" /></span>
-                                <span v-else class="text-lg"><AppIcon name="save" /></span> Simpan Bidang
+                                <span v-else class="text-lg"><AppIcon name="save" /></span> {{ bidangForm.id ? 'Simpan Perubahan' : 'Simpan Bidang' }}
                             </button>
                         </div>
                     </form>
@@ -88,10 +91,13 @@
                             <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Nama Program</label>
                             <input type="text" v-model="programForm.nama_program" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800" placeholder="Misal: Teknik Komputer dan Informatika">
                         </div>
-                        <div class="pt-4 border-t border-slate-100">
-                            <button type="submit" :disabled="isSaving" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-2xl shadow-lg hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 uppercase tracking-widest text-xs">
+                        <div class="pt-4 border-t border-slate-100 flex gap-3">
+                            <button v-if="programForm.id" type="button" @click="resetProgramForm" class="flex-1 py-3 bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold rounded-2xl transition-all text-xs uppercase tracking-widest border border-rose-200">
+                                Batal
+                            </button>
+                            <button type="submit" :disabled="isSaving" class="flex-[2] py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-2xl shadow-lg hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 uppercase tracking-widest text-xs">
                                 <span v-if="isSaving" class="animate-spin text-lg"><AppIcon name="clock" /></span>
-                                <span v-else class="text-lg"><AppIcon name="save" /></span> Simpan Program
+                                <span v-else class="text-lg"><AppIcon name="save" /></span> {{ programForm.id ? 'Simpan Perubahan' : 'Simpan Program' }}
                             </button>
                         </div>
                     </form>
@@ -142,10 +148,13 @@
                             </div>
                         </div>
 
-                        <div class="pt-4 border-t border-slate-100">
-                            <button type="submit" :disabled="isSaving" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-2xl shadow-lg hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 uppercase tracking-widest text-xs">
+                        <div class="pt-4 border-t border-slate-100 flex gap-3">
+                            <button v-if="kejuruanForm.id" type="button" @click="resetKejuruanForm" class="flex-1 py-3 bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold rounded-2xl transition-all text-xs uppercase tracking-widest border border-rose-200">
+                                Batal
+                            </button>
+                            <button type="submit" :disabled="isSaving" class="flex-[2] py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-2xl shadow-lg hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 uppercase tracking-widest text-xs">
                                 <span v-if="isSaving" class="animate-spin text-lg"><AppIcon name="clock" /></span>
-                                <span v-else class="text-lg"><AppIcon name="save" /></span> Simpan Konsentrasi
+                                <span v-else class="text-lg"><AppIcon name="save" /></span> {{ kejuruanForm.id ? 'Simpan Perubahan' : 'Simpan Konsentrasi' }}
                             </button>
                         </div>
                     </form>
@@ -394,16 +403,28 @@ const fetchTreeData = async () => {
 
 const saveBidang = async () => {
     await submitForm('bidang', bidangForm.value)
-    bidangForm.value = { id: null, nama_bidang: '' }
+    resetBidangForm()
 }
 
 const saveProgram = async () => {
     await submitForm('program', programForm.value)
-    programForm.value = { id: null, bidang_id: '', nama_program: '' }
+    resetProgramForm()
 }
 
 const saveKejuruan = async () => {
     await submitForm('konsentrasi', kejuruanForm.value)
+    resetKejuruanForm()
+}
+
+const resetBidangForm = () => {
+    bidangForm.value = { id: null, nama_bidang: '' }
+}
+
+const resetProgramForm = () => {
+    programForm.value = { id: null, bidang_id: '', nama_program: '' }
+}
+
+const resetKejuruanForm = () => {
     kejuruanForm.value = { id: null, program_id: '', kode_konsentrasi: '', nama_konsentrasi: '' }
 }
 
