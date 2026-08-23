@@ -606,6 +606,9 @@ const resetProduktifForm = () => {
 }
 
 const editProduktif = (item) => {
+  // Fetch kejuruan list if it's empty so the dropdown can populate
+  if (kejuruanList.value.length === 0) fetchKejuruanList()
+  
   // Parse kelompok "251.XI" → kode_kejuruan="251", tingkat="XI"
   const parts = (item.kelompok || '').split('.')
   formProduktif.value = {
