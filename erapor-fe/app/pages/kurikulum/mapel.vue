@@ -16,92 +16,163 @@
       <!-- =============================================== -->
       <!-- PANEL DOCK KIRI (Form Input)                    -->
       <!-- =============================================== -->
-      <div :class="['w-full xl:w-[360px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', activeTabMobile === 'form' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[52px]' : '']">
+      <div :class="['w-full xl:w-[380px] bg-white border-r border-slate-200 flex-shrink-0 flex flex-col h-full z-10 shadow-[2px_0_10px_-4px_rgba(0,0,0,0.05)] transition-all', activeTabMobile === 'form' || isDesktop ? 'block' : 'hidden xl:flex', !isDesktop ? 'pt-[52px]' : '']">
         
-        <div class="p-4 pb-2 shrink-0 z-10 relative">
-          <div class="bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl p-4 border border-amber-500 shadow-sm relative overflow-hidden flex items-center gap-3">
-            <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg relative z-10 text-white"><AppIcon name="book-open" class="w-5 h-5" /></div>
-            <div class="relative z-10">
-                <h3 class="text-xs font-black uppercase tracking-widest text-white">{{ isEditing ? 'Edit Mata Pelajaran' : 'Mapel Baru' }}</h3>
-                <p class="text-[10px] text-amber-100 font-semibold uppercase mt-0.5">{{ isEditing ? 'Perbarui Data' : 'Tambah Data Manual' }}</p>
-            </div>
-            <div class="absolute right-0 bottom-0 opacity-15 text-white pointer-events-none">
-              <svg class="w-16 h-16 transform translate-x-4 translate-y-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path></svg>
-            </div>
+        <!-- Tabs: Umum vs Produktif -->
+        <div class="p-3 pb-0 shrink-0">
+          <div class="flex bg-slate-100 rounded-2xl p-1 gap-1">
+            <button type="button" @click="switchFormTab('umum')" :class="activeFormTab === 'umum' ? 'bg-white text-amber-700 shadow-sm' : 'text-slate-500 hover:text-slate-700'" class="flex-1 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all">
+              📚 Mapel Umum
+            </button>
+            <button type="button" @click="switchFormTab('produktif')" :class="activeFormTab === 'produktif' ? 'bg-white text-purple-700 shadow-sm' : 'text-slate-500 hover:text-slate-700'" class="flex-1 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all">
+              🏭 Produktif
+            </button>
           </div>
         </div>
-        
-        <div class="flex-1 overflow-y-auto custom-scrollbar p-4 pb-6">
+
+        <div class="flex-1 overflow-y-auto custom-scrollbar">
+
+          <!-- ===================== -->
+          <!-- TAB: MAPEL UMUM (A/B/C/D) -->
+          <!-- ===================== -->
+          <div v-show="activeFormTab === 'umum'" class="p-4 space-y-4">
+            <div class="bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl p-4 border border-amber-500 shadow-sm relative overflow-hidden flex items-center gap-3">
+              <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg text-white"><AppIcon name="book-open" class="w-5 h-5" /></div>
+              <div>
+                <h3 class="text-xs font-black uppercase tracking-widest text-white">{{ isEditing ? 'Edit Mapel' : 'Tambah Mapel' }}</h3>
+                <p class="text-[10px] text-amber-100 font-semibold mt-0.5">Kelompok A / B / C / D</p>
+              </div>
+            </div>
             <form @submit.prevent="saveData" class="space-y-4">
-                
-                <!-- Pilih Kurikulum -->
-                <div>
-                    <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Pilih Kurikulum</label>
-                    <select v-model="formData.kurikulum_id" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-700 outline-none cursor-pointer">
-                        <option value="" disabled>-- Pilih Kurikulum --</option>
-                        <option v-for="kur in kurikulums" :key="kur.id" :value="kur.id">{{ kur.nama_kurikulum }}</option>
-                    </select>
-                </div>
-
-                <!-- Pilih Kelompok (WAJIB, langsung setelah kurikulum) -->
-                <div>
-                    <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">
-                        Kelompok Mapel <span class="text-rose-500">*</span>
-                    </label>
-                    <select v-model="formData.kelompok" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-700 outline-none cursor-pointer">
-                        <option value="" disabled>-- Pilih Kelompok --</option>
-                        <!-- Kelompok baku A, B, C, D -->
-                        <optgroup label="Kelompok Baku">
-                            <option v-for="kel in refKelompokMapel" :key="kel.kode" :value="kel.kode">
-                                {{ kel.kode }} &ndash; {{ kel.nama }}
-                            </option>
-                        </optgroup>
-                        <!-- Input kode produktif khusus jika tidak ada di daftar -->
-                    </select>
-                    <!-- Tip untuk kode produktif khusus -->
-                    <p class="text-[10px] text-amber-600 font-bold mt-1.5 ml-1">
-                        💡 Mapel Kejuruan-Produktif? Gunakan kode kustom di bawah ini.
-                    </p>
-                </div>
-
-                <!-- Kode Kelompok Custom (untuk Kejuruan-Produktif) -->
-                <div>
-                    <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">
-                        Kode Kelompok Kustom
-                        <span class="normal-case text-[10px] text-slate-400 font-semibold">(utk. Produktif, contoh: 251.XI)</span>
-                    </label>
-                    <input type="text" v-model="formData.kelompok" placeholder="Contoh: 251.XI, 482.X, dsb."
-                        class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-800 placeholder:text-slate-400 outline-none">
-                    <p class="text-[10px] text-slate-400 font-semibold mt-1 ml-1">Mengisi field ini akan override pilihan dropdown di atas.</p>
-                </div>
-
-                <!-- Kode Mapel -->
-                <div>
-                    <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Kode Mapel</label>
-                    <input type="text" v-model="formData.kode_mapel" required placeholder="Contoh: A1, B3, 251.X.A"
-                        class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-800 placeholder:text-slate-400 outline-none">
-                </div>
-
-                <!-- Nama Mapel -->
-                <div>
-                    <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Nama Mapel</label>
-                    <input type="text" v-model="formData.nama_mapel" required placeholder="Nama lengkap mata pelajaran"
-                        class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-800 placeholder:text-slate-400 outline-none">
-                </div>
-                
-                <div class="pt-4 border-t border-slate-100 flex gap-3">
-                    <button v-if="isEditing" type="button" @click="resetForm" class="flex-1 py-3 bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold rounded-2xl transition-all text-xs uppercase tracking-widest border border-rose-200">
-                        Batal
-                    </button>
-                    <button type="submit" :disabled="isSaving" class="flex-[2] py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold rounded-2xl shadow-lg shadow-amber-500/30 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 text-xs uppercase tracking-widest disabled:opacity-50">
-                        <span v-if="isSaving" class="animate-spin"><AppIcon name="clock" class="w-6 h-6" /></span>
-                        <span v-else>{{ isEditing ? '💾' : '➕' }}</span> 
-                        {{ isEditing ? 'Simpan' : 'Tambah' }}
-                    </button>
-                </div>
+              <!-- Pilih Kurikulum -->
+              <div>
+                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Pilih Kurikulum</label>
+                <select v-model="formData.kurikulum_id" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-700 outline-none cursor-pointer">
+                  <option value="" disabled>-- Pilih Kurikulum --</option>
+                  <option v-for="kur in kurikulums" :key="kur.id" :value="kur.id">{{ kur.nama_kurikulum }}</option>
+                </select>
+              </div>
+              <!-- Pilih Kelompok -->
+              <div>
+                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Kelompok Mapel <span class="text-rose-500">*</span></label>
+                <select v-model="formData.kelompok" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-700 outline-none cursor-pointer">
+                  <option value="" disabled>-- Pilih Kelompok --</option>
+                  <option v-for="kel in refKelompokMapel" :key="kel.kode" :value="kel.kode">{{ kel.kode }} &ndash; {{ kel.nama }}</option>
+                </select>
+              </div>
+              <!-- Kode Mapel -->
+              <div>
+                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Kode Mapel</label>
+                <input type="text" v-model="formData.kode_mapel" required placeholder="Contoh: A1, B3, C4"
+                  class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-800 placeholder:text-slate-400 outline-none">
+              </div>
+              <!-- Nama Mapel -->
+              <div>
+                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Nama Mapel</label>
+                <input type="text" v-model="formData.nama_mapel" required placeholder="Nama lengkap mata pelajaran"
+                  class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-800 placeholder:text-slate-400 outline-none">
+              </div>
+              <div class="pt-4 border-t border-slate-100 flex gap-3">
+                <button v-if="isEditing" type="button" @click="resetForm" class="flex-1 py-3 bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold rounded-2xl transition-all text-xs uppercase tracking-widest border border-rose-200">Batal</button>
+                <button type="submit" :disabled="isSaving" class="flex-[2] py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold rounded-2xl shadow-lg shadow-amber-500/30 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 text-xs uppercase tracking-widest disabled:opacity-50">
+                  <span v-if="isSaving" class="animate-spin"><AppIcon name="clock" class="w-5 h-5" /></span>
+                  <span v-else>{{ isEditing ? '💾' : '➕' }}</span>
+                  {{ isEditing ? 'Simpan Perubahan' : 'Tambah Mapel' }}
+                </button>
+              </div>
             </form>
-        </div>
-      </div>
+          </div>
+
+          <!-- ===================== -->
+          <!-- TAB: MAPEL PRODUKTIF  -->
+          <!-- ===================== -->
+          <div v-show="activeFormTab === 'produktif'" class="p-4 space-y-4">
+            <div class="bg-gradient-to-r from-purple-600 to-fuchsia-700 rounded-2xl p-4 border border-purple-500 shadow-sm relative overflow-hidden flex items-center gap-3">
+              <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg text-white">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18" /></svg>
+              </div>
+              <div>
+                <h3 class="text-xs font-black uppercase tracking-widest text-white">{{ isEditingProduktif ? 'Edit Mapel Produktif' : 'Tambah Mapel Produktif' }}</h3>
+                <p class="text-[10px] text-purple-100 font-semibold mt-0.5">Berbasis Kode Kejuruan 3-Digit</p>
+              </div>
+            </div>
+
+            <!-- Preview Kode Final -->
+            <div class="p-3 rounded-2xl border-2 transition-all" :class="kodeProduktifPreview ? 'border-purple-400 bg-purple-50' : 'border-dashed border-slate-200 bg-slate-50'">
+              <p class="text-[10px] font-black uppercase tracking-widest" :class="kodeProduktifPreview ? 'text-purple-500' : 'text-slate-400'">Preview Kode Final</p>
+              <p class="text-xl font-black mt-1" :class="kodeProduktifPreview ? 'text-purple-800' : 'text-slate-300'">{{ kodeProduktifPreview || '—.—.—' }}</p>
+              <p v-if="formProduktif.nama_mapel" class="text-xs font-bold text-purple-600 mt-0.5 truncate">{{ formProduktif.nama_mapel }}</p>
+            </div>
+
+            <form @submit.prevent="saveProduktif" class="space-y-4">
+              <!-- Pilih Kurikulum -->
+              <div>
+                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Pilih Kurikulum</label>
+                <select v-model="formProduktif.kurikulum_id" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all text-sm font-bold text-slate-700 outline-none cursor-pointer">
+                  <option value="" disabled>-- Pilih Kurikulum --</option>
+                  <option v-for="kur in kurikulums" :key="kur.id" :value="kur.id">{{ kur.nama_kurikulum }}</option>
+                </select>
+              </div>
+
+              <!-- Dropdown 1: Kode Kejuruan -->
+              <div>
+                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Kode Kejuruan <span class="text-rose-500">*</span></label>
+                <div v-if="isLoadingKejuruan" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 text-xs text-slate-400 font-bold">Memuat daftar kejuruan...</div>
+                <select v-else v-model="formProduktif.kode_kejuruan" required @change="updateKodePreview" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all text-sm font-bold text-slate-700 outline-none cursor-pointer">
+                  <option value="" disabled>-- Pilih Kode Kejuruan --</option>
+                  <option v-for="k in kejuruanList" :key="k.id" :value="k.kode">{{ k.label }}</option>
+                </select>
+                <p v-if="kejuruanList.length === 0 && !isLoadingKejuruan" class="text-[10px] text-rose-500 font-bold mt-1 ml-1">⚠️ Belum ada kejuruan dengan kode 3 digit. Buat dahulu di Admin → Master Kejuruan.</p>
+              </div>
+
+              <!-- Dropdown 2: Tingkat (X/XI/XII) -->
+              <div>
+                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Tingkat / Kelas <span class="text-rose-500">*</span></label>
+                <div class="grid grid-cols-3 gap-2">
+                  <button type="button" v-for="tingkat in ['X', 'XI', 'XII']" :key="tingkat" @click="formProduktif.tingkat = tingkat; updateKodePreview()"
+                    :class="formProduktif.tingkat === tingkat ? 'bg-purple-600 text-white shadow-lg shadow-purple-500/30 border-purple-600 ring-2 ring-purple-500 ring-offset-1' : 'bg-slate-50 text-slate-600 border-slate-200 hover:border-purple-300 hover:bg-purple-50'"
+                    class="py-3 rounded-2xl font-black text-sm border-2 transition-all">
+                    {{ tingkat }}
+                  </button>
+                </div>
+                <p class="text-[10px] font-semibold mt-1.5 ml-1" :class="formProduktif.tingkat === 'X' ? 'text-blue-600' : formProduktif.tingkat ? 'text-purple-600' : 'text-slate-400'">
+                  <span v-if="formProduktif.tingkat === 'X'">📘 Kelas X = Mapel untuk <strong>Program Keahlian</strong></span>
+                  <span v-else-if="formProduktif.tingkat === 'XI' || formProduktif.tingkat === 'XII'">🎯 Kelas {{ formProduktif.tingkat }} = Mapel untuk <strong>Konsentrasi Keahlian</strong></span>
+                  <span v-else>Pilih tingkat kelas mapel ini berlaku</span>
+                </p>
+              </div>
+
+              <!-- Input: Kode Identitas Mapel -->
+              <div>
+                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Kode Identitas Mapel <span class="text-rose-500">*</span></label>
+                <input type="text" v-model="formProduktif.kode_identitas" required placeholder="Contoh: B5a, B6a, C1"
+                  @input="updateKodePreview"
+                  class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all text-sm font-black text-purple-800 placeholder:text-slate-400 placeholder:font-normal outline-none">
+                <p class="text-[10px] text-slate-400 font-semibold mt-1 ml-1">Kode unik mapel ini. Format bebas: <span class="font-black text-purple-600">B5a, C1, D2b</span></p>
+              </div>
+
+              <!-- Input: Nama Mapel -->
+              <div>
+                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Nama Mapel <span class="text-rose-500">*</span></label>
+                <input type="text" v-model="formProduktif.nama_mapel" required placeholder="Misal: Dasar Listrik, Dasar Mikrokontroler"
+                  class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all text-sm font-bold text-slate-800 placeholder:text-slate-400 outline-none">
+              </div>
+
+              <div class="pt-4 border-t border-slate-100 flex gap-3">
+                <button v-if="isEditingProduktif" type="button" @click="resetProduktifForm" class="flex-1 py-3 bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold rounded-2xl transition-all text-xs uppercase tracking-widest border border-rose-200">Batal</button>
+                <button type="submit" :disabled="isSaving || !kodeProduktifPreview" class="flex-[2] py-3 bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white font-bold rounded-2xl shadow-lg shadow-purple-500/30 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 text-xs uppercase tracking-widest disabled:opacity-50">
+                  <span v-if="isSaving" class="animate-spin"><AppIcon name="clock" class="w-5 h-5" /></span>
+                  <span v-else>{{ isEditingProduktif ? '💾' : '➕' }}</span>
+                  {{ isEditingProduktif ? 'Simpan Perubahan' : 'Tambah Mapel Produktif' }}
+                </button>
+              </div>
+            </form>
+          </div>
+
+        </div><!-- end flex-1 scrollable -->
+      </div><!-- end panel kiri -->
+
+
 
       <!-- =============================================== -->
       <!-- PANEL FLOW KANAN (Tabel Data Global)            -->
@@ -213,7 +284,7 @@
                                         </td>
                                         <td class="py-2.5 px-3 text-center w-10">
                                             <div class="flex flex-col items-center justify-center gap-1 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
-                                                <button @click.stop="editData(item)" class="w-7 h-7 rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-amber-200 hover:bg-amber-50 hover:text-amber-600 flex items-center justify-center transition-all shadow-sm" title="Edit">
+                                                <button @click.stop="item.kelompok && item.kelompok.match(/^\d{3}\./) ? editProduktif(item) : editData(item)" class="w-7 h-7 rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-amber-200 hover:bg-amber-50 hover:text-amber-600 flex items-center justify-center transition-all shadow-sm" title="Edit">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
                                                 </button>
                                                 <button @click.stop="confirmDelete(item)" class="w-7 h-7 rounded-lg bg-white border border-slate-200 text-slate-400 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 flex items-center justify-center transition-all shadow-sm" title="Hapus">
@@ -275,6 +346,33 @@ const mobileTabs = [
   { id: 'form', title: 'Form Data', icon: 'document-text' },
   { id: 'table', title: 'Database', icon: 'clipboard' }
 ]
+
+// Active form tab (umum vs produktif)
+const activeFormTab = ref('umum')
+const switchFormTab = (tab) => {
+  activeFormTab.value = tab
+  if (tab === 'produktif' && kejuruanList.value.length === 0) fetchKejuruanList()
+}
+
+// Produktif Form State
+const isEditingProduktif = ref(false)
+const isLoadingKejuruan = ref(false)
+const kejuruanList = ref([])
+const formProduktif = ref({
+  id: null,
+  kurikulum_id: '',
+  kode_kejuruan: '',
+  tingkat: '',
+  kode_identitas: '',
+  nama_mapel: ''
+})
+const kodeProduktifPreview = computed(() => {
+  const { kode_kejuruan, tingkat, kode_identitas } = formProduktif.value
+  if (kode_kejuruan && tingkat && kode_identitas) {
+    return `${kode_kejuruan}.${tingkat}.${kode_identitas}`
+  }
+  return ''
+})
 
 // Data
 const mapels = ref([])
@@ -432,14 +530,95 @@ const editData = (item) => {
 }
 
 const resetForm = () => {
-    isEditing.value = false
-    formData.value = {
-        id: null,
-        kurikulum_id: '',
-        kode_mapel: '',
-        nama_mapel: '',
-        kelompok: ''
+  isEditing.value = false
+  formData.value = {
+    id: null,
+    kurikulum_id: '',
+    kode_mapel: '',
+    nama_mapel: '',
+    kelompok: ''
+  }
+}
+
+// ===== PRODUKTIF FUNCTIONS =====
+const fetchKejuruanList = async () => {
+  isLoadingKejuruan.value = true
+  const token = useCookie('auth_token').value
+  try {
+    const res = await $fetch(`${import.meta.env.VITE_API_BASE_URL}/api/kurikulum/kejuruan-list`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    if (res.success) kejuruanList.value = res.data
+  } catch (e) {
+    console.error('Failed to fetch kejuruan list:', e)
+  } finally {
+    isLoadingKejuruan.value = false
+  }
+}
+
+const updateKodePreview = () => {
+  // Computed automatically recalculates - this is called to trigger reactivity
+}
+
+const saveProduktif = async () => {
+  if (!kodeProduktifPreview.value) {
+    useSwal().toast('Lengkapi semua field Mapel Produktif!', 'error')
+    return
+  }
+  isSaving.value = true
+  const token = useCookie('auth_token').value
+  // kelompok = kode_kejuruan.tingkat  (e.g. 251.XI)
+  // kode_mapel = kode_kejuruan.tingkat.kode_identitas  (e.g. 251.XI.B6a)
+  const payload = {
+    kurikulum_id: formProduktif.value.kurikulum_id,
+    kode_mapel: kodeProduktifPreview.value,
+    nama_mapel: formProduktif.value.nama_mapel,
+    kelompok: `${formProduktif.value.kode_kejuruan}.${formProduktif.value.tingkat}`,
+  }
+  const url = isEditingProduktif.value
+    ? `${import.meta.env.VITE_API_BASE_URL}/api/kurikulum/mapel/${formProduktif.value.id}`
+    : `${import.meta.env.VITE_API_BASE_URL}/api/kurikulum/mapel`
+  const method = isEditingProduktif.value ? 'PUT' : 'POST'
+  try {
+    const response = await $fetch(url, {
+      method,
+      headers: { Authorization: `Bearer ${token}` },
+      body: payload
+    })
+    if (response.success) {
+      useSwal().toast(response.message, 'success')
+      resetProduktifForm()
+      fetchData()
+      if (!isDesktop.value) activeTabMobile.value = 'table'
     }
+  } catch (error) {
+    let errMsg = 'Gagal menyimpan data mapel produktif.'
+    if (error.response?.status === 422) errMsg = error.response._data?.message || errMsg
+    useSwal().toast(errMsg, 'error')
+  } finally {
+    isSaving.value = false
+  }
+}
+
+const resetProduktifForm = () => {
+  isEditingProduktif.value = false
+  formProduktif.value = { id: null, kurikulum_id: '', kode_kejuruan: '', tingkat: '', kode_identitas: '', nama_mapel: '' }
+}
+
+const editProduktif = (item) => {
+  // Parse kelompok "251.XI" → kode_kejuruan="251", tingkat="XI"
+  const parts = (item.kelompok || '').split('.')
+  formProduktif.value = {
+    id: item.id,
+    kurikulum_id: item.kurikulum_id,
+    kode_kejuruan: parts[0] || '',
+    tingkat: parts[1] || '',
+    kode_identitas: (item.kode_mapel || '').split('.').slice(2).join('.'),
+    nama_mapel: item.nama_mapel
+  }
+  isEditingProduktif.value = true
+  activeFormTab.value = 'produktif'
+  if (!isDesktop.value) activeTabMobile.value = 'form'
 }
 
 const confirmDelete = (item) => {

@@ -123,9 +123,30 @@
                         </div>
                         <div class="space-y-5">
                             <div>
-                                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Kode Konsentrasi</label>
-                                <input type="text" v-model="kejuruanForm.kode_konsentrasi" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-black uppercase text-slate-800" placeholder="Contoh: TKJ">
+                                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">
+                                    Kode Konsentrasi
+                                    <span class="normal-case text-[10px] text-purple-500 font-bold ml-1">— 3 Digit Angka</span>
+                                </label>
+                                <input 
+                                    type="text" 
+                                    v-model="kejuruanForm.kode_konsentrasi" 
+                                    required 
+                                    maxlength="3" 
+                                    pattern="\d{3}"
+                                    inputmode="numeric"
+                                    @input="kejuruanForm.kode_konsentrasi = kejuruanForm.kode_konsentrasi.replace(/\D/g, '').slice(0,3)"
+                                    class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all text-2xl font-black tracking-widest text-purple-700 text-center placeholder:text-slate-300 placeholder:text-base placeholder:font-semibold placeholder:tracking-normal"
+                                    placeholder="251"
+                                >
+                                <p class="text-[10px] text-slate-400 font-semibold mt-1.5 ml-1">Kode ini menjadi FK untuk Mapel Kejuruan-Produktif. Contoh: <span class="font-black text-purple-600">251, 482, 063</span></p>
+                                <!-- Preview kode -->
+                                <div v-if="kejuruanForm.kode_konsentrasi.length === 3" class="mt-2 p-2 bg-purple-50 border border-purple-200 rounded-xl">
+                                    <p class="text-[10px] font-black text-purple-600 uppercase tracking-widest">Preview Kode Mapel Produktif:</p>
+                                    <p class="text-sm font-black text-purple-800 mt-0.5">{{ kejuruanForm.kode_konsentrasi }}.X.B5a = Contoh Mapel Prog. Keahlian</p>
+                                    <p class="text-sm font-black text-purple-800">{{ kejuruanForm.kode_konsentrasi }}.XI.B6a = Contoh Mapel Konsentrasi</p>
+                                </div>
                             </div>
+
                             <div>
                                 <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Nama Lengkap Konsentrasi</label>
                                 <input type="text" v-model="kejuruanForm.nama_konsentrasi" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-sm font-semibold text-slate-800" placeholder="Misal: Teknik Komputer dan Jaringan">
