@@ -87,13 +87,13 @@
           <!-- TAB: MAPEL PRODUKTIF  -->
           <!-- ===================== -->
           <div v-show="activeFormTab === 'produktif'" class="p-4 space-y-4">
-            <div class="bg-gradient-to-r from-purple-600 to-fuchsia-700 rounded-2xl p-4 border border-purple-500 shadow-sm relative overflow-hidden flex items-center gap-3">
-              <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/10 rounded-lg text-white">
+            <div class="bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl p-4 border border-amber-400 shadow-sm relative overflow-hidden flex items-center gap-3">
+              <div class="w-8 h-8 flex items-center justify-center shrink-0 bg-white/20 rounded-lg text-white">
                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18" /></svg>
               </div>
               <div>
                 <h3 class="text-xs font-black uppercase tracking-widest text-white">{{ isEditingProduktif ? 'Edit Mapel Produktif' : 'Tambah Mapel Produktif' }}</h3>
-                <p class="text-[10px] text-purple-100 font-semibold mt-0.5">Berbasis Kode Kejuruan 3-Digit</p>
+                <p class="text-[10px] text-amber-100 font-semibold mt-0.5">Berbasis Kode Kejuruan 3-Digit</p>
               </div>
             </div>
 
@@ -101,7 +101,7 @@
               <!-- Pilih Kurikulum -->
               <div>
                 <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Pilih Kurikulum</label>
-                <select v-model="formProduktif.kurikulum_id" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all text-sm font-bold text-slate-700 outline-none cursor-pointer">
+                <select v-model="formProduktif.kurikulum_id" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-700 outline-none cursor-pointer">
                   <option value="" disabled>-- Pilih Kurikulum --</option>
                   <option v-for="kur in kurikulums" :key="kur.id" :value="kur.id">{{ kur.nama_kurikulum }}</option>
                 </select>
@@ -110,19 +110,19 @@
               <!-- 3 Areas -->
               <div class="flex gap-3 items-stretch">
                 <!-- Dropdown 1: Kode Kejuruan -->
-                <div class="flex-[2] min-w-0">
+                <div class="flex-1 min-w-0">
                   <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Kode Kejuruan <span class="text-rose-500">*</span></label>
                   <div v-if="isLoadingKejuruan" class="w-full px-3 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 text-xs text-slate-400 font-bold flex items-center min-h-[46px]">Memuat...</div>
-                  <select v-else v-model="formProduktif.kode_kejuruan" required @change="updateKodePreview" class="w-full px-3 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all text-xs sm:text-sm font-bold text-slate-700 outline-none cursor-pointer truncate">
-                    <option value="" disabled>-- Pilih --</option>
-                    <option v-for="k in kejuruanList" :key="k.id" :value="k.kode">{{ k.label }}</option>
+                  <select v-else v-model="formProduktif.kode_kejuruan" required @change="updateKodePreview" class="w-full px-3 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-xs sm:text-sm font-bold text-slate-700 outline-none cursor-pointer truncate text-center">
+                    <option value="" disabled>-</option>
+                    <option v-for="k in kejuruanList" :key="k.id" :value="k.kode">{{ k.kode }}</option>
                   </select>
                 </div>
                 
                 <!-- Dropdown 2: Tingkat -->
                 <div class="flex-1 min-w-0">
                   <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Tingkat <span class="text-rose-500">*</span></label>
-                  <select v-model="formProduktif.tingkat" required @change="updateKodePreview" class="w-full px-3 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all text-sm font-black text-slate-700 outline-none cursor-pointer text-center">
+                  <select v-model="formProduktif.tingkat" required @change="updateKodePreview" class="w-full px-3 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-black text-slate-700 outline-none cursor-pointer text-center">
                     <option value="" disabled>-</option>
                     <option value="X">X</option>
                     <option value="XI">XI</option>
@@ -135,7 +135,7 @@
                   <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Kode Mapel <span class="text-rose-500">*</span></label>
                   <input type="text" v-model="formProduktif.kode_identitas" required placeholder="Ex: B5a"
                     @input="updateKodePreview"
-                    class="w-full px-3 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all text-sm font-black text-purple-800 placeholder:text-slate-300 placeholder:font-normal outline-none text-center">
+                    class="w-full px-3 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-black text-slate-700 placeholder:text-slate-300 placeholder:font-normal outline-none text-center">
                 </div>
               </div>
               <p v-if="kejuruanList.length === 0 && !isLoadingKejuruan" class="text-[10px] text-rose-500 font-bold mt-1 ml-1">⚠️ Belum ada kejuruan dengan kode 3 digit. Buat dahulu di Admin → Master Kejuruan.</p>
@@ -144,22 +144,22 @@
               <div>
                 <label class="block text-[11px] font-black text-slate-500 uppercase mb-1 ml-1 flex justify-between items-end">
                   <span>Nama Mapel <span class="text-rose-500">*</span></span>
-                  <span v-if="kodeProduktifPreview" class="text-[10px] text-purple-600 font-black bg-purple-50 px-2 py-0.5 rounded-lg border border-purple-200 tracking-widest">
+                  <span v-if="kodeProduktifPreview" class="text-[10px] text-amber-600 font-black bg-amber-50 px-2 py-0.5 rounded-lg border border-amber-200 tracking-widest">
                     {{ kodeProduktifPreview }}
                   </span>
                 </label>
                 <div v-if="smartDescriptionProduktif" class="mb-1.5 ml-1">
-                  <p class="text-[10px] text-purple-600 font-bold bg-purple-50 inline-flex items-center px-2 py-0.5 rounded-md border border-purple-100">
+                  <p class="text-[10px] text-amber-600 font-bold bg-amber-50 inline-flex items-center px-2 py-0.5 rounded-md border border-amber-100">
                     💡 {{ smartDescriptionProduktif }}
                   </p>
                 </div>
                 <input type="text" v-model="formProduktif.nama_mapel" required placeholder="Misal: Dasar Listrik, Dasar Mikrokontroler"
-                  class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all text-sm font-bold text-slate-800 placeholder:text-slate-400 outline-none">
+                  class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-amber-500/10 focus:border-amber-500 transition-all text-sm font-bold text-slate-800 placeholder:text-slate-400 outline-none">
               </div>
 
               <div class="pt-4 border-t border-slate-100 flex gap-3">
                 <button v-if="isEditingProduktif" type="button" @click="resetProduktifForm" class="flex-1 py-3 bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold rounded-2xl transition-all text-xs uppercase tracking-widest border border-rose-200">Batal</button>
-                <button type="submit" :disabled="isSaving || !kodeProduktifPreview" class="flex-[2] py-3 bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white font-bold rounded-2xl shadow-lg shadow-purple-500/30 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 text-xs uppercase tracking-widest disabled:opacity-50">
+                <button type="submit" :disabled="isSaving || !kodeProduktifPreview" class="flex-[2] py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold rounded-2xl shadow-lg shadow-amber-500/30 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 text-xs uppercase tracking-widest disabled:opacity-50">
                   <span v-if="isSaving" class="animate-spin"><AppIcon name="clock" class="w-5 h-5" /></span>
                   <span v-else>{{ isEditingProduktif ? '💾' : '➕' }}</span>
                   {{ isEditingProduktif ? 'Simpan Perubahan' : 'Tambah Mapel Produktif' }}
