@@ -97,63 +97,52 @@
               </div>
             </div>
 
-            <!-- Preview Kode Final -->
-            <div class="p-3 rounded-2xl border-2 transition-all" :class="kodeProduktifPreview ? 'border-purple-400 bg-purple-50' : 'border-dashed border-slate-200 bg-slate-50'">
-              <p class="text-[10px] font-black uppercase tracking-widest" :class="kodeProduktifPreview ? 'text-purple-500' : 'text-slate-400'">Preview Kode Final</p>
-              <p class="text-xl font-black mt-1" :class="kodeProduktifPreview ? 'text-purple-800' : 'text-slate-300'">{{ kodeProduktifPreview || '—.—.—' }}</p>
-              <p v-if="formProduktif.nama_mapel" class="text-xs font-bold text-purple-600 mt-0.5 truncate">{{ formProduktif.nama_mapel }}</p>
-            </div>
-
-            <form @submit.prevent="saveProduktif" class="space-y-4">
-              <!-- Pilih Kurikulum -->
-              <div>
-                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Pilih Kurikulum</label>
-                <select v-model="formProduktif.kurikulum_id" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all text-sm font-bold text-slate-700 outline-none cursor-pointer">
-                  <option value="" disabled>-- Pilih Kurikulum --</option>
-                  <option v-for="kur in kurikulums" :key="kur.id" :value="kur.id">{{ kur.nama_kurikulum }}</option>
-                </select>
-              </div>
-
-              <!-- Dropdown 1: Kode Kejuruan -->
-              <div>
-                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Kode Kejuruan <span class="text-rose-500">*</span></label>
-                <div v-if="isLoadingKejuruan" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 text-xs text-slate-400 font-bold">Memuat daftar kejuruan...</div>
-                <select v-else v-model="formProduktif.kode_kejuruan" required @change="updateKodePreview" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all text-sm font-bold text-slate-700 outline-none cursor-pointer">
-                  <option value="" disabled>-- Pilih Kode Kejuruan --</option>
-                  <option v-for="k in kejuruanList" :key="k.id" :value="k.kode">{{ k.label }}</option>
-                </select>
-                <p v-if="kejuruanList.length === 0 && !isLoadingKejuruan" class="text-[10px] text-rose-500 font-bold mt-1 ml-1">⚠️ Belum ada kejuruan dengan kode 3 digit. Buat dahulu di Admin → Master Kejuruan.</p>
-              </div>
-
-              <!-- Dropdown 2: Tingkat (X/XI/XII) -->
-              <div>
-                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Tingkat / Kelas <span class="text-rose-500">*</span></label>
-                <div class="grid grid-cols-3 gap-2">
-                  <button type="button" v-for="tingkat in ['X', 'XI', 'XII']" :key="tingkat" @click="formProduktif.tingkat = tingkat; updateKodePreview()"
-                    :class="formProduktif.tingkat === tingkat ? 'bg-purple-600 text-white shadow-lg shadow-purple-500/30 border-purple-600 ring-2 ring-purple-500 ring-offset-1' : 'bg-slate-50 text-slate-600 border-slate-200 hover:border-purple-300 hover:bg-purple-50'"
-                    class="py-3 rounded-2xl font-black text-sm border-2 transition-all">
-                    {{ tingkat }}
-                  </button>
+              <!-- 3 Areas -->
+              <div class="flex gap-3 items-stretch">
+                <!-- Dropdown 1: Kode Kejuruan -->
+                <div class="flex-[2] min-w-0">
+                  <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Kode Kejuruan <span class="text-rose-500">*</span></label>
+                  <div v-if="isLoadingKejuruan" class="w-full px-3 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 text-xs text-slate-400 font-bold flex items-center min-h-[46px]">Memuat...</div>
+                  <select v-else v-model="formProduktif.kode_kejuruan" required @change="updateKodePreview" class="w-full px-3 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all text-xs sm:text-sm font-bold text-slate-700 outline-none cursor-pointer truncate">
+                    <option value="" disabled>-- Pilih --</option>
+                    <option v-for="k in kejuruanList" :key="k.id" :value="k.kode">{{ k.label }}</option>
+                  </select>
                 </div>
-                <p class="text-[10px] font-semibold mt-1.5 ml-1" :class="formProduktif.tingkat === 'X' ? 'text-blue-600' : formProduktif.tingkat ? 'text-purple-600' : 'text-slate-400'">
-                  <span v-if="formProduktif.tingkat === 'X'">📘 Kelas X = Mapel untuk <strong>Program Keahlian</strong></span>
-                  <span v-else-if="formProduktif.tingkat === 'XI' || formProduktif.tingkat === 'XII'">🎯 Kelas {{ formProduktif.tingkat }} = Mapel untuk <strong>Konsentrasi Keahlian</strong></span>
-                  <span v-else>Pilih tingkat kelas mapel ini berlaku</span>
-                </p>
-              </div>
+                
+                <!-- Dropdown 2: Tingkat -->
+                <div class="flex-1 min-w-0">
+                  <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Tingkat <span class="text-rose-500">*</span></label>
+                  <select v-model="formProduktif.tingkat" required @change="updateKodePreview" class="w-full px-3 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all text-sm font-black text-slate-700 outline-none cursor-pointer text-center">
+                    <option value="" disabled>-</option>
+                    <option value="X">X</option>
+                    <option value="XI">XI</option>
+                    <option value="XII">XII</option>
+                  </select>
+                </div>
 
-              <!-- Input: Kode Identitas Mapel -->
-              <div>
-                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Kode Identitas Mapel <span class="text-rose-500">*</span></label>
-                <input type="text" v-model="formProduktif.kode_identitas" required placeholder="Contoh: B5a, B6a, C1"
-                  @input="updateKodePreview"
-                  class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all text-sm font-black text-purple-800 placeholder:text-slate-400 placeholder:font-normal outline-none">
-                <p class="text-[10px] text-slate-400 font-semibold mt-1 ml-1">Kode unik mapel ini. Format bebas: <span class="font-black text-purple-600">B5a, C1, D2b</span></p>
+                <!-- Input: Kode Identitas -->
+                <div class="flex-1 min-w-0">
+                  <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Kode Mapel <span class="text-rose-500">*</span></label>
+                  <input type="text" v-model="formProduktif.kode_identitas" required placeholder="Ex: B5a"
+                    @input="updateKodePreview"
+                    class="w-full px-3 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all text-sm font-black text-purple-800 placeholder:text-slate-300 placeholder:font-normal outline-none text-center">
+                </div>
               </div>
+              <p v-if="kejuruanList.length === 0 && !isLoadingKejuruan" class="text-[10px] text-rose-500 font-bold mt-1 ml-1">⚠️ Belum ada kejuruan dengan kode 3 digit. Buat dahulu di Admin → Master Kejuruan.</p>
 
-              <!-- Input: Nama Mapel -->
+              <!-- Nama Mapel & Smart Description -->
               <div>
-                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1.5 ml-1">Nama Mapel <span class="text-rose-500">*</span></label>
+                <label class="block text-[11px] font-black text-slate-500 uppercase mb-1 ml-1 flex justify-between items-end">
+                  <span>Nama Mapel <span class="text-rose-500">*</span></span>
+                  <span v-if="kodeProduktifPreview" class="text-[10px] text-purple-600 font-black bg-purple-50 px-2 py-0.5 rounded-lg border border-purple-200 tracking-widest">
+                    {{ kodeProduktifPreview }}
+                  </span>
+                </label>
+                <div v-if="smartDescriptionProduktif" class="mb-1.5 ml-1">
+                  <p class="text-[10px] text-purple-600 font-bold bg-purple-50 inline-flex items-center px-2 py-0.5 rounded-md border border-purple-100">
+                    💡 {{ smartDescriptionProduktif }}
+                  </p>
+                </div>
                 <input type="text" v-model="formProduktif.nama_mapel" required placeholder="Misal: Dasar Listrik, Dasar Mikrokontroler"
                   class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200/70 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-purple-500/10 focus:border-purple-500 transition-all text-sm font-bold text-slate-800 placeholder:text-slate-400 outline-none">
               </div>
@@ -372,6 +361,19 @@ const kodeProduktifPreview = computed(() => {
     return `${kode_kejuruan}.${tingkat}.${kode_identitas}`
   }
   return ''
+})
+
+const smartDescriptionProduktif = computed(() => {
+  const { kode_kejuruan, tingkat } = formProduktif.value
+  if (!kode_kejuruan || !tingkat) return ''
+  const kejuruan = kejuruanList.value.find(k => k.kode === kode_kejuruan)
+  if (!kejuruan) return ''
+
+  if (tingkat === 'X') {
+    return `Mapel untuk Program Keahlian: ${kejuruan.nama_program}`
+  } else {
+    return `Mapel untuk Konsentrasi Keahlian: ${kejuruan.nama_konsentrasi}`
+  }
 })
 
 // Data
