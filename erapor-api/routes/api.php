@@ -85,6 +85,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/dashboard', [App\Http\Controllers\Api\Kurikulum\DashboardController::class, 'index']);
         
         Route::apiResource('mapel', App\Http\Controllers\Api\Kurikulum\MapelController::class);
+        Route::get('kejuruan-list', [App\Http\Controllers\Api\AdminKejuruanController::class, 'getKejuruanList']);
         Route::apiResource('ekskul', App\Http\Controllers\Api\Kurikulum\EkskulController::class);
 
         // Titimangsa
@@ -163,6 +164,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Master Kejuruan (Bidang -> Program -> Konsentrasi)
     Route::prefix('/admin/kejuruan')->group(function () {
         Route::get('/data', [App\Http\Controllers\Api\AdminKejuruanController::class, 'index']);
+        Route::get('/list', [App\Http\Controllers\Api\AdminKejuruanController::class, 'getKejuruanList']);
         
         Route::post('/bidang', [App\Http\Controllers\Api\AdminKejuruanController::class, 'storeBidang']);
         Route::put('/bidang/{id}', [App\Http\Controllers\Api\AdminKejuruanController::class, 'updateBidang']);

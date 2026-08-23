@@ -7,6 +7,7 @@ use App\Models\Bidang;
 use App\Models\Program;
 use App\Models\Kejuruan;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class AdminKejuruanController extends Controller
 {
@@ -77,9 +78,9 @@ class AdminKejuruanController extends Controller
     public function storeKejuruan(Request $request)
     {
         $request->validate([
-            'program_id' => 'required|exists:programs,id',
-            'kode_konsentrasi' => 'required|string|max:50',
-            'nama_konsentrasi' => 'required|string|max:255'
+            'program_id'       => 'required|exists:programs,id',
+            'kode_konsentrasi' => ['required', 'digits:3', 'unique:kejuruans,kode_konsentrasi'],
+            'nama_konsentrasi' => 'required|string|max:255',
         ]);
         $kejuruan = Kejuruan::create($request->only('program_id', 'kode_konsentrasi', 'nama_konsentrasi'));
         return response()->json(['success' => true, 'message' => 'Konsentrasi berhasil ditambahkan', 'data' => $kejuruan]);
@@ -88,13 +89,36 @@ class AdminKejuruanController extends Controller
     public function updateKejuruan(Request $request, $id)
     {
         $request->validate([
-            'program_id' => 'required|exists:programs,id',
-            'kode_konsentrasi' => 'required|string|max:50',
-            'nama_konsentrasi' => 'required|string|max:255'
+            'program_id'       => 'required|exists:programs,id',
+            'kode_konsentrasi' => ['required', 'digits:3', Rule::unique('kejuruans', 'kode_konsentrasi')->ignore($id)],
+            'nama_konsentrasi' => 'required|string|max:255',
         ]);
         $kejuruan = Kejuruan::findOrFail($id);
         $kejuruan->update($request->only('program_id', 'kode_konsentrasi', 'nama_konsentrasi'));
         return response()->json(['success' => true, 'message' => 'Konsentrasi berhasil diperbarui', 'data' => $kejuruan]);
+    }
+
+    // === 5. LIST KEJURUAN UNTUK DROPDOWN MAPEL PRODUKTIF ===
+    public function getKejuruanList()
+    {
+        $kejuruans = Kejuruan::with('program.bidang')
+            ->whereRaw('kode_konsentrasi REGEXP \'^\'[0-9]{3}\'\'')  // only 3-digit numeric codes
+            ->orderBy('kode_konsentrasi')
+            ->get()
+            ->map(function ($k) {
+                return [
+                    'id'               => $k->id,
+                    'kode'             => $k->kode_konsentrasi,
+                    'nama_konsentrasi' => $k->nama_konsentrasi,
+                    'nama_program'     => optional($k->program)->nama_program,
+                    'label'            => $k->kode_konsentrasi . ' — ' . $k->nama_konsentrasi,
+                ];
+            });
+
+        return response()->json([
+            'success' => true,
+            'data'    => $kejuruans
+        ]);
     }
 
     public function destroyKejuruan($id)
