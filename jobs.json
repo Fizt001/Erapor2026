@@ -1,0 +1,81 @@
+{
+  "total_count": 1,
+  "jobs": [
+    {
+      "id": 96792112757,
+      "run_id": 32489037622,
+      "workflow_name": "Deploy Backend API to cPanel",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/Fizt001/Erapor2026/actions/runs/32489037622",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOSunyuc8AAAAWiUJudQ",
+      "head_sha": "3d2e5b1b181328724901721bc6ddbb651e6cac22",
+      "url": "https://api.github.com/repos/Fizt001/Erapor2026/actions/jobs/96792112757",
+      "html_url": "https://github.com/Fizt001/Erapor2026/actions/runs/32489037622/job/96792112757",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-08-21T13:51:31Z",
+      "started_at": "2026-08-21T13:51:34Z",
+      "completed_at": "2026-08-21T13:58:20Z",
+      "name": "deploy-api",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-08-21T13:51:35Z",
+          "completed_at": "2026-08-21T13:51:35Z"
+        },
+        {
+          "name": "Checkout Code",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-08-21T13:51:35Z",
+          "completed_at": "2026-08-21T13:51:37Z"
+        },
+        {
+          "name": "Install lftp",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-08-21T13:51:37Z",
+          "completed_at": "2026-08-21T13:51:44Z"
+        },
+        {
+          "name": "Deploy API to cPanel via FTP",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 4,
+          "started_at": "2026-08-21T13:51:44Z",
+          "completed_at": "2026-08-21T13:58:18Z"
+        },
+        {
+          "name": "Post Checkout Code",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-08-21T13:58:18Z",
+          "completed_at": "2026-08-21T13:58:18Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-08-21T13:58:18Z",
+          "completed_at": "2026-08-21T13:58:18Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/Fizt001/Erapor2026/check-runs/96792112757",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000000383,
+      "runner_name": "GitHub Actions 1000000383",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ]
+}

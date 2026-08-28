@@ -88,3 +88,4 @@ npm run dev
 ---
 
 *Dikembangkan untuk digitalisasi pendidikan Indonesia.* 🇮🇩
+ 
