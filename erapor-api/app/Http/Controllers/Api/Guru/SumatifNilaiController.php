@@ -175,6 +175,20 @@ class SumatifNilaiController extends Controller
             $pstsDataOnly[$s['id']] = $pRow ? $pRow->na_value : null;
         }
 
+        $kkmNilai = null;
+        if ($selectedKelasId && $selectedTahunId && $selectedKurikulumId) {
+            $kelasObj = Kelas::find($selectedKelasId);
+            if ($kelasObj) {
+                $kkmObj = \App\Models\Kkm::where('tahun_ajaran_id', $selectedTahunId)
+                             ->where('kurikulum_id', $selectedKurikulumId)
+                             ->where('tingkat', $kelasObj->tingkat)
+                             ->first();
+                if ($kkmObj) {
+                    $kkmNilai = $kkmObj->nilai;
+                }
+            }
+        }
+
         return response()->json([
             'success' => true,
             'data' => [
@@ -195,7 +209,8 @@ class SumatifNilaiController extends Controller
                     'mapel_id' => $selectedMapelId,
                     'kelas_id' => $selectedKelasId,
                     'is_titimangsa_aktif' => $isTitimangsaAktif,
-                    'is_psts' => $isPsts
+                    'is_psts' => $isPsts,
+                    'kkm' => $kkmNilai
                 ]
             ]
         ]);

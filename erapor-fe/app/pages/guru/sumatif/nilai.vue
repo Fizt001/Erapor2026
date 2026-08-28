@@ -84,8 +84,9 @@
               <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-sky-50 text-sky-600 rounded-xl flex items-center justify-center border border-sky-100 shrink-0"><AppIcon name="clipboard-document-list" class="w-5 h-5" /></div>
                 <div class="min-w-0">
-                  <h3 class="text-[13px] font-black leading-none uppercase tracking-wide text-slate-800 truncate">
-                    {{ filter.kelas_id && references.kelases.find(k => k.id == filter.kelas_id) ? `${references.kelases.find(k => k.id == filter.kelas_id).tingkat} ${references.kelases.find(k => k.id == filter.kelas_id).nama_kelas}` : 'Matriks Nilai Sumatif' }}
+                  <h3 class="text-[13px] font-black leading-none uppercase tracking-wide text-slate-800 truncate flex items-center gap-2">
+                    <span>{{ filter.kelas_id && references.kelases.find(k => k.id == filter.kelas_id) ? `${references.kelases.find(k => k.id == filter.kelas_id).tingkat} ${references.kelases.find(k => k.id == filter.kelas_id).nama_kelas}` : 'Matriks Nilai Sumatif' }}</span>
+                    <span v-if="references.kkm" class="text-[10px] bg-rose-50 text-rose-600 px-2 py-0.5 rounded-md border border-rose-200 tracking-widest font-black shrink-0">KKM: {{ references.kkm }}</span>
                   </h3>
                   <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1 truncate">{{ filter.kelas_id ? siswas.length + ' Siswa Aktif' : 'Sistem otomatis menyimpan ketikan anda' }}</p>
                 </div>
@@ -417,6 +418,7 @@ const fetchData = async () => {
       references.value.kelases = res.data.kelases || []
       references.value.is_titimangsa_aktif = res.data.selections.is_titimangsa_aktif
       references.value.is_psts = res.data.selections.is_psts
+      references.value.kkm = res.data.selections.kkm
       references.value.jumlah_tp = res.data.jumlah_tp || 1
       
       if (res.data.global_bobot) {
