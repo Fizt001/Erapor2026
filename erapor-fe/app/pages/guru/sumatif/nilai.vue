@@ -84,21 +84,23 @@
               <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-sky-50 text-sky-600 rounded-xl flex items-center justify-center border border-sky-100 shrink-0"><AppIcon name="clipboard-document-list" class="w-5 h-5" /></div>
                 <div class="min-w-0">
-                  <h3 class="text-[13px] font-black leading-none uppercase tracking-wide text-slate-800 truncate flex items-center gap-2">
+                  <h3 class="text-[13px] font-black leading-none uppercase tracking-wide text-slate-800 truncate">
                     <span>{{ filter.kelas_id && references.kelases.find(k => k.id == filter.kelas_id) ? `${references.kelases.find(k => k.id == filter.kelas_id).tingkat} ${references.kelases.find(k => k.id == filter.kelas_id).nama_kelas}` : 'Matriks Nilai Sumatif' }}</span>
-                    <span v-if="references.kkm" class="text-[10px] bg-rose-50 text-rose-600 px-2 py-0.5 rounded-md border border-rose-200 tracking-widest font-black shrink-0">KKM: {{ references.kkm }}</span>
                   </h3>
                   <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1 truncate">{{ filter.kelas_id ? siswas.length + ' Siswa Aktif' : 'Sistem otomatis menyimpan ketikan anda' }}</p>
                 </div>
               </div>
               
-              <!-- Save Status Indicator -->
-              <div class="flex items-center space-x-4" v-if="isFilterComplete && references.is_titimangsa_aktif">
-                <div class="flex items-center space-x-2 text-[10px] font-black uppercase tracking-widest px-3 py-1.5 bg-emerald-50 text-emerald-600 rounded-lg border border-emerald-200 transition-all" v-if="saveStatus === 'saved'">
-                  <span class="text-sm">✓</span> <span>Tersimpan</span>
-                </div>
-                <div class="flex items-center space-x-2 text-[10px] font-black uppercase tracking-widest px-3 py-1.5 bg-amber-50 text-amber-600 rounded-lg border border-amber-200 transition-all" v-if="saveStatus === 'saving'">
-                  <span class="animate-spin text-sm">↻</span> <span>Menyimpan...</span>
+              <div class="flex items-center gap-4 shrink-0">
+                <span v-if="references.kkm" class="text-[10px] bg-rose-50 text-rose-600 px-2.5 py-1 rounded-md border border-rose-200 tracking-widest font-black shrink-0">KKM: {{ references.kkm }}</span>
+                <!-- Save Status Indicator -->
+                <div class="flex items-center space-x-4" v-if="isFilterComplete && references.is_titimangsa_aktif">
+                  <div class="flex items-center space-x-2 text-[10px] font-black uppercase tracking-widest px-3 py-1.5 bg-emerald-50 text-emerald-600 rounded-lg border border-emerald-200 transition-all" v-if="saveStatus === 'saved'">
+                    <span class="text-sm">✓</span> <span>Tersimpan</span>
+                  </div>
+                  <div class="flex items-center space-x-2 text-[10px] font-black uppercase tracking-widest px-3 py-1.5 bg-amber-50 text-amber-600 rounded-lg border border-amber-200 transition-all" v-if="saveStatus === 'saving'">
+                    <span class="animate-spin text-sm">↻</span> <span>Menyimpan...</span>
+                  </div>
                 </div>
               </div>
             </div>
